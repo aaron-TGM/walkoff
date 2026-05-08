@@ -79,7 +79,6 @@ export function WaitlistForm() {
           name="company"
           type="text"
           className="form-input"
-          placeholder="Frost Buddy"
           autoComplete="organization"
           value={company}
           onChange={(e) => setCompany(e.target.value)}
@@ -94,7 +93,6 @@ export function WaitlistForm() {
           name="email"
           type="email"
           className="form-input"
-          placeholder="you@yourbrand.com"
           autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -129,7 +127,6 @@ export function WaitlistForm() {
             name="team"
             type="text"
             className="form-input"
-            placeholder="LA Dodgers"
             value={team}
             onChange={(e) => setTeam(e.target.value)}
           />

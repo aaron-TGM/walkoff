@@ -3,6 +3,7 @@ import { BrandSpan } from "@/components/BrandSpan";
 import { Eyebrow } from "@/components/Eyebrow";
 import { FaqItem } from "@/components/FaqItem";
 import { HeroCard } from "@/components/HeroCard";
+import { TriggerCategory } from "@/components/TriggerCategory";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { TRIGGERS, TRIGGER_CATEGORIES } from "@/lib/triggers";
 
@@ -324,29 +325,11 @@ export function MarketingPage() {
             {TRIGGER_CATEGORIES.map((cat) => {
               const items = TRIGGERS.filter((t) => t.category === cat.id);
               return (
-                <div key={cat.id} className="trigger-cat">
-                  <div className="trigger-cat-label">
-                    — <span>{cat.label}</span>
-                  </div>
-                  <div className="trigger-grid-3">
-                    {items.map((t) => (
-                      <div
-                        key={t.id}
-                        className="border border-rule bg-paper p-[1.1rem]"
-                      >
-                        <div className="mb-1 font-display text-[0.9rem] font-bold uppercase tracking-[-0.005em]">
-                          {t.name}
-                        </div>
-                        <div className="mb-2.5 font-mono text-[0.58rem] tracking-[0.05em] text-red">
-                          {t.id}
-                        </div>
-                        <p className="text-[0.8rem] leading-[1.45] text-inkMuted">
-                          {t.description}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <TriggerCategory
+                  key={cat.id}
+                  label={cat.label}
+                  items={items}
+                />
               );
             })}
           </div>
@@ -580,7 +563,7 @@ export function MarketingPage() {
               className="prefooter-logo"
             />
           </div>
-          <h2 className="final-cta-h">Stop missing the moment.</h2>
+          <h2 className="final-cta-h">Stop missing your moment.</h2>
           <div className="final-cta-actions">
             <a href="#form" className="btn-primary">
               <span>Claim Early Access — Free</span>

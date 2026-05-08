@@ -456,17 +456,31 @@ section.block {
   @apply mt-10;
 }
 .trigger-cat {
-  @apply mb-7 last:mb-0;
+  @apply mb-3 last:mb-0;
 }
-.trigger-cat-label {
-  @apply mb-4 flex items-center gap-2 border-b-2 border-ink pb-3 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-inkMuted;
+.trigger-cat-btn {
+  @apply w-full flex items-center justify-between border-b-2 border-ink pb-3 pt-3 cursor-pointer bg-transparent text-left;
+  transition: opacity 0.15s;
 }
-.trigger-cat-label span {
-  @apply font-bold uppercase text-ink;
-  font-size: 0.9rem;
+.trigger-cat-btn:hover {
+  opacity: 0.7;
+}
+.trigger-cat-label-text {
+  @apply font-display font-extrabold uppercase text-ink;
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  letter-spacing: -0.01em;
+}
+.trigger-cat-meta {
+  @apply flex items-center gap-3 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-inkMuted flex-shrink-0;
+}
+.trigger-cat-count {
+  @apply text-red;
+}
+.trigger-cat-chevron {
+  font-size: 0.55rem;
 }
 .trigger-grid-3 {
-  @apply grid gap-3 grid-cols-1 layout:grid-cols-3;
+  @apply mt-3 grid gap-3 grid-cols-1 layout:grid-cols-3;
 }
 @media (max-width: 879px) {
   .trigger-grid-3 {
@@ -779,7 +793,10 @@ section.block {
 }
 @media (max-width: 560px) {
   .footer-grid {
-    @apply grid-cols-1;
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer-grid > div:first-child {
+    grid-column: 1 / -1;
   }
 }
 .footer-mark {
