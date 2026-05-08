@@ -14,7 +14,7 @@ export function MarketingPage() {
         <div className="nav-inner">
           <a href="#" className="nav-mark">
             <Image
-              src="/walkoff-logo-v2.png"
+              src="/walkoff-logo-v3.png"
               alt="WALKOFF."
               width={163}
               height={39}
@@ -573,7 +573,7 @@ export function MarketingPage() {
         <div className="container-narrow">
           <div className="final-cta-script">
             <Image
-              src="/walkoff-logo-v2.png"
+              src="/walkoff-logo-v3.png"
               alt="WALKOFF."
               width={650}
               height={155}
@@ -603,7 +603,7 @@ export function MarketingPage() {
             <div>
               <div className="footer-mark">
                 <Image
-                  src="/walkoff-logo-dark-v2.png"
+                  src="/walkoff-logo-dark-v3.png"
                   alt="WALKOFF."
                   width={240}
                   height={57}
