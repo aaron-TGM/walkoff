@@ -76,13 +76,14 @@
 }
 .nav-mark {
   flex-shrink: 0;
-  font-family: var(--font-amerik), sans-serif;
-  font-size: 1.85rem;
-  line-height: 1;
-  color: rgb(200 68 42);
   text-decoration: none;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  line-height: 0;
+}
+.nav-logo {
+  display: block;
+  height: 34px;
+  width: auto;
+  mix-blend-mode: multiply;
 }
 .nav-links {
   @apply hidden layout:flex layout:gap-8 font-mono text-[0.7rem] uppercase tracking-[0.15em];
@@ -748,7 +749,13 @@ section.block {
   @apply py-28 text-center;
 }
 .final-cta-script {
-  @apply mb-6 inline-block font-brand text-[clamp(4rem,10vw,9rem)] leading-[0.9] text-red uppercase;
+  @apply mb-6 block;
+}
+.prefooter-logo {
+  display: block;
+  height: clamp(5rem, 12vw, 10rem);
+  width: auto;
+  mix-blend-mode: multiply;
 }
 .final-cta-h {
   @apply mx-auto mb-8 max-w-[24ch] font-display text-[clamp(1.5rem,3vw,2.25rem)] font-extrabold uppercase tracking-[-0.005em];
@@ -778,13 +785,15 @@ section.block {
   }
 }
 .footer-mark {
-  font-family: var(--font-amerik), sans-serif;
-  font-size: 2.75rem;
-  line-height: 1;
-  color: rgb(200 68 42);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
   margin-bottom: 0.75rem;
+  line-height: 0;
+}
+.footer-logo {
+  display: block;
+  height: 52px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
 }
 .footer-tagline {
   @apply max-w-[28ch] font-display text-[0.85rem] font-bold uppercase leading-snug tracking-[0.02em];

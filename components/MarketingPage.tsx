@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { BrandSpan } from "@/components/BrandSpan";
 import { Eyebrow } from "@/components/Eyebrow";
 import { FaqItem } from "@/components/FaqItem";
@@ -12,7 +13,14 @@ export function MarketingPage() {
       <nav className="site-nav" aria-label="Primary">
         <div className="nav-inner">
           <a href="#" className="nav-mark">
-            WALKOFF.
+            <Image
+              src="/walkoff-logo.png"
+              alt="WALKOFF."
+              width={180}
+              height={43}
+              className="nav-logo"
+              priority
+            />
           </a>
           <div className="nav-links">
             <a href="#how">How it works</a>
@@ -563,7 +571,15 @@ export function MarketingPage() {
       {/* ─── FINAL CTA ───────────────────────────────────────── */}
       <section className="final-cta">
         <div className="container-narrow">
-          <div className="final-cta-script">WALKOFF.</div>
+          <div className="final-cta-script">
+            <Image
+              src="/walkoff-logo.png"
+              alt="WALKOFF."
+              width={640}
+              height={153}
+              className="prefooter-logo"
+            />
+          </div>
           <h2 className="final-cta-h">Stop missing the moment.</h2>
           <div className="final-cta-actions">
             <a href="#form" className="btn-primary">
@@ -585,7 +601,15 @@ export function MarketingPage() {
         <div className="container-w">
           <div className="footer-grid">
             <div>
-              <div className="footer-mark">WALKOFF.</div>
+              <div className="footer-mark">
+                <Image
+                  src="/walkoff-logo.png"
+                  alt="WALKOFF."
+                  width={240}
+                  height={57}
+                  className="footer-logo"
+                />
+              </div>
               <p className="footer-tagline">
                 The sports moment marketing layer for licensed DTC brands.
               </p>
