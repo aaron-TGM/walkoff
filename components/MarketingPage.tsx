@@ -603,7 +603,7 @@ export function MarketingPage() {
             <div>
               <div className="footer-mark">
                 <Image
-                  src="/walkoff-logo-dark.png"
+                  src="/walkoff-logo-dark-v2.png"
                   alt="WALKOFF."
                   width={240}
                   height={57}
