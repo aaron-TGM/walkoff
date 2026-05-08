@@ -14,10 +14,10 @@ export function MarketingPage() {
         <div className="nav-inner">
           <a href="#" className="nav-mark">
             <Image
-              src="/walkoff-logo-v3.png"
+              src="/walkoff_logov3.png"
               alt="WALKOFF."
-              width={163}
-              height={39}
+              width={1539}
+              height={367}
               className="nav-logo"
               priority
             />
@@ -573,10 +573,10 @@ export function MarketingPage() {
         <div className="container-narrow">
           <div className="final-cta-script">
             <Image
-              src="/walkoff-logo-v3.png"
+              src="/walkoff_logov3.png"
               alt="WALKOFF."
-              width={650}
-              height={155}
+              width={1539}
+              height={367}
               className="prefooter-logo"
             />
           </div>
@@ -603,10 +603,10 @@ export function MarketingPage() {
             <div>
               <div className="footer-mark">
                 <Image
-                  src="/walkoff-logo-dark-v3.png"
+                  src="/walkoff_logo_darkv3.png"
                   alt="WALKOFF."
-                  width={240}
-                  height={57}
+                  width={1539}
+                  height={367}
                   className="footer-logo"
                 />
               </div>
