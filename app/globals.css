@@ -754,7 +754,6 @@ section.block {
   display: block;
   height: clamp(5rem, 12vw, 10rem);
   width: auto;
-  mix-blend-mode: multiply;
 }
 .final-cta-h {
   @apply mx-auto mb-8 max-w-[24ch] font-display text-[clamp(1.5rem,3vw,2.25rem)] font-extrabold uppercase tracking-[-0.005em];

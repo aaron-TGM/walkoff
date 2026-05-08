@@ -573,10 +573,10 @@ export function MarketingPage() {
         <div className="container-narrow">
           <div className="final-cta-script">
             <Image
-              src="/walkoff-logo.png"
+              src="/walkoff-logo-v2.png"
               alt="WALKOFF."
-              width={640}
-              height={153}
+              width={650}
+              height={155}
               className="prefooter-logo"
             />
           </div>
