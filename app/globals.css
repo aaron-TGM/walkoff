@@ -27,27 +27,9 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Midruns Script";
-  src: url("/fonts/midruns-script.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: Midruns;
-  src: url("/fonts/midruns.woff2") format("woff2");
-  font-weight: 400 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
   --font-amerik: "Amerik Slant", sans-serif;
   --font-arbeit: Arbeit, system-ui, sans-serif;
-  --font-midruns-script: "Midruns Script", cursive;
-  --font-midruns: Midruns, Georgia, serif;
 }
 
 @layer base {
@@ -192,7 +174,7 @@
   @apply my-5 font-display text-[clamp(2.75rem,5.5vw,5.5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.015em];
 }
 .hero h1 .script {
-  @apply px-[0.05em] font-script text-[0.85em] font-normal normal-case leading-none text-red;
+  @apply px-[0.05em] font-brand text-[0.85em] font-normal normal-case leading-none text-red;
 }
 .hero-sub {
   @apply mb-8 max-w-[50ch] text-[1.1rem] leading-[1.55] text-inkMuted;
@@ -361,7 +343,7 @@ section.block {
   @apply border border-rule bg-paper p-8;
 }
 .problem-card-num {
-  @apply mb-3 inline-block -rotate-1 font-script text-[3.5rem] leading-none text-red;
+  @apply mb-3 inline-block -rotate-1 font-brand text-[3.5rem] leading-none text-red;
 }
 .problem-card-h {
   @apply mb-2.5 font-display text-base font-bold uppercase tracking-[0.01em];
@@ -575,7 +557,7 @@ section.block {
   border-color: rgba(244, 239, 228, 0.1);
 }
 .case-stat-num {
-  @apply inline-block -rotate-[1.5deg] font-script text-[3.5rem] leading-none text-red;
+  @apply inline-block -rotate-[1.5deg] font-brand text-[3.5rem] leading-none text-red;
 }
 .case-stat-lbl {
   @apply mt-2.5 font-mono text-[0.68rem] uppercase tracking-[0.15em];
@@ -709,7 +691,7 @@ section.block {
   @apply py-28 text-center;
 }
 .final-cta-script {
-  @apply mb-6 inline-block -rotate-2 font-script text-[clamp(4rem,10vw,9rem)] leading-[0.9] text-red;
+  @apply mb-6 inline-block -rotate-2 font-brand text-[clamp(4rem,10vw,9rem)] leading-[0.9] text-red;
 }
 .final-cta-h {
   @apply mx-auto mb-8 max-w-[24ch] font-display text-[clamp(1.5rem,3vw,2.25rem)] font-extrabold uppercase tracking-[-0.005em];
@@ -830,7 +812,7 @@ select.form-input {
   @apply border border-ruleDark bg-cream p-8 text-center;
 }
 .form-success-script {
-  @apply mb-3 font-script text-6xl leading-none text-red layout:text-7xl;
+  @apply mb-3 font-brand text-6xl leading-none text-red layout:text-7xl;
 }
 .form-success-h {
   @apply mb-3 font-display text-2xl font-extrabold uppercase;

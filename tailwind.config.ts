@@ -23,13 +23,11 @@ const config: Config = {
         grass: "rgb(74 112 72 / <alpha-value>)",
       },
       fontFamily: {
-        // Amerik Slant — WALKOFF wordmark + .brand inline spans only
+        // Amerik Slant — wordmark, decorative accents, .brand spans
         brand: ["var(--font-amerik)", "sans-serif"],
-        // Arbeit Bold/Regular — all headlines and body copy
+        // Arbeit — all headlines (Bold) and body copy (Regular)
         display: ["var(--font-arbeit)", "system-ui", "sans-serif"],
         sans: ["var(--font-arbeit)", "system-ui", "sans-serif"],
-        // Midruns Script — decorative script accents (hero h1, final CTA, case stats)
-        script: ["var(--font-midruns-script)", "cursive"],
         // JetBrains Mono — eyebrows, labels, buttons, badges, code
         mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
       },
