@@ -330,19 +330,39 @@ export function MarketingPage() {
           </div>
           <div className="integrations-row">
             <div className="integration-item">
-              <div className="integration-name">Klaviyo</div>
+              <Image
+                src="/klaviyo-new-logo.png"
+                alt="Klaviyo"
+                width={120}
+                height={30}
+                className="integration-logo"
+              />
               <span className="integration-badge integration-badge-live">
                 Live
               </span>
             </div>
             <div className="integration-item">
-              <div className="integration-name">Postscript</div>
+              <Image
+                src="/postscript_logo.svg"
+                alt="Postscript"
+                width={189}
+                height={59}
+                unoptimized
+                className="integration-logo integration-logo-postscript"
+              />
               <span className="integration-badge integration-badge-soon">
                 Coming Soon
               </span>
             </div>
             <div className="integration-item">
-              <div className="integration-name">Attentive</div>
+              <Image
+                src="/attentive_logo.svg"
+                alt="Attentive"
+                width={186}
+                height={32}
+                unoptimized
+                className="integration-logo"
+              />
               <span className="integration-badge integration-badge-soon">
                 Coming Soon
               </span>
