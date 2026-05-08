@@ -24,8 +24,8 @@ export function MarketingPage() {
             />
           </a>
           <div className="nav-links">
-            <a href="#how">How it works</a>
             <a href="#triggers">Triggers</a>
+            <a href="#how">How it works</a>
             <a href="#pricing">Pricing</a>
             <a href="#form">Early Access</a>
           </div>
@@ -61,7 +61,7 @@ export function MarketingPage() {
                 </a>
               </div>
               <div className="hero-note">
-                First 20 brands &middot; Free 60 days &middot; We set everything up
+                Free 60 days &middot; We set everything up
               </div>
             </div>
 
@@ -145,10 +145,6 @@ export function MarketingPage() {
                 Rivalry in 48 hours. Playoff preview. Fire a pre-game campaign
                 while fans are already talking.
               </p>
-              <div className="moment-tags">
-                <span className="moment-tag">rivalry_preview</span>
-                <span className="moment-tag">big_game_alert</span>
-              </div>
             </div>
 
             {/* During */}
@@ -174,10 +170,6 @@ export function MarketingPage() {
                 Tied in the 8th. Final two minutes. Fans are on their
                 phones. That&apos;s your window.
               </p>
-              <div className="moment-tags">
-                <span className="moment-tag">close_game</span>
-                <span className="moment-tag">comeback_live</span>
-              </div>
             </div>
 
             {/* After */}
@@ -203,10 +195,6 @@ export function MarketingPage() {
                 Walk-off win. Rivalry sweep. Heartbreaker loss. Each result = a
                 different angle and a different offer.
               </p>
-              <div className="moment-tags">
-                <span className="moment-tag">walkoff_win</span>
-                <span className="moment-tag">heartbreak_loss</span>
-              </div>
             </div>
 
             {/* Season */}
@@ -236,17 +224,39 @@ export function MarketingPage() {
                 Playoff clinch. Championship. Season opener. Moments your
                 competitors are silent on.
               </p>
-              <div className="moment-tags">
-                <span className="moment-tag">playoff_clinch</span>
-                <span className="moment-tag">title_won</span>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* ─── TRIGGERS ────────────────────────────────────────── */}
+      <section className="block border-y border-rule bg-paper" id="triggers">
+        <div className="container-w">
+          <div className="block-num">
+            <span className="eyebrow-dot" aria-hidden />
+            Trigger library
+          </div>
+          <h2 className="section-title">
+            Every moment, <em>ready to fire.</em>
+          </h2>
+          <div className="trigger-section">
+            {TRIGGER_CATEGORIES.map((cat) => {
+              const items = TRIGGERS.filter((t) => t.category === cat.id);
+              return (
+                <TriggerCategory
+                  key={cat.id}
+                  categoryId={cat.id}
+                  label={cat.label}
+                  items={items}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* ─── HOW IT WORKS ─────────────────────────────────────── */}
-      <section className="block border-y border-rule bg-paper" id="how">
+      <section className="block" id="how">
         <div className="container-w">
           <div className="block-num">
             <span className="eyebrow-dot" aria-hidden />
@@ -311,32 +321,6 @@ export function MarketingPage() {
         </div>
       </section>
 
-      {/* ─── TRIGGERS ────────────────────────────────────────── */}
-      <section className="block" id="triggers">
-        <div className="container-w">
-          <div className="block-num">
-            <span className="eyebrow-dot" aria-hidden />
-            Trigger library
-          </div>
-          <h2 className="section-title">
-            Every moment, <em>ready to fire.</em>
-          </h2>
-          <div className="trigger-section">
-            {TRIGGER_CATEGORIES.map((cat) => {
-              const items = TRIGGERS.filter((t) => t.category === cat.id);
-              return (
-                <TriggerCategory
-                  key={cat.id}
-                  categoryId={cat.id}
-                  label={cat.label}
-                  items={items}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* ─── CASE STUDY ──────────────────────────────────────── */}
       {/* ─── INTEGRATIONS ────────────────────────────────────── */}
       <div className="integrations-bar">
@@ -364,7 +348,7 @@ export function MarketingPage() {
               </span>
             </div>
             <div className="integration-item">
-              <div className="integration-name">Shopify</div>
+              <div className="integration-name">Custom API</div>
               <span className="integration-badge integration-badge-soon">
                 Coming Soon
               </span>
@@ -385,7 +369,7 @@ export function MarketingPage() {
             <em>Every game. Every trigger.</em>
           </h2>
           <p className="section-lead">
-            First 20 brands get 60 days free. No credit card required.
+            60 days free. No credit card required.
           </p>
           <div className="pricing-grid">
             {/* Starter */}
@@ -425,7 +409,7 @@ export function MarketingPage() {
                 <li>Priority support</li>
                 <li className="dim">SMS integrations</li>
               </ul>
-              <a href="#form" className="btn-primary block text-center">
+              <a href="#form" className="btn-green block text-center">
                 <span>Get Early Access</span>
               </a>
             </div>
@@ -467,7 +451,7 @@ export function MarketingPage() {
                 Early Access
               </div>
               <h2 className="form-left-title">
-                First 20. Free for <em>60 days.</em>
+                Free for <em>60 days.</em>
               </h2>
               <p className="form-left-body">
                 We onboard manually. Tell us your team and we handle the rest:
@@ -554,7 +538,7 @@ export function MarketingPage() {
               className="prefooter-logo"
             />
           </div>
-          <h2 className="final-cta-h">Stop missing your moment.</h2>
+          <h2 className="final-cta-h whitespace-nowrap">Stop missing your moment.</h2>
           <div className="final-cta-actions">
             <a href="#form" className="btn-primary">
               <span>Claim Early Access, Free</span>

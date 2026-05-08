@@ -3,6 +3,13 @@
 import { useState } from "react";
 import type { Trigger, TriggerCategory as TCat } from "@/lib/triggers";
 
+const ICON_COLORS: Record<TCat, string> = {
+  before: "text-red",
+  during: "text-mustard",
+  after: "text-red",
+  season: "text-grass",
+};
+
 const ICONS: Record<TCat, React.ReactNode> = {
   before: (
     <svg width="18" height="18" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -51,7 +58,7 @@ export function TriggerCategory({ categoryId, label, items }: Props) {
         aria-expanded={open}
       >
         <span className="trigger-cat-label-text">
-          <span className="trigger-cat-icon">{ICONS[categoryId]}</span>
+          <span className={`trigger-cat-icon ${ICON_COLORS[categoryId]}`}>{ICONS[categoryId]}</span>
           {label}
         </span>
         <span className="trigger-cat-meta">

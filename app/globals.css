@@ -143,6 +143,13 @@
 .btn-primary:hover {
   background: rgb(154 51 31);
 }
+.btn-green {
+  background: rgb(74 112 72);
+  color: rgb(244 239 228);
+}
+.btn-green:hover {
+  background: rgb(55 85 54);
+}
 .btn-ghost {
   background: transparent;
   color: rgb(26 20 16);
@@ -473,7 +480,7 @@ section.block {
   letter-spacing: -0.01em;
 }
 .trigger-cat-icon {
-  @apply flex-shrink-0 text-red;
+  @apply flex-shrink-0;
   line-height: 0;
 }
 .trigger-cat-meta {
@@ -776,7 +783,7 @@ section.block {
   width: auto;
 }
 .final-cta-h {
-  @apply mx-auto mb-8 max-w-[24ch] font-display text-[clamp(1.5rem,3vw,2.25rem)] font-extrabold uppercase tracking-[-0.005em];
+  @apply mx-auto mb-8 font-display text-[clamp(1.5rem,3vw,2.25rem)] font-extrabold uppercase tracking-[-0.005em];
 }
 .final-cta-actions {
   @apply flex flex-wrap justify-center gap-4;
@@ -873,7 +880,7 @@ select.form-input {
   cursor: pointer;
   border: none;
   transform: skewX(-10deg);
-  background: rgb(200 68 42);
+  background: rgb(74 112 72);
   padding: 1rem 1.5rem;
   font-family: var(--font-arbeit), system-ui, sans-serif;
   font-size: 0.82rem;
@@ -884,7 +891,7 @@ select.form-input {
   transition: background-color 0.15s;
 }
 .form-submit:hover {
-  background: rgb(154 51 31);
+  background: rgb(55 85 54);
 }
 .form-submit:disabled {
   opacity: 0.6;

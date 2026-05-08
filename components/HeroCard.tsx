@@ -2,6 +2,21 @@
 
 import { useEffect, useRef } from "react";
 
+function getYesterdayFormatted(): string {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const dayName = days[d.getDay()];
+  const month = months[d.getMonth()];
+  const date = d.getDate();
+  const suffix =
+    date === 1 || date === 21 || date === 31 ? "st" :
+    date === 2 || date === 22 ? "nd" :
+    date === 3 || date === 23 ? "rd" : "th";
+  return `${dayName}, ${month} ${date}${suffix}`;
+}
+
 export function HeroCard() {
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -31,15 +46,15 @@ export function HeroCard() {
     <div className="hero-card" ref={cardRef}>
       <div className="hero-card-badge">
         <span className="hero-card-badge-dot" aria-hidden />
-        $5,689 in 7 minutes.
+        LIVE RESULTS
       </div>
       <div className="hero-card-meta">
-        Frost Buddy &middot; MLB &middot; April 2026
+        Brand: Frost Buddy &middot; MLB &middot; <span suppressHydrationWarning>{getYesterdayFormatted()}</span>
       </div>
       <div className="hero-card-title">
         7 teams. 7 win-triggered emails.
       </div>
-      <div className="hero-card-result-headline">$5,689 in one week.</div>
+      <div className="hero-card-result-headline">$5,689 in 7 minutes.</div>
       <div className="hero-card-stats">
         <div>
           <div className="hero-card-stat-num">16K</div>
