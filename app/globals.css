@@ -83,7 +83,6 @@
   display: block;
   height: 34px;
   width: auto;
-  mix-blend-mode: multiply;
 }
 .nav-links {
   @apply hidden layout:flex layout:gap-8 font-mono text-[0.7rem] uppercase tracking-[0.15em];

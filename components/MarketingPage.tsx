@@ -14,10 +14,10 @@ export function MarketingPage() {
         <div className="nav-inner">
           <a href="#" className="nav-mark">
             <Image
-              src="/walkoff-logo.png"
+              src="/walkoff-logo-v2.png"
               alt="WALKOFF."
-              width={180}
-              height={43}
+              width={163}
+              height={39}
               className="nav-logo"
               priority
             />
