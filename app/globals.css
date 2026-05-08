@@ -792,8 +792,6 @@ section.block {
   display: block;
   height: 52px;
   width: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.9;
 }
 .footer-tagline {
   @apply max-w-[28ch] font-display text-[0.85rem] font-bold uppercase leading-snug tracking-[0.02em];
