@@ -117,7 +117,8 @@
 
 /* Buttons — parallelogram via skewX */
 .btn-primary,
-.btn-ghost {
+.btn-ghost,
+.btn-green {
   display: inline-block;
   cursor: pointer;
   border: none;
@@ -132,7 +133,8 @@
   transition: background-color 0.15s, color 0.15s;
 }
 .btn-primary span,
-.btn-ghost span {
+.btn-ghost span,
+.btn-green span {
   display: inline-block;
   transform: skewX(10deg);
 }
