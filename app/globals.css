@@ -75,7 +75,14 @@
   @apply mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-5 py-4 layout:px-12;
 }
 .nav-mark {
-  @apply flex-shrink-0 font-brand text-2xl leading-none text-red no-underline;
+  flex-shrink: 0;
+  font-family: var(--font-amerik), sans-serif;
+  font-size: 1.85rem;
+  line-height: 1;
+  color: rgb(200 68 42);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 .nav-links {
   @apply hidden layout:flex layout:gap-8 font-mono text-[0.7rem] uppercase tracking-[0.15em];
@@ -151,6 +158,7 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-weight: 400;
+  color: rgb(200 68 42);
 }
 
 /* Eyebrow */
@@ -208,13 +216,25 @@
   @apply mb-1 mt-2 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-inkMuted;
 }
 .hero-card-title {
-  @apply mb-1 font-display text-[1.65rem] font-extrabold uppercase;
+  @apply mb-2 mt-1 font-display text-[1.05rem] font-extrabold uppercase leading-snug tracking-tight;
 }
-.hero-card-sub {
-  @apply mb-5 border-b border-rule pb-5 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-inkMuted;
+.hero-card-result-headline {
+  font-family: var(--font-amerik), sans-serif;
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: rgb(200 68 42);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(26, 20, 16, 0.12);
 }
 .hero-card-stats {
   @apply grid grid-cols-3 gap-3;
+}
+.hero-card-attr {
+  @apply mt-4 border-t border-rule pt-4 font-mono text-[0.6rem] uppercase tracking-[0.1em] text-inkMuted leading-relaxed;
 }
 .hero-card-stat-num {
   font-family: var(--font-amerik), sans-serif;
@@ -268,7 +288,12 @@ section.block {
   @apply mb-5 font-display text-[clamp(2rem,4vw,3.25rem)] font-extrabold uppercase leading-none tracking-[-0.01em];
 }
 .section-title em {
-  @apply italic text-red;
+  font-family: var(--font-amerik), sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: rgb(200 68 42);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 .section-lead {
   @apply mb-12 max-w-[58ch] text-[1.1rem] leading-[1.55] text-inkMuted;

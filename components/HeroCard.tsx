@@ -31,31 +31,35 @@ export function HeroCard() {
     <div className="hero-card" ref={cardRef}>
       <div className="hero-card-badge">
         <span className="hero-card-badge-dot" aria-hidden />
-        Trigger Fired
+        Live Results
       </div>
       <div className="hero-card-meta">
-        LAD vs SF &middot; Apr 6, 2026 &middot; 2:28 PM ET
+        Frost Buddy &middot; MLB &middot; April 2026
       </div>
-      <div className="hero-card-title">Free Lid Win — Dodgers</div>
-      <div className="hero-card-sub">
-        MLB SHOPPER &middot; DODGERS &middot; 2,813 RECIPIENTS
+      <div className="hero-card-title">
+        7 teams. 7 win-triggered emails.
       </div>
+      <div className="hero-card-result-headline">$5,689 in one week.</div>
       <div className="hero-card-stats">
         <div>
-          <div className="hero-card-stat-num">$1,450</div>
-          <div className="hero-card-stat-lbl">Attributed</div>
-          <div className="hero-card-stat-note">Single send</div>
+          <div className="hero-card-stat-num">$5,689</div>
+          <div className="hero-card-stat-lbl">Total Revenue</div>
+          <div className="hero-card-stat-note">7 sends, one week</div>
         </div>
         <div>
-          <div className="hero-card-stat-num">39%</div>
-          <div className="hero-card-stat-lbl">Open Rate</div>
-          <div className="hero-card-stat-note">↑ vs 20% avg</div>
+          <div className="hero-card-stat-num">$0.52</div>
+          <div className="hero-card-stat-lbl">Rev / Recipient</div>
+          <div className="hero-card-stat-note">Best single send</div>
         </div>
         <div>
-          <div className="hero-card-stat-num">3.1%</div>
-          <div className="hero-card-stat-lbl">Click Rate</div>
-          <div className="hero-card-stat-note">225 clicks</div>
+          <div className="hero-card-stat-num">16K</div>
+          <div className="hero-card-stat-lbl">Recipients</div>
+          <div className="hero-card-stat-note">7 team segments</div>
         </div>
+      </div>
+      <div className="hero-card-attr">
+        &ldquo;Free Lid Win&rdquo; &mdash; No discount. Just the right email at
+        the right moment.
       </div>
     </div>
   );

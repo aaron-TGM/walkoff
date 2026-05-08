@@ -12,7 +12,7 @@ export function MarketingPage() {
       <nav className="site-nav" aria-label="Primary">
         <div className="nav-inner">
           <a href="#" className="nav-mark">
-            Walkoff
+            WALKOFF.
           </a>
           <div className="nav-links">
             <a href="#how">How it works</a>
