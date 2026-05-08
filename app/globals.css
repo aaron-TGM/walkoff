@@ -748,7 +748,7 @@ section.block {
   @apply py-28 text-center;
 }
 .final-cta-script {
-  @apply mb-6 inline-block font-brand text-[clamp(4rem,10vw,9rem)] leading-[0.9] text-red;
+  @apply mb-6 inline-block font-brand text-[clamp(4rem,10vw,9rem)] leading-[0.9] text-red uppercase;
 }
 .final-cta-h {
   @apply mx-auto mb-8 max-w-[24ch] font-display text-[clamp(1.5rem,3vw,2.25rem)] font-extrabold uppercase tracking-[-0.005em];

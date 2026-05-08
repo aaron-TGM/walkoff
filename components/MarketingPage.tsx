@@ -563,7 +563,7 @@ export function MarketingPage() {
       {/* ─── FINAL CTA ───────────────────────────────────────── */}
       <section className="final-cta">
         <div className="container-narrow">
-          <div className="final-cta-script">Walkoff.</div>
+          <div className="final-cta-script">WALKOFF.</div>
           <h2 className="final-cta-h">Stop missing the moment.</h2>
           <div className="final-cta-actions">
             <a href="#form" className="btn-primary">
