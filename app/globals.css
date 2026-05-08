@@ -531,7 +531,7 @@ section.block {
   font-size: 2.9rem;
   line-height: 1;
   letter-spacing: 0.02em;
-  color: rgb(26 20 16);
+  color: rgb(200 68 42);
   margin: 0.7rem 0 0.2rem;
 }
 .pricing-freq {
@@ -748,7 +748,7 @@ section.block {
   @apply py-28 text-center;
 }
 .final-cta-script {
-  @apply mb-6 inline-block -rotate-2 font-brand text-[clamp(4rem,10vw,9rem)] leading-[0.9] text-red;
+  @apply mb-6 inline-block font-brand text-[clamp(4rem,10vw,9rem)] leading-[0.9] text-red;
 }
 .final-cta-h {
   @apply mx-auto mb-8 max-w-[24ch] font-display text-[clamp(1.5rem,3vw,2.25rem)] font-extrabold uppercase tracking-[-0.005em];
@@ -778,7 +778,13 @@ section.block {
   }
 }
 .footer-mark {
-  @apply mb-3 font-brand text-[2.75rem] leading-none text-red;
+  font-family: var(--font-amerik), sans-serif;
+  font-size: 2.75rem;
+  line-height: 1;
+  color: rgb(200 68 42);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.75rem;
 }
 .footer-tagline {
   @apply max-w-[28ch] font-display text-[0.85rem] font-bold uppercase leading-snug tracking-[0.02em];

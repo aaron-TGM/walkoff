@@ -61,27 +61,6 @@ export function MarketingPage() {
         </div>
       </section>
 
-      {/* ─── PROOF ───────────────────────────────────────────── */}
-      <div className="proof">
-        <div className="container-w">
-          <div className="proof-inner">
-            <div className="proof-label">From Klaviyo</div>
-            <div className="proof-divider" aria-hidden />
-            <div>
-              <div className="proof-quote">
-                <em>7 teams. 7 win-triggered emails. $5,689 in one week.</em>{" "}
-                Keep your highest-LTV customers engaged during the moments they
-                already care about.
-              </div>
-              <div className="proof-attr">
-                — MLB &ldquo;Free Lid Win&rdquo; campaign &middot; Buy anything + get a free
-                lid &middot; April 2026 &middot; Frost Buddy
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* ─── WHO ─────────────────────────────────────────────── */}
       <section className="block border-y border-rule bg-paper" id="who">
         <div className="container-w">
@@ -367,84 +346,6 @@ export function MarketingPage() {
       </section>
 
       {/* ─── CASE STUDY ──────────────────────────────────────── */}
-      <section className="case">
-        <div className="container-w">
-          <div className="case-eyebrow">
-            Live results &middot; Frost Buddy &middot; MLB &middot; April 2026
-          </div>
-          <div className="case-grid">
-            <div>
-              <h2 className="case-quote">
-                7 teams. 7 win-triggered emails.{" "}
-                <em>$5,689 in one week.</em>
-              </h2>
-              <p className="case-body">
-                &ldquo;Free Lid Win&rdquo; — buy anything, get a free lid accessory. Fired to
-                team-tagged shopper segments within minutes of each win. No discount
-                strategy. Just the right email at the right moment.
-              </p>
-              <div className="case-byline">
-                — Frost Buddy &middot; Official MLB Licensed Drinkware &middot; San Clemente, CA
-              </div>
-            </div>
-            <div>
-              <div className="case-stats">
-                <div>
-                  <div className="case-stat-num">$0.52</div>
-                  <div className="case-stat-lbl">Rev / Recipient</div>
-                  <div className="case-stat-note">best single campaign</div>
-                </div>
-                <div>
-                  <div className="case-stat-num">$5,689</div>
-                  <div className="case-stat-lbl">Total Revenue</div>
-                  <div className="case-stat-note">7 sends, one week</div>
-                </div>
-                <div>
-                  <div className="case-stat-num">Top LTV</div>
-                  <div className="case-stat-lbl">Buyer Re-Engage</div>
-                  <div className="case-stat-note">highest-value segment</div>
-                </div>
-                <div>
-                  <div className="case-stat-num">16K</div>
-                  <div className="case-stat-lbl">Recipients</div>
-                  <div className="case-stat-note">across 7 team segments</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="campaigns-grid">
-            <div className="campaign-card">
-              <div className="campaign-team">Dodgers &middot; Apr 6</div>
-              <div className="campaign-rev">$1,450</div>
-              <div className="campaign-meta">
-                2,813 rec &middot; 39% open &middot; 3.1% CTR
-              </div>
-            </div>
-            <div className="campaign-card">
-              <div className="campaign-team">Cubs &middot; Apr 6</div>
-              <div className="campaign-rev">$1,130</div>
-              <div className="campaign-meta">
-                1,924 rec &middot; 39% open &middot; 4.1% CTR
-              </div>
-            </div>
-            <div className="campaign-card">
-              <div className="campaign-team">Yankees &middot; Apr 8</div>
-              <div className="campaign-rev">$1,144</div>
-              <div className="campaign-meta">
-                4,761 rec &middot; 61.6% open &middot; 5.0% CTR
-              </div>
-            </div>
-            <div className="campaign-card">
-              <div className="campaign-team">Red Sox &middot; Apr 8</div>
-              <div className="campaign-rev">$750</div>
-              <div className="campaign-meta">
-                1,704 rec &middot; 61.5% open &middot; 5.0% CTR
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ─── INTEGRATIONS ────────────────────────────────────── */}
       <div className="integrations-bar">
         <div className="container-w">
@@ -684,7 +585,7 @@ export function MarketingPage() {
         <div className="container-w">
           <div className="footer-grid">
             <div>
-              <div className="footer-mark">Walkoff</div>
+              <div className="footer-mark">WALKOFF.</div>
               <p className="footer-tagline">
                 The sports moment marketing layer for licensed DTC brands.
               </p>

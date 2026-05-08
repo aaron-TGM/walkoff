@@ -42,19 +42,19 @@ export function HeroCard() {
       <div className="hero-card-result-headline">$5,689 in one week.</div>
       <div className="hero-card-stats">
         <div>
-          <div className="hero-card-stat-num">$5,689</div>
-          <div className="hero-card-stat-lbl">Total Revenue</div>
-          <div className="hero-card-stat-note">7 sends, one week</div>
+          <div className="hero-card-stat-num">16K</div>
+          <div className="hero-card-stat-lbl">Recipients</div>
+          <div className="hero-card-stat-note">7 team segments</div>
+        </div>
+        <div>
+          <div className="hero-card-stat-num">6.7%</div>
+          <div className="hero-card-stat-lbl">Click Rate</div>
+          <div className="hero-card-stat-note">Avg across 7 sends</div>
         </div>
         <div>
           <div className="hero-card-stat-num">$0.52</div>
           <div className="hero-card-stat-lbl">Rev / Recipient</div>
           <div className="hero-card-stat-note">Best single send</div>
-        </div>
-        <div>
-          <div className="hero-card-stat-num">16K</div>
-          <div className="hero-card-stat-lbl">Recipients</div>
-          <div className="hero-card-stat-note">7 team segments</div>
         </div>
       </div>
       <div className="hero-card-attr">
