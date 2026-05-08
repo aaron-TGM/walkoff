@@ -94,19 +94,21 @@
   flex-shrink: 0;
   display: inline-block;
   transform: skewX(-10deg);
-  background: rgb(200 68 42);
-  padding: 0.6rem 1.25rem 0.6rem 1rem;
+  background: transparent;
+  border: 2px solid rgb(26 20 16);
+  padding: 0.55rem 1.25rem 0.55rem 1rem;
   font-family: var(--font-arbeit), system-ui, sans-serif;
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: rgb(244 239 228);
+  color: rgb(26 20 16);
   text-decoration: none;
-  transition: background-color 0.15s;
+  transition: background-color 0.15s, color 0.15s;
 }
 .nav-cta:hover {
-  background: rgb(154 51 31);
+  background: rgb(26 20 16);
+  color: rgb(244 239 228);
 }
 .nav-cta span {
   display: inline-block;
@@ -163,10 +165,10 @@
 
 /* Eyebrow */
 .eyebrow {
-  @apply flex flex-wrap items-center gap-3 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-red;
+  @apply mb-5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-red;
 }
 .eyebrow-dot {
-  @apply inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-red;
+  @apply inline-block h-1.5 w-1.5 rounded-full bg-red align-middle mr-3;
 }
 .eyebrow-dot-green {
   @apply bg-grass;
@@ -207,10 +209,10 @@
   @apply relative border border-ruleDark bg-paper p-7;
 }
 .hero-card-badge {
-  @apply absolute -top-3 left-7 flex items-center gap-1.5 bg-red px-[0.65rem] py-1 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream;
+  @apply absolute -top-3 left-7 flex items-center gap-1.5 bg-grass px-[0.65rem] py-1 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-cream;
 }
 .hero-card-badge-dot {
-  @apply h-[5px] w-[5px] animate-pulse rounded-full bg-cream;
+  @apply h-[5px] w-[5px] animate-pulse rounded-full bg-mustard;
 }
 .hero-card-meta {
   @apply mb-1 mt-2 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-inkMuted;
@@ -466,9 +468,13 @@ section.block {
   opacity: 0.7;
 }
 .trigger-cat-label-text {
-  @apply font-display font-extrabold uppercase text-ink;
+  @apply flex items-center gap-2 font-display font-extrabold uppercase text-ink;
   font-size: clamp(0.9rem, 1.5vw, 1.05rem);
   letter-spacing: -0.01em;
+}
+.trigger-cat-icon {
+  @apply flex-shrink-0 text-red;
+  line-height: 0;
 }
 .trigger-cat-meta {
   @apply flex items-center gap-3 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-inkMuted flex-shrink-0;

@@ -41,7 +41,7 @@ export function MarketingPage() {
           <div className="hero-grid">
             <div>
               <Eyebrow>
-                Beta &middot; MLB &middot; NHL &middot; NCAA Football &middot; NCAA Basketball
+                MLB &middot; NHL &middot; NCAA Football &middot; NCAA Basketball
               </Eyebrow>
               <h1>
                 Every sports moment
@@ -49,12 +49,12 @@ export function MarketingPage() {
               </h1>
               <p className="hero-sub">
                 <BrandSpan /> connects your Klaviyo to the full sports calendar.
-                Rivalry previews, in-game alerts, win triggers, season milestones —
-                every moment your customer cares about, turned into a timely email.
+                Rivalry previews, in-game alerts, win triggers, season milestones.
+                Every moment your customer cares about, turned into a timely email.
               </p>
               <div className="hero-actions">
                 <a href="#form" className="btn-primary">
-                  <span>Get Early Access — Free</span>
+                  <span>Get Early Access, Free</span>
                 </a>
                 <a href="#how" className="btn-ghost">
                   <span>See how it works</span>
@@ -87,7 +87,7 @@ export function MarketingPage() {
                 event.
               </p>
               <div className="who-card-ex">
-                MLB &middot; NHL &middot; NFL &middot; NBA &middot; NCAA — official licensees with Klaviyo
+                MLB &middot; NHL &middot; NFL &middot; NBA &middot; NCAA, official licensees with Klaviyo
               </div>
             </div>
             <div className="who-card who-card-light">
@@ -95,7 +95,7 @@ export function MarketingPage() {
               <div className="who-card-h">Local &amp; Adjacent Businesses</div>
               <p className="who-card-p">
                 No license required. Any business in a sports city with an email
-                list — restaurants, bars, dispensaries, local retail.
+                list: restaurants, bars, dispensaries, local retail.
               </p>
               <div className="who-card-ex">
                 Downtown LA restaurant &rarr; Dodgers win &rarr; &ldquo;$2 off tonight,
@@ -172,7 +172,7 @@ export function MarketingPage() {
               <div className="moment-title">Tension</div>
               <p className="moment-body">
                 Tied in the 8th. Final two minutes. Fans are on their
-                phones — that&apos;s your window.
+                phones. That&apos;s your window.
               </p>
               <div className="moment-tags">
                 <span className="moment-tag">close_game</span>
@@ -275,7 +275,7 @@ export function MarketingPage() {
               <div className="how-step-title">We build your setup</div>
               <p className="how-step-body">
                 We create three segments targeting your buyers, cart abandoners,
-                and browsers — plus a trigger flow, before your next game.
+                and browsers, plus a trigger flow, before your next game.
               </p>
               <div className="how-step-visual">
                 <span className="k">seg_1</span>:{" "}
@@ -327,6 +327,7 @@ export function MarketingPage() {
               return (
                 <TriggerCategory
                   key={cat.id}
+                  categoryId={cat.id}
                   label={cat.label}
                   items={items}
                 />
@@ -394,7 +395,7 @@ export function MarketingPage() {
               <div className="pricing-price">
                 $149<span className="pricing-freq">/mo</span>
               </div>
-              <div className="pricing-billed">$1,430/yr — save 20%</div>
+              <div className="pricing-billed">$1,430/yr (save 20%)</div>
               <ul className="pricing-features">
                 <li>One team, one league</li>
                 <li>All triggers included</li>
@@ -415,7 +416,7 @@ export function MarketingPage() {
               <div className="pricing-price">
                 $299<span className="pricing-freq">/mo</span>
               </div>
-              <div className="pricing-billed">$2,870/yr — save 20%</div>
+              <div className="pricing-billed">$2,870/yr (save 20%)</div>
               <ul className="pricing-features">
                 <li>All teams, one league</li>
                 <li>All triggers included</li>
@@ -436,7 +437,7 @@ export function MarketingPage() {
               <div className="pricing-price">
                 $499<span className="pricing-freq">/mo</span>
               </div>
-              <div className="pricing-billed">$4,790/yr — save 20%</div>
+              <div className="pricing-billed">$4,790/yr (save 20%)</div>
               <ul className="pricing-features">
                 <li>All teams, all leagues</li>
                 <li>All triggers included</li>
@@ -469,7 +470,7 @@ export function MarketingPage() {
                 First 20. Free for <em>60 days.</em>
               </h2>
               <p className="form-left-body">
-                We onboard manually. Tell us your team and we do the rest —
+                We onboard manually. Tell us your team and we handle the rest:
                 segments, flow, and the first 5 triggers fired by us. You collect
                 the data.
               </p>
@@ -480,23 +481,13 @@ export function MarketingPage() {
                 </li>
                 <li>
                   <span className="form-perks-check">✓</span>
-                  First 5 triggers fired manually — we watch the games
+                  First 5 triggers fired manually. We watch the games.
                 </li>
                 <li>
                   <span className="form-perks-check">✓</span>
                   Works with or without a sports license
                 </li>
               </ul>
-              <div className="form-counter">
-                <div>
-                  <div className="form-counter-num">14</div>
-                </div>
-                <div className="form-counter-label">
-                  Spots
-                  <br />
-                  Remaining
-                </div>
-              </div>
             </div>
 
             <div>
@@ -519,7 +510,7 @@ export function MarketingPage() {
 
           <FaqItem num="01" question="Do I need a sports license?" defaultOpen>
             No. Licensed DTC brands are our primary ICP, but any business with
-            customers in a sports city qualifies — restaurants, bars, dispensaries,
+            customers in a sports city qualifies: restaurants, bars, dispensaries,
             local retail. Anyone with an email list and customers who follow the
             home team.
           </FaqItem>
@@ -529,7 +520,7 @@ export function MarketingPage() {
             can&apos;t read your lists, send campaigns, or access subscriber data.
           </FaqItem>
           <FaqItem num="03" question="How fast does a trigger fire?">
-            During the beta we fire manually — typically 8–15 minutes after the
+            During the beta we fire manually, typically 8 to 15 minutes after the
             moment. The full platform fires automatically within 2–5 minutes via
             real-time sports data.
           </FaqItem>
@@ -546,7 +537,7 @@ export function MarketingPage() {
           <FaqItem num="06" question="Which leagues do you support?">
             Currently MLB, NHL, NCAA Football, and NCAA Basketball. NFL and NBA
             are on the roadmap for fall 2026. If you have a license for a league
-            not listed, reach out — we&apos;ll see what we can do.
+            not listed, reach out. We&apos;ll see what we can do.
           </FaqItem>
         </div>
       </section>
@@ -566,15 +557,14 @@ export function MarketingPage() {
           <h2 className="final-cta-h">Stop missing your moment.</h2>
           <div className="final-cta-actions">
             <a href="#form" className="btn-primary">
-              <span>Claim Early Access — Free</span>
+              <span>Claim Early Access, Free</span>
             </a>
             <a href="mailto:hello@walkoff.io" className="btn-ghost">
               <span>Ask a question</span>
             </a>
           </div>
           <p className="final-cta-foot">
-            14 spots remaining &middot; No credit card &middot; 60 days free &middot; We do
-            the setup
+            No credit card &middot; 60 days free &middot; We do the setup
           </p>
         </div>
       </section>

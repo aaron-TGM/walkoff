@@ -31,7 +31,7 @@ export function HeroCard() {
     <div className="hero-card" ref={cardRef}>
       <div className="hero-card-badge">
         <span className="hero-card-badge-dot" aria-hidden />
-        Live Results
+        $5,689 in 7 minutes.
       </div>
       <div className="hero-card-meta">
         Frost Buddy &middot; MLB &middot; April 2026
@@ -58,8 +58,7 @@ export function HeroCard() {
         </div>
       </div>
       <div className="hero-card-attr">
-        &ldquo;Free Lid Win&rdquo; &mdash; No discount. Just the right email at
-        the right moment.
+        &ldquo;Free Lid Win.&rdquo; No discount. Just the right email at the right moment.
       </div>
     </div>
   );

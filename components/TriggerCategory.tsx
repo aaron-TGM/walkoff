@@ -1,14 +1,46 @@
 "use client";
 
 import { useState } from "react";
-import type { Trigger } from "@/lib/triggers";
+import type { Trigger, TriggerCategory as TCat } from "@/lib/triggers";
+
+const ICONS: Record<TCat, React.ReactNode> = {
+  before: (
+    <svg width="18" height="18" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="5" y="8" width="30" height="26" rx="2" />
+      <path d="M5 16 H35" />
+      <path d="M13 4 V12 M27 4 V12" />
+      <path d="M12 23 H14 M19 23 H21 M26 23 H28" />
+      <path d="M12 29 H14 M19 29 H21" />
+    </svg>
+  ),
+  during: (
+    <svg width="18" height="18" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M23 4 L10 22 H19 L17 36 L30 17 H21 Z" />
+    </svg>
+  ),
+  after: (
+    <svg width="18" height="18" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M20 32 C18 30 6 23 6 14 C6 9.5 9.5 6 14 6 C17 6 19.5 8 20 9 C20.5 8 23 6 26 6 C30.5 6 34 9.5 34 14 C34 23 22 30 20 32 Z" />
+    </svg>
+  ),
+  season: (
+    <svg width="18" height="18" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M13 5 H27 V17 C27 23 23 26 20 26 C17 26 13 23 13 17 Z" />
+      <path d="M7 7 H13 C13 15 8.5 17 7 13 Z" />
+      <path d="M27 7 H33 C33 17 27.5 15 27 7 Z" />
+      <path d="M17 26 V31 M23 26 V31" />
+      <path d="M13 31 H27" />
+    </svg>
+  ),
+};
 
 interface Props {
+  categoryId: TCat;
   label: string;
   items: Trigger[];
 }
 
-export function TriggerCategory({ label, items }: Props) {
+export function TriggerCategory({ categoryId, label, items }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -18,7 +50,10 @@ export function TriggerCategory({ label, items }: Props) {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
       >
-        <span className="trigger-cat-label-text">— {label}</span>
+        <span className="trigger-cat-label-text">
+          <span className="trigger-cat-icon">{ICONS[categoryId]}</span>
+          {label}
+        </span>
         <span className="trigger-cat-meta">
           <span className="trigger-cat-count">({items.length})</span>
           <span className="trigger-cat-chevron" aria-hidden>
