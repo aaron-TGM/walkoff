@@ -88,11 +88,12 @@
   display: inline-block;
   transform: skewX(-10deg);
   background: rgb(200 68 42);
-  padding: 0.65rem 1.1rem;
-  font-family: var(--font-jetbrains), ui-monospace, monospace;
-  font-size: 0.7rem;
+  padding: 0.6rem 1.25rem 0.6rem 1rem;
+  font-family: var(--font-arbeit), system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.04em;
   color: rgb(244 239 228);
   text-decoration: none;
   transition: background-color 0.15s;
@@ -112,12 +113,12 @@
   cursor: pointer;
   border: none;
   transform: skewX(-10deg);
-  font-family: var(--font-jetbrains), ui-monospace, monospace;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
+  font-family: var(--font-arbeit), system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 1rem 1.75rem;
+  padding: 1rem 2rem 1rem 1.75rem;
   text-decoration: none;
   transition: background-color 0.15s, color 0.15s;
 }
@@ -174,7 +175,15 @@
   @apply my-5 font-display text-[clamp(2.75rem,5.5vw,5.5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.015em];
 }
 .hero h1 .script {
-  @apply px-[0.05em] font-brand text-[0.85em] font-normal normal-case leading-none text-red;
+  display: block;
+  margin-top: 0.06em;
+  font-family: var(--font-amerik), sans-serif;
+  font-weight: 400;
+  font-size: 0.85em;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: rgb(200 68 42);
 }
 .hero-sub {
   @apply mb-8 max-w-[50ch] text-[1.1rem] leading-[1.55] text-inkMuted;
@@ -208,13 +217,20 @@
   @apply grid grid-cols-3 gap-3;
 }
 .hero-card-stat-num {
-  @apply font-display text-[2.1rem] font-extrabold leading-none text-red;
+  font-family: var(--font-amerik), sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1;
+  color: rgb(200 68 42);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 .hero-card-stat-lbl {
-  @apply mt-1.5 font-mono text-[0.62rem] uppercase tracking-[0.15em] text-inkMuted;
+  @apply mt-1.5 font-mono text-[0.55rem] uppercase tracking-[0.1em] text-inkMuted;
 }
 .hero-card-stat-note {
-  @apply mt-0.5 font-mono text-[0.62rem] tracking-[0.05em] text-inkFaint;
+  @apply mt-0.5 text-[0.78rem];
+  color: rgb(74 112 72); /* grass green */
 }
 
 /* Proof */
@@ -252,7 +268,7 @@ section.block {
   @apply mb-5 font-display text-[clamp(2rem,4vw,3.25rem)] font-extrabold uppercase leading-none tracking-[-0.01em];
 }
 .section-title em {
-  @apply not-italic text-red;
+  @apply italic text-red;
 }
 .section-lead {
   @apply mb-12 max-w-[58ch] text-[1.1rem] leading-[1.55] text-inkMuted;
@@ -486,7 +502,12 @@ section.block {
   @apply mb-2 font-display text-[1.35rem] font-bold tracking-[-0.01em];
 }
 .pricing-price {
-  @apply my-3 font-display text-[3rem] leading-none tracking-[0.02em] text-ink;
+  font-family: var(--font-amerik), sans-serif;
+  font-size: 2.9rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: rgb(26 20 16);
+  margin: 0.7rem 0 0.2rem;
 }
 .pricing-freq {
   @apply font-mono text-[0.65rem] uppercase tracking-[0.1em] text-inkMuted;
@@ -540,36 +561,43 @@ section.block {
   @apply bg-ink py-20 text-cream;
 }
 .case-eyebrow {
-  @apply mb-4 flex items-center gap-3 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-red;
+  @apply mb-6 flex items-center gap-3 font-mono text-[0.62rem] uppercase tracking-[0.2em];
+  color: rgba(244, 239, 228, 0.4);
+}
+/* 2-column layout: left=quote, right=stats */
+.case-grid {
+  @apply grid grid-cols-1 gap-16 layout:grid-cols-2 layout:items-start;
 }
 .case-quote {
-  @apply mb-6 max-w-[22ch] font-display text-[clamp(1.75rem,3.5vw,2.75rem)] font-extrabold uppercase leading-[1.05] tracking-[-0.005em];
+  @apply mb-4 font-display text-[clamp(1.45rem,2.6vw,2.15rem)] font-bold leading-[1.08] tracking-[-0.015em];
 }
 .case-quote em {
-  @apply not-italic text-red;
+  @apply italic text-red;
 }
 .case-body {
-  @apply mb-12 max-w-[58ch] text-base leading-[1.6];
-  color: rgba(244, 239, 228, 0.75);
+  @apply mb-6 text-[0.95rem] leading-[1.65];
+  color: rgba(244, 239, 228, 0.65);
+}
+.case-byline {
+  @apply text-[0.88rem];
+  color: rgba(244, 239, 228, 0.38);
 }
 .case-stats {
-  @apply grid grid-cols-2 gap-8 border-t pt-12 layout:grid-cols-4;
+  @apply grid grid-cols-2 gap-5 border-t pt-8;
   border-color: rgba(244, 239, 228, 0.1);
 }
 .case-stat-num {
-  @apply inline-block -rotate-[1.5deg] font-brand text-[3.5rem] leading-none text-red;
+  @apply font-brand text-[2.75rem] leading-none text-red;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 .case-stat-lbl {
-  @apply mt-2.5 font-mono text-[0.68rem] uppercase tracking-[0.15em];
-  color: rgba(244, 239, 228, 0.5);
-}
-.case-stat-note {
-  @apply mt-1 font-mono text-[0.62rem];
+  @apply mt-2 font-mono text-[0.6rem] uppercase tracking-[0.15em];
   color: rgba(244, 239, 228, 0.4);
 }
-.case-byline {
-  @apply mt-8 font-mono text-[0.72rem] uppercase tracking-[0.15em];
-  color: rgba(244, 239, 228, 0.5);
+.case-stat-note {
+  @apply mt-1 text-[0.82rem];
+  color: rgba(244, 239, 228, 0.27);
 }
 
 /* Klaviyo */
@@ -636,7 +664,11 @@ section.block {
   @apply flex items-center justify-between bg-red px-5 py-4 text-cream;
 }
 .form-counter-num {
-  @apply font-display text-[2.5rem] font-extrabold leading-none;
+  font-family: var(--font-amerik), sans-serif;
+  font-size: 2.75rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
 }
 .form-counter-label {
   @apply text-right font-mono text-[0.68rem] uppercase tracking-[0.15em];
@@ -783,11 +815,11 @@ select.form-input {
   border: none;
   transform: skewX(-10deg);
   background: rgb(200 68 42);
-  padding: 1.1rem 1.75rem;
-  font-family: var(--font-jetbrains), ui-monospace, monospace;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
+  padding: 1rem 1.5rem;
+  font-family: var(--font-arbeit), system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: rgb(244 239 228);
   transition: background-color 0.15s;

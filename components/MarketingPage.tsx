@@ -370,42 +370,47 @@ export function MarketingPage() {
       <section className="case">
         <div className="container-w">
           <div className="case-eyebrow">
-            <span className="eyebrow-dot" aria-hidden />
             Live results &middot; Frost Buddy &middot; MLB &middot; April 2026
           </div>
-          <h2 className="case-quote">
-            7 teams. 7 win-triggered emails.{" "}
-            <em>$5,689 in one week.</em>
-          </h2>
-          <p className="case-body">
-            &ldquo;Free Lid Win&rdquo; — buy anything, get a free lid accessory. Fired to
-            team-tagged shopper segments within minutes of each win. No discount
-            strategy. Just the right email at the right moment.
-          </p>
-          <div className="case-stats">
+          <div className="case-grid">
             <div>
-              <div className="case-stat-num">$0.52</div>
-              <div className="case-stat-lbl">Rev / Recipient</div>
-              <div className="case-stat-note">best single campaign</div>
+              <h2 className="case-quote">
+                7 teams. 7 win-triggered emails.{" "}
+                <em>$5,689 in one week.</em>
+              </h2>
+              <p className="case-body">
+                &ldquo;Free Lid Win&rdquo; — buy anything, get a free lid accessory. Fired to
+                team-tagged shopper segments within minutes of each win. No discount
+                strategy. Just the right email at the right moment.
+              </p>
+              <div className="case-byline">
+                — Frost Buddy &middot; Official MLB Licensed Drinkware &middot; San Clemente, CA
+              </div>
             </div>
             <div>
-              <div className="case-stat-num">$5,689</div>
-              <div className="case-stat-lbl">Total Revenue</div>
-              <div className="case-stat-note">7 sends, one week</div>
+              <div className="case-stats">
+                <div>
+                  <div className="case-stat-num">$0.52</div>
+                  <div className="case-stat-lbl">Rev / Recipient</div>
+                  <div className="case-stat-note">best single campaign</div>
+                </div>
+                <div>
+                  <div className="case-stat-num">$5,689</div>
+                  <div className="case-stat-lbl">Total Revenue</div>
+                  <div className="case-stat-note">7 sends, one week</div>
+                </div>
+                <div>
+                  <div className="case-stat-num">Top LTV</div>
+                  <div className="case-stat-lbl">Buyer Re-Engage</div>
+                  <div className="case-stat-note">highest-value segment</div>
+                </div>
+                <div>
+                  <div className="case-stat-num">16K</div>
+                  <div className="case-stat-lbl">Recipients</div>
+                  <div className="case-stat-note">across 7 team segments</div>
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="case-stat-num">Top LTV</div>
-              <div className="case-stat-lbl">Buyer Re-Engage</div>
-              <div className="case-stat-note">highest-value segment</div>
-            </div>
-            <div>
-              <div className="case-stat-num">16K</div>
-              <div className="case-stat-lbl">Recipients</div>
-              <div className="case-stat-note">across 7 team segments</div>
-            </div>
-          </div>
-          <div className="case-byline">
-            — Frost Buddy &middot; Official MLB Licensed Drinkware &middot; San Clemente, CA
           </div>
           <div className="campaigns-grid">
             <div className="campaign-card">
