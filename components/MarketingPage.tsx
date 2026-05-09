@@ -580,7 +580,7 @@ export function MarketingPage() {
             <div>
               <div className="footer-mark">
                 <Image
-                  src="/walkoff_logo_darkv3.png"
+                  src="/walkoff_logo_white_v2.png"
                   alt="WALKOFF."
                   width={1539}
                   height={367}
