@@ -350,8 +350,8 @@ export function MarketingPage() {
                 unoptimized
                 className="integration-logo integration-logo-postscript"
               />
-              <span className="integration-badge integration-badge-soon">
-                Coming Soon
+              <span className="integration-badge integration-badge-progress">
+                In Progress
               </span>
             </div>
             <div className="integration-item">
@@ -363,8 +363,8 @@ export function MarketingPage() {
                 unoptimized
                 className="integration-logo"
               />
-              <span className="integration-badge integration-badge-soon">
-                Coming Soon
+              <span className="integration-badge integration-badge-progress">
+                In Progress
               </span>
             </div>
             <div className="integration-item">

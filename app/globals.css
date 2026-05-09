@@ -542,6 +542,10 @@ section.block {
 .integration-badge-soon {
   @apply bg-inkFaint;
 }
+.integration-badge-progress {
+  @apply bg-mustard;
+  color: rgb(26 20 16);
+}
 
 /* Pricing */
 .pricing-grid {
