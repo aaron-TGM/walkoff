@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function getYesterdayFormatted(): string {
   const d = new Date();
@@ -19,6 +19,11 @@ function getYesterdayFormatted(): string {
 
 export function HeroCard() {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [yesterday, setYesterday] = useState("");
+
+  useEffect(() => {
+    setYesterday(getYesterdayFormatted());
+  }, []);
 
   useEffect(() => {
     const card = cardRef.current;
@@ -49,7 +54,7 @@ export function HeroCard() {
         LIVE RESULTS
       </div>
       <div className="hero-card-meta">
-        Brand: Frost Buddy &middot; MLB &middot; <span suppressHydrationWarning>{getYesterdayFormatted()}</span>
+        Brand: Frost Buddy &middot; MLB &middot; {yesterday}
       </div>
       <div className="hero-card-title">
         7 teams. 7 win-triggered emails.
