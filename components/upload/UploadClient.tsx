@@ -2,6 +2,7 @@
 
 import Papa from "papaparse";
 import { useRef, useState } from "react";
+import { hexForColorName } from "@/lib/affinity/colors";
 import { computeAffinity, type AffinityReport, type TaggedProduct } from "@/lib/affinity/compute";
 import { demoData } from "@/lib/affinity/demo";
 import {
@@ -16,7 +17,7 @@ import {
   type Row,
 } from "@/lib/affinity/imports";
 import { tagProduct } from "@/lib/affinity/tagging";
-import { AffinityReportView } from "./AffinityReportView";
+import { AffinityReportView, Swatches } from "./AffinityReportView";
 import { ExportGuides } from "./ExportGuides";
 
 type Status = "idle" | "reading" | "ready" | "uploading" | "done";
@@ -25,7 +26,7 @@ interface Props {
   token: string;
   brandName: string;
   initialReport: AffinityReport | null;
-  initialCatalog: { products: number; tagged: number };
+  initialCatalog: { products: number; tagged: number; colorways?: number };
   /** Demo: files are read and mapped in the browser, nothing is uploaded. */
   demo?: boolean;
 }
@@ -186,19 +187,33 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
     setCatalog((s) => ({ ...s, status: "uploading", error: undefined }));
     try {
       if (demo) {
-        const tags = items.map((i) => ({ title: i.title, teams: tagProduct(i).teams })).filter((t) => t.teams.length);
+        const tags: TaggedProduct[] = items.map((i) => {
+          const t = tagProduct(i);
+          return {
+            handle: i.handle,
+            title: i.title,
+            teams: t.teams,
+            colors: t.colors,
+            uses: t.uses,
+            colorways: i.colorways.map((c) => ({ ...c, hex: hexForColorName(c.name) })),
+          };
+        });
         setDemoTags(tags);
-        setCatalogStats({ products: items.length, tagged: tags.length });
+        setCatalogStats({
+          products: items.length,
+          tagged: tags.filter((t) => t.teams.length).length,
+          colorways: items.reduce((n, i) => n + i.colorways.length, 0),
+        });
         const seed = demoData();
         const areas = customers.data?.areas ?? seed.areas;
         const products = customers.data ? customers.data.products : seed.products;
         showReport(computeAffinity(areas, { products, catalog: tags }));
       } else {
-        const res = await post<{ products: number; tagged: number; report: AffinityReport | null }>(
+        const res = await post<{ products: number; tagged: number; colorways: number; report: AffinityReport | null }>(
           `/api/upload/${token}/catalog`,
           { format, items },
         );
-        setCatalogStats({ products: res.products, tagged: res.tagged });
+        setCatalogStats({ products: res.products, tagged: res.tagged, colorways: res.colorways });
         if (res.report) showReport(res.report);
       }
       setCatalog((s) => ({ ...s, status: "done" }));
@@ -209,6 +224,9 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
 
   const c = customers.data;
   const placed = c ? c.areas.reduce((s, a) => s + a.customers, 0) : 0;
+  const colorways = catalog.items
+    ? [...new Map(catalog.items.flatMap((i) => i.colorways).map((cw) => [cw.name.toLowerCase(), cw.name])).values()]
+    : [];
 
   return (
     <div className="container-w upload">
@@ -302,8 +320,8 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
           <div className="upload-step-num">Step 2 &middot; optional</div>
           <h2 className="upload-step-title">Products</h2>
           <p className="upload-step-body">
-            Your Shopify product export, or a spreadsheet of products. We tag teams, colors and
-            uses so moments can name the right product.
+            Your Shopify product export, or a spreadsheet of products. We read every colorway,
+            so when a team wins we can feature the pieces in its colors. No team gear needed.
           </p>
           <DropZone
             label="Drop your product export here"
@@ -321,7 +339,25 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
                   .map((i) => i.title)
                   .join(", ")}
                 .
+                {colorways.length ? ` They come in ${fmt(colorways.length)} colors:` : ""}
               </p>
+              {colorways.length ? (
+                <div className="colorway-chips">
+                  {colorways.slice(0, 14).map((name) => {
+                    const hex = hexForColorName(name);
+                    return (
+                      <span key={name} className={`colorway-chip${hex.length ? "" : " colorway-chip-unknown"}`}>
+                        <Swatches hex={hex} />
+                        {name}
+                      </span>
+                    );
+                  })}
+                  {colorways.length > 14 ? <span className="colorway-chip">+{fmt(colorways.length - 14)} more</span> : null}
+                </div>
+              ) : null}
+              {colorways.some((n) => !hexForColorName(n).length) ? (
+                <p className="preview-more">Names we can&apos;t read yet, like the dashed ones, get named in our full pass.</p>
+              ) : null}
               <button
                 type="button"
                 className="form-submit"
@@ -335,7 +371,8 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
             </div>
           ) : catalogStats.products ? (
             <p className="preview-line">
-              {fmt(catalogStats.products)} products on file, {fmt(catalogStats.tagged)} tagged to a team.
+              {fmt(catalogStats.products)} products on file, {fmt(catalogStats.tagged)} tagged to a team
+              {catalogStats.colorways ? `, ${fmt(catalogStats.colorways)} colorways` : ""}.
             </p>
           ) : null}
         </section>

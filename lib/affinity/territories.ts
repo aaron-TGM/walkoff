@@ -6,6 +6,7 @@
 //   - national brands reach further (Cowboys, Packers, Manchester United)
 //   - regional teams count as local across their region (Patriots in Maine)
 //   - college fans favor in-state schools
+//   - teams that moved keep fans where they left (the Chargers in San Diego)
 import { haversineKm, POSTAL_AREAS, TEAM_HOMES, type Country, type PostalArea, type TeamHome } from "./geo";
 
 export const LEAGUE_COUNTRIES: Record<string, Country[]> = {
@@ -62,9 +63,11 @@ export function sharesForArea(league: string, area: PostalArea): TeamShare[] {
   if (!LEAGUE_COUNTRIES[league]?.includes(area.country)) return [];
   const model = modelFor(league);
   const scored = (TEAM_HOMES[league] ?? []).map((team) => {
-    const km = effectiveKm(haversineKm(area, team), team.reach, model);
+    const pull = (home: { lat: number; lng: number }) =>
+      effectiveKm(haversineKm(area, home), team.reach, model) ** -model.gamma;
     const local = team.region === area.region || team.regions.includes(area.region);
-    return { team, score: team.weight * (local ? model.regionBoost : 1) * km ** -model.gamma };
+    const homes = pull(team) + (team.homes ?? []).reduce((s, h) => s + h.weight * pull(h), 0);
+    return { team, score: team.weight * (local ? model.regionBoost : 1) * homes };
   });
   const total = scored.reduce((s, x) => s + x.score, 0);
   if (!total) return [];

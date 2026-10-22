@@ -33,6 +33,12 @@ describe("fan territories match well-known fan maps", () => {
     assert.equal(top("mlb", "US", "958"), "SF", "Sacramento is still Giants country");
   });
 
+  it("teams that moved keep the fans they left", () => {
+    assert.equal(top("nfl", "US", "921"), "LAC", "San Diego is still Chargers country");
+    assert.equal(top("nfl", "US", "900"), "LAR", "LA leans Rams");
+    assert.equal(top("nfl", "US", "941"), "SF", "the second home doesn't spill into San Francisco");
+  });
+
   it("Canada", () => {
     assert.equal(top("nhl", "CA", "H3B"), "MTL");
     assert.equal(top("nhl", "CA", "R3B"), "WPG");

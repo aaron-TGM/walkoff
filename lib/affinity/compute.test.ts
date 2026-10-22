@@ -33,6 +33,19 @@ describe("computeAffinity", () => {
     assert.ok(leagues.has("mlb") && leagues.has("nba") && leagues.has("nhl"));
   });
 
+  it("standouts come with what to feature when they win", () => {
+    const cw = (name: string, hex: string) => ({ name, hex: [hex], skus: [name], image: "" });
+    const report = computeAffinity(brand(20_000, 3), {
+      catalog: [
+        { title: "Sunday Hoodie", teams: [], colorways: [cw("Pine", "0b4a50"), cw("Sand", "d8c3a5")] },
+        { title: "Everyday Jogger", teams: [], colorways: [cw("Azure", "2e8bd8")] },
+      ],
+    });
+    const eagles = report.standouts.find((s) => s.league === "nfl" && s.abbr === "PHI")!;
+    assert.deepEqual(eagles.colors, ["06424d", "000000"]);
+    assert.deepEqual(eagles.picks?.map((p) => `${p.title} · ${p.colorway}`), ["Sunday Hoodie · Pine"]);
+  });
+
   it("an even spread has no standouts", () => {
     const report = computeAffinity(brand(20_000, 1));
     assert.deepEqual(report.standouts, []);

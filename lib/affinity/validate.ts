@@ -2,7 +2,15 @@
 // browser's work: areas must already be coarse (no full ZIPs or postcodes).
 import type { AreaCount, ProductCount } from "./compute";
 import type { Country } from "./geo";
-import { formatKind, type CatalogItem, type CustomerImport, type ImportFormat } from "./imports";
+import {
+  formatKind,
+  MAX_COLORWAYS,
+  MAX_SKUS,
+  type CatalogItem,
+  type Colorway,
+  type CustomerImport,
+  type ImportFormat,
+} from "./imports";
 
 const FORMATS: ImportFormat[] = [
   "shopify_customers",
@@ -79,6 +87,23 @@ export function parseCustomerUpload(body: unknown): CustomerImport {
   };
 }
 
+/** Photos are shown on the brand's report, so only https links. */
+function imageUrl(v: unknown): string {
+  const url = text(v, 500);
+  return /^https:\/\/[^\s"'<>]+$/.test(url) ? url : "";
+}
+
+function colorways(v: unknown): Colorway[] {
+  if (!Array.isArray(v)) return [];
+  return v.slice(0, MAX_COLORWAYS).flatMap((raw): Colorway[] => {
+    const r = (raw ?? {}) as Record<string, unknown>;
+    const name = text(r.name, 60);
+    if (!name) return [];
+    const skus = Array.isArray(r.skus) ? r.skus.slice(0, MAX_SKUS).map((s) => text(s, 80)).filter(Boolean) : [];
+    return [{ name, skus, image: imageUrl(r.image) }];
+  });
+}
+
 export function parseCatalogUpload(body: unknown): { format: ImportFormat; items: CatalogItem[] } {
   const b = (body ?? {}) as Record<string, unknown>;
   const items = Array.isArray(b.items) ? b.items : fail("No products in the upload");
@@ -98,6 +123,7 @@ export function parseCatalogUpload(body: unknown): { format: ImportFormat; items
         tags: Array.isArray(r.tags) ? r.tags.slice(0, 30).map((t) => text(t, 60)).filter(Boolean) : [],
         description: text(r.description, 500),
         price,
+        colorways: colorways(r.colorways),
       };
     }),
   };

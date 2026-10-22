@@ -3,6 +3,7 @@
 // Needs data/geo/postal-areas.json (scripts/build-geo.ts) first.
 // Run: npx tsx scripts/build-teams.ts
 import { readFileSync, writeFileSync } from "node:fs";
+import type { TeamHome } from "../lib/affinity/geo";
 import { LEAGUES } from "../lib/leagues";
 import { cached, columns, eachRow, SOURCES, STATE_ABBR } from "./lib/sources";
 import {
@@ -13,26 +14,11 @@ import {
   FAN_BASES,
   HOME_OVERRIDES,
   POWER_CONFERENCE_MEMBERS,
+  TEAM_COLORS,
   type FanBase,
 } from "./lib/team-overrides";
 
 const B = "https://site.api.espn.com/apis/site/v2/sports";
-
-interface TeamHome {
-  id: string;
-  abbr: string;
-  name: string;
-  /** "Philadelphia" / "Eagles"; "Michigan" / "Wolverines". */
-  location: string;
-  nickname: string;
-  country: "US" | "CA" | "GB";
-  region: string;
-  lat: number;
-  lng: number;
-  weight: number;
-  reach: number;
-  regions: string[];
-}
 
 interface Venue {
   city?: string;
@@ -182,26 +168,44 @@ function resolveFirst(specs: string[]): ReturnType<typeof resolve> {
   return null;
 }
 
+const round3 = (n: number) => Math.round(n * 1000) / 1000;
+
 function finish(
-  base: { id: string; abbr: string; name: string; location: string; nickname: string },
+  league: string,
+  base: { id: string; abbr: string; name: string; location: string; nickname: string; colors: string[] },
   where: Pick<TeamHome, "country" | "region" | "lat" | "lng">,
   fan: FanBase,
 ): TeamHome {
+  const homes = (fan.homes ?? []).map((h) => {
+    const at = resolve(h.at);
+    if (!at) throw new Error(`${league} ${base.abbr}: can't place second home ${h.at}`);
+    return { lat: round3(at.lat), lng: round3(at.lng), weight: h.weight };
+  });
   return {
     ...base,
     ...where,
-    lat: Math.round(where.lat * 1000) / 1000,
-    lng: Math.round(where.lng * 1000) / 1000,
+    lat: round3(where.lat),
+    lng: round3(where.lng),
     weight: fan.weight ?? 1,
     reach: fan.reach ?? 1,
     regions: fan.regions ?? [],
+    homes,
+    colors: TEAM_COLORS[league]?.[base.abbr] ?? base.colors,
   };
 }
 
 // ── Leagues ────────────────────────────────────────────────────────
 
 interface EspnTeamRef {
-  team: { id: string; abbreviation: string; displayName: string; location?: string; name?: string };
+  team: {
+    id: string;
+    abbreviation: string;
+    displayName: string;
+    location?: string;
+    name?: string;
+    color?: string;
+    alternateColor?: string;
+  };
 }
 
 async function teamList(feedPath: string) {
@@ -214,6 +218,9 @@ async function teamList(feedPath: string) {
     name: t.team.displayName,
     location: t.team.location ?? "",
     nickname: t.team.name ?? "",
+    colors: [t.team.color, t.team.alternateColor]
+      .filter((c): c is string => /^[0-9a-f]{6}$/i.test(c ?? ""))
+      .map((c) => c.toLowerCase()),
   }));
 }
 
@@ -232,7 +239,7 @@ async function proLeague(league: string, feedPath: string): Promise<TeamHome[]> 
     if (!where) {
       throw new Error(`${league} ${t.abbr}: can't place ${JSON.stringify(specs)}. Add a HOME_OVERRIDES entry.`);
     }
-    return finish(t, where, FAN_BASES[league]?.[t.abbr] ?? {});
+    return finish(league, t, where, FAN_BASES[league]?.[t.abbr] ?? {});
   });
 }
 
@@ -242,7 +249,7 @@ async function premierLeague(feedPath: string): Promise<TeamHome[]> {
     const district = EPL_GROUNDS[t.abbr];
     const a = district ? GB_AREAS.get(district) : undefined;
     if (!a) throw new Error(`epl ${t.abbr}: add its ground to EPL_GROUNDS`);
-    return finish(t, { country: "GB", region: a[4], lat: a[1], lng: a[2] }, FAN_BASES.epl?.[t.abbr] ?? {});
+    return finish("epl", t, { country: "GB", region: a[4], lat: a[1], lng: a[2] }, FAN_BASES.epl?.[t.abbr] ?? {});
   });
 }
 
@@ -252,6 +259,7 @@ interface CollegeTeam {
   name: string;
   location: string;
   nickname: string;
+  colors: string[];
   conference: string | null;
 }
 
@@ -337,7 +345,7 @@ async function college(
       ...(powerIds.has(t.conference ?? "") ? COLLEGE_WEIGHT.power : COLLEGE_WEIGHT.other),
       ...COLLEGE_OVERRIDES[league]?.[t.name],
     };
-    return finish(t, where, fan);
+    return finish(league, t, where, fan);
   });
   return out.filter((t): t is TeamHome => t !== null);
 }
@@ -363,7 +371,7 @@ async function main() {
   writeFileSync(
     "data/geo/team-homes.json",
     JSON.stringify({
-      note: "Team homes and fan-base shape for lib/affinity. Built by scripts/build-teams.ts.",
+      note: "Team homes, fan-base shape and colors for lib/affinity. Built by scripts/build-teams.ts.",
       leagues: out,
     }),
   );

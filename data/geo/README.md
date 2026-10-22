@@ -21,12 +21,14 @@ never works below this level.
 
 ## team-homes.json
 
-Where each V1 team plays and the shape of its fan base. Homes come from the
-ESPN feeds (stadium ZIP, or the city of the team's home games), corrected in
-`scripts/lib/team-overrides.ts` where the feed is stale. The same file holds
-the fan-base shape: relative size in shared markets, national reach, and
-regional followings. Review it each season, especially Premier League
-promotion and relegation.
+Where each V1 team plays, the shape of its fan base, and its colors. Homes
+come from the ESPN feeds (stadium ZIP, or the city of the team's home games),
+corrected in `scripts/lib/team-overrides.ts` where the feed is stale. The
+same file holds the fan-base shape: relative size in shared markets,
+national reach, regional followings, and second homes where a team that
+moved kept its fans (the Chargers in San Diego). Colors come from the feeds
+too, with Premier League clubs corrected where the feed lists kit colors.
+Review it each season, especially Premier League promotion and relegation.
 
 ## Attribution
 

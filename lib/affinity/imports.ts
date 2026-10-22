@@ -197,6 +197,14 @@ function roundProduct(p: ProductCount): ProductCount {
   return { ...p, revenue: Math.round((p.revenue ?? 0) * 100) / 100 };
 }
 
+export interface Colorway {
+  /** The brand's name for the color: "Azure Heather". */
+  name: string;
+  skus: string[];
+  /** The variant's photo, or the product's first photo. */
+  image: string;
+}
+
 export interface CatalogItem {
   handle: string;
   title: string;
@@ -205,6 +213,24 @@ export interface CatalogItem {
   tags: string[];
   description: string;
   price: number | null;
+  /** The colors it comes in, from the variants' color option. */
+  colorways: Colorway[];
+}
+
+export const MAX_COLORWAYS = 40;
+export const MAX_SKUS = 60;
+const COLOR_OPTION = /colou?r|shade/i;
+
+function addColorway(item: CatalogItem, name: string, sku: string, image: string) {
+  const key = name.toLowerCase();
+  let cw = item.colorways.find((c) => c.name.toLowerCase() === key);
+  if (!cw) {
+    if (item.colorways.length >= MAX_COLORWAYS) return;
+    cw = { name: name.slice(0, 60), skus: [], image: "" };
+    item.colorways.push(cw);
+  }
+  if (sku && !cw.skus.includes(sku) && cw.skus.length < MAX_SKUS) cw.skus.push(sku.slice(0, 80));
+  cw.image ||= image;
 }
 
 function stripHtml(html: string): string {
@@ -218,9 +244,15 @@ function stripHtml(html: string): string {
 }
 
 /** Products from a Shopify product export (one row per variant) or a plain
- *  spreadsheet (one row per product). */
+ *  spreadsheet (one row per product, or per color with a color column). */
 export function parseCatalog(format: ImportFormat, rows: Row[]): CatalogItem[] {
   const items = new Map<string, CatalogItem>();
+  // Shopify names a product's options on its first row only.
+  const colorOption = new Map<string, number>();
+  const firstImage = new Map<string, string>();
+  const skus = new Map<string, string[]>();
+  // Shopify's standard color field ("Blue; Yellow"), for one-color products.
+  const fieldColors = new Map<string, string[]>();
   for (const row of rows) {
     const title = pick(row, ["title", "product", "name", "product title"]);
     const handle =
@@ -230,7 +262,7 @@ export function parseCatalog(format: ImportFormat, rows: Row[]): CatalogItem[] {
     let item = items.get(handle);
     if (!item) {
       if (!title && format === "shopify_products") continue; // variant row before its product
-      item = { handle, title, productType: "", category: "", tags: [], description: "", price: null };
+      item = { handle, title, productType: "", category: "", tags: [], description: "", price: null, colorways: [] };
       items.set(handle, item);
     }
     item.title ||= title;
@@ -242,6 +274,32 @@ export function parseCatalog(format: ImportFormat, rows: Row[]): CatalogItem[] {
     item.description ||= stripHtml(pick(row, ["body html", "description", "body"])).slice(0, 500);
     const price = money(pick(row, ["variant price", "price"]));
     if (price > 0 && (item.price === null || price < item.price)) item.price = price;
+
+    for (const i of [1, 2, 3]) {
+      if (COLOR_OPTION.test(pick(row, [`option${i} name`]))) colorOption.set(handle, i);
+    }
+    const sku = pick(row, ["variant sku", "sku"]);
+    if (sku) skus.set(handle, [...(skus.get(handle) ?? []), sku]);
+    const photo = pick(row, ["image src", "image url", "image"]);
+    if (photo && !firstImage.has(handle)) firstImage.set(handle, photo);
+    const option = colorOption.get(handle);
+    const color = option
+      ? pick(row, [`option${option} value`])
+      : format === "catalog_csv"
+        ? pick(row, ["color", "colour", "colorway", "color name"])
+        : "";
+    if (color) addColorway(item, color, sku, pick(row, ["variant image"]));
+    const field = Object.keys(row).find((k) => /metafield/i.test(k) && /colou?r/i.test(k));
+    const listed = field ? (row[field] ?? "").split(/[;,]/).map((c) => c.trim()).filter(Boolean) : [];
+    if (listed.length) fieldColors.set(handle, listed);
+  }
+  for (const item of items.values()) {
+    if (!item.colorways.length) {
+      for (const c of fieldColors.get(item.handle) ?? []) {
+        for (const sku of skus.get(item.handle) ?? [""]) addColorway(item, c, sku, "");
+      }
+    }
+    for (const cw of item.colorways) cw.image ||= firstImage.get(item.handle) ?? "";
   }
   return [...items.values()].filter((i) => i.title);
 }

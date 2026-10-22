@@ -31,7 +31,7 @@ export const INTERESTS = [
 export const COLORS = [
   "midnight green", "kelly green", "forest green", "green", "navy", "royal blue", "light blue", "blue",
   "red", "scarlet", "crimson", "maroon", "burgundy", "orange", "gold", "yellow", "purple", "black",
-  "white", "gray", "silver", "teal", "pink", "brown", "cream",
+  "white", "gray", "silver", "teal", "pink", "brown", "cream", "tan", "olive", "charcoal", "sage",
 ] as const;
 
 const PRO = ["nfl", "nba", "nhl", "mlb"];

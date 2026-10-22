@@ -1,12 +1,19 @@
 import type { CSSProperties } from "react";
+import { Swatches } from "@/components/upload/AffinityReportView";
 
 // Example session shown in the hero. Lines reveal one after another
 // (CSS only, see .console-line in globals.css).
 
 const AFFINITY = [
-  { name: "Eagles territory", customers: "2,310", lift: 2.4 },
-  { name: "First-freeze zone", customers: "3,902", lift: 1.9 },
+  { name: "Chargers territory", customers: "2,310", lift: 2.4 },
+  { name: "Heat wave zone", customers: "3,902", lift: 1.9 },
   { name: "Arsenal fans, UK", customers: "846", lift: 1.6 },
+];
+
+// A brand with no license: its own colorways, in the team's colors.
+const PICKS = [
+  { title: "Everyday Jogger", colorway: "Azure Heather", hex: "2e8bd8" },
+  { title: "Sunday Hoodie", colorway: "Sunflower", hex: "ffc512" },
 ];
 
 const MAX_LIFT = Math.max(...AFFINITY.map((a) => a.lift));
@@ -65,20 +72,32 @@ export function AgentConsole() {
           <span className="console-dim"> &middot; next 72h</span>
         </div>
         <div className="console-line console-out" style={line(i++)}>
-          <span className="console-when">SUN 4:25P</span> Cowboys at Eagles
+          <span className="console-when">SUN 1:05P</span> Raiders at Chargers
           <span className="console-chip">rivalry</span>
         </div>
         <div className="console-line console-out" style={line(i++)}>
-          <span className="console-when">SAT</span> First freeze, Twin Cities
+          <span className="console-when">SAT</span> Heat wave, Inland Empire
           <span className="console-chip">weather</span>
         </div>
+
+        <div className="console-line console-tool" style={line(i++)}>
+          <span className="console-bullet" aria-hidden />
+          walkoff.match_products
+          <span className="console-dim"> &middot; their colors, your catalog</span>
+        </div>
+        {PICKS.map((p) => (
+          <div key={p.colorway} className="console-line console-out console-pick" style={line(i++)}>
+            <Swatches hex={[p.hex]} />
+            {p.title} <span className="console-dim">&middot; {p.colorway}</span>
+          </div>
+        ))}
 
         <div className="console-line console-tool" style={line(i++)}>
           <span className="console-bullet" aria-hidden />
           walkoff.create_trigger
         </div>
         <div className="console-line console-out" style={line(i++)}>
-          Eagles win &rarr; &ldquo;Win Day Restock&rdquo; &rarr; Klaviyo
+          Chargers win &rarr; &ldquo;Powder Blue Sunday&rdquo; &rarr; Klaviyo
         </div>
         <div className="console-line console-ok" style={line(i++)}>
           &#10003; Armed &middot; auto-fire rule on
@@ -86,7 +105,7 @@ export function AgentConsole() {
 
         <div className="console-line console-fire" style={line(i++)}>
           <span className="console-fire-tag">Final</span>
-          SUN 7:41P &middot; Eagles 27, Cowboys 24
+          SUN 4:12P &middot; Chargers 27, Raiders 20
         </div>
         <div className="console-line console-fired" style={line(i++)}>
           Fired to 2,310 customers &middot; 2m 14s after the final

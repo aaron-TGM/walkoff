@@ -9,6 +9,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav } from "@/components/SiteNav";
 import { Ticker } from "@/components/Ticker";
 import { TriggerCategory } from "@/components/TriggerCategory";
+import { Swatches } from "@/components/upload/AffinityReportView";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { LEAGUES } from "@/lib/leagues";
 import { MOMENT_CATEGORIES, MOMENT_STATUS_LABEL } from "@/lib/moments";
@@ -17,16 +18,16 @@ import { TRIGGERS, TRIGGER_CATEGORIES } from "@/lib/triggers";
 
 const AUDIENCES = [
   {
+    title: "Brands without a license",
+    body: "Your customers have a team. When it wins, show up in its colors with products you already sell.",
+  },
+  {
     title: "Licensed brands",
-    body: "Team-tagged products and fans who buy the minute their team wins.",
+    body: "Team products in front of the fans who buy the minute their team wins.",
   },
   {
     title: "Local businesses",
     body: "Bars, restaurants and shops in a sports town with a customer list.",
-  },
-  {
-    title: "Any DTC brand",
-    body: "Your customers have a team, a hometown and a season. Now you'll know which.",
   },
   {
     title: "Agencies",
@@ -34,10 +35,18 @@ const AUDIENCES = [
   },
 ];
 
+// The founder's example: a brand with no license, its own catalog, a
+// team's colors.
+const MOMENT_PICKS = [
+  { title: "Everyday Jogger", colorway: "Azure Heather", hex: "2e8bd8" },
+  { title: "Sunday Hoodie", colorway: "Sunflower", hex: "ffc512" },
+  { title: "Coastal Crew", colorway: "Gold", hex: "ffb81c" },
+];
+
 const STEPS = [
   {
-    title: "Upload your counts",
-    body: "Export from Shopify or Klaviyo with our guides, then upload postal codes and product categories as counts. Never a customer list.",
+    title: "Drop in your exports",
+    body: "Your Shopify or Klaviyo export, read right in your browser. Only counts by postal area reach us, plus your product list. Never a customer list.",
     visual: (
       <>
         <span className="c">{"// counts.csv"}</span>
@@ -55,17 +64,17 @@ const STEPS = [
   },
   {
     title: "Get your affinity map",
-    body: "Walkoff finds the teams, places and seasons your customers lean toward, then matches your products to each one.",
+    body: "Walkoff finds the teams, places and seasons your customers lean toward, then matches your products and colorways to each one.",
     visual: (
       <>
-        <span className="k">eagles_territory</span>:{" "}
+        <span className="k">chargers_territory</span>:{" "}
         <span className="v">2.4×</span>
         <br />
-        <span className="k">first_freeze_zone</span>:{" "}
+        <span className="k">heat_wave_zone</span>:{" "}
         <span className="v">1.9×</span>
         <br />
-        <span className="k">top_match</span>:{" "}
-        <span className="v">&quot;hoodies&quot;</span>
+        <span className="k">in_their_colors</span>:{" "}
+        <span className="v">&quot;azure heather&quot;</span>
       </>
     ),
   },
@@ -103,28 +112,32 @@ const STEPS = [
 
 const AFFINITY_EXAMPLES = [
   {
-    group: "Eagles territory",
+    group: "Chargers territory",
     customers: "2,310",
     lift: "2.4×",
-    match: "Midweight hoodies",
+    match: "Azure and sunflower colorways",
+    swatches: ["2e8bd8", "ffc512"],
   },
   {
     group: "First-freeze zone",
     customers: "3,902",
     lift: "1.9×",
     match: "Blankets and beanies",
+    swatches: [],
   },
   {
     group: "Packers territory",
     customers: "1,402",
     lift: "1.8×",
-    match: "Tumblers and koozies",
+    match: "Forest green and gold",
+    swatches: ["1e4d2b", "ffb81c"],
   },
   {
     group: "Arsenal, North London",
     customers: "846",
     lift: "1.6×",
     match: "Anything red and white",
+    swatches: ["ef0107", "f7f7f5"],
   },
 ];
 
@@ -135,7 +148,7 @@ const MCP_TOOLS = [
   },
   {
     name: "match_products",
-    body: "Which products fit each group and moment, from team colors to gift versus self-purchase.",
+    body: "Which products and colorways fit each group and moment, by team colors, use and season.",
   },
   {
     name: "upcoming_moments",
@@ -279,6 +292,59 @@ export function MarketingPage() {
         </div>
       </section>
 
+      {/* ─── FOUNDER ─────────────────────────────────────────── */}
+      <section className="block border-t border-rule" id="why">
+        <div className="container-w">
+          <div className="founder-grid">
+            <figure className="founder-quote">
+              <div className="block-num">
+                <span className="eyebrow-dot" aria-hidden />
+                Why we built it
+              </div>
+              <blockquote>
+                <p>
+                  The biggest opportunity is brands that will never have a
+                  license. Say the Chargers win. That night, an athleisure brand
+                  sends an email built from its own catalog: the powder blues,
+                  the golds, the pieces that feel like game day.{" "}
+                  <em>
+                    It ties the brand to the moment and gives the message a real
+                    reason to exist.
+                  </em>
+                </p>
+              </blockquote>
+              <figcaption className="founder-name">
+                Aaron <span>Founder, Walkoff</span>
+              </figcaption>
+            </figure>
+
+            <div className="moment-card" aria-label="Example: the email that goes out after a win">
+              <div className="moment-card-final">
+                <span>Final</span>Chargers 27, Raiders 20
+              </div>
+              <div className="moment-card-meta">
+                2 minutes later &middot; 2,310 customers in their territory
+              </div>
+              <div className="moment-card-email">
+                <div className="moment-card-subject">Powder blue kind of Sunday.</div>
+                <div className="moment-card-items">
+                  {MOMENT_PICKS.map((p) => (
+                    <div key={p.colorway} className="moment-card-item">
+                      <span className="moment-card-photo" style={{ backgroundColor: `#${p.hex}` }} aria-hidden />
+                      <b>{p.title}</b>
+                      <span>{p.colorway}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="moment-card-foot">
+                No logo. No license. Your catalog, in their colors.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─── HOW IT WORKS ─────────────────────────────────────── */}
       <section className="block border-y border-rule bg-paper" id="how">
         <div className="container-w">
@@ -318,10 +384,10 @@ export function MarketingPage() {
             <em>something new about your customers.</em>
           </h2>
           <p className="section-lead section-lead-dark">
-            Upload your counts and Walkoff shows which teams, places and
+            Drop in your exports and Walkoff shows which teams, places and
             seasons your customers lean toward, using widely recognized fan
             territory maps for every league. Then it matches your products to
-            each one.
+            each one, down to the colorway.
           </p>
           <div className="affinity-grid">
             {AFFINITY_EXAMPLES.map((a) => (
@@ -333,6 +399,7 @@ export function MarketingPage() {
                 </div>
                 <div className="affinity-match">
                   <span>Top match</span>
+                  <Swatches hex={a.swatches} />
                   {a.match}
                 </div>
               </div>
@@ -677,17 +744,20 @@ export function MarketingPage() {
           </h2>
 
           <FaqItem num="01" question="Who is Walkoff for?" defaultOpen>
-            Any brand whose customers have a team, a hometown or a season:
-            licensed apparel brands, local bars and restaurants, everyday DTC
-            brands, and the agencies that run them. You don&apos;t need a
-            sports license to use Walkoff. What your messages say about teams
-            is up to you, so leave team logos and trademarks out unless
-            you&apos;re licensed.
+            Any brand whose customers have a team, a hometown or a season,
+            and especially brands that will never have a sports license. When
+            a team wins, Walkoff features your own products in its colors, so
+            you show up for the moment without a logo. Licensed brands, local
+            bars and restaurants, and agencies use it too. Leave team logos
+            and trademarks out of your messages unless you&apos;re licensed:
+            the colors do the talking.
           </FaqItem>
           <FaqItem num="02" question="What do I upload?">
-            A spreadsheet of counts: postal code, product category, number of
-            customers and revenue. No names, no emails. Our export guides walk
-            you through pulling it from Shopify or Klaviyo in a few minutes.
+            Your Shopify order or customer export, or a Klaviyo profile
+            export, plus your product export. Your browser reads them and
+            sends us only counts per postal area and your product details,
+            including every colorway. No names, no emails, no street
+            addresses. Our export guides take a few minutes.
           </FaqItem>
           <FaqItem num="03" question={<>Does <BrandSpan /> send the messages?</>}>
             Your email or SMS platform does. Walkoff tells it when to send and

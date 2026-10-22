@@ -6,6 +6,7 @@ import {
   batchPrompt,
   DEFAULT_MODEL,
   estimateCost,
+  nameColorsWithClaude,
   systemPrompt,
   tagWithClaude,
   teamDirectory,
@@ -192,5 +193,31 @@ describe("estimateCost", () => {
   it("prices a run, or says nothing for unknown models", () => {
     assert.equal(estimateCost(DEFAULT_MODEL, { input: 1e6, output: 1e6, cacheRead: 1e6, cacheWrite: 1e6 }), 29.2);
     assert.equal(estimateCost("some-other-model", usage), null);
+  });
+});
+
+describe("nameColorsWithClaude", () => {
+  it("maps answers back by ref and keeps only real hex values", async () => {
+    const prompts: string[] = [];
+    const run = await nameColorsWithClaude(["Cove", "Dune", "Solid", "Fog"], {
+      batchSize: 3,
+      send: async (prompt) => {
+        prompts.push(prompt);
+        const colors = prompt.includes("c1: Cove")
+          ? [
+              { ref: "c1", hex: ["#3B6E8F"] },
+              { ref: "c2", hex: ["d8c3a5", "not-a-color"] },
+              { ref: "c3", hex: [] },
+            ]
+          : [];
+        return { ...reply([]), text: JSON.stringify({ colors }) };
+      },
+    });
+    assert.equal(prompts.length, 2);
+    assert.deepEqual(run.colors.get("Cove"), ["3b6e8f"]);
+    assert.deepEqual(run.colors.get("Dune"), ["d8c3a5"]);
+    assert.deepEqual(run.colors.get("Solid"), [], "not a color");
+    assert.deepEqual(run.failed, ["Fog"], "left out of the reply");
+    assert.equal(run.requests, 2);
   });
 });

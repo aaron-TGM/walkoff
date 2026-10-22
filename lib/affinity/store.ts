@@ -4,6 +4,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { computeAffinity, type AffinityReport, type AreaCount, type ProductCount, type TaggedProduct } from "./compute";
 import type { Country } from "./geo";
 import type { CatalogItem, CustomerImport } from "./imports";
+import { hexForColorName } from "./colors";
 import { tagProduct, type ProductTags } from "./tagging";
 
 export interface Brand {
@@ -116,6 +117,7 @@ export async function saveCatalog(
       tags: item.tags,
       description: item.description || null,
       price: item.price,
+      colorways: item.colorways,
       updated_at: now,
     };
     if (byClaude.has(item.handle)) return base;
@@ -132,6 +134,44 @@ export async function saveCatalog(
     rows_saved: rows.length,
   });
   if (error) throw error;
+  await saveColorNames(
+    db,
+    brand,
+    items.flatMap((i) => i.colorways.map((c) => ({ name: c.name, hex: hexForColorName(c.name) }))),
+    "rules",
+  );
+}
+
+/** What each of the brand's color names looks like, by lowercased name. */
+export async function loadColorNames(
+  db: SupabaseClient,
+  brandId: string,
+): Promise<Map<string, { hex: string[]; taggedBy: "rules" | "claude" }>> {
+  const rows = await selectAll<{ name: string; hex: string[]; tagged_by: "rules" | "claude" }>((from, to) =>
+    db.from("brand_colors").select("name, hex, tagged_by").eq("brand_id", brandId).range(from, to),
+  );
+  return new Map(rows.map((r) => [r.name, { hex: r.hex ?? [], taggedBy: r.tagged_by }]));
+}
+
+/** Saves color names. Claude's answers stick: rules never overwrite them. */
+export async function saveColorNames(
+  db: SupabaseClient,
+  brand: Brand,
+  colors: { name: string; hex: string[] }[],
+  taggedBy: "rules" | "claude",
+): Promise<void> {
+  const byName = new Map(colors.map((c) => [c.name.trim().toLowerCase(), c.hex]));
+  byName.delete("");
+  if (!byName.size) return;
+  const known = taggedBy === "rules" ? await loadColorNames(db, brand.id) : new Map();
+  const now = new Date().toISOString();
+  const rows = [...byName]
+    .filter(([name]) => known.get(name)?.taggedBy !== "claude")
+    .map(([name, hex]) => ({ brand_id: brand.id, name, hex, tagged_by: taggedBy, updated_at: now }));
+  for (let i = 0; i < rows.length; i += PAGE) {
+    const { error } = await db.from("brand_colors").upsert(rows.slice(i, i + PAGE), { onConflict: "brand_id,name" });
+    if (error) throw error;
+  }
 }
 
 export interface StoredProduct extends Omit<CatalogItem, "price"> {
@@ -147,11 +187,12 @@ export async function loadCatalog(db: SupabaseClient, brandId: string): Promise<
     category: string | null;
     tags: string[] | null;
     description: string | null;
+    colorways: CatalogItem["colorways"] | null;
     tagged_by: "rules" | "claude";
   }>((from, to) =>
     db
       .from("brand_products")
-      .select("handle, title, product_type, category, tags, description, tagged_by")
+      .select("handle, title, product_type, category, tags, description, colorways, tagged_by")
       .eq("brand_id", brandId)
       .order("handle")
       .range(from, to),
@@ -163,6 +204,7 @@ export async function loadCatalog(db: SupabaseClient, brandId: string): Promise<
     category: r.category ?? "",
     tags: r.tags ?? [],
     description: r.description ?? "",
+    colorways: r.colorways ?? [],
     taggedBy: r.tagged_by,
   }));
 }
@@ -195,21 +237,39 @@ export interface BrandData {
 }
 
 export async function loadBrandData(db: SupabaseClient, brandId: string): Promise<BrandData> {
-  const [areas, products, catalog] = await Promise.all([
+  const [areas, products, catalog, colorNames] = await Promise.all([
     selectAll<{ country: Country; area: string; customers: number; orders: number; revenue: number }>((from, to) =>
       db.from("brand_area_counts").select("country, area, customers, orders, revenue").eq("brand_id", brandId).range(from, to),
     ),
     selectAll<{ country: Country; area: string; product: string; orders: number; revenue: number }>((from, to) =>
       db.from("brand_product_counts").select("country, area, product, orders, revenue").eq("brand_id", brandId).range(from, to),
     ),
-    selectAll<{ title: string; teams: { league: string; teamId: string }[] }>((from, to) =>
-      db.from("brand_products").select("title, teams").eq("brand_id", brandId).range(from, to),
+    selectAll<{
+      handle: string;
+      title: string;
+      teams: { league: string; teamId: string }[] | null;
+      colors: string[] | null;
+      uses: string[] | null;
+      colorways: CatalogItem["colorways"] | null;
+    }>((from, to) =>
+      db.from("brand_products").select("handle, title, teams, colors, uses, colorways").eq("brand_id", brandId).range(from, to),
     ),
+    loadColorNames(db, brandId),
   ]);
   return {
     areas: areas.map((a) => ({ ...a, revenue: Number(a.revenue) })),
     products: products.map((p) => ({ ...p, revenue: Number(p.revenue) })),
-    catalog: catalog.filter((p) => Array.isArray(p.teams) && p.teams.length),
+    catalog: catalog.map((p) => ({
+      handle: p.handle,
+      title: p.title,
+      teams: p.teams ?? [],
+      colors: p.colors ?? [],
+      uses: p.uses ?? [],
+      colorways: (p.colorways ?? []).map((c) => ({
+        ...c,
+        hex: colorNames.get(c.name.toLowerCase())?.hex ?? hexForColorName(c.name),
+      })),
+    })),
   };
 }
 
@@ -236,9 +296,20 @@ export async function latestReport(db: SupabaseClient, brandId: string): Promise
   return (data?.report as AffinityReport | undefined) ?? null;
 }
 
-export async function catalogStats(db: SupabaseClient, brandId: string): Promise<{ products: number; tagged: number }> {
-  const rows = await selectAll<{ teams: unknown[] }>((from, to) =>
-    db.from("brand_products").select("teams").eq("brand_id", brandId).range(from, to),
+export interface CatalogStats {
+  products: number;
+  /** Products tagged to a team. */
+  tagged: number;
+  colorways: number;
+}
+
+export async function catalogStats(db: SupabaseClient, brandId: string): Promise<CatalogStats> {
+  const rows = await selectAll<{ teams: unknown[] | null; colorways: unknown[] | null }>((from, to) =>
+    db.from("brand_products").select("teams, colorways").eq("brand_id", brandId).range(from, to),
   );
-  return { products: rows.length, tagged: rows.filter((r) => Array.isArray(r.teams) && r.teams.length).length };
+  return {
+    products: rows.length,
+    tagged: rows.filter((r) => Array.isArray(r.teams) && r.teams.length).length,
+    colorways: rows.reduce((n, r) => n + (Array.isArray(r.colorways) ? r.colorways.length : 0), 0),
+  };
 }

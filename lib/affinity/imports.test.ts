@@ -120,9 +120,41 @@ describe("parseCatalog", () => {
         tags: ["eagles", "football", "fall"],
         description: "Midweight fleece in midnight green .",
         price: 64,
+        colorways: [],
       },
-      { handle: "koozie", title: "Can Koozie", productType: "Drinkware", category: "", tags: [], description: "", price: 15 },
+      { handle: "koozie", title: "Can Koozie", productType: "Drinkware", category: "", tags: [], description: "", price: 15, colorways: [] },
     ]);
+  });
+
+  it("collects colorways from the color option, with SKUs and photos", () => {
+    const headers = [...SHOPIFY_PRODUCTS, "Option2 Name", "Option2 Value", "Variant Image"];
+    const rows = [
+      row(headers, { Handle: "jogger", Title: "Everyday Jogger", Type: "Pants", "Option1 Name": "Size", "Option1 Value": "S", "Option2 Name": "Color", "Option2 Value": "Azure Heather", "Variant SKU": "EJ-AZ-S", "Variant Image": "https://cdn.example.com/az.jpg", "Image Src": "https://cdn.example.com/main.jpg" }),
+      row(headers, { Handle: "jogger", "Option1 Value": "M", "Option2 Value": "Azure Heather", "Variant SKU": "EJ-AZ-M" }),
+      row(headers, { Handle: "jogger", "Option1 Value": "S", "Option2 Value": "Sunflower", "Variant SKU": "EJ-SF-S" }),
+      row(headers, { Handle: "cap", Title: "Plain Cap", "Option1 Name": "Title", "Option1 Value": "Default Title", "Variant SKU": "CAP-1" }),
+    ];
+    const [jogger, cap] = parseCatalog("shopify_products", rows);
+    assert.deepEqual(jogger.colorways, [
+      { name: "Azure Heather", skus: ["EJ-AZ-S", "EJ-AZ-M"], image: "https://cdn.example.com/az.jpg" },
+      { name: "Sunflower", skus: ["EJ-SF-S"], image: "https://cdn.example.com/main.jpg" },
+    ]);
+    assert.deepEqual(cap.colorways, [], "Default Title isn't a color");
+  });
+
+  it("falls back to Shopify's color field, and reads a color column in plain sheets", () => {
+    const headers = [...SHOPIFY_PRODUCTS, "Color (product.metafields.shopify.color-pattern)"];
+    const [short] = parseCatalog("shopify_products", [
+      row(headers, { Handle: "short", Title: "Trail Short", "Variant SKU": "TS-1", "Color (product.metafields.shopify.color-pattern)": "Blue; Yellow" }),
+    ]);
+    assert.deepEqual(short.colorways.map((c) => [c.name, c.skus]), [["Blue", ["TS-1"]], ["Yellow", ["TS-1"]]]);
+
+    const sheet = ["title", "type", "color", "sku"];
+    const [tee] = parseCatalog("catalog_csv", [
+      row(sheet, { title: "Performance Tee", type: "Tee", color: "Royal", sku: "PT-R" }),
+      row(sheet, { title: "Performance Tee", type: "Tee", color: "Marigold", sku: "PT-M" }),
+    ]);
+    assert.deepEqual(tee.colorways.map((c) => c.name), ["Royal", "Marigold"]);
   });
 
   it("product names drop the variant", () => {

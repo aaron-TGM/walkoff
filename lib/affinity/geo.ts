@@ -33,6 +33,11 @@ export interface TeamHome {
   weight: number;
   reach: number;
   regions: string[];
+  /** Places the team left that still follow it, with the share of its pull
+   *  it keeps there. */
+  homes: { lat: number; lng: number; weight: number }[];
+  /** Team colors as hex, main color first. */
+  colors: string[];
 }
 
 type Row = [string, number, number, number, string];

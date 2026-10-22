@@ -1,7 +1,8 @@
 // A brand's affinity map: which fan territories hold more of its customers
 // than population alone predicts, and which products those fans buy.
 import { LEAGUES } from "../leagues";
-import { postalArea, type Country } from "./geo";
+import { postalArea, type Country, type TeamHome } from "./geo";
+import { pickForTeam, type Pick, type PickProduct } from "./pick";
 import { LEAGUE_COUNTRIES, territory } from "./territories";
 
 /** Customers per postal area. What a brand uploads (counts, never people). */
@@ -22,11 +23,9 @@ export interface ProductCount {
   revenue?: number;
 }
 
-/** A catalog product and the teams it's tagged with (lib/affinity/tagging). */
-export interface TaggedProduct {
-  title: string;
-  teams: { league: string; teamId: string }[];
-}
+/** A catalog product with its team tags and colorways (lib/affinity/tagging,
+ *  lib/affinity/colors). */
+export type TaggedProduct = PickProduct;
 
 export interface ProductLift {
   product: string;
@@ -53,6 +52,10 @@ export interface TeamGroup {
   z: number;
   products: ProductLift[];
   taggedProducts: string[];
+  /** The team's colors as hex, main color first. */
+  colors?: string[];
+  /** What to feature when they win (standouts only). */
+  picks?: Pick[];
 }
 
 export interface LeagueSummary {
@@ -149,7 +152,7 @@ export function computeAffinity(
 
     let n = 0;
     const observed = new Map<string, number>();
-    const teamById = new Map<string, { name: string; abbr: string }>();
+    const teamById = new Map<string, TeamHome>();
     const productsInTeam = new Map<string, Map<string, number>>();
     const productsAll = new Map<string, number>();
     let ordersAll = 0;
@@ -167,7 +170,7 @@ export function computeAffinity(
       }
       for (const s of shares) {
         observed.set(s.team.id, (observed.get(s.team.id) ?? 0) + customers * s.share);
-        teamById.set(s.team.id, { name: s.team.name, abbr: s.team.abbr });
+        teamById.set(s.team.id, s.team);
         if (orders) {
           const m = productsInTeam.get(s.team.id) ?? new Map<string, number>();
           for (const [product, o] of orders) m.set(product, (m.get(product) ?? 0) + o * s.share);
@@ -214,6 +217,7 @@ export function computeAffinity(
         z: round(z, 1),
         products,
         taggedProducts: (tagged.get(`${league}:${teamId}`) ?? []).slice(0, 5),
+        colors: team.colors,
       });
     }
 
@@ -230,12 +234,14 @@ export function computeAffinity(
   // at 1.3x shouldn't bury a striking one at 2.5x.
   const score = (g: TeamGroup) => g.customers * (1 - 1 / g.lift) * Math.log(g.lift);
   standouts.sort((a, b) => score(b) - score(a));
+  const top = standouts.slice(0, STANDOUT.max);
+  for (const g of top) g.picks = pickForTeam(options.catalog ?? [], g.league, { id: g.teamId, colors: g.colors ?? [] });
 
   return {
     version: 1,
     computedAt: (options.now ?? new Date()).toISOString(),
     totals,
-    standouts: standouts.slice(0, STANDOUT.max),
+    standouts: top,
     leagues: summaries,
   };
 }

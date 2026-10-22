@@ -133,12 +133,22 @@ export const OUTPUT_SCHEMA = {
   additionalProperties: false,
 };
 
+/** What Claude is asked to do: instructions and the JSON shape to answer in. */
+export interface Task {
+  system: string;
+  schema: Record<string, unknown>;
+}
+
+export const productTask = (): Task => ({ system: systemPrompt(), schema: OUTPUT_SCHEMA });
+
 /** The real Send: one Messages API call per batch. */
-export function claudeSend(options: { client?: Anthropic; model?: string; effort?: Effort } = {}): Send {
+export function claudeSend(
+  task: Task,
+  options: { client?: Anthropic; model?: string; effort?: Effort } = {},
+): Send {
   // The SDK retries rate limits, overloads and dropped connections with backoff.
   const client = options.client ?? new Anthropic({ maxRetries: 6 });
   const model = options.model ?? DEFAULT_MODEL;
-  const system = systemPrompt();
   return async (prompt) => {
     const message = await client.beta.messages.create({
       model,
@@ -147,8 +157,8 @@ export function claudeSend(options: { client?: Anthropic; model?: string; effort
       // fallback model instead of returning a refusal.
       betas: ["server-side-fallback-2026-07-01"],
       fallbacks: "default",
-      output_config: { effort: options.effort ?? "medium", format: { type: "json_schema", schema: OUTPUT_SCHEMA } },
-      system: [{ type: "text", text: system, cache_control: { type: "ephemeral" } }],
+      output_config: { effort: options.effort ?? "medium", format: { type: "json_schema", schema: task.schema } },
+      system: [{ type: "text", text: task.system, cache_control: { type: "ephemeral" } }],
       messages: [{ role: "user", content: prompt }],
     });
     // Text before a fallback switch belongs to the model that declined.
@@ -352,6 +362,79 @@ export async function tagWithClaude(products: ProductInput[], options: TagOption
     while (next < batches.length) await tagBatch(batches[next++], true);
   };
   await Promise.all(Array.from({ length: Math.min(concurrency, batches.length - 1) }, worker));
+  return run;
+}
+
+// ── Color names ────────────────────────────────────────────────────
+
+export const colorTask = (): Task => ({
+  system: `You name colors for an online store. Each line is a color name from the store's product variants, like "Azure Heather" or "Dune". For each, give the hex value of the color a shopper would expect to see. Names are often fanciful; go by what the word suggests in fashion. For a name with several colors ("Navy/Gold", "Black Camo"), give each main color, at most three. If a name isn't a color at all ("Solid", "Default", "Print"), give no hex. Return one entry for every name, with its ref.`,
+  schema: {
+    type: "object",
+    properties: {
+      colors: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: { ref: { type: "string" }, hex: { type: "array", items: { type: "string" } } },
+          required: ["ref", "hex"],
+          additionalProperties: false,
+        },
+      },
+    },
+    required: ["colors"],
+    additionalProperties: false,
+  },
+});
+
+export interface ColorRun {
+  /** Hex values by color name, as given. */
+  colors: Map<string, string[]>;
+  failed: string[];
+  usage: Usage;
+  requests: number;
+}
+
+/** Hex values for color names the rules can't read ("Cove", "Fog"). */
+export async function nameColorsWithClaude(
+  names: string[],
+  options: { send: Send; batchSize?: number; log?: (line: string) => void },
+): Promise<ColorRun> {
+  const batchSize = options.batchSize ?? 120;
+  const run: ColorRun = { colors: new Map(), failed: [], usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, requests: 0 };
+  for (let i = 0; i < names.length; i += batchSize) {
+    const batch = names.slice(i, i + batchSize);
+    const prompt = `Name these ${batch.length} colors.\n\n${batch.map((n, j) => `c${j + 1}: ${n}`).join("\n")}`;
+    let reply: Reply;
+    try {
+      reply = await options.send(prompt);
+    } catch (err) {
+      if (isFatal(err)) throw err;
+      if (!(err instanceof Anthropic.APIError)) throw err;
+      options.log?.(`${batch.length} color names not named: ${err.message}`);
+      run.failed.push(...batch);
+      continue;
+    }
+    run.requests++;
+    for (const k of ["input", "output", "cacheRead", "cacheWrite"] as const) run.usage[k] += reply.usage[k];
+    let entries: { ref?: unknown; hex?: unknown }[] = [];
+    try {
+      const parsed = JSON.parse(reply.text) as { colors?: unknown };
+      if (Array.isArray(parsed.colors)) entries = parsed.colors;
+    } catch {
+      // Unreadable: every name in the batch falls through to failed below.
+    }
+    const byRef = new Map(entries.map((e) => [e.ref, e.hex]));
+    batch.forEach((name, j) => {
+      const hex = byRef.get(`c${j + 1}`);
+      if (!Array.isArray(hex)) return run.failed.push(name);
+      const clean = hex
+        .filter((h): h is string => typeof h === "string" && /^#?[0-9a-f]{6}$/i.test(h.trim()))
+        .map((h) => h.trim().replace(/^#/, "").toLowerCase())
+        .slice(0, 3);
+      run.colors.set(name, clean);
+    });
+  }
   return run;
 }
 

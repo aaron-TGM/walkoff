@@ -78,6 +78,9 @@ export interface FanBase {
   weight?: number;
   reach?: number;
   regions?: string[];
+  /** Places a team left that still follow it: a postal code and how much
+   *  of the team's pull it keeps there (the Chargers in San Diego). */
+  homes?: { at: string; weight: number }[];
 }
 
 const NEW_ENGLAND = ["MA", "NH", "ME", "VT", "RI", "CT"];
@@ -102,7 +105,7 @@ export const FAN_BASES: Record<string, Record<string, FanBase>> = {
     NYG: { weight: 1.0, regions: NEW_YORK },
     NYJ: { weight: 0.8, regions: NEW_YORK },
     LAR: { weight: 1.0 },
-    LAC: { weight: 0.6 },
+    LAC: { weight: 0.6, homes: [{ at: "92108", weight: 0.5 }] }, // San Diego until 2017
     PHI: { regions: PHILLY },
     WSH: { regions: DMV },
     CAR: { regions: CAROLINAS },
@@ -219,5 +222,26 @@ export const COLLEGE_OVERRIDES: Record<string, Record<string, FanBase>> = {
   ncaab: {
     "Gonzaga Bulldogs": { weight: 0.8, reach: 2 },
     "Saint Mary's Gaels": { weight: 0.3 },
+  },
+};
+
+/** Club colors where the feed lists kit colors instead (Arsenal in navy). */
+export const TEAM_COLORS: Record<string, Record<string, string[]>> = {
+  epl: {
+    ARS: ["ef0107", "ffffff"],
+    AVL: ["670e36", "95bfe5"],
+    BOU: ["da291c", "000000"],
+    BRE: ["e30613", "ffffff"],
+    BHA: ["0057b8", "ffffff"],
+    CRY: ["1b458f", "c4122e"],
+    EVE: ["003399", "ffffff"],
+    FUL: ["ffffff", "000000"],
+    HUL: ["f5a12d", "000000"],
+    IPS: ["0044a9", "ffffff"],
+    LEE: ["ffffff", "ffcd00", "1d428a"],
+    MAN: ["da291c", "ffffff", "000000"],
+    MNC: ["6cabdd", "ffffff"],
+    NFO: ["dd0000", "ffffff"],
+    SUN: ["eb172b", "ffffff"],
   },
 };

@@ -30,7 +30,11 @@ export default async function UploadPage({ params }: { params: Promise<{ token: 
             token="demo"
             brandName={DEMO_BRAND}
             initialReport={report}
-            initialCatalog={{ products: seed.catalog.length, tagged: seed.catalog.length }}
+            initialCatalog={{
+              products: seed.catalog.length,
+              tagged: 0,
+              colorways: seed.catalog.reduce((n, p) => n + (p.colorways?.length ?? 0), 0),
+            }}
             demo
           />
         </main>

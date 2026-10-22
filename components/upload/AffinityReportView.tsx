@@ -1,5 +1,18 @@
 import type { AffinityReport, TeamGroup } from "@/lib/affinity/compute";
 
+/** Color dots. Only plain hex reaches the style attribute. */
+export function Swatches({ hex, label }: { hex: string[]; label?: string }) {
+  const colors = hex.filter((h) => /^[0-9a-f]{6}$/i.test(h)).slice(0, 3);
+  if (!colors.length) return null;
+  return (
+    <span className="swatches" aria-label={label} role={label ? "img" : undefined}>
+      {colors.map((h) => (
+        <i key={h} className="swatch" style={{ background: `#${h}` }} />
+      ))}
+    </span>
+  );
+}
+
 function fmt(n: number): string {
   return n.toLocaleString("en-US");
 }
@@ -34,17 +47,38 @@ export function AffinityReportView({ report }: { report: AffinityReport }) {
         <div className="report-grid">
           {standouts.map((g) => {
             const match = topMatch(g, totals.productOrders > 0);
+            const picks = g.picks ?? [];
             return (
               <div key={`${g.league}:${g.teamId}`} className="affinity-card">
                 <div className="affinity-lift">{g.lift}&times;</div>
-                <div className="affinity-group">{g.teamName}</div>
+                <div className="affinity-group">
+                  {g.teamName}
+                  <Swatches hex={g.colors ?? []} label={`${g.teamName} colors`} />
+                </div>
                 <div className="affinity-customers">
                   {fmt(g.customers)} customers &middot; {g.leagueName}
                 </div>
-                <div className="affinity-match">
-                  <span>{match.label}</span>
-                  {match.value}
-                </div>
+                {picks.length ? (
+                  <div className="affinity-picks">
+                    <span className="affinity-label">On a win, feature</span>
+                    {picks.slice(0, 2).map((p) => (
+                      <div key={`${p.title}:${p.colorway}`} className="affinity-pick">
+                        <Swatches hex={p.hex} />
+                        <div>
+                          {p.title}
+                          {p.colorway ? <em> &middot; {p.colorway}</em> : null}
+                          <small>{p.why}</small>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+                {!picks.length || g.products[0] ? (
+                  <div className="affinity-match">
+                    <span>{match.label}</span>
+                    {match.value}
+                  </div>
+                ) : null}
               </div>
             );
           })}
@@ -58,7 +92,8 @@ export function AffinityReportView({ report }: { report: AffinityReport }) {
       <p className="affinity-foot report-foot">
         2.4&times; means 2.4 times more of your customers live in that team&apos;s territory
         than population alone would predict. Only differences too large to be chance are
-        shown.
+        shown. Picks match your colorways to the team&apos;s colors, so no logo or license is
+        needed.
       </p>
 
       <div className="report-leagues">

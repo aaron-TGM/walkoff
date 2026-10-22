@@ -47,7 +47,12 @@ function printReport(name: string, report: AffinityReport) {
     return `  ${`${g.lift}x`.padEnd(6)} ${g.teamName} (${g.leagueName}), ${fmt(g.customers)} customers${buys}`;
   };
   console.log(report.standouts.length ? "\nStandout territories:" : "\nNo territory stands out yet.");
-  report.standouts.forEach((g) => console.log(line(g)));
+  for (const g of report.standouts) {
+    console.log(line(g));
+    for (const p of g.picks ?? []) {
+      console.log(`         on a win: ${p.title}${p.colorway ? ` in ${p.colorway}` : ""} (${p.why.toLowerCase()})`);
+    }
+  }
   for (const league of report.leagues) {
     console.log(`\n${league.leagueName}, ${fmt(league.customers)} customers:`);
     league.teams.forEach((g) => console.log(line(g)));
