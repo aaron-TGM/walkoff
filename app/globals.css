@@ -1191,6 +1191,10 @@ select.form-input {
 .mcp-grid {
   @apply grid gap-12 layout:grid-cols-[1.05fr_1fr] layout:items-start;
 }
+/* Let long code lines scroll inside the column instead of widening it. */
+.mcp-grid > * {
+  min-width: 0;
+}
 .dark-block .code-block {
   @apply p-5 text-[0.76rem];
   background: rgb(244 239 228 / 0.06);
@@ -1228,6 +1232,9 @@ select.form-input {
   content: "walkoff.";
   color: rgb(244 239 228 / 0.4);
   font-weight: 400;
+}
+.mcp-tool-soon {
+  @apply ml-2 bg-mustard px-1.5 py-0.5 align-middle font-mono text-[0.5rem] font-normal uppercase tracking-[0.18em] text-ink;
 }
 .mcp-tool-body {
   @apply text-[0.85rem] leading-[1.5];

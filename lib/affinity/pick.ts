@@ -19,6 +19,7 @@ export interface PickProduct {
    *  colorways. */
   colors?: string[];
   uses?: string[];
+  price?: number | null;
 }
 
 export interface Pick {
@@ -32,6 +33,7 @@ export interface Pick {
   /** "Made for their fans", or "Close to their blue". */
   why: string;
   score: number;
+  price?: number | null;
 }
 
 /** Below this a color is a stretch, not a nod. */
@@ -69,6 +71,7 @@ function toPick(product: PickProduct, option: Option | null, teamHex: string | n
     image: option?.image ?? "",
     why: teamHex ? `Close to their ${colorFamily(teamHex)}` : "Made for their fans",
     score: Math.round(score * 100) / 100,
+    price: product.price ?? null,
   };
 }
 

@@ -31,6 +31,12 @@ export default function PrivacyPage() {
           platforms you connect, such as Klaviyo.
         </li>
         <li>
+          <strong>Sign-in details.</strong> If you connect Walkoff to Claude or
+          another AI agent: your work email, to send you a one-time sign-in
+          code, and a record of the access you approved, kept only as hashed
+          tokens.
+        </li>
+        <li>
           <strong>Results.</strong> Performance data your connected platforms
           report back, such as sends, clicks, attributed orders and revenue.
         </li>

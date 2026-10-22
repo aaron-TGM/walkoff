@@ -1,0 +1,99 @@
+# Walkoff MCP server
+
+Walkoff runs as a remote MCP server at **`https://www.walkoff.io/mcp`**, so
+marketers can use it in Claude next to the Klaviyo and Shopify connectors
+they already have. Walkoff knows the moments and the fans; it builds the
+campaign. Their own Klaviyo connector, on their own permissions, drafts it.
+
+## Connecting
+
+- **Claude (web, desktop, mobile):** Settings → Connectors → Add custom
+  connector → `https://www.walkoff.io/mcp`, then sign in.
+- **Claude Code:** `claude mcp add --transport http walkoff https://www.walkoff.io/mcp`,
+  then `/mcp` to sign in.
+
+Use the `www` address: the bare domain redirects, and the token is bound to
+the address Claude connected to.
+
+Signing in: Walkoff emails a 6-digit code to the person's work email, they
+pick which brands Claude may use, and approve. The consent page names the app
+and where it sends them back (claude.ai, or localhost for Claude Code).
+
+## Who can sign in
+
+```bash
+npm run brand -- invite "Frost Buddy" marketer@frostbuddy.com   # one brand
+npm run brand -- members "Frost Buddy"                            # who has access
+npm run brand -- members "Frost Buddy" --remove marketer@frostbuddy.com
+npm run brand -- set "Frost Buddy" --store https://frostbuddy.com [--licensed | --unlicensed]
+```
+
+`WALKOFF_OPERATOR_EMAILS` (comma-separated, on Vercel) can use every brand.
+Removing someone cuts access on their next request; refresh stops working.
+
+`--store` gives campaigns product links (`<store>/products/<handle>`).
+`--licensed` lets campaign copy name the brand's teams. Without it (the
+default, and most brands) copy never names a team, league, player or event:
+it nods with the city, for pro teams, and the colors.
+
+## Tools
+
+| Tool | What it does |
+|------|--------------|
+| `list_brands` | Brands this person can use, with store, license, customers mapped, catalog and standout teams. |
+| `get_affinity_map` | Standout fan territories (lift, customers, what they buy) and what to feature for each. |
+| `trigger_queue` | Moments to act on now: matching the brand's triggers (or, with none, big moments for its standout teams), not yet drafted, sent or skipped, with how long each keeps. |
+| `recent_moments` | What just happened for the brand's teams, or any team. |
+| `upcoming_games` | Games coming up for those teams, in the fans' time zone, with pre-game moments. |
+| `match_products` | The brand's products in a team's colors. |
+| `get_territory` | A team's fans as a Klaviyo segment: one to three "Someone's proximity to a location" circles on real postal codes (UK clubs also get outward codes), coverage, and how many of the brand's customers live there. `reach: "wide"` adds shared markets. |
+| `build_campaign` | Subject lines, preview text, a finished email (Klaviyo HTML with `{% unsubscribe %}` and the address tags), products with links and prices, the audience, the send time (now, or 8 AM local after a late finish), copy rules and the Klaviyo steps. Takes a `moment_id`, or a team and `moment_type` for a sample. |
+| `create_trigger`, `list_triggers`, `delete_trigger` | The brand's rules for which moments matter. |
+| `log_send`, `send_history` | What the brand drafted, sent or skipped. Logged moments leave the queue. |
+
+There's also a `moment_campaign` prompt that runs the whole loop, and
+server instructions that tell Claude the flow and the copy rules.
+
+**The Klaviyo side.** Klaviyo's connector can create templates and draft
+campaigns but not segments, so the first time a brand acts on a team, the
+marketer saves the segment once from `get_territory`'s steps (about a
+minute). Every later moment reuses it. Scheduling stays with the marketer
+unless their Klaviyo connector can do it.
+
+## How sign-in works
+
+OAuth 2.1 as the MCP authorization spec and Claude's connector expect:
+
+- `401` from `/mcp` with `WWW-Authenticate: Bearer resource_metadata=…`.
+- Protected resource metadata (RFC 9728) at
+  `/.well-known/oauth-protected-resource[/mcp]`, authorization server
+  metadata (RFC 8414) at `/.well-known/oauth-authorization-server` (and the
+  OpenID path). `next.config.ts` rewrites these to `app/api/oauth/*`.
+- Clients identify with a client ID metadata document (Claude does; Walkoff
+  fetches and caches it for a day) or register at `/oauth/register`
+  (RFC 7591). All clients are public: PKCE S256 is required.
+- `/oauth/authorize` runs the email code, brand pick and consent, bound to
+  the browser by a cookie, then redirects with `code`, `state` and `iss`
+  (RFC 9207). Tokens are bound to the `/mcp` resource (RFC 8707).
+- `/oauth/token`: codes last 10 minutes and work once; access tokens 24
+  hours; refresh tokens 90 days, rotated on every use. `/oauth/revoke`
+  revokes either.
+- Codes and tokens are stored only as SHA-256 hashes (`oauth_grants`).
+
+The server is stateless: each request builds a fresh server for the token's
+owner, and every query is scoped to the brands they approved.
+
+Code: `lib/mcp/` (tools, campaign builder, audience, timing, queue),
+`lib/mcp/oauth/`, routes in `app/mcp` and `app/oauth`. Tables:
+`supabase/006_mcp.sql`.
+
+## Setup
+
+1. Run `supabase/006_mcp.sql` in the Supabase SQL editor.
+2. On Vercel: `WALKOFF_OPERATOR_EMAILS`, plus `RESEND_API_KEY` and a
+   `RESEND_FROM_EMAIL` on a domain verified in Resend (sign-in codes won't
+   send without them).
+3. `npm run brand -- set <brand> --store https://…` and invite the people
+   who'll use it.
+
+Locally, without `RESEND_API_KEY`, sign-in codes print to the dev server log.

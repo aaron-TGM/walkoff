@@ -17,6 +17,10 @@ export interface PostalArea {
   population: number;
   /** State, province, or UK nation. */
   region: string;
+  /** The full postal code nearest the area's center: "92108", "M5V 1K5",
+   *  "N17 6RX". For tools that need a real code, like Klaviyo's "within N
+   *  miles of" segment condition. */
+  ref: string;
 }
 
 export interface TeamHome {
@@ -40,10 +44,10 @@ export interface TeamHome {
   colors: string[];
 }
 
-type Row = [string, number, number, number, string];
+type Row = [string, number, number, number, string, string];
 
 export const POSTAL_AREAS: PostalArea[] = COUNTRIES.flatMap((country) =>
-  (postal.areas[country] as Row[]).map(([code, lat, lng, population, region]) => ({
+  (postal.areas[country] as Row[]).map(([code, lat, lng, population, region, ref]) => ({
     key: `${country}:${code}`,
     country,
     code,
@@ -51,6 +55,7 @@ export const POSTAL_AREAS: PostalArea[] = COUNTRIES.flatMap((country) =>
     lng,
     population,
     region,
+    ref,
   })),
 );
 

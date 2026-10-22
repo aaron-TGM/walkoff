@@ -141,30 +141,39 @@ const AFFINITY_EXAMPLES = [
   },
 ];
 
-const MCP_TOOLS = [
+const MCP_TOOLS: { name: string; body: string; soon?: boolean }[] = [
+  {
+    name: "trigger_queue",
+    body: "The moments to act on right now, for the teams your customers follow, most urgent first.",
+  },
+  {
+    name: "build_campaign",
+    body: "A ready-to-draft campaign: subject lines, the email, products in the team's colors, the audience and when to send.",
+  },
   {
     name: "get_affinity_map",
-    body: "Which teams, places and seasons stand out in your customers, and how big each group is.",
+    body: "Which fan territories hold more of your customers than population predicts, and by how much.",
   },
   {
     name: "match_products",
-    body: "Which products and colorways fit each group and moment, by team colors, use and season.",
+    body: "Your own products in each team's colors. No license needed.",
   },
   {
-    name: "upcoming_moments",
-    body: "Games, rivalries, weather and events in the next few days that touch your customers.",
+    name: "get_territory",
+    body: "Each team's fans as a Klaviyo segment. Save it once, reuse it for every moment.",
   },
   {
     name: "create_trigger",
-    body: "Hands Walkoff a rule: when this moment hits this group, send this. Walkoff takes it from there.",
+    body: "Your rules for which moments matter, like walk-off wins in your top markets.",
   },
   {
-    name: "trigger_history",
-    body: "Everything that fired, who it reached and what it sold.",
+    name: "send_history",
+    body: "Everything you drafted, sent and skipped, moment by moment.",
   },
   {
     name: "benchmarks",
     body: "How each type of moment performs for brands like yours.",
+    soon: true,
   },
 ];
 
@@ -493,38 +502,47 @@ export function MarketingPage() {
               </h2>
               <p className="section-lead section-lead-dark">
                 Walkoff runs as an MCP server, the open standard Claude and
-                other AI agents use to call tools. Connect it once and your
-                agent can ask what&apos;s happening, who cares and what to
-                send, then hand the timing to Walkoff.
+                other AI agents use to call tools. Connect it once and Claude
+                can see what just happened for the teams your customers
+                follow, build the campaign, and draft it in Klaviyo for your
+                yes.
               </p>
               <div className="code-block">
+                <span className="c">{"# Claude: Settings → Connectors → Add custom connector"}</span>
+                {"\n"}
+                <span className="s">https://www.walkoff.io/mcp</span>
+                {"\n\n"}
                 <span className="c">{"# Claude Code"}</span>
                 {"\n"}
                 <span className="k">claude</span> mcp add --transport http{" "}
                 <span className="s">walkoff</span>
                 {" \\\n  "}
-                <span className="s">https://mcp.walkoff.io/mcp</span>
+                <span className="s">https://www.walkoff.io/mcp</span>
               </div>
               <ul className="mcp-notes">
                 <li>
                   <span className="mcp-notes-badge">Early access</span>
-                  Founding brands get the MCP first. Until then we run it for
-                  you.
+                  Invited brands sign in with their work email. Ask us for an
+                  invite.
                 </li>
                 <li>
-                  Works next to the Klaviyo and Shopify MCP servers your agent
-                  may already use.
+                  Works next to the Klaviyo and Shopify connectors you already
+                  use: Walkoff builds the campaign, your Klaviyo connector
+                  drafts it, you hit send.
                 </li>
                 <li>
-                  Your agent plans. Walkoff&apos;s always-on engine fires at
-                  10:47pm when nobody&apos;s at a keyboard.
+                  The engine watches every game around the clock, so the
+                  moment is already in your queue when you open Claude.
                 </li>
               </ul>
             </div>
             <div className="mcp-tools">
               {MCP_TOOLS.map((t) => (
                 <div key={t.name} className="mcp-tool">
-                  <div className="mcp-tool-name">{t.name}</div>
+                  <div className="mcp-tool-name">
+                    {t.name}
+                    {t.soon && <span className="mcp-tool-soon">Coming</span>}
+                  </div>
                   <p className="mcp-tool-body">{t.body}</p>
                 </div>
               ))}
@@ -767,8 +785,9 @@ export function MarketingPage() {
           <FaqItem num="04" question="What's MCP, and do I need it?">
             MCP (Model Context Protocol) is the open standard AI agents like
             Claude use to call outside tools. You don&apos;t need it: during
-            early access we run everything for you. If your team already works
-            with Claude or another agent, you can plug Walkoff straight in.
+            early access we can run everything for you. If your team works in
+            Claude, add Walkoff as a connector at www.walkoff.io/mcp, next to
+            Klaviyo and Shopify, and ask it for a campaign.
           </FaqItem>
           <FaqItem num="05" question="How fast does a trigger fire?">
             During early access we confirm every moment by hand, usually

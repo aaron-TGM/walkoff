@@ -54,6 +54,17 @@ Run from the repo root. They read `.env.local` (see `.env.example`).
    npm run brand -- list
    ```
 
+5. **Connect Claude.** Add the store address (for product links), then
+   invite the people who'll use Walkoff in Claude. They add
+   `https://www.walkoff.io/mcp` as a connector and sign in with a code
+   emailed to that address (docs/mcp.md):
+
+   ```bash
+   npm run brand -- set <brand> --store https://brand.com   # --licensed if they may name teams
+   npm run brand -- invite <brand> person@brand.com
+   npm run brand -- members <brand>                          # --remove person@brand.com
+   ```
+
 ## Reference data
 
 ```bash
