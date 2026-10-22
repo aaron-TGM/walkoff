@@ -1,56 +1,227 @@
 import Image from "next/image";
+import { AgentConsole } from "@/components/AgentConsole";
 import { BrandSpan } from "@/components/BrandSpan";
 import { Eyebrow } from "@/components/Eyebrow";
 import { FaqItem } from "@/components/FaqItem";
-import { HeroCard } from "@/components/HeroCard";
+import { PricingPicker } from "@/components/PricingPicker";
+import { ResultCard } from "@/components/ResultCard";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteNav } from "@/components/SiteNav";
+import { Ticker } from "@/components/Ticker";
 import { TriggerCategory } from "@/components/TriggerCategory";
 import { WaitlistForm } from "@/components/WaitlistForm";
+import { LEAGUES } from "@/lib/leagues";
+import { MOMENT_CATEGORIES, MOMENT_STATUS_LABEL } from "@/lib/moments";
+import { PRICING } from "@/lib/pricing";
 import { TRIGGERS, TRIGGER_CATEGORIES } from "@/lib/triggers";
+
+const AUDIENCES = [
+  {
+    title: "Licensed brands",
+    body: "Team-tagged products and fans who buy the minute their team wins.",
+  },
+  {
+    title: "Local businesses",
+    body: "Bars, restaurants and shops in a sports town with a customer list.",
+  },
+  {
+    title: "Any DTC brand",
+    body: "Your customers have a team, a hometown and a season. Now you'll know which.",
+  },
+  {
+    title: "Agencies",
+    body: "One setup that works across every brand you run.",
+  },
+];
+
+const STEPS = [
+  {
+    title: "Upload your counts",
+    body: "Export from Shopify or Klaviyo with our guides, then upload postal codes and product categories as counts. Never a customer list.",
+    visual: (
+      <>
+        <span className="c">{"// counts.csv"}</span>
+        <br />
+        <span className="k">postal_code</span>,<span className="k">category</span>,
+        <span className="k">customers</span>
+        <br />
+        <span className="v">19147</span>,<span className="v">hoodies</span>,
+        <span className="v">212</span>
+        <br />
+        <span className="v">53202</span>,<span className="v">drinkware</span>,
+        <span className="v">96</span>
+      </>
+    ),
+  },
+  {
+    title: "Get your affinity map",
+    body: "Walkoff finds the teams, places and seasons your customers lean toward, then matches your products to each one.",
+    visual: (
+      <>
+        <span className="k">eagles_territory</span>:{" "}
+        <span className="v">2.4×</span>
+        <br />
+        <span className="k">first_freeze_zone</span>:{" "}
+        <span className="v">1.9×</span>
+        <br />
+        <span className="k">top_match</span>:{" "}
+        <span className="v">&quot;hoodies&quot;</span>
+      </>
+    ),
+  },
+  {
+    title: "Moments get matched",
+    body: "We watch every game in your leagues, plus the weather and the calendar, and flag the moments your customers care about.",
+    visual: (
+      <>
+        <span className="k">moment</span>:{" "}
+        <span className="v">&quot;derby_win&quot;</span>
+        <br />
+        <span className="k">where</span>:{" "}
+        <span className="v">&quot;North London&quot;</span>
+        <br />
+        <span className="k">products</span>: <span className="v">3</span>
+      </>
+    ),
+  },
+  {
+    title: "Approve, or go first",
+    body: "Approve each send, or set rules that fire on their own. Your email platform sends it while the moment is still hot.",
+    visual: (
+      <>
+        <span className="k">status</span>:{" "}
+        <span className="v">&quot;fired&quot;</span>
+        <br />
+        <span className="k">after_final</span>:{" "}
+        <span className="v">&quot;2m 14s&quot;</span>
+        <br />
+        <span className="k">via</span>: <span className="v">&quot;klaviyo&quot;</span>
+      </>
+    ),
+  },
+];
+
+const AFFINITY_EXAMPLES = [
+  {
+    group: "Eagles territory",
+    customers: "2,310",
+    lift: "2.4×",
+    match: "Midweight hoodies",
+  },
+  {
+    group: "First-freeze zone",
+    customers: "3,902",
+    lift: "1.9×",
+    match: "Blankets and beanies",
+  },
+  {
+    group: "Packers territory",
+    customers: "1,402",
+    lift: "1.8×",
+    match: "Tumblers and koozies",
+  },
+  {
+    group: "Arsenal, North London",
+    customers: "846",
+    lift: "1.6×",
+    match: "Anything red and white",
+  },
+];
+
+const MCP_TOOLS = [
+  {
+    name: "get_affinity_map",
+    body: "Which teams, places and seasons stand out in your customers, and how big each group is.",
+  },
+  {
+    name: "match_products",
+    body: "Which products fit each group and moment, from team colors to gift versus self-purchase.",
+  },
+  {
+    name: "upcoming_moments",
+    body: "Games, rivalries, weather and events in the next few days that touch your customers.",
+  },
+  {
+    name: "create_trigger",
+    body: "Hands Walkoff a rule: when this moment hits this group, send this. Walkoff takes it from there.",
+  },
+  {
+    name: "trigger_history",
+    body: "Everything that fired, who it reached and what it sold.",
+  },
+  {
+    name: "benchmarks",
+    body: "How each type of moment performs for brands like yours.",
+  },
+];
+
+const CONTROLS = [
+  {
+    title: "Approval first",
+    body: "Every message waits for your yes. You see the moment, the audience and the message before anything sends.",
+  },
+  {
+    title: "Auto-fire rules",
+    body: "Trust a moment? Set a rule, like any Eagles win, and Walkoff fires the second it happens.",
+  },
+  {
+    title: "Quiet hours",
+    body: "Nothing goes out at 2am in your customers' time zone, however late the game ends.",
+  },
+  {
+    title: "Frequency caps",
+    body: "Customers hear from you only as often as you allow, even in a big week.",
+  },
+  {
+    title: "Brand safety",
+    body: "No storm sales, nothing triggered by tragedy. Some moments are never marketing moments.",
+  },
+  {
+    title: "Instant pause",
+    body: "Stop everything at once, any time, for any reason.",
+  },
+];
+
+const PROOF_POINTS = [
+  {
+    title: "Holdout groups",
+    body: "A random slice of every audience doesn't get the message, so you see what the moment added, not just who clicked.",
+  },
+  {
+    title: "Tracked to the order",
+    body: "Every send carries its own tracking and gets matched to your store's orders.",
+  },
+  {
+    title: "Revenue per moment",
+    body: "See what each walk-off, freeze or derby actually sold.",
+  },
+  {
+    title: "Benchmarks",
+    body: "Compare against brands like yours. We pool results, never customers.",
+  },
+];
 
 export function MarketingPage() {
   return (
     <>
-      {/* ─── NAV ─────────────────────────────────────────────── */}
-      <nav className="site-nav" aria-label="Primary">
-        <div className="nav-inner">
-          <a href="#" className="nav-mark">
-            <Image
-              src="/walkoff_logov3.png"
-              alt="WALKOFF."
-              width={1539}
-              height={367}
-              className="nav-logo"
-              priority
-            />
-          </a>
-          <div className="nav-links">
-            <a href="#triggers">Triggers</a>
-            <a href="#how">How it works</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#form">Early Access</a>
-          </div>
-          <a href="#form" className="nav-cta">
-            <span>Get Early Access</span>
-          </a>
-        </div>
-      </nav>
+      <SiteNav />
+      <Ticker />
 
       {/* ─── HERO ────────────────────────────────────────────── */}
       <section className="hero">
         <div className="container-w">
           <div className="hero-grid">
             <div>
-              <Eyebrow>
-                MLB &middot; NHL &middot; NCAA Football &middot; NCAA Basketball
-              </Eyebrow>
+              <Eyebrow>Sports first &middot; Built for AI agents</Eyebrow>
               <h1>
-                Every sports moment
+                Every moment
                 <span className="script">is a marketing moment.</span>
               </h1>
               <p className="hero-sub">
-                <BrandSpan /> connects your Klaviyo to the full sports calendar.
-                Rivalry previews, in-game alerts, win triggers, season milestones.
-                Every moment your customer cares about, turned into a timely email.
+                <BrandSpan /> watches the games, the weather and the calendar,
+                finds the customers who care, matches the right products, and
+                fires your message while the moment is still hot. One MCP
+                connection plugs it into Claude or any AI agent.
               </p>
               <div className="hero-actions">
                 <a href="#form" className="btn-primary">
@@ -61,48 +232,116 @@ export function MarketingPage() {
                 </a>
               </div>
               <div className="hero-note">
-                Free 60 days &middot; We set everything up
+                {PRICING.trialDays} days free &middot; Done for you during
+                early access
               </div>
             </div>
 
-            <HeroCard />
+            <AgentConsole />
           </div>
         </div>
       </section>
 
+      {/* ─── LEAGUES ─────────────────────────────────────────── */}
+      <div className="league-strip">
+        <div className="container-w league-strip-inner">
+          <span className="league-strip-label">V1 coverage</span>
+          <ul className="league-strip-list">
+            {LEAGUES.map((l) => (
+              <li key={l.id}>
+                {l.name}
+                {l.note ? <span className="league-strip-note">{l.note}</span> : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
       {/* ─── WHO ─────────────────────────────────────────────── */}
-      <section className="block border-y border-rule bg-paper" id="who">
+      <section className="block" id="who">
         <div className="container-w">
-          <h2 className="section-title">
-            If your customers care{" "}
-            <em>when the team wins,</em> you have a trigger opportunity.
-          </h2>
-          <div className="who-grid">
-            <div className="who-card who-card-dark">
-              <div className="who-eyebrow">Primary ICP</div>
-              <div className="who-card-h">Licensed DTC Brands</div>
-              <p className="who-card-p">
-                You have team-tagged SKUs, a Klaviyo account, and licensing fees
-                to justify. <BrandSpan /> turns every game result into a revenue
-                event.
-              </p>
-              <div className="who-card-ex">
-                MLB &middot; NHL &middot; NFL &middot; NBA &middot; NCAA, official licensees with Klaviyo
-              </div>
-            </div>
-            <div className="who-card who-card-light">
-              <div className="who-eyebrow">Also a great fit</div>
-              <div className="who-card-h">Local &amp; Adjacent Businesses</div>
-              <p className="who-card-p">
-                No license required. Any business in a sports city with an email
-                list: restaurants, bars, dispensaries, local retail.
-              </p>
-              <div className="who-card-ex">
-                Downtown LA restaurant &rarr; Dodgers win &rarr; &ldquo;$2 off tonight,
-                11–close.&rdquo;
-              </div>
-            </div>
+          <div className="block-num">
+            <span className="eyebrow-dot" aria-hidden />
+            Who it&apos;s for
           </div>
+          <h2 className="section-title section-title-stack">
+            If your customers have a team, <em>you have a trigger.</em>
+          </h2>
+          <div className="audience-grid">
+            {AUDIENCES.map((a, idx) => (
+              <div key={a.title} className="audience-card">
+                <div className="audience-num">0{idx + 1}</div>
+                <div className="audience-title">{a.title}</div>
+                <p className="audience-body">{a.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── HOW IT WORKS ─────────────────────────────────────── */}
+      <section className="block border-y border-rule bg-paper" id="how">
+        <div className="container-w">
+          <div className="block-num">
+            <span className="eyebrow-dot" aria-hidden />
+            How it works
+          </div>
+          <h2 className="section-title">
+            Four steps. <em>We do them for you.</em>
+          </h2>
+          <p className="section-lead">
+            During early access we run every step for you through our own
+            Claude setup. Self-serve onboarding comes next.
+          </p>
+          <ol className="how-grid how-grid-4">
+            {STEPS.map((s, idx) => (
+              <li key={s.title} className="how-step">
+                <div className="how-step-num">&mdash; 0{idx + 1}</div>
+                <div className="how-step-title">{s.title}</div>
+                <p className="how-step-body">{s.body}</p>
+                <div className="how-step-visual">{s.visual}</div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ─── AFFINITY ────────────────────────────────────────── */}
+      <section className="dark-block" id="affinity">
+        <div className="container-w">
+          <div className="block-num block-num-dark">
+            <span className="eyebrow-dot" aria-hidden />
+            Your affinity map
+          </div>
+          <h2 className="section-title section-title-stack">
+            Day one, you learn{" "}
+            <em>something new about your customers.</em>
+          </h2>
+          <p className="section-lead section-lead-dark">
+            Upload your counts and Walkoff shows which teams, places and
+            seasons your customers lean toward, using widely recognized fan
+            territory maps for every league. Then it matches your products to
+            each one.
+          </p>
+          <div className="affinity-grid">
+            {AFFINITY_EXAMPLES.map((a) => (
+              <div key={a.group} className="affinity-card">
+                <div className="affinity-lift">{a.lift}</div>
+                <div className="affinity-group">{a.group}</div>
+                <div className="affinity-customers">
+                  {a.customers} customers
+                </div>
+                <div className="affinity-match">
+                  <span>Top match</span>
+                  {a.match}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="affinity-foot">
+            Example map. 2.4&times; means 2.4 times more of your customers live
+            there than population alone would predict.
+          </p>
         </div>
       </section>
 
@@ -111,223 +350,178 @@ export function MarketingPage() {
         <div className="container-w">
           <div className="block-num">
             <span className="eyebrow-dot" aria-hidden />
-            The full sports calendar
+            Moments
           </div>
-          <h2 className="section-title">
-            Not just when the game ends.{" "}
-            <em>Every moment that moves your customer.</em>
+          <h2 className="section-title section-title-stack">
+            Sports first. <em>Then everything that moves your customers.</em>
           </h2>
-          <div className="moments-grid">
-            {/* Before */}
-            <div className="moment-card">
-              <div className="moment-icon text-red">
-                <svg
-                  width="36"
-                  height="36"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden
-                >
-                  <rect x="5" y="8" width="30" height="26" rx="2" />
-                  <path d="M5 16 H35" />
-                  <path d="M13 4 V12 M27 4 V12" />
-                  <path d="M12 23 H14 M19 23 H21 M26 23 H28" />
-                  <path d="M12 29 H14 M19 29 H21" />
-                </svg>
+          <div className="category-grid">
+            {MOMENT_CATEGORIES.map((c) => (
+              <div
+                key={c.id}
+                className={`category-card category-card-${c.status}`}
+              >
+                <div className="category-head">
+                  <div className="category-name">{c.name}</div>
+                  <span className={`category-badge category-badge-${c.status}`}>
+                    {MOMENT_STATUS_LABEL[c.status]}
+                  </span>
+                </div>
+                <p className="category-body">{c.description}</p>
+                <div className="moment-tags">
+                  {c.examples.map((ex) => (
+                    <span key={ex} className="moment-tag">
+                      {ex}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="moment-cat">Before</div>
-              <div className="moment-title">Anticipation</div>
-              <p className="moment-body">
-                Rivalry in 48 hours. Playoff preview. Fire a pre-game campaign
-                while fans are already talking.
-              </p>
-            </div>
-
-            {/* During */}
-            <div className="moment-card">
-              <div className="moment-icon text-mustard">
-                <svg
-                  width="36"
-                  height="36"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden
-                >
-                  <path d="M23 4 L10 22 H19 L17 36 L30 17 H21 Z" />
-                </svg>
-              </div>
-              <div className="moment-cat">During</div>
-              <div className="moment-title">Tension</div>
-              <p className="moment-body">
-                Tied in the 8th. Final two minutes. Fans are on their
-                phones. That&apos;s your window.
-              </p>
-            </div>
-
-            {/* After */}
-            <div className="moment-card">
-              <div className="moment-icon text-red">
-                <svg
-                  width="36"
-                  height="36"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden
-                >
-                  <path d="M20 32 C18 30 6 23 6 14 C6 9.5 9.5 6 14 6 C17 6 19.5 8 20 9 C20.5 8 23 6 26 6 C30.5 6 34 9.5 34 14 C34 23 22 30 20 32 Z" />
-                </svg>
-              </div>
-              <div className="moment-cat">After</div>
-              <div className="moment-title">The Result</div>
-              <p className="moment-body">
-                Walk-off win. Rivalry sweep. Heartbreaker loss. Each result = a
-                different angle and a different offer.
-              </p>
-            </div>
-
-            {/* Season */}
-            <div className="moment-card">
-              <div className="moment-icon text-grass">
-                <svg
-                  width="36"
-                  height="36"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden
-                >
-                  <path d="M13 5 H27 V17 C27 23 23 26 20 26 C17 26 13 23 13 17 Z" />
-                  <path d="M7 7 H13 C13 15 8.5 17 7 13 Z" />
-                  <path d="M27 7 H33 C33 17 27.5 15 27 7 Z" />
-                  <path d="M17 26 V31 M23 26 V31" />
-                  <path d="M13 31 H27" />
-                </svg>
-              </div>
-              <div className="moment-cat">Season</div>
-              <div className="moment-title">Milestones</div>
-              <p className="moment-body">
-                Playoff clinch. Championship. Season opener. Moments your
-                competitors are silent on.
-              </p>
-            </div>
+            ))}
           </div>
-        </div>
-      </section>
 
-      {/* ─── TRIGGERS ────────────────────────────────────────── */}
-      <section className="block border-y border-rule bg-paper" id="triggers">
-        <div className="container-w">
-          <div className="block-num">
-            <span className="eyebrow-dot" aria-hidden />
-            Trigger library
-          </div>
-          <h2 className="section-title">
-            Every moment, <em>ready to fire.</em>
-          </h2>
-          <div className="trigger-section">
-            {TRIGGER_CATEGORIES.map((cat) => {
-              const items = TRIGGERS.filter((t) => t.category === cat.id);
-              return (
+          <div className="trigger-library">
+            <div className="trigger-library-head">
+              <div className="trigger-library-title">
+                The sports trigger library
+              </div>
+              <div className="trigger-library-count">
+                {TRIGGERS.length} triggers &middot; every brand gets all of them
+              </div>
+            </div>
+            <div className="trigger-section">
+              {TRIGGER_CATEGORIES.map((cat) => (
                 <TriggerCategory
                   key={cat.id}
                   categoryId={cat.id}
                   label={cat.label}
-                  items={items}
+                  items={TRIGGERS.filter((t) => t.category === cat.id)}
                 />
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ─── HOW IT WORKS ─────────────────────────────────────── */}
-      <section className="block" id="how">
+      {/* ─── RED BAND ────────────────────────────────────────── */}
+      <section className="red-band" aria-label="Why timing matters">
+        <div className="container-w">
+          <p className="red-band-line">
+            The first brand in the inbox
+            <span>owns the moment.</span>
+          </p>
+        </div>
+      </section>
+
+      {/* ─── MCP ─────────────────────────────────────────────── */}
+      <section className="dark-block" id="mcp">
+        <div className="container-w">
+          <div className="mcp-grid">
+            <div>
+              <div className="block-num block-num-dark">
+                <span className="eyebrow-dot" aria-hidden />
+                For Claude and every AI agent
+              </div>
+              <h2 className="section-title">
+                One connection. <em>Every agent.</em>
+              </h2>
+              <p className="section-lead section-lead-dark">
+                Walkoff runs as an MCP server, the open standard Claude and
+                other AI agents use to call tools. Connect it once and your
+                agent can ask what&apos;s happening, who cares and what to
+                send, then hand the timing to Walkoff.
+              </p>
+              <div className="code-block">
+                <span className="c">{"# Claude Code"}</span>
+                {"\n"}
+                <span className="k">claude</span> mcp add --transport http{" "}
+                <span className="s">walkoff</span>
+                {" \\\n  "}
+                <span className="s">https://mcp.walkoff.io/mcp</span>
+              </div>
+              <ul className="mcp-notes">
+                <li>
+                  <span className="mcp-notes-badge">Early access</span>
+                  Founding brands get the MCP first. Until then we run it for
+                  you.
+                </li>
+                <li>
+                  Works next to the Klaviyo and Shopify MCP servers your agent
+                  may already use.
+                </li>
+                <li>
+                  Your agent plans. Walkoff&apos;s always-on engine fires at
+                  10:47pm when nobody&apos;s at a keyboard.
+                </li>
+              </ul>
+            </div>
+            <div className="mcp-tools">
+              {MCP_TOOLS.map((t) => (
+                <div key={t.name} className="mcp-tool">
+                  <div className="mcp-tool-name">{t.name}</div>
+                  <p className="mcp-tool-body">{t.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── CONTROL ─────────────────────────────────────────── */}
+      <section className="block" id="control">
         <div className="container-w">
           <div className="block-num">
             <span className="eyebrow-dot" aria-hidden />
-            How it works
+            You&apos;re in control
           </div>
           <h2 className="section-title">
-            Three steps. <em>Zero technical lift.</em>
+            You approve. <em>Or you go first.</em>
           </h2>
-          <div className="how-grid">
-            <div>
-              <div className="how-step-num">— 01</div>
-              <div className="how-step-title">Connect Klaviyo</div>
-              <p className="how-step-body">
-                Share your API key (events-write only). We can&apos;t read your
-                lists or send emails. Encrypted at rest.
-              </p>
-              <div className="how-step-visual">
-                <span className="c">{"// Verified"}</span>
-                <br />
-                <span className="k">scope</span>:{" "}
-                <span className="v">&quot;events:write ✓&quot;</span>
+          <div className="control-grid">
+            {CONTROLS.map((c) => (
+              <div key={c.title} className="control-card">
+                <div className="control-title">{c.title}</div>
+                <p className="control-body">{c.body}</p>
               </div>
-            </div>
-            <div>
-              <div className="how-step-num">— 02</div>
-              <div className="how-step-title">We build your setup</div>
-              <p className="how-step-body">
-                We create three segments targeting your buyers, cart abandoners,
-                and browsers, plus a trigger flow, before your next game.
-              </p>
-              <div className="how-step-visual">
-                <span className="k">seg_1</span>:{" "}
-                <span className="v">&quot;Buyers 60d&quot;</span>
-                <br />
-                <span className="k">seg_2</span>:{" "}
-                <span className="v">&quot;Cart Add 14d&quot;</span>
-                <br />
-                <span className="k">seg_3</span>:{" "}
-                <span className="v">&quot;Browsers 30d&quot;</span>
-              </div>
-            </div>
-            <div>
-              <div className="how-step-num">— 03</div>
-              <div className="how-step-title">
-                Moment hits. <BrandSpan /> fires.
-              </div>
-              <p className="how-step-body">
-                We watch the calendar. When your trigger moment occurs, a
-                structured event hits your Klaviyo and your flow activates.
-              </p>
-              <div className="how-step-visual">
-                <span className="k">event</span>:{" "}
-                <span className="v">&quot;[Walkoff] Win&quot;</span>
-                <br />
-                <span className="k">team</span>:{" "}
-                <span className="v">&quot;LAD&quot;</span>{" "}
-                <span className="k">score</span>:{" "}
-                <span className="v">&quot;6-5&quot;</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ─── CASE STUDY ──────────────────────────────────────── */}
+      {/* ─── PROOF ───────────────────────────────────────────── */}
+      <section className="block border-y border-rule bg-paper" id="proof">
+        <div className="container-w">
+          <div className="proof-grid">
+            <div>
+              <div className="block-num">
+                <span className="eyebrow-dot" aria-hidden />
+                Proof
+              </div>
+              <h2 className="section-title">
+                Results you can <em>defend.</em>
+              </h2>
+              <ul className="proof-list">
+                {PROOF_POINTS.map((p) => (
+                  <li key={p.title}>
+                    <span className="proof-check" aria-hidden>
+                      &#10003;
+                    </span>
+                    <div>
+                      <div className="proof-title">{p.title}</div>
+                      <p className="proof-body">{p.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <ResultCard />
+          </div>
+        </div>
+      </section>
+
       {/* ─── INTEGRATIONS ────────────────────────────────────── */}
       <div className="integrations-bar">
         <div className="container-w">
-          <div className="integrations-label">
-            Integrates with your existing stack
-          </div>
+          <div className="integrations-label">Plugs into your existing stack</div>
           <div className="integrations-row">
             <div className="integration-item">
               <Image
@@ -368,7 +562,13 @@ export function MarketingPage() {
               </span>
             </div>
             <div className="integration-item">
-              <div className="integration-name">Custom API</div>
+              <div className="integration-name">MCP &middot; Claude &amp; agents</div>
+              <span className="integration-badge integration-badge-progress">
+                Early Access
+              </span>
+            </div>
+            <div className="integration-item">
+              <div className="integration-name">Webhooks</div>
               <span className="integration-badge integration-badge-soon">
                 Coming Soon
               </span>
@@ -378,118 +578,82 @@ export function MarketingPage() {
       </div>
 
       {/* ─── PRICING ─────────────────────────────────────────── */}
-      <section className="block border-y border-rule bg-paper" id="pricing">
+      <section className="block" id="pricing">
         <div className="container-w">
           <div className="block-num">
             <span className="eyebrow-dot" aria-hidden />
             Pricing
           </div>
-          <h2 className="section-title">
-            One flat rate per league.{" "}
-            <em>Every game. Every trigger.</em>
+          <h2 className="section-title section-title-stack">
+            One flat price per brand. <em>Everything included.</em>
           </h2>
           <p className="section-lead">
-            60 days free. No credit card required.
+            Pick your leagues. Every trigger, every moment category and
+            everything we build next comes with it.
           </p>
-          <div className="pricing-grid">
-            {/* Starter */}
-            <div className="pricing-card">
-              <div className="pricing-tier">— Starter</div>
-              <div className="pricing-name">Single Team</div>
-              <div className="pricing-price">
-                $149<span className="pricing-freq">/mo</span>
+          <div className="pricing-layout">
+            <PricingPicker />
+            <div className="pricing-side">
+              <div className="pricing-side-card pricing-side-dark">
+                <div className="pricing-tier">&mdash; Agencies</div>
+                <div className="pricing-side-h">Running several brands?</div>
+                <p className="pricing-side-p">
+                  One onboarding, one bill, every brand on its own affinity
+                  map. Tell us how many brands you run and we&apos;ll price it.
+                </p>
+                <a href="mailto:hello@walkoff.io?subject=Walkoff%20for%20agencies" className="btn-primary">
+                  <span>Talk to us</span>
+                </a>
               </div>
-              <div className="pricing-billed">$1,430/yr (save 20%)</div>
-              <ul className="pricing-features">
-                <li>One team, one league</li>
-                <li>All triggers included</li>
-                <li>Klaviyo integration</li>
-                <li>Segments + flow built</li>
-                <li className="dim">Multi-league</li>
-                <li className="dim">SMS integrations</li>
-              </ul>
-              <a href="#form" className="btn-ghost block text-center">
-                <span>Get Early Access</span>
-              </a>
-            </div>
-
-            {/* Growth (featured) */}
-            <div className="pricing-card pricing-card-feat">
-              <div className="pricing-tier">— Growth</div>
-              <div className="pricing-name">Single League</div>
-              <div className="pricing-price">
-                $299<span className="pricing-freq">/mo</span>
+              <div className="pricing-side-card">
+                <div className="pricing-tier">&mdash; Every plan</div>
+                <ul className="pricing-side-list">
+                  <li>{PRICING.trialDays} days free</li>
+                  <li>No credit card to start</li>
+                  <li>Cancel anytime</li>
+                  <li>
+                    Save {PRICING.annualDiscount * 100}% when you pay yearly
+                  </li>
+                </ul>
               </div>
-              <div className="pricing-billed">$2,870/yr (save 20%)</div>
-              <ul className="pricing-features">
-                <li>All teams, one league</li>
-                <li>All triggers included</li>
-                <li>Klaviyo integration</li>
-                <li>Segments + flow built</li>
-                <li>Priority support</li>
-                <li className="dim">SMS integrations</li>
-              </ul>
-              <a href="#form" className="btn-green block text-center">
-                <span>Get Early Access</span>
-              </a>
             </div>
-
-            {/* Pro */}
-            <div className="pricing-card">
-              <div className="pricing-tier">— Pro</div>
-              <div className="pricing-name">Multi-League</div>
-              <div className="pricing-price">
-                $499<span className="pricing-freq">/mo</span>
-              </div>
-              <div className="pricing-billed">$4,790/yr (save 20%)</div>
-              <ul className="pricing-features">
-                <li>All teams, all leagues</li>
-                <li>All triggers included</li>
-                <li>Klaviyo + SMS (when live)</li>
-                <li>Flows built per league</li>
-                <li>Onboarding session</li>
-                <li>Custom trigger config</li>
-              </ul>
-              <a href="#form" className="btn-ghost block text-center">
-                <span>Get Early Access</span>
-              </a>
-            </div>
-          </div>
-          <div className="pricing-note">
-            60-day free trial &middot; No credit card &middot; Cancel anytime
           </div>
         </div>
       </section>
 
       {/* ─── FORM ────────────────────────────────────────────── */}
-      <section className="block" id="form">
+      <section className="block border-y border-rule bg-paper" id="form">
         <div className="container-w">
           <div className="form-grid">
             <div>
               <div className="block-num">
                 <span className="eyebrow-dot" aria-hidden />
-                Early Access
+                Early access
               </div>
               <h2 className="form-left-title">
-                Free for <em>60 days.</em>
+                Founding brands <em>go first.</em>
               </h2>
               <p className="form-left-body">
-                We onboard manually. Tell us your team and we handle the rest:
-                segments, flow, and the first 5 triggers fired by us. You collect
-                the data.
+                We onboard by hand during early access. Tell us about your
+                brand and we&apos;ll build your affinity map, connect your
+                platform and set up your first moments for you.
               </p>
               <ul className="form-perks">
                 <li>
                   <span className="form-perks-check">✓</span>
-                  Klaviyo segments + trigger flow built for you
+                  Done for you, start to finish
                 </li>
                 <li>
                   <span className="form-perks-check">✓</span>
-                  First 5 triggers fired manually. We watch the games.
+                  Your affinity map before your first moment
                 </li>
                 <li>
                   <span className="form-perks-check">✓</span>
-                  Works with or without a sports license
+                  Approval on every send until you say otherwise
+                </li>
+                <li>
+                  <span className="form-perks-check">✓</span>
+                  {PRICING.trialDays} days free, no credit card
                 </li>
               </ul>
             </div>
@@ -502,7 +666,7 @@ export function MarketingPage() {
       </section>
 
       {/* ─── FAQ ─────────────────────────────────────────────── */}
-      <section className="block border-y border-rule bg-paper" id="faq">
+      <section className="block" id="faq">
         <div className="container-narrow">
           <div className="block-num">
             <span className="eyebrow-dot" aria-hidden />
@@ -512,36 +676,59 @@ export function MarketingPage() {
             Questions <em>people actually ask.</em>
           </h2>
 
-          <FaqItem num="01" question="Do I need a sports license?" defaultOpen>
-            No. Licensed DTC brands are our primary ICP, but any business with
-            customers in a sports city qualifies: restaurants, bars, dispensaries,
-            local retail. Anyone with an email list and customers who follow the
-            home team.
+          <FaqItem num="01" question="Who is Walkoff for?" defaultOpen>
+            Any brand whose customers have a team, a hometown or a season:
+            licensed apparel brands, local bars and restaurants, everyday DTC
+            brands, and the agencies that run them. You don&apos;t need a
+            sports license to use Walkoff. What your messages say about teams
+            is up to you, so leave team logos and trademarks out unless
+            you&apos;re licensed.
           </FaqItem>
-          <FaqItem num="02" question={<>Does <BrandSpan /> send the emails?</>}>
-            Never. <BrandSpan /> fires events into Klaviyo as custom metrics.
-            Klaviyo handles all sending, suppression, and deliverability. We
-            can&apos;t read your lists, send campaigns, or access subscriber data.
+          <FaqItem num="02" question="What do I upload?">
+            A spreadsheet of counts: postal code, product category, number of
+            customers and revenue. No names, no emails. Our export guides walk
+            you through pulling it from Shopify or Klaviyo in a few minutes.
           </FaqItem>
-          <FaqItem num="03" question="How fast does a trigger fire?">
-            During the beta we fire manually, typically 8 to 15 minutes after the
-            moment. The full platform fires automatically within 2–5 minutes via
-            real-time sports data.
+          <FaqItem num="03" question={<>Does <BrandSpan /> send the messages?</>}>
+            Your email or SMS platform does. Walkoff tells it when to send and
+            which segment gets it, so your deliverability, unsubscribes and
+            suppression rules stay exactly as they are.
           </FaqItem>
-          <FaqItem num="04" question="What happens after 60 days?">
-            You&apos;ll have real attribution data. We talk through what worked and
-            whether the paid tier makes sense. No auto-renewal. Plans start at
-            $149/month.
+          <FaqItem num="04" question="What's MCP, and do I need it?">
+            MCP (Model Context Protocol) is the open standard AI agents like
+            Claude use to call outside tools. You don&apos;t need it: during
+            early access we run everything for you. If your team already works
+            with Claude or another agent, you can plug Walkoff straight in.
           </FaqItem>
-          <FaqItem num="05" question="Is my Klaviyo key safe?">
-            Yes. Keys are encrypted at rest and we use events-write scope only.{" "}
-            <BrandSpan /> can push custom metric events but cannot read lists,
-            send campaigns, or access subscriber data.
+          <FaqItem num="05" question="How fast does a trigger fire?">
+            During early access we confirm every moment by hand, usually
+            within 15 minutes. Automated triggers are built to fire within a
+            few minutes of the final whistle, and auto-fire rules skip the wait
+            for approval.
           </FaqItem>
-          <FaqItem num="06" question="Which leagues do you support?">
-            Currently MLB, NHL, NCAA Football, and NCAA Basketball. NFL and NBA
-            are on the roadmap for fall 2026. If you have a license for a league
-            not listed, reach out. We&apos;ll see what we can do.
+          <FaqItem num="06" question="Which leagues are covered?">
+            NFL, NBA, NHL, NCAA football and basketball, and the Premier
+            League, with MLB from Opening Day 2027. Need a league that
+            isn&apos;t listed? Ask. It&apos;s usually quick to add.
+          </FaqItem>
+          <FaqItem num="07" question="How do you prove it worked?">
+            Every moment holds back a small random slice of the audience.
+            Comparing the two groups shows what the message actually added,
+            not just who clicked. Each send also carries its own tracking,
+            matched to your orders.
+          </FaqItem>
+          <FaqItem num="08" question="Is my data safe?">
+            We work from counts, not customer lists, so there&apos;s no email
+            address to leak. We ask for the narrowest API access that works,
+            encrypt keys, and wall off each brand&apos;s data from every other
+            brand&apos;s.
+          </FaqItem>
+          <FaqItem num="09" question="What does it cost?">
+            ${PRICING.firstLeague} a month per brand, including one league.
+            Each extra league is ${PRICING.extraLeague}, and every league
+            together is ${PRICING.allLeagues}. Every trigger, category and
+            feature we ship is included. {PRICING.trialDays} days free, no
+            credit card.
           </FaqItem>
         </div>
       </section>
@@ -558,7 +745,7 @@ export function MarketingPage() {
               className="prefooter-logo"
             />
           </div>
-          <h2 className="final-cta-h whitespace-nowrap">Stop missing your moment.</h2>
+          <h2 className="final-cta-h">Be first to the moment.</h2>
           <div className="final-cta-actions">
             <a href="#form" className="btn-primary">
               <span>Claim Early Access, Free</span>
@@ -568,74 +755,13 @@ export function MarketingPage() {
             </a>
           </div>
           <p className="final-cta-foot">
-            No credit card &middot; 60 days free &middot; We do the setup
+            No credit card &middot; {PRICING.trialDays} days free &middot; We
+            do the setup
           </p>
         </div>
       </section>
 
-      {/* ─── FOOTER ──────────────────────────────────────────── */}
-      <footer className="site-footer">
-        <div className="container-w">
-          <div className="footer-grid">
-            <div>
-              <div className="footer-mark">
-                <Image
-                  src="/walkoff_logo_white_v2.png"
-                  alt="WALKOFF."
-                  width={1539}
-                  height={367}
-                  className="footer-logo"
-                />
-              </div>
-              <p className="footer-tagline">
-                The sports moment marketing layer for licensed DTC brands.
-              </p>
-            </div>
-            <div className="footer-col">
-              <div className="footer-col-title">Product</div>
-              <ul>
-                <li>
-                  <a href="#how">How it works</a>
-                </li>
-                <li>
-                  <a href="#triggers">Triggers</a>
-                </li>
-                <li>
-                  <a href="#pricing">Pricing</a>
-                </li>
-                <li>
-                  <a href="#form">Early Access</a>
-                </li>
-                <li>
-                  <a href="#faq">FAQ</a>
-                </li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <div className="footer-col-title">Company</div>
-              <ul>
-                <li>
-                  <a href="#">Security</a>
-                </li>
-                <li>
-                  <a href="#">Privacy</a>
-                </li>
-                <li>
-                  <a href="#">Terms</a>
-                </li>
-                <li>
-                  <a href="mailto:hello@walkoff.io">Contact</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <span>© 2026 <BrandSpan /> · A Tuff Ghost Media product</span>
-            <span>San Clemente, California</span>
-            <span>walkoff.io</span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

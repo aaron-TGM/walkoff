@@ -1,7 +1,19 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+import { LEAGUE_IDS, LEAGUES } from "@/lib/leagues";
 import { getServiceSupabase } from "@/lib/supabase";
+import { PLATFORMS, ROLES, type WaitlistSubmission } from "@/lib/waitlist";
+
+const MAX_LEN = 300;
+
+function str(v: unknown): string {
+  return typeof v === "string" ? v.trim().slice(0, MAX_LEN) : "";
+}
+
+function oneOf<T extends string>(v: string, options: readonly T[]): T | null {
+  return (options as readonly string[]).includes(v) ? (v as T) : null;
+}
 
 export async function POST(req: Request) {
   let body: unknown;
@@ -15,48 +27,71 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
-  const { company, email, league, team } = body as Record<string, unknown>;
+  const raw = body as Record<string, unknown>;
 
-  const requiredFields = [company, email, league, team];
-  if (requiredFields.some((v) => typeof v !== "string" || !String(v).trim())) {
+  // Honeypot filled in: pretend it worked so bots don't retry.
+  if (str(raw.fax)) {
+    return NextResponse.json({ ok: true });
+  }
+
+  const role = oneOf(str(raw.role), ROLES);
+  const platform = oneOf(str(raw.platform), PLATFORMS);
+  const submission: WaitlistSubmission | null =
+    role && platform
+      ? {
+          company: str(raw.company),
+          email: str(raw.email).toLowerCase(),
+          website: str(raw.website),
+          role,
+          platform,
+          leagues: Array.isArray(raw.leagues)
+            ? raw.leagues.filter(
+                (l): l is string => typeof l === "string" && LEAGUE_IDS.has(l),
+              )
+            : [],
+          teams: str(raw.teams),
+        }
+      : null;
+
+  if (!submission || !submission.company || !submission.email) {
     return NextResponse.json(
-      { error: "All fields are required" },
+      { error: "Please fill in your brand, email, role and email platform." },
       { status: 400 },
     );
   }
 
-  const companyStr = String(company).trim();
-  const emailStr = String(email).trim().toLowerCase();
-  const leagueStr = String(league).trim();
-  const teamStr = String(team).trim();
-
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr)) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(submission.email)) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
   }
 
-  let supabase;
+  const leagueNames = submission.leagues
+    .map((id) => LEAGUES.find((l) => l.id === id)?.name ?? id)
+    .join(", ");
+
+  // Save to Supabase, but never lose a lead over it: if the insert fails,
+  // the notification email below still carries every field.
+  let saved = false;
   try {
-    supabase = getServiceSupabase();
+    const supabase = getServiceSupabase();
+    const { error } = await supabase.from("waitlist").insert({
+      company: submission.company,
+      email: submission.email,
+      website: submission.website || null,
+      role: submission.role,
+      platform: submission.platform,
+      leagues: submission.leagues,
+      teams: submission.teams || null,
+      // Legacy columns from the first waitlist schema.
+      league: leagueNames || null,
+      team: submission.teams || null,
+    });
+    if (error) throw error;
+    saved = true;
   } catch (e) {
-    console.error(e);
-    return NextResponse.json(
-      { error: "Server configuration error" },
-      { status: 500 },
-    );
+    console.error("Waitlist insert failed", e);
   }
 
-  const { error: dbError } = await supabase.from("waitlist").insert({
-    company: companyStr,
-    email: emailStr,
-    league: leagueStr,
-    team: teamStr,
-  });
-
-  if (dbError) {
-    console.error(dbError);
-    return NextResponse.json({ error: "Could not save submission" }, { status: 500 });
-  }
-
+  let notified = false;
   const resendKey = process.env.RESEND_API_KEY;
   const notifyTo = process.env.NOTIFICATION_EMAIL;
   const from =
@@ -65,21 +100,37 @@ export async function POST(req: Request) {
   if (resendKey && notifyTo) {
     try {
       const resend = new Resend(resendKey);
-      await resend.emails.send({
+      const { error } = await resend.emails.send({
         from,
         to: notifyTo,
-        subject: `New Walkoff waitlist submission — ${companyStr}`,
+        replyTo: submission.email,
+        subject: `New Walkoff early access: ${submission.company} (${submission.role})`,
         text: [
-          `Company: ${companyStr}`,
-          `Email: ${emailStr}`,
-          `League: ${leagueStr}`,
-          `Team: ${teamStr}`,
+          `Company: ${submission.company}`,
+          `Email: ${submission.email}`,
+          `Website: ${submission.website || "-"}`,
+          `Role: ${submission.role}`,
+          `Platform: ${submission.platform}`,
+          `Leagues: ${leagueNames || "-"}`,
+          `Teams / markets: ${submission.teams || "-"}`,
+          "",
+          saved
+            ? "Saved to Supabase."
+            : "NOT saved to Supabase (insert failed). This email is the only record.",
         ].join("\n"),
       });
+      if (error) throw error;
+      notified = true;
     } catch (e) {
       console.error("Resend failed", e);
-      // brief: still success if DB worked
     }
+  }
+
+  if (!saved && !notified) {
+    return NextResponse.json(
+      { error: "Could not save your request. Please email hello@walkoff.io." },
+      { status: 500 },
+    );
   }
 
   return NextResponse.json({ ok: true });
