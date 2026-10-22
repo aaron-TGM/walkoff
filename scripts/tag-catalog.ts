@@ -1,0 +1,183 @@
+// Tags a catalog with Claude: a brand's saved products, or a product export
+// on disk.
+//
+//   npm run affinity:tag -- --brand <brand id or upload token>
+//   npm run affinity:tag -- --file products.csv [--out tags.json]
+//
+// --brand saves Claude's tags and refreshes the brand's report (add
+// --dry-run to only look). --file prints what Claude found next to the
+// keyword rules and saves nothing. Needs ANTHROPIC_API_KEY, or a profile
+// from `ant auth login`.
+import "./lib/env";
+import { readFileSync, writeFileSync } from "node:fs";
+import { parseArgs } from "node:util";
+import Anthropic from "@anthropic-ai/sdk";
+import Papa from "papaparse";
+import {
+  claudeSend,
+  DEFAULT_MODEL,
+  EFFORTS,
+  estimateCost,
+  tagWithClaude,
+  type Effort,
+  type ProductInput,
+  type TagRun,
+} from "../lib/affinity/claude-tagger";
+import { TEAM_HOMES } from "../lib/affinity/geo";
+import { detectFormat, formatKind, parseCatalog, type Row } from "../lib/affinity/imports";
+import { findBrand, loadCatalog, recomputeReport, saveClaudeTags } from "../lib/affinity/store";
+import { tagProduct, type ProductTags, type TeamTag } from "../lib/affinity/tagging";
+import { scriptDb } from "./lib/db";
+
+const { values: args } = parseArgs({
+  options: {
+    brand: { type: "string" },
+    file: { type: "string" },
+    out: { type: "string" },
+    all: { type: "boolean", default: false },
+    "dry-run": { type: "boolean", default: false },
+    limit: { type: "string" },
+    model: { type: "string", default: process.env.WALKOFF_TAG_MODEL || DEFAULT_MODEL },
+    effort: { type: "string", default: process.env.WALKOFF_TAG_EFFORT || "medium" },
+    "batch-size": { type: "string", default: "25" },
+    concurrency: { type: "string", default: "4" },
+  },
+});
+
+function usage(message: string): never {
+  console.error(`${message}
+
+  npm run affinity:tag -- --brand <brand id or upload token> [--all] [--dry-run] [--limit N]
+  npm run affinity:tag -- --file products.csv [--out tags.json] [--limit N]
+
+  --all          re-tag products Claude already tagged
+  --model        default ${DEFAULT_MODEL} (or WALKOFF_TAG_MODEL)
+  --effort       ${EFFORTS.join(", ")}; default medium (or WALKOFF_TAG_EFFORT)`);
+  process.exit(1);
+}
+
+const abbr = new Map(Object.entries(TEAM_HOMES).flatMap(([league, teams]) => teams.map((t) => [`${league}:${t.id}`, t.abbr])));
+const teamKey = (t: TeamTag) => `${t.league}:${t.teamId}`;
+const label = (t: TeamTag) => `${abbr.get(teamKey(t)) ?? t.name} (${t.league})`;
+
+function readCatalogFile(path: string): ProductInput[] {
+  const parsed = Papa.parse<Row>(readFileSync(path, "utf8"), { header: true, skipEmptyLines: "greedy" });
+  const format = detectFormat(parsed.meta.fields ?? []);
+  if (!format || formatKind(format) !== "catalog") usage(`${path} doesn't look like a product export.`);
+  return parseCatalog(format, parsed.data);
+}
+
+/** What Claude changed versus the keyword rules, one line per product. */
+function printChanges(products: ProductInput[], run: TagRun) {
+  let changed = 0;
+  for (const p of products) {
+    const claude = run.tags.get(p.handle);
+    if (!claude) continue;
+    const rules = tagProduct(p).teams;
+    const ruleKeys = new Set(rules.map(teamKey));
+    const claudeKeys = new Set(claude.teams.map(teamKey));
+    const added = claude.teams.filter((t) => !ruleKeys.has(teamKey(t)));
+    const removed = rules.filter((t) => !claudeKeys.has(teamKey(t)));
+    if (!added.length && !removed.length && !claude.interests.length) continue;
+    changed++;
+    const parts = [
+      ...added.map((t) => `+${label(t)}: ${t.why ?? ""}`),
+      ...removed.map((t) => `-${label(t)}`),
+      ...(claude.interests.length ? [`interests: ${claude.interests.join(", ")}`] : []),
+    ];
+    console.log(`  ${p.title}\n    ${parts.join("\n    ")}`);
+  }
+  if (!changed) console.log("  Claude agreed with the keyword rules on every product.");
+}
+
+function printSummary(products: ProductInput[], run: TagRun, model: string) {
+  const withTeams = [...run.tags.values()].filter((t) => t.teams.length).length;
+  const withInterests = [...run.tags.values()].filter((t) => t.interests.length).length;
+  const prompt = run.usage.input + run.usage.cacheRead + run.usage.cacheWrite;
+  const cost = estimateCost(model, run.usage);
+  console.log(
+    [
+      "",
+      `Tagged ${run.tags.size} of ${products.length} products: ${withTeams} to a team, ${withInterests} to an interest.`,
+      run.failed.length ? `Not tagged this run (they keep their rule tags): ${run.failed.length}.` : "",
+      run.unknownKeys.length ? `Dropped team keys that aren't ours: ${[...new Set(run.unknownKeys)].join(", ")}.` : "",
+      `${run.requests} request${run.requests === 1 ? "" : "s"} to ${[...run.models].join(", ") || model}, ${prompt.toLocaleString()} prompt tokens` +
+        ` (${prompt ? Math.round((run.usage.cacheRead / prompt) * 100) : 0}% from cache), ${run.usage.output.toLocaleString()} output tokens` +
+        (cost === null ? "." : `, about $${cost.toFixed(2)}.`),
+    ]
+      .filter(Boolean)
+      .join("\n"),
+  );
+}
+
+async function main() {
+  if (!args.brand === !args.file) usage("Pass --brand or --file.");
+  const effort = args.effort as Effort;
+  if (!EFFORTS.includes(effort)) usage(`--effort must be one of ${EFFORTS.join(", ")}.`);
+  const limit = args.limit ? Number(args.limit) : Infinity;
+
+  const db = args.brand ? scriptDb() : null;
+  const brand = db && args.brand ? await findBrand(db, args.brand) : null;
+  if (db && !brand) usage(`No brand with id or upload token ${args.brand}.`);
+
+  let products: ProductInput[];
+  if (db && brand) {
+    const saved = await loadCatalog(db, brand.id);
+    if (!saved.length) usage(`${brand.name} has no products yet. They upload them in step 2 of their upload page.`);
+    products = saved.filter((p) => args.all || p.taggedBy !== "claude");
+    console.log(`${brand.name}: ${saved.length} products, ${products.length} to tag${args.all ? "" : " (--all re-tags the rest)"}.`);
+  } else {
+    products = readCatalogFile(args.file!);
+    console.log(`${args.file}: ${products.length} products.`);
+  }
+  products = products.slice(0, limit);
+  if (!products.length) return console.log("Nothing to tag.");
+
+  const run = await tagWithClaude(products, {
+    send: claudeSend({ model: args.model, effort }),
+    batchSize: Number(args["batch-size"]),
+    concurrency: Number(args.concurrency),
+    onProgress: (done, total) => process.stderr.write(`\r  ${done}/${total} products`),
+    log: (line) => process.stderr.write(`\n  ${line}\n`),
+  });
+  process.stderr.write("\n");
+
+  console.log("\nWhat Claude changed from the keyword rules:");
+  printChanges(products, run);
+  printSummary(products, run, args.model!);
+
+  if (args.out) {
+    const out = products.flatMap((p) => {
+      const tags = run.tags.get(p.handle);
+      return tags ? [{ handle: p.handle, title: p.title, ...tags }] : [];
+    });
+    writeFileSync(args.out, `${JSON.stringify(out, null, 2)}\n`);
+    console.log(`Wrote ${out.length} products to ${args.out}.`);
+  }
+
+  if (!db || !brand) return;
+  if (args["dry-run"]) return console.log("Dry run: nothing saved.");
+  const tagged = products.flatMap((p) => {
+    const tags: ProductTags | undefined = run.tags.get(p.handle);
+    return tags ? [{ handle: p.handle, title: p.title, tags }] : [];
+  });
+  await saveClaudeTags(db, brand, tagged);
+  const report = await recomputeReport(db, brand);
+  console.log(
+    `Saved ${tagged.length} products.` +
+      (report ? ` Report refreshed: ${report.standouts.length} standout territories.` : " No report yet: the brand hasn't uploaded customers."),
+  );
+}
+
+main().catch((err) => {
+  if (err instanceof Anthropic.AuthenticationError || err instanceof Anthropic.PermissionDeniedError) {
+    console.error(`\nClaude rejected the credentials (${err.status}). Set ANTHROPIC_API_KEY in .env.local, or run \`ant auth login\`.`);
+  } else if (err instanceof Anthropic.APIError) {
+    console.error(`\nThe Claude API stopped the run (${err.status ?? "no response"}): ${err.message}`);
+  } else if (err instanceof Anthropic.AnthropicError) {
+    console.error(`\n${err.message}`);
+  } else {
+    console.error(err);
+  }
+  process.exit(1);
+});

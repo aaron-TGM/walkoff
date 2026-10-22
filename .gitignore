@@ -34,3 +34,6 @@ npm-debug.log*
 # moment engine bundle
 /dist/
 *.tsbuildinfo
+
+# downloaded reference data (scripts/build-geo.ts)
+/.cache/
