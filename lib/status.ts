@@ -20,6 +20,8 @@ export interface StatusReport {
   leagues: CheckResult[];
   platform: CheckResult[];
   integrations: CheckResult[];
+  /** One row per league from the moment engine, or null before it runs. */
+  engine: CheckResult[] | null;
 }
 
 const FEED_BASE = "https://site.api.espn.com/apis/site/v2/sports";
@@ -130,8 +132,76 @@ async function checkNotifications(): Promise<CheckResult> {
   );
 }
 
+function ago(ms: number): string {
+  const s = Math.max(0, Math.round(ms / 1000));
+  if (s < 90) return `${s}s ago`;
+  const m = Math.round(s / 60);
+  if (m < 90) return `${m}m ago`;
+  return `${Math.round(m / 60)}h ago`;
+}
+
+export interface HeartbeatRow {
+  league: string;
+  last_poll_at: string | null;
+  last_ok_at: string | null;
+  last_error: string | null;
+  live_games: number;
+  consecutive_failures: number;
+}
+
+/** One status row per league from the engine's heartbeats. The engine polls
+ *  at least every 5 minutes, so 15 minutes without a good poll is down. */
+export function engineChecks(
+  rows: HeartbeatRow[],
+  momentsToday: Map<string, number>,
+  now: number,
+): CheckResult[] {
+  const byLeague = new Map(rows.map((r) => [r.league, r]));
+  return LEAGUES.filter((l) => byLeague.has(l.id)).map((l) => {
+    const r = byLeague.get(l.id)!;
+    const sinceOk = r.last_ok_at ? now - Date.parse(r.last_ok_at) : Infinity;
+    const moments = momentsToday.get(l.id) ?? 0;
+    const state: CheckState =
+      sinceOk > 15 * 60_000 ? "down" : r.consecutive_failures > 0 ? "degraded" : "operational";
+    const lastPoll = r.last_poll_at ?? r.last_ok_at;
+    const detail =
+      state === "operational" && lastPoll
+        ? `Polled ${ago(now - Date.parse(lastPoll))} · ${r.live_games} live · ${moments} ${moments === 1 ? "moment" : "moments"} today`
+        : `Last good poll ${r.last_ok_at ? ago(sinceOk) : "never"}${r.last_error ? ` · ${r.last_error}` : ""}`;
+    return { id: `engine-${l.id}`, name: `${l.name} moments`, state, detail };
+  });
+}
+
+async function checkEngine(): Promise<CheckResult[] | null> {
+  let supabase;
+  try {
+    supabase = getServiceSupabase();
+  } catch {
+    return null;
+  }
+  try {
+    const startOfDay = new Date();
+    startOfDay.setUTCHours(0, 0, 0, 0);
+    const [beats, today] = await Promise.all([
+      supabase
+        .from("engine_heartbeats")
+        .select("league, last_poll_at, last_ok_at, last_error, live_games, consecutive_failures"),
+      supabase.from("moments").select("league").gte("detected_at", startOfDay.toISOString()),
+    ]);
+    // No table yet, or the engine has never run.
+    if (beats.error || !beats.data?.length) return null;
+    const momentsToday = new Map<string, number>();
+    for (const m of today.data ?? []) {
+      momentsToday.set(m.league, (momentsToday.get(m.league) ?? 0) + 1);
+    }
+    return engineChecks(beats.data as HeartbeatRow[], momentsToday, Date.now());
+  } catch {
+    return null;
+  }
+}
+
 export async function runStatusChecks(): Promise<StatusReport> {
-  const [leagues, platform, integrations] = await Promise.all([
+  const [leagues, platform, integrations, engine] = await Promise.all([
     Promise.all(LEAGUES.map(checkLeague)),
     Promise.all([
       Promise.resolve<CheckResult>({
@@ -151,12 +221,18 @@ export async function runStatusChecks(): Promise<StatusReport> {
         "Reachable from Walkoff",
       ),
     ]),
+    checkEngine(),
   ]);
-  return { checkedAt: new Date().toISOString(), leagues, platform, integrations };
+  return { checkedAt: new Date().toISOString(), leagues, platform, integrations, engine };
 }
 
 export function overallState(report: StatusReport): CheckState {
-  const all = [...report.leagues, ...report.platform, ...report.integrations];
+  const all = [
+    ...report.leagues,
+    ...report.platform,
+    ...report.integrations,
+    ...(report.engine ?? []),
+  ];
   if (all.some((c) => c.state === "down")) return "down";
   if (all.some((c) => c.state === "degraded")) return "degraded";
   return "operational";

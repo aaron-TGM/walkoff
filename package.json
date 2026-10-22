@@ -6,7 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "engine:dev": "tsx watch engine/main.ts",
+    "engine:once": "ONCE=1 tsx engine/main.ts",
+    "engine:test": "tsx --test \"engine/**/*.test.ts\"",
+    "engine:build": "esbuild engine/main.ts --bundle --platform=node --target=node22 --format=cjs --outfile=dist/engine.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
@@ -21,10 +25,12 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
+    "esbuild": "^0.28.2",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

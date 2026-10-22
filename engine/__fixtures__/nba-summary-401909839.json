@@ -1,0 +1,2231 @@
+{
+ "header": {
+  "id": "401909839"
+ },
+ "plays": [
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "11:25"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 2,
+   "awayScore": 0,
+   "team": {
+    "id": "3"
+   },
+   "text": "Yves Missi makes 1-foot dunk"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "11:11"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 2,
+   "awayScore": 2,
+   "team": {
+    "id": "11"
+   },
+   "text": "Kelly Oubre Jr. makes 11-foot pullup jump shot (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "10:56"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 4,
+   "awayScore": 2,
+   "team": {
+    "id": "3"
+   },
+   "text": "Trey Murphy III makes alley oop dunk (Zion Williamson assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "10:42"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 4,
+   "awayScore": 3,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "10:42"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 4,
+   "awayScore": 4,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "10:30"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 7,
+   "awayScore": 4,
+   "team": {
+    "id": "3"
+   },
+   "text": "Jeremiah Fears makes 27-foot three point jumper (Dejounte Murray assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "10:13"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 7,
+   "awayScore": 5,
+   "team": {
+    "id": "11"
+   },
+   "text": "Ivica Zubac makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "10:13"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 7,
+   "awayScore": 6,
+   "team": {
+    "id": "11"
+   },
+   "text": "Ivica Zubac makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "10:02"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 9,
+   "awayScore": 6,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes driving layup (Dejounte Murray assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "10:02"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 10,
+   "awayScore": 6,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes free throw 1 of 1"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "9:50"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 10,
+   "awayScore": 8,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes 4-foot two point shot (Andrew Nembhard assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "9:39"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 11,
+   "awayScore": 8,
+   "team": {
+    "id": "3"
+   },
+   "text": "Jeremiah Fears makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "9:18"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 11,
+   "awayScore": 10,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes 12-foot pullup jump shot"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "8:57"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 11,
+   "awayScore": 13,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes 25-foot three pointer"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "8:20"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 14,
+   "awayScore": 13,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes 23-foot three point jumper (Yves Missi assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "7:51"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 14,
+   "awayScore": 15,
+   "team": {
+    "id": "11"
+   },
+   "text": "Ivica Zubac makes running dunk (Kelly Oubre Jr. assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "7:14"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 14,
+   "awayScore": 17,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes running layup"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "6:56"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 14,
+   "awayScore": 19,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes running layup"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "6:56"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 14,
+   "awayScore": 20,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes free throw 1 of 1"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "6:12"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 14,
+   "awayScore": 23,
+   "team": {
+    "id": "11"
+   },
+   "text": "Obi Toppin makes 23-foot three point jumper (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "5:53"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 16,
+   "awayScore": 23,
+   "team": {
+    "id": "3"
+   },
+   "text": "Yves Missi makes alley oop dunk (Bennedict Mathurin assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "4:55"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 18,
+   "awayScore": 23,
+   "team": {
+    "id": "3"
+   },
+   "text": "Bennedict Mathurin makes 10-foot driving floating jump shot"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "4:41"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 18,
+   "awayScore": 25,
+   "team": {
+    "id": "11"
+   },
+   "text": "Ivica Zubac makes 2-foot hook shot (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "4:03"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 19,
+   "awayScore": 25,
+   "team": {
+    "id": "3"
+   },
+   "text": "Bennedict Mathurin makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "4:03"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 20,
+   "awayScore": 25,
+   "team": {
+    "id": "3"
+   },
+   "text": "Bennedict Mathurin makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "3:24"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 20,
+   "awayScore": 26,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "3:24"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 20,
+   "awayScore": 27,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "3:10"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 22,
+   "awayScore": 27,
+   "team": {
+    "id": "3"
+   },
+   "text": "Saddiq Bey makes 12-foot fade away jump shot"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "2:55"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 22,
+   "awayScore": 28,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "2:41"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 25,
+   "awayScore": 28,
+   "team": {
+    "id": "3"
+   },
+   "text": "Saddiq Bey makes 24-foot three point jumper (Bennedict Mathurin assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "2:19"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 25,
+   "awayScore": 30,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes tip shot"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "1:56"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 25,
+   "awayScore": 33,
+   "team": {
+    "id": "11"
+   },
+   "text": "Jarace Walker makes 25-foot running jump shot (Andrew Nembhard assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "1:36"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 26,
+   "awayScore": 33,
+   "team": {
+    "id": "3"
+   },
+   "text": "Jordan Poole makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "1:36"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 27,
+   "awayScore": 33,
+   "team": {
+    "id": "3"
+   },
+   "text": "Jordan Poole makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "1:17"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 29,
+   "awayScore": 33,
+   "team": {
+    "id": "3"
+   },
+   "text": "Bennedict Mathurin makes 1-foot reverse layup (Derik Queen assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "51.9"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 30,
+   "awayScore": 33,
+   "team": {
+    "id": "3"
+   },
+   "text": "Jordan Poole makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "51.9"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 31,
+   "awayScore": 33,
+   "team": {
+    "id": "3"
+   },
+   "text": "Jordan Poole makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "37.2"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 31,
+   "awayScore": 35,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes 23-foot jumper (Andrew Nembhard assists)"
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "16.5"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 31,
+   "awayScore": 38,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes 26-foot three point jumper (Andrew Nembhard assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "11:39"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 33,
+   "awayScore": 38,
+   "team": {
+    "id": "3"
+   },
+   "text": "Herbert Jones makes two point shot"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "11:11"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 35,
+   "awayScore": 38,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes 8-foot pullup jump shot (Jordan Poole assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "10:03"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 36,
+   "awayScore": 38,
+   "team": {
+    "id": "3"
+   },
+   "text": "Derik Queen makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "10:03"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 37,
+   "awayScore": 38,
+   "team": {
+    "id": "3"
+   },
+   "text": "Derik Queen makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "9:35"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 38,
+   "awayScore": 38,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "9:35"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 39,
+   "awayScore": 38,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "8:27"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 41,
+   "awayScore": 38,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes 9-foot two point shot"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "8:12"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 42,
+   "awayScore": 38,
+   "team": {
+    "id": "3"
+   },
+   "text": "Yves Missi makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "8:12"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 43,
+   "awayScore": 38,
+   "team": {
+    "id": "3"
+   },
+   "text": "Yves Missi makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "7:29"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 43,
+   "awayScore": 41,
+   "team": {
+    "id": "11"
+   },
+   "text": "Obi Toppin makes 25-foot three point jumper (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "6:46"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 44,
+   "awayScore": 41,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "6:46"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 45,
+   "awayScore": 41,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "6:19"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 45,
+   "awayScore": 42,
+   "team": {
+    "id": "11"
+   },
+   "text": "Obi Toppin makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "5:53"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 45,
+   "awayScore": 44,
+   "team": {
+    "id": "11"
+   },
+   "text": "Obi Toppin makes driving layup (Andrew Nembhard assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "5:53"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 45,
+   "awayScore": 45,
+   "team": {
+    "id": "11"
+   },
+   "text": "Obi Toppin makes free throw 1 of 1"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "5:27"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 45,
+   "awayScore": 48,
+   "team": {
+    "id": "11"
+   },
+   "text": "Obi Toppin makes 23-foot running jump shot (Kelly Oubre Jr. assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "4:59"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 48,
+   "awayScore": 48,
+   "team": {
+    "id": "3"
+   },
+   "text": "Trey Murphy III makes 26-foot three point jumper (Yves Missi assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "4:31"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 49,
+   "awayScore": 48,
+   "team": {
+    "id": "3"
+   },
+   "text": "Yves Missi makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "4:11"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 49,
+   "awayScore": 50,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes 15-foot turnaround jump shot"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "3:54"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 51,
+   "awayScore": 50,
+   "team": {
+    "id": "3"
+   },
+   "text": "Yves Missi makes 1-foot dunk (Dejounte Murray assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "3:04"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 53,
+   "awayScore": 50,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes driving layup (Dejounte Murray assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "2:47"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 55,
+   "awayScore": 50,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes running layup (Zion Williamson assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "1:32"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 57,
+   "awayScore": 50,
+   "team": {
+    "id": "3"
+   },
+   "text": "Saddiq Bey makes 12-foot pullup jump shot"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "1:32"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 58,
+   "awayScore": 50,
+   "team": {
+    "id": "3"
+   },
+   "text": "Saddiq Bey makes free throw 1 of 1"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "1:18"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 58,
+   "awayScore": 52,
+   "team": {
+    "id": "11"
+   },
+   "text": "Ivica Zubac makes 5-foot hook shot (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "58.2"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 61,
+   "awayScore": 52,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes 25-foot three pointer (Trey Murphy III assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "39.3"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 61,
+   "awayScore": 54,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes driving layup (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "30.6"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 63,
+   "awayScore": 54,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes driving layup"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "12.7"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 63,
+   "awayScore": 56,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes 4-foot driving floating jump shot (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "1.4"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 66,
+   "awayScore": 56,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes 25-foot three point jumper (Dejounte Murray assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "11:36"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 66,
+   "awayScore": 58,
+   "team": {
+    "id": "11"
+   },
+   "text": "Kelly Oubre Jr. makes running layup (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "11:12"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 68,
+   "awayScore": 58,
+   "team": {
+    "id": "3"
+   },
+   "text": "Jeremiah Fears makes 3-foot driving floating jump shot"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "10:53"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 68,
+   "awayScore": 61,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes 24-foot three pointer"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "10:06"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 70,
+   "awayScore": 61,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes driving layup (Yves Missi assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "9:48"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 70,
+   "awayScore": 63,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes driving layup"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "9:26"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 70,
+   "awayScore": 65,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes 3-foot layup (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "8:16"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 70,
+   "awayScore": 67,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes 6-foot fade away jump shot (Kelly Oubre Jr. assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "8:03"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 72,
+   "awayScore": 67,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes 2-foot two point shot (Dejounte Murray assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "7:41"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 75,
+   "awayScore": 67,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes 26-foot three point jumper (Zion Williamson assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "7:18"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 77,
+   "awayScore": 67,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes running layup"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "7:01"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 77,
+   "awayScore": 69,
+   "team": {
+    "id": "11"
+   },
+   "text": "Ivica Zubac makes two point shot"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "6:22"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 77,
+   "awayScore": 72,
+   "team": {
+    "id": "11"
+   },
+   "text": "Ben Sheppard makes 25-foot three point jumper (Jarace Walker assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "5:28"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 77,
+   "awayScore": 74,
+   "team": {
+    "id": "11"
+   },
+   "text": "Obi Toppin makes dunk (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "5:18"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 78,
+   "awayScore": 74,
+   "team": {
+    "id": "3"
+   },
+   "text": "Saddiq Bey makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "5:18"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 79,
+   "awayScore": 74,
+   "team": {
+    "id": "3"
+   },
+   "text": "Saddiq Bey makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "4:26"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 80,
+   "awayScore": 74,
+   "team": {
+    "id": "3"
+   },
+   "text": "Bennedict Mathurin makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "4:26"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 81,
+   "awayScore": 74,
+   "team": {
+    "id": "3"
+   },
+   "text": "Bennedict Mathurin makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "4:10"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 81,
+   "awayScore": 76,
+   "team": {
+    "id": "11"
+   },
+   "text": "Ivica Zubac makes layup (Obi Toppin assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "4:01"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 84,
+   "awayScore": 76,
+   "team": {
+    "id": "3"
+   },
+   "text": "Trey Murphy III makes 26-foot three point shot"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "3:08"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 84,
+   "awayScore": 79,
+   "team": {
+    "id": "11"
+   },
+   "text": "Obi Toppin makes 25-foot three point jumper (Andrew Nembhard assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "2:41"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 84,
+   "awayScore": 81,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes driving layup (Jarace Walker assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "2:12"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 86,
+   "awayScore": 81,
+   "team": {
+    "id": "3"
+   },
+   "text": "Derik Queen makes driving layup"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "1:35"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 88,
+   "awayScore": 81,
+   "team": {
+    "id": "3"
+   },
+   "text": "Bennedict Mathurin makes two point shot"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "1:09"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 88,
+   "awayScore": 83,
+   "team": {
+    "id": "11"
+   },
+   "text": "Quenton Jackson makes running layup"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "47.0"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 88,
+   "awayScore": 85,
+   "team": {
+    "id": "11"
+   },
+   "text": "Obi Toppin makes two point shot (Quenton Jackson assists)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "36.2"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 89,
+   "awayScore": 85,
+   "team": {
+    "id": "3"
+   },
+   "text": "Derik Queen makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "36.2"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 90,
+   "awayScore": 85,
+   "team": {
+    "id": "3"
+   },
+   "text": "Derik Queen makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "25.7"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 90,
+   "awayScore": 86,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "3.1"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 91,
+   "awayScore": 86,
+   "team": {
+    "id": "3"
+   },
+   "text": "Derik Queen makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "3.1"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 92,
+   "awayScore": 86,
+   "team": {
+    "id": "3"
+   },
+   "text": "Derik Queen makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "10:46"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 95,
+   "awayScore": 86,
+   "team": {
+    "id": "3"
+   },
+   "text": "Saddiq Bey makes 25-foot three point jumper (Jordan Poole assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "10:24"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 95,
+   "awayScore": 88,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes tip shot"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "10:03"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 96,
+   "awayScore": 88,
+   "team": {
+    "id": "3"
+   },
+   "text": "Bennedict Mathurin makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "9:31"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 96,
+   "awayScore": 90,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes driving dunk"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "9:31"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 96,
+   "awayScore": 91,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes free throw 1 of 1"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "9:15"
+   },
+   "scoringPlay": true,
+   "scoreValue": 3,
+   "homeScore": 99,
+   "awayScore": 91,
+   "team": {
+    "id": "3"
+   },
+   "text": "Herbert Jones makes 25-foot three point jumper (Jordan Poole assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "8:54"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 99,
+   "awayScore": 93,
+   "team": {
+    "id": "11"
+   },
+   "text": "Ivica Zubac makes dunk"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "8:34"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 101,
+   "awayScore": 93,
+   "team": {
+    "id": "3"
+   },
+   "text": "Derik Queen makes 5-foot driving floating jump shot"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "8:18"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 101,
+   "awayScore": 94,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "8:18"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 101,
+   "awayScore": 95,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "7:41"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 101,
+   "awayScore": 97,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes driving layup"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "7:41"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 101,
+   "awayScore": 98,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes free throw 1 of 1"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "7:08"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 101,
+   "awayScore": 100,
+   "team": {
+    "id": "11"
+   },
+   "text": "Ivica Zubac makes 1-foot alley oop dunk (Pascal Siakam assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "7:08"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 102,
+   "awayScore": 100,
+   "team": {
+    "id": "3"
+   },
+   "text": "Trey Murphy III makes technical free throw"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "6:44"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 104,
+   "awayScore": 100,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes 13-foot pullup jump shot (Yves Missi assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "6:31"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 104,
+   "awayScore": 102,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes 3-foot layup (Andrew Nembhard assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "6:07"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 104,
+   "awayScore": 104,
+   "team": {
+    "id": "11"
+   },
+   "text": "Quenton Jackson makes running layup (Andrew Nembhard assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "5:37"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 104,
+   "awayScore": 106,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes driving layup"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "5:06"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 104,
+   "awayScore": 107,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "5:06"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 104,
+   "awayScore": 108,
+   "team": {
+    "id": "11"
+   },
+   "text": "Andrew Nembhard makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "4:48"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 105,
+   "awayScore": 108,
+   "team": {
+    "id": "3"
+   },
+   "text": "Jeremiah Fears makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "4:48"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 106,
+   "awayScore": 108,
+   "team": {
+    "id": "3"
+   },
+   "text": "Jeremiah Fears makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "4:14"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 107,
+   "awayScore": 108,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "4:14"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 108,
+   "awayScore": 108,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes free throw 2 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "4:00"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 108,
+   "awayScore": 110,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes 8-foot two point shot (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "3:48"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 110,
+   "awayScore": 110,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes 1-foot two point shot"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "3:48"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 111,
+   "awayScore": 110,
+   "team": {
+    "id": "3"
+   },
+   "text": "Dejounte Murray makes free throw 1 of 1"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "3:35"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 111,
+   "awayScore": 112,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes 14-foot pullup jump shot"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "3:13"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 113,
+   "awayScore": 112,
+   "team": {
+    "id": "3"
+   },
+   "text": "Trey Murphy III makes 14-foot driving floating jump shot (Yves Missi assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "2:50"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 113,
+   "awayScore": 114,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes 10-foot floating jump shot (Andrew Nembhard assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "2:32"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 113,
+   "awayScore": 116,
+   "team": {
+    "id": "11"
+   },
+   "text": "Pascal Siakam makes layup (Tyrese Haliburton assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "2:16"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 115,
+   "awayScore": 116,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes 1-foot two point shot (Dejounte Murray assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "2:16"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 116,
+   "awayScore": 116,
+   "team": {
+    "id": "3"
+   },
+   "text": "Zion Williamson makes free throw 1 of 1"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "2:00"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 116,
+   "awayScore": 118,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes 14-foot driving floating jump shot"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "1:40"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 118,
+   "awayScore": 118,
+   "team": {
+    "id": "3"
+   },
+   "text": "Yves Missi makes tip in dunk"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "1:23"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 118,
+   "awayScore": 120,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes 11-foot driving floating jump shot"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "1:23"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 118,
+   "awayScore": 121,
+   "team": {
+    "id": "11"
+   },
+   "text": "Tyrese Haliburton makes free throw 1 of 1"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "1:11"
+   },
+   "scoringPlay": true,
+   "scoreValue": 2,
+   "homeScore": 120,
+   "awayScore": 121,
+   "team": {
+    "id": "3"
+   },
+   "text": "Yves Missi makes dunk (Jeremiah Fears assists)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "45.7"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 120,
+   "awayScore": 122,
+   "team": {
+    "id": "11"
+   },
+   "text": "Quenton Jackson makes free throw 1 of 2"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "45.7"
+   },
+   "scoringPlay": true,
+   "scoreValue": 1,
+   "homeScore": 120,
+   "awayScore": 123,
+   "team": {
+    "id": "11"
+   },
+   "text": "Quenton Jackson makes free throw 2 of 2"
+  }
+ ]
+}

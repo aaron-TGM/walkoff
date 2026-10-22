@@ -1,0 +1,1555 @@
+{
+ "events": [
+  {
+   "id": "401909834",
+   "date": "2026-10-21T23:00Z",
+   "name": "Atlanta Hawks at Orlando Magic",
+   "shortName": "ATL @ ORL",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 720.0,
+    "displayClock": "12:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909834",
+     "date": "2026-10-21T23:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 720.0,
+      "displayClock": "12:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "125",
+       "linescores": [
+        {
+         "value": 33.0,
+         "period": 1
+        },
+        {
+         "value": 29.0,
+         "period": 2
+        },
+        {
+         "value": 38.0,
+         "period": 3
+        },
+        {
+         "value": 25.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-1"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "19",
+        "abbreviation": "ORL",
+        "displayName": "Orlando Magic",
+        "shortDisplayName": "Magic",
+        "name": "Magic",
+        "location": "Orlando",
+        "color": "0150b5",
+        "alternateColor": "9ca0a3"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "132",
+       "linescores": [
+        {
+         "value": 28.0,
+         "period": 1
+        },
+        {
+         "value": 44.0,
+         "period": 2
+        },
+        {
+         "value": 27.0,
+         "period": 3
+        },
+        {
+         "value": 33.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-0"
+        }
+       ],
+       "team": {
+        "id": "1",
+        "abbreviation": "ATL",
+        "displayName": "Atlanta Hawks",
+        "shortDisplayName": "Hawks",
+        "name": "Hawks",
+        "location": "Atlanta",
+        "color": "c8102e",
+        "alternateColor": "fdb927"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401909835",
+   "date": "2026-10-21T23:00Z",
+   "name": "Milwaukee Bucks at Washington Wizards",
+   "shortName": "MIL @ WSH",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0.0",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909835",
+     "date": "2026-10-21T23:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0.0",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "128",
+       "linescores": [
+        {
+         "value": 25.0,
+         "period": 1
+        },
+        {
+         "value": 26.0,
+         "period": 2
+        },
+        {
+         "value": 39.0,
+         "period": 3
+        },
+        {
+         "value": 38.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "27",
+        "abbreviation": "WSH",
+        "displayName": "Washington Wizards",
+        "shortDisplayName": "Wizards",
+        "name": "Wizards",
+        "location": "Washington",
+        "color": "e31837",
+        "alternateColor": "002b5c"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "116",
+       "linescores": [
+        {
+         "value": 23.0,
+         "period": 1
+        },
+        {
+         "value": 33.0,
+         "period": 2
+        },
+        {
+         "value": 37.0,
+         "period": 3
+        },
+        {
+         "value": 23.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-1"
+        }
+       ],
+       "team": {
+        "id": "15",
+        "abbreviation": "MIL",
+        "displayName": "Milwaukee Bucks",
+        "shortDisplayName": "Bucks",
+        "name": "Bucks",
+        "location": "Milwaukee",
+        "color": "00471b",
+        "alternateColor": "eee1c6"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401909091",
+   "date": "2026-10-21T23:30Z",
+   "name": "Minnesota Timberwolves at Miami Heat",
+   "shortName": "MIN @ MIA",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 720.0,
+    "displayClock": "12:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909091",
+     "date": "2026-10-21T23:30Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 720.0,
+      "displayClock": "12:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "106",
+       "linescores": [
+        {
+         "value": 32.0,
+         "period": 1
+        },
+        {
+         "value": 27.0,
+         "period": 2
+        },
+        {
+         "value": 22.0,
+         "period": 3
+        },
+        {
+         "value": 25.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-1"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "14",
+        "abbreviation": "MIA",
+        "displayName": "Miami Heat",
+        "shortDisplayName": "Heat",
+        "name": "Heat",
+        "location": "Miami",
+        "color": "98002e",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "131",
+       "linescores": [
+        {
+         "value": 34.0,
+         "period": 1
+        },
+        {
+         "value": 35.0,
+         "period": 2
+        },
+        {
+         "value": 30.0,
+         "period": 3
+        },
+        {
+         "value": 32.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-0"
+        }
+       ],
+       "team": {
+        "id": "16",
+        "abbreviation": "MIN",
+        "displayName": "Minnesota Timberwolves",
+        "shortDisplayName": "Timberwolves",
+        "name": "Timberwolves",
+        "location": "Minnesota",
+        "color": "266092",
+        "alternateColor": "79bc43"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401909836",
+   "date": "2026-10-21T23:30Z",
+   "name": "Charlotte Hornets at Brooklyn Nets",
+   "shortName": "CHA @ BKN",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 720.0,
+    "displayClock": "12:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909836",
+     "date": "2026-10-21T23:30Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 720.0,
+      "displayClock": "12:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "103",
+       "linescores": [
+        {
+         "value": 23.0,
+         "period": 1
+        },
+        {
+         "value": 25.0,
+         "period": 2
+        },
+        {
+         "value": 33.0,
+         "period": 3
+        },
+        {
+         "value": 22.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-1"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "17",
+        "abbreviation": "BKN",
+        "displayName": "Brooklyn Nets",
+        "shortDisplayName": "Nets",
+        "name": "Nets",
+        "location": "Brooklyn",
+        "color": "000000",
+        "alternateColor": "ffffff"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "110",
+       "linescores": [
+        {
+         "value": 27.0,
+         "period": 1
+        },
+        {
+         "value": 27.0,
+         "period": 2
+        },
+        {
+         "value": 32.0,
+         "period": 3
+        },
+        {
+         "value": 24.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-0"
+        }
+       ],
+       "team": {
+        "id": "30",
+        "abbreviation": "CHA",
+        "displayName": "Charlotte Hornets",
+        "shortDisplayName": "Hornets",
+        "name": "Hornets",
+        "location": "Charlotte",
+        "color": "008ca8",
+        "alternateColor": "1d1060"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401909837",
+   "date": "2026-10-21T23:30Z",
+   "name": "Chicago Bulls at Toronto Raptors",
+   "shortName": "CHI @ TOR",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0.0",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909837",
+     "date": "2026-10-21T23:30Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0.0",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "135",
+       "linescores": [
+        {
+         "value": 43.0,
+         "period": 1
+        },
+        {
+         "value": 26.0,
+         "period": 2
+        },
+        {
+         "value": 34.0,
+         "period": 3
+        },
+        {
+         "value": 32.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "28",
+        "abbreviation": "TOR",
+        "displayName": "Toronto Raptors",
+        "shortDisplayName": "Raptors",
+        "name": "Raptors",
+        "location": "Toronto",
+        "color": "d91244",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "92",
+       "linescores": [
+        {
+         "value": 23.0,
+         "period": 1
+        },
+        {
+         "value": 21.0,
+         "period": 2
+        },
+        {
+         "value": 27.0,
+         "period": 3
+        },
+        {
+         "value": 21.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-1"
+        }
+       ],
+       "team": {
+        "id": "4",
+        "abbreviation": "CHI",
+        "displayName": "Chicago Bulls",
+        "shortDisplayName": "Bulls",
+        "name": "Bulls",
+        "location": "Chicago",
+        "color": "ce1141",
+        "alternateColor": "000000"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401909838",
+   "date": "2026-10-22T00:00Z",
+   "name": "Utah Jazz at Memphis Grizzlies",
+   "shortName": "UTAH @ MEM",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 720.0,
+    "displayClock": "12:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909838",
+     "date": "2026-10-22T00:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 720.0,
+      "displayClock": "12:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "123",
+       "linescores": [
+        {
+         "value": 29.0,
+         "period": 1
+        },
+        {
+         "value": 35.0,
+         "period": 2
+        },
+        {
+         "value": 34.0,
+         "period": 3
+        },
+        {
+         "value": 25.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "29",
+        "abbreviation": "MEM",
+        "displayName": "Memphis Grizzlies",
+        "shortDisplayName": "Grizzlies",
+        "name": "Grizzlies",
+        "location": "Memphis",
+        "color": "5d76a9",
+        "alternateColor": "12173f"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "103",
+       "linescores": [
+        {
+         "value": 31.0,
+         "period": 1
+        },
+        {
+         "value": 20.0,
+         "period": 2
+        },
+        {
+         "value": 28.0,
+         "period": 3
+        },
+        {
+         "value": 24.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-1"
+        }
+       ],
+       "team": {
+        "id": "26",
+        "abbreviation": "UTAH",
+        "displayName": "Utah Jazz",
+        "shortDisplayName": "Jazz",
+        "name": "Jazz",
+        "location": "Utah",
+        "color": "4e008e",
+        "alternateColor": "79a3dc"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401909839",
+   "date": "2026-10-22T00:00Z",
+   "name": "Indiana Pacers at New Orleans Pelicans",
+   "shortName": "IND @ NO",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 720.0,
+    "displayClock": "12:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909839",
+     "date": "2026-10-22T00:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 720.0,
+      "displayClock": "12:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "120",
+       "linescores": [
+        {
+         "value": 31.0,
+         "period": 1
+        },
+        {
+         "value": 35.0,
+         "period": 2
+        },
+        {
+         "value": 26.0,
+         "period": 3
+        },
+        {
+         "value": 28.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-1"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "3",
+        "abbreviation": "NO",
+        "displayName": "New Orleans Pelicans",
+        "shortDisplayName": "Pelicans",
+        "name": "Pelicans",
+        "location": "New Orleans",
+        "color": "0a2240",
+        "alternateColor": "b4975a"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "123",
+       "linescores": [
+        {
+         "value": 38.0,
+         "period": 1
+        },
+        {
+         "value": 18.0,
+         "period": 2
+        },
+        {
+         "value": 30.0,
+         "period": 3
+        },
+        {
+         "value": 37.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-0"
+        }
+       ],
+       "team": {
+        "id": "11",
+        "abbreviation": "IND",
+        "displayName": "Indiana Pacers",
+        "shortDisplayName": "Pacers",
+        "name": "Pacers",
+        "location": "Indiana",
+        "color": "0c2340",
+        "alternateColor": "ffd520"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401909840",
+   "date": "2026-10-22T00:30Z",
+   "name": "Dallas Mavericks at Houston Rockets",
+   "shortName": "DAL @ HOU",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 720.0,
+    "displayClock": "12:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909840",
+     "date": "2026-10-22T00:30Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 720.0,
+      "displayClock": "12:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "128",
+       "linescores": [
+        {
+         "value": 32.0,
+         "period": 1
+        },
+        {
+         "value": 38.0,
+         "period": 2
+        },
+        {
+         "value": 30.0,
+         "period": 3
+        },
+        {
+         "value": 28.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "10",
+        "abbreviation": "HOU",
+        "displayName": "Houston Rockets",
+        "shortDisplayName": "Rockets",
+        "name": "Rockets",
+        "location": "Houston",
+        "color": "ce0e2d",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "110",
+       "linescores": [
+        {
+         "value": 26.0,
+         "period": 1
+        },
+        {
+         "value": 12.0,
+         "period": 2
+        },
+        {
+         "value": 38.0,
+         "period": 3
+        },
+        {
+         "value": 34.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-1"
+        }
+       ],
+       "team": {
+        "id": "6",
+        "abbreviation": "DAL",
+        "displayName": "Dallas Mavericks",
+        "shortDisplayName": "Mavericks",
+        "name": "Mavericks",
+        "location": "Dallas",
+        "color": "0064b1",
+        "alternateColor": "bbc4ca"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401909092",
+   "date": "2026-10-22T02:00Z",
+   "name": "Golden State Warriors at Los Angeles Lakers",
+   "shortName": "GS @ LAL",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0.0",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909092",
+     "date": "2026-10-22T02:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0.0",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "127",
+       "linescores": [
+        {
+         "value": 34.0,
+         "period": 1
+        },
+        {
+         "value": 32.0,
+         "period": 2
+        },
+        {
+         "value": 36.0,
+         "period": 3
+        },
+        {
+         "value": 25.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "13",
+        "abbreviation": "LAL",
+        "displayName": "Los Angeles Lakers",
+        "shortDisplayName": "Lakers",
+        "name": "Lakers",
+        "location": "Los Angeles",
+        "color": "552583",
+        "alternateColor": "fdb927"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "105",
+       "linescores": [
+        {
+         "value": 33.0,
+         "period": 1
+        },
+        {
+         "value": 19.0,
+         "period": 2
+        },
+        {
+         "value": 16.0,
+         "period": 3
+        },
+        {
+         "value": 37.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-1"
+        }
+       ],
+       "team": {
+        "id": "9",
+        "abbreviation": "GS",
+        "displayName": "Golden State Warriors",
+        "shortDisplayName": "Warriors",
+        "name": "Warriors",
+        "location": "Golden State",
+        "color": "fdb927",
+        "alternateColor": "1d428a"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401909841",
+   "date": "2026-10-22T02:00Z",
+   "name": "Phoenix Suns at Portland Trail Blazers",
+   "shortName": "PHX @ POR",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 720.0,
+    "displayClock": "12:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909841",
+     "date": "2026-10-22T02:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 720.0,
+      "displayClock": "12:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "124",
+       "linescores": [
+        {
+         "value": 43.0,
+         "period": 1
+        },
+        {
+         "value": 29.0,
+         "period": 2
+        },
+        {
+         "value": 35.0,
+         "period": 3
+        },
+        {
+         "value": 17.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "22",
+        "abbreviation": "POR",
+        "displayName": "Portland Trail Blazers",
+        "shortDisplayName": "Trail Blazers",
+        "name": "Trail Blazers",
+        "location": "Portland",
+        "color": "e03a3e",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "83",
+       "linescores": [
+        {
+         "value": 12.0,
+         "period": 1
+        },
+        {
+         "value": 27.0,
+         "period": 2
+        },
+        {
+         "value": 27.0,
+         "period": 3
+        },
+        {
+         "value": 17.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-1"
+        }
+       ],
+       "team": {
+        "id": "21",
+        "abbreviation": "PHX",
+        "displayName": "Phoenix Suns",
+        "shortDisplayName": "Suns",
+        "name": "Suns",
+        "location": "Phoenix",
+        "color": "29127a",
+        "alternateColor": "e56020"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401909842",
+   "date": "2026-10-22T02:30Z",
+   "name": "Sacramento Kings at LA Clippers",
+   "shortName": "SAC @ LAC",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 720.0,
+    "displayClock": "12:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909842",
+     "date": "2026-10-22T02:30Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 720.0,
+      "displayClock": "12:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "121",
+       "linescores": [
+        {
+         "value": 41.0,
+         "period": 1
+        },
+        {
+         "value": 20.0,
+         "period": 2
+        },
+        {
+         "value": 32.0,
+         "period": 3
+        },
+        {
+         "value": 28.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-0"
+        }
+       ],
+       "team": {
+        "id": "12",
+        "abbreviation": "LAC",
+        "displayName": "LA Clippers",
+        "shortDisplayName": "Clippers",
+        "name": "Clippers",
+        "location": "LA",
+        "color": "12173f",
+        "alternateColor": "c8102e"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "96",
+       "linescores": [
+        {
+         "value": 29.0,
+         "period": 1
+        },
+        {
+         "value": 25.0,
+         "period": 2
+        },
+        {
+         "value": 16.0,
+         "period": 3
+        },
+        {
+         "value": 26.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-1"
+        }
+       ],
+       "team": {
+        "id": "23",
+        "abbreviation": "SAC",
+        "displayName": "Sacramento Kings",
+        "shortDisplayName": "Kings",
+        "name": "Kings",
+        "location": "Sacramento",
+        "color": "5a2d81",
+        "alternateColor": "6a7a82"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

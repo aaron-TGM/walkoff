@@ -1,0 +1,207 @@
+{
+ "events": [
+  {
+   "id": "401908003",
+   "date": "2026-10-04T20:00Z",
+   "name": "San Diego Padres at Milwaukee Brewers",
+   "shortName": "SD @ MIL",
+   "season": {
+    "year": 2026,
+    "type": 3,
+    "slug": "post-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401908003",
+     "date": "2026-10-04T20:00Z",
+     "neutralSite": false,
+     "notes": [
+      {
+       "type": "event",
+       "headline": "NLDS - Game 2"
+      }
+     ],
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "MIL leads series 2-0",
+      "completed": false,
+      "totalCompetitions": 5,
+      "competitors": [
+       {
+        "id": "8",
+        "wins": 2
+       },
+       {
+        "id": "25",
+        "wins": 0
+       }
+      ]
+     },
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 1.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 1.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 2.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "103-59"
+        },
+        {
+         "type": "home",
+         "summary": "55-26"
+        },
+        {
+         "type": "road",
+         "summary": "48-33"
+        }
+       ],
+       "team": {
+        "id": "8",
+        "abbreviation": "MIL",
+        "displayName": "Milwaukee Brewers",
+        "shortDisplayName": "Brewers",
+        "name": "Brewers",
+        "location": "Milwaukee",
+        "color": "13294b",
+        "alternateColor": "ffc72c"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "3",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 1.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 1.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "91-71"
+        },
+        {
+         "type": "home",
+         "summary": "51-30"
+        },
+        {
+         "type": "road",
+         "summary": "40-41"
+        }
+       ],
+       "team": {
+        "id": "25",
+        "abbreviation": "SD",
+        "displayName": "San Diego Padres",
+        "shortDisplayName": "Padres",
+        "name": "Padres",
+        "location": "San Diego",
+        "color": "2f241d",
+        "alternateColor": "ffc425"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

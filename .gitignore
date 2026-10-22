@@ -30,3 +30,7 @@ npm-debug.log*
 # ide
 .idea
 .vercel
+
+# moment engine bundle
+/dist/
+*.tsbuildinfo

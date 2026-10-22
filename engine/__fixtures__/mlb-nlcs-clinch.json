@@ -1,0 +1,207 @@
+{
+ "events": [
+  {
+   "id": "401908033",
+   "date": "2026-10-16T00:00Z",
+   "name": "Milwaukee Brewers at Los Angeles Dodgers",
+   "shortName": "MIL @ LAD",
+   "season": {
+    "year": 2026,
+    "type": 3,
+    "slug": "post-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401908033",
+     "date": "2026-10-16T00:00Z",
+     "neutralSite": false,
+     "notes": [
+      {
+       "type": "event",
+       "headline": "NLCS - Game 4"
+      }
+     ],
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "MIL wins series 4-0",
+      "completed": true,
+      "totalCompetitions": 7,
+      "competitors": [
+       {
+        "id": "19",
+        "wins": 0
+       },
+       {
+        "id": "8",
+        "wins": 4
+       }
+      ]
+     },
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 4.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "100-62"
+        },
+        {
+         "type": "home",
+         "summary": "51-30"
+        },
+        {
+         "type": "road",
+         "summary": "49-32"
+        }
+       ],
+       "team": {
+        "id": "19",
+        "abbreviation": "LAD",
+        "displayName": "Los Angeles Dodgers",
+        "shortDisplayName": "Dodgers",
+        "name": "Dodgers",
+        "location": "Los Angeles",
+        "color": "005a9c",
+        "alternateColor": "ffffff"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "6",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 2.0,
+         "period": 4
+        },
+        {
+         "value": 2.0,
+         "period": 5
+        },
+        {
+         "value": 1.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 1.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "103-59"
+        },
+        {
+         "type": "home",
+         "summary": "55-26"
+        },
+        {
+         "type": "road",
+         "summary": "48-33"
+        }
+       ],
+       "team": {
+        "id": "8",
+        "abbreviation": "MIL",
+        "displayName": "Milwaukee Brewers",
+        "shortDisplayName": "Brewers",
+        "name": "Brewers",
+        "location": "Milwaukee",
+        "color": "13294b",
+        "alternateColor": "ffc72c"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

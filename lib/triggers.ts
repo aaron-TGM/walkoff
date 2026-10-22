@@ -107,6 +107,13 @@ export const TRIGGERS: Trigger[] = [
     category: "season",
   },
   {
+    name: "Series Win",
+    id: "playoff_advance",
+    description:
+      "Won a playoff round. Fans are already buying for the next one.",
+    category: "season",
+  },
+  {
     name: "Player Milestone",
     id: "player_milestone",
     description:

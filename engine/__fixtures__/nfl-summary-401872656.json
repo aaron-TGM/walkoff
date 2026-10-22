@@ -1,0 +1,97 @@
+{
+ "header": {
+  "id": "401872656"
+ },
+ "scoringPlays": [
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 551.0,
+    "displayValue": "9:11"
+   },
+   "homeScore": 0,
+   "awayScore": 7,
+   "team": {
+    "id": "17"
+   },
+   "type": {
+    "text": "Passing Touchdown"
+   },
+   "text": "Eli Raridon 2 Yd pass from Drake Maye (Andy Borregales Kick)"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "value": 709.0,
+    "displayValue": "11:49"
+   },
+   "homeScore": 0,
+   "awayScore": 10,
+   "team": {
+    "id": "17"
+   },
+   "type": {
+    "text": "Field Goal Good"
+   },
+   "text": "Andy Borregales 50 Yd Field Goal"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "value": 193.0,
+    "displayValue": "3:13"
+   },
+   "homeScore": 3,
+   "awayScore": 10,
+   "team": {
+    "id": "26"
+   },
+   "type": {
+    "text": "Field Goal Good"
+   },
+   "text": "Jason Myers 30 Yd Field Goal"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 688.0,
+    "displayValue": "11:28"
+   },
+   "homeScore": 10,
+   "awayScore": 10,
+   "team": {
+    "id": "26"
+   },
+   "type": {
+    "text": "Passing Touchdown"
+   },
+   "text": "Jaxon Smith-Njigba 45 Yd pass from Drew Lock (Jason Myers Kick)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 350.0,
+    "displayValue": "5:50"
+   },
+   "homeScore": 13,
+   "awayScore": 10,
+   "team": {
+    "id": "26"
+   },
+   "type": {
+    "text": "Field Goal Good"
+   },
+   "text": "Jason Myers 26 Yd Field Goal"
+  }
+ ]
+}

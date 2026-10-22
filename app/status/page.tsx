@@ -125,6 +125,7 @@ export default async function StatusPage() {
             ))}
           </div>
 
+          {report.engine ? <CheckGroup title="Moment engine" checks={report.engine} /> : null}
           <CheckGroup title="League data" checks={report.leagues} />
           <CheckGroup title="Platform" checks={report.platform} />
           <CheckGroup title="Integrations" checks={report.integrations} />
@@ -134,7 +135,9 @@ export default async function StatusPage() {
               <h2 className="status-group-title">Coming online</h2>
             </div>
             <ul className="status-rows">
-              {COMING_ONLINE.map((c) => (
+              {COMING_ONLINE.filter(
+                (c) => !(report.engine && c.name === "Automated moment engine"),
+              ).map((c) => (
                 <li key={c.name} className="status-row">
                   <span className="status-light status-light-soon" aria-hidden />
                   <div className="status-row-main">
