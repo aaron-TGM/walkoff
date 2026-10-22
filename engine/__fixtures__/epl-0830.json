@@ -1,0 +1,627 @@
+{
+ "events": [
+  {
+   "id": "401879317",
+   "date": "2026-08-30T13:00Z",
+   "name": "Brighton & Hove Albion at Chelsea",
+   "shortName": "BHA @ CHE",
+   "season": {
+    "year": 2026,
+    "type": 14308,
+    "slug": "2026-27-english-premier-league"
+   },
+   "status": {
+    "clock": 5400.0,
+    "displayClock": "90'+7'",
+    "period": 2,
+    "type": {
+     "name": "STATUS_FULL_TIME",
+     "state": "post",
+     "completed": true,
+     "description": "Full Time",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401879317",
+     "date": "2026-08-30T13:00Z",
+     "notes": [],
+     "status": {
+      "clock": 5400.0,
+      "displayClock": "90'+7'",
+      "period": 2,
+      "type": {
+       "name": "STATUS_FULL_TIME",
+       "state": "post",
+       "completed": true,
+       "description": "Full Time",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "details": [
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 221.0,
+        "displayValue": "4'"
+       },
+       "team": {
+        "id": "363"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 789.0,
+        "displayValue": "14'"
+       },
+       "team": {
+        "id": "363"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 1873.0,
+        "displayValue": "32'"
+       },
+       "team": {
+        "id": "363"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 2088.0,
+        "displayValue": "35'"
+       },
+       "team": {
+        "id": "331"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Own Goal"
+       },
+       "clock": {
+        "value": 3759.0,
+        "displayValue": "63'"
+       },
+       "team": {
+        "id": "331"
+       },
+       "scoringPlay": true,
+       "ownGoal": true,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 4426.0,
+        "displayValue": "74'"
+       },
+       "team": {
+        "id": "363"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal - Header"
+       },
+       "clock": {
+        "value": 5400.0,
+        "displayValue": "90'+6'"
+       },
+       "team": {
+        "id": "331"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "4",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "2-0-0"
+        }
+       ],
+       "team": {
+        "id": "363",
+        "abbreviation": "CHE",
+        "displayName": "Chelsea",
+        "shortDisplayName": "Chelsea",
+        "name": "Chelsea",
+        "location": "Chelsea",
+        "color": "144992",
+        "alternateColor": "FFFFFF"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "3",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0-1"
+        }
+       ],
+       "team": {
+        "id": "331",
+        "abbreviation": "BHA",
+        "displayName": "Brighton & Hove Albion",
+        "shortDisplayName": "Brighton",
+        "name": "Brighton & Hove Albion",
+        "location": "Brighton & Hove Albion",
+        "color": "0606fa",
+        "alternateColor": "005F60"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401879315",
+   "date": "2026-08-30T13:00Z",
+   "name": "Brentford at Leeds United",
+   "shortName": "BRE @ LEE",
+   "season": {
+    "year": 2026,
+    "type": 14308,
+    "slug": "2026-27-english-premier-league"
+   },
+   "status": {
+    "clock": 5400.0,
+    "displayClock": "90'+4'",
+    "period": 2,
+    "type": {
+     "name": "STATUS_FULL_TIME",
+     "state": "post",
+     "completed": true,
+     "description": "Full Time",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401879315",
+     "date": "2026-08-30T13:00Z",
+     "notes": [],
+     "status": {
+      "clock": 5400.0,
+      "displayClock": "90'+4'",
+      "period": 2,
+      "type": {
+       "name": "STATUS_FULL_TIME",
+       "state": "post",
+       "completed": true,
+       "description": "Full Time",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "details": [
+      {
+       "type": {
+        "text": "Goal - Volley"
+       },
+       "clock": {
+        "value": 2404.0,
+        "displayValue": "41'"
+       },
+       "team": {
+        "id": "337"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 4692.0,
+        "displayValue": "79'"
+       },
+       "team": {
+        "id": "357"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "1",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-1-0"
+        }
+       ],
+       "team": {
+        "id": "357",
+        "abbreviation": "LEE",
+        "displayName": "Leeds United",
+        "shortDisplayName": "Leeds",
+        "name": "Leeds United",
+        "location": "Leeds United",
+        "color": "ffffff",
+        "alternateColor": "FFCD00"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "1",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-1-0"
+        }
+       ],
+       "team": {
+        "id": "337",
+        "abbreviation": "BRE",
+        "displayName": "Brentford",
+        "shortDisplayName": "Brentford",
+        "name": "Brentford",
+        "location": "Brentford",
+        "color": "f42727",
+        "alternateColor": "0f1c3f"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401879313",
+   "date": "2026-08-30T13:00Z",
+   "name": "Fulham at Sunderland",
+   "shortName": "FUL @ SUN",
+   "season": {
+    "year": 2026,
+    "type": 14308,
+    "slug": "2026-27-english-premier-league"
+   },
+   "status": {
+    "clock": 5400.0,
+    "displayClock": "90'+5'",
+    "period": 2,
+    "type": {
+     "name": "STATUS_FULL_TIME",
+     "state": "post",
+     "completed": true,
+     "description": "Full Time",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401879313",
+     "date": "2026-08-30T13:00Z",
+     "notes": [],
+     "status": {
+      "clock": 5400.0,
+      "displayClock": "90'+5'",
+      "period": 2,
+      "type": {
+       "name": "STATUS_FULL_TIME",
+       "state": "post",
+       "completed": true,
+       "description": "Full Time",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "details": [
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 4484.0,
+        "displayValue": "75'"
+       },
+       "team": {
+        "id": "366"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "1",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0-1"
+        }
+       ],
+       "team": {
+        "id": "366",
+        "abbreviation": "SUN",
+        "displayName": "Sunderland",
+        "shortDisplayName": "Sunderland",
+        "name": "Sunderland",
+        "location": "Sunderland",
+        "color": "EB172B",
+        "alternateColor": "FFB6C1"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "0",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-0-2"
+        }
+       ],
+       "team": {
+        "id": "370",
+        "abbreviation": "FUL",
+        "displayName": "Fulham",
+        "shortDisplayName": "Fulham",
+        "name": "Fulham",
+        "location": "Fulham",
+        "color": "ffffff",
+        "alternateColor": "CC0000"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401879293",
+   "date": "2026-08-30T15:30Z",
+   "name": "Ipswich Town at Manchester United",
+   "shortName": "IPS @ MAN",
+   "season": {
+    "year": 2026,
+    "type": 14308,
+    "slug": "2026-27-english-premier-league"
+   },
+   "status": {
+    "clock": 5400.0,
+    "displayClock": "90'+9'",
+    "period": 2,
+    "type": {
+     "name": "STATUS_FULL_TIME",
+     "state": "post",
+     "completed": true,
+     "description": "Full Time",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401879293",
+     "date": "2026-08-30T15:30Z",
+     "notes": [],
+     "status": {
+      "clock": 5400.0,
+      "displayClock": "90'+9'",
+      "period": 2,
+      "type": {
+       "name": "STATUS_FULL_TIME",
+       "state": "post",
+       "completed": true,
+       "description": "Full Time",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "details": [
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 1708.0,
+        "displayValue": "29'"
+       },
+       "team": {
+        "id": "373"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 2383.0,
+        "displayValue": "40'"
+       },
+       "team": {
+        "id": "360"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Own Goal"
+       },
+       "clock": {
+        "value": 3355.0,
+        "displayValue": "56'"
+       },
+       "team": {
+        "id": "360"
+       },
+       "scoringPlay": true,
+       "ownGoal": true,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Penalty - Scored"
+       },
+       "clock": {
+        "value": 3637.0,
+        "displayValue": "61'"
+       },
+       "team": {
+        "id": "360"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": true
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 4049.0,
+        "displayValue": "68'"
+       },
+       "team": {
+        "id": "360"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 4908.0,
+        "displayValue": "82'"
+       },
+       "team": {
+        "id": "360"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 5400.0,
+        "displayValue": "90'+1'"
+       },
+       "team": {
+        "id": "373"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "5",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0-1"
+        }
+       ],
+       "team": {
+        "id": "360",
+        "abbreviation": "MAN",
+        "displayName": "Manchester United",
+        "shortDisplayName": "Man United",
+        "name": "Manchester United",
+        "location": "Manchester United",
+        "color": "da020e",
+        "alternateColor": "4169E1"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "2",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0-1"
+        }
+       ],
+       "team": {
+        "id": "373",
+        "abbreviation": "IPS",
+        "displayName": "Ipswich Town",
+        "shortDisplayName": "Ipswich",
+        "name": "Ipswich Town",
+        "location": "Ipswich Town",
+        "color": "0000fa",
+        "alternateColor": "F5F2DC"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

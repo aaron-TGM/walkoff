@@ -1,0 +1,629 @@
+{
+ "events": [
+  {
+   "id": "401879322",
+   "date": "2026-08-22T11:30Z",
+   "name": "Manchester United at Hull City",
+   "shortName": "MAN @ HUL",
+   "season": {
+    "year": 2026,
+    "type": 14308,
+    "slug": "2026-27-english-premier-league"
+   },
+   "status": {
+    "clock": 5400.0,
+    "displayClock": "90'+6'",
+    "period": 2,
+    "type": {
+     "name": "STATUS_FULL_TIME",
+     "state": "post",
+     "completed": true,
+     "description": "Full Time",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401879322",
+     "date": "2026-08-22T11:30Z",
+     "notes": [],
+     "status": {
+      "clock": 5400.0,
+      "displayClock": "90'+6'",
+      "period": 2,
+      "type": {
+       "name": "STATUS_FULL_TIME",
+       "state": "post",
+       "completed": true,
+       "description": "Full Time",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "details": [
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 1009.0,
+        "displayValue": "17'"
+       },
+       "team": {
+        "id": "306"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal - Header"
+       },
+       "clock": {
+        "value": 2243.0,
+        "displayValue": "38'"
+       },
+       "team": {
+        "id": "306"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "2",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0-0"
+        }
+       ],
+       "team": {
+        "id": "306",
+        "abbreviation": "HUL",
+        "displayName": "Hull City",
+        "shortDisplayName": "Hull",
+        "name": "Hull City",
+        "location": "Hull City",
+        "color": "f28800",
+        "alternateColor": "ffffff"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "0",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-0-1"
+        }
+       ],
+       "team": {
+        "id": "360",
+        "abbreviation": "MAN",
+        "displayName": "Manchester United",
+        "shortDisplayName": "Man United",
+        "name": "Manchester United",
+        "location": "Manchester United",
+        "color": "da020e",
+        "alternateColor": "4169E1"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401879300",
+   "date": "2026-08-22T14:00Z",
+   "name": "Crystal Palace at Everton",
+   "shortName": "CRY @ EVE",
+   "season": {
+    "year": 2026,
+    "type": 14308,
+    "slug": "2026-27-english-premier-league"
+   },
+   "status": {
+    "clock": 5400.0,
+    "displayClock": "90'+8'",
+    "period": 2,
+    "type": {
+     "name": "STATUS_FULL_TIME",
+     "state": "post",
+     "completed": true,
+     "description": "Full Time",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401879300",
+     "date": "2026-08-22T14:00Z",
+     "notes": [],
+     "status": {
+      "clock": 5400.0,
+      "displayClock": "90'+8'",
+      "period": 2,
+      "type": {
+       "name": "STATUS_FULL_TIME",
+       "state": "post",
+       "completed": true,
+       "description": "Full Time",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "details": [
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 2511.0,
+        "displayValue": "42'"
+       },
+       "team": {
+        "id": "368"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal - Header"
+       },
+       "clock": {
+        "value": 3152.0,
+        "displayValue": "53'"
+       },
+       "team": {
+        "id": "368"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "2",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0-0"
+        }
+       ],
+       "team": {
+        "id": "368",
+        "abbreviation": "EVE",
+        "displayName": "Everton",
+        "shortDisplayName": "Everton",
+        "name": "Everton",
+        "location": "Everton",
+        "color": "0606fa",
+        "alternateColor": "ffffff"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "0",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-0-1"
+        }
+       ],
+       "team": {
+        "id": "384",
+        "abbreviation": "CRY",
+        "displayName": "Crystal Palace",
+        "shortDisplayName": "C Palace",
+        "name": "Crystal Palace",
+        "location": "Crystal Palace",
+        "color": "0202fb",
+        "alternateColor": "000000"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401879299",
+   "date": "2026-08-22T14:00Z",
+   "name": "Sunderland at Ipswich Town",
+   "shortName": "SUN @ IPS",
+   "season": {
+    "year": 2026,
+    "type": 14308,
+    "slug": "2026-27-english-premier-league"
+   },
+   "status": {
+    "clock": 5400.0,
+    "displayClock": "90'+5'",
+    "period": 2,
+    "type": {
+     "name": "STATUS_FULL_TIME",
+     "state": "post",
+     "completed": true,
+     "description": "Full Time",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401879299",
+     "date": "2026-08-22T14:00Z",
+     "notes": [],
+     "status": {
+      "clock": 5400.0,
+      "displayClock": "90'+5'",
+      "period": 2,
+      "type": {
+       "name": "STATUS_FULL_TIME",
+       "state": "post",
+       "completed": true,
+       "description": "Full Time",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "details": [
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 1395.0,
+        "displayValue": "24'"
+       },
+       "team": {
+        "id": "373"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal - Free-kick"
+       },
+       "clock": {
+        "value": 2326.0,
+        "displayValue": "39'"
+       },
+       "team": {
+        "id": "366"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 5379.0,
+        "displayValue": "90'"
+       },
+       "team": {
+        "id": "373"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "2",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0-0"
+        }
+       ],
+       "team": {
+        "id": "373",
+        "abbreviation": "IPS",
+        "displayName": "Ipswich Town",
+        "shortDisplayName": "Ipswich",
+        "name": "Ipswich Town",
+        "location": "Ipswich Town",
+        "color": "0000fa",
+        "alternateColor": "F5F2DC"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "1",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-0-1"
+        }
+       ],
+       "team": {
+        "id": "366",
+        "abbreviation": "SUN",
+        "displayName": "Sunderland",
+        "shortDisplayName": "Sunderland",
+        "name": "Sunderland",
+        "location": "Sunderland",
+        "color": "EB172B",
+        "alternateColor": "FFB6C1"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401879298",
+   "date": "2026-08-22T14:00Z",
+   "name": "Leeds United at Nottingham Forest",
+   "shortName": "LEE @ NFO",
+   "season": {
+    "year": 2026,
+    "type": 14308,
+    "slug": "2026-27-english-premier-league"
+   },
+   "status": {
+    "clock": 5400.0,
+    "displayClock": "90'+4'",
+    "period": 2,
+    "type": {
+     "name": "STATUS_FULL_TIME",
+     "state": "post",
+     "completed": true,
+     "description": "Full Time",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401879298",
+     "date": "2026-08-22T14:00Z",
+     "notes": [],
+     "status": {
+      "clock": 5400.0,
+      "displayClock": "90'+4'",
+      "period": 2,
+      "type": {
+       "name": "STATUS_FULL_TIME",
+       "state": "post",
+       "completed": true,
+       "description": "Full Time",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "details": [
+      {
+       "type": {
+        "text": "Goal - Free-kick"
+       },
+       "clock": {
+        "value": 5226.0,
+        "displayValue": "88'"
+       },
+       "team": {
+        "id": "357"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "0",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-0-1"
+        }
+       ],
+       "team": {
+        "id": "393",
+        "abbreviation": "NFO",
+        "displayName": "Nottingham Forest",
+        "shortDisplayName": "Nottm Forest",
+        "name": "Nottingham Forest",
+        "location": "Nottingham Forest",
+        "color": "c8102e",
+        "alternateColor": "1B3624"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "1",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0-0"
+        }
+       ],
+       "team": {
+        "id": "357",
+        "abbreviation": "LEE",
+        "displayName": "Leeds United",
+        "shortDisplayName": "Leeds",
+        "name": "Leeds United",
+        "location": "Leeds United",
+        "color": "ffffff",
+        "alternateColor": "FFCD00"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401879321",
+   "date": "2026-08-22T16:30Z",
+   "name": "Tottenham Hotspur at Brentford",
+   "shortName": "TOT @ BRE",
+   "season": {
+    "year": 2026,
+    "type": 14308,
+    "slug": "2026-27-english-premier-league"
+   },
+   "status": {
+    "clock": 5400.0,
+    "displayClock": "90'+5'",
+    "period": 2,
+    "type": {
+     "name": "STATUS_FULL_TIME",
+     "state": "post",
+     "completed": true,
+     "description": "Full Time",
+     "detail": "FT",
+     "shortDetail": "FT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401879321",
+     "date": "2026-08-22T16:30Z",
+     "notes": [],
+     "status": {
+      "clock": 5400.0,
+      "displayClock": "90'+5'",
+      "period": 2,
+      "type": {
+       "name": "STATUS_FULL_TIME",
+       "state": "post",
+       "completed": true,
+       "description": "Full Time",
+       "detail": "FT",
+       "shortDetail": "FT"
+      }
+     },
+     "details": [
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 699.0,
+        "displayValue": "12'"
+       },
+       "team": {
+        "id": "337"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 1924.0,
+        "displayValue": "33'"
+       },
+       "team": {
+        "id": "337"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      },
+      {
+       "type": {
+        "text": "Goal"
+       },
+       "clock": {
+        "value": 2881.0,
+        "displayValue": "49'"
+       },
+       "team": {
+        "id": "337"
+       },
+       "scoringPlay": true,
+       "ownGoal": false,
+       "penaltyKick": false
+      }
+     ],
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "3",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "1-0-0"
+        }
+       ],
+       "team": {
+        "id": "337",
+        "abbreviation": "BRE",
+        "displayName": "Brentford",
+        "shortDisplayName": "Brentford",
+        "name": "Brentford",
+        "location": "Brentford",
+        "color": "f42727",
+        "alternateColor": "0f1c3f"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "0",
+       "linescores": [],
+       "records": [
+        {
+         "type": "total",
+         "summary": "0-0-1"
+        }
+       ],
+       "team": {
+        "id": "367",
+        "abbreviation": "TOT",
+        "displayName": "Tottenham Hotspur",
+        "shortDisplayName": "Spurs",
+        "name": "Tottenham Hotspur",
+        "location": "Tottenham Hotspur",
+        "color": "ffffff",
+        "alternateColor": "0B1426"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

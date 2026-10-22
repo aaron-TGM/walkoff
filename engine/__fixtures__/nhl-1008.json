@@ -1,0 +1,1358 @@
+{
+ "events": [
+  {
+   "id": "401891820",
+   "date": "2026-10-08T23:00Z",
+   "name": "Philadelphia Flyers at Ottawa Senators",
+   "shortName": "PHI @ OTT",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 3,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401891820",
+     "date": "2026-10-08T23:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 3,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "3-1-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-0-0"
+        },
+        {
+         "type": "road",
+         "summary": "2-1-0"
+        }
+       ],
+       "team": {
+        "id": "14",
+        "abbreviation": "OTT",
+        "displayName": "Ottawa Senators",
+        "shortDisplayName": "Senators",
+        "name": "Senators",
+        "location": "Ottawa",
+        "color": "dd1a32",
+        "alternateColor": "b79257"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "1",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 1.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "0-3-2"
+        },
+        {
+         "type": "home",
+         "summary": "0-1-1"
+        },
+        {
+         "type": "road",
+         "summary": "0-2-1"
+        }
+       ],
+       "team": {
+        "id": "15",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Flyers",
+        "shortDisplayName": "Flyers",
+        "name": "Flyers",
+        "location": "Philadelphia",
+        "color": "fe5823",
+        "alternateColor": "000000"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401892457",
+   "date": "2026-10-08T23:00Z",
+   "name": "Utah Mammoth at Boston Bruins",
+   "shortName": "UTA @ BOS",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 3,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401892457",
+     "date": "2026-10-08T23:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 3,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "6",
+       "linescores": [
+        {
+         "value": 3.0,
+         "period": 1
+        },
+        {
+         "value": 3.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "3-2-0"
+        },
+        {
+         "type": "home",
+         "summary": "2-1-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-1-0"
+        }
+       ],
+       "team": {
+        "id": "1",
+        "abbreviation": "BOS",
+        "displayName": "Boston Bruins",
+        "shortDisplayName": "Bruins",
+        "name": "Bruins",
+        "location": "Boston",
+        "color": "231f20",
+        "alternateColor": "fdb71a"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "1",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "3-2-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-0-0"
+        },
+        {
+         "type": "road",
+         "summary": "2-2-0"
+        }
+       ],
+       "team": {
+        "id": "129764",
+        "abbreviation": "UTA",
+        "displayName": "Utah Mammoth",
+        "shortDisplayName": "Mammoth",
+        "name": "Mammoth",
+        "location": "Utah",
+        "color": "000000",
+        "alternateColor": "7ab2e1"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401892458",
+   "date": "2026-10-08T23:00Z",
+   "name": "Dallas Stars at Buffalo Sabres",
+   "shortName": "DAL @ BUF",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 3,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401892458",
+     "date": "2026-10-08T23:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 3,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "0",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "2-2-0"
+        },
+        {
+         "type": "home",
+         "summary": "2-1-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-1-0"
+        }
+       ],
+       "team": {
+        "id": "2",
+        "abbreviation": "BUF",
+        "displayName": "Buffalo Sabres",
+        "shortDisplayName": "Sabres",
+        "name": "Sabres",
+        "location": "Buffalo",
+        "color": "00468b",
+        "alternateColor": "fdb71a"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 3.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "2-2-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-1-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-1-0"
+        }
+       ],
+       "team": {
+        "id": "9",
+        "abbreviation": "DAL",
+        "displayName": "Dallas Stars",
+        "shortDisplayName": "Stars",
+        "name": "Stars",
+        "location": "Dallas",
+        "color": "20864c",
+        "alternateColor": "000000"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401892459",
+   "date": "2026-10-08T23:00Z",
+   "name": "Nashville Predators at Montreal Canadiens",
+   "shortName": "NSH @ MTL",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 3,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401892459",
+     "date": "2026-10-08T23:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 3,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 2.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "1-2-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-2-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-0-1"
+        }
+       ],
+       "team": {
+        "id": "10",
+        "abbreviation": "MTL",
+        "displayName": "Montreal Canadiens",
+        "shortDisplayName": "Canadiens",
+        "name": "Canadiens",
+        "location": "Montreal",
+        "color": "c41230",
+        "alternateColor": "013a81"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "5",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 2.0,
+         "period": 2
+        },
+        {
+         "value": 3.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "2-1-1"
+        },
+        {
+         "type": "home",
+         "summary": "1-1-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-0-1"
+        }
+       ],
+       "team": {
+        "id": "27",
+        "abbreviation": "NSH",
+        "displayName": "Nashville Predators",
+        "shortDisplayName": "Predators",
+        "name": "Predators",
+        "location": "Nashville",
+        "color": "fdba31",
+        "alternateColor": "002d62"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401892460",
+   "date": "2026-10-08T23:00Z",
+   "name": "Minnesota Wild at Tampa Bay Lightning",
+   "shortName": "MIN @ TB",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 3,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401892460",
+     "date": "2026-10-08T23:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 3,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "3",
+       "linescores": [
+        {
+         "value": 2.0,
+         "period": 1
+        },
+        {
+         "value": 1.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "3-1-0"
+        },
+        {
+         "type": "home",
+         "summary": "3-0-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-1-0"
+        }
+       ],
+       "team": {
+        "id": "20",
+        "abbreviation": "TB",
+        "displayName": "Tampa Bay Lightning",
+        "shortDisplayName": "Lightning",
+        "name": "Lightning",
+        "location": "Tampa Bay",
+        "color": "003e7e",
+        "alternateColor": "ffffff"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 2.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "2-1-1"
+        },
+        {
+         "type": "home",
+         "summary": "1-0-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-1-1"
+        }
+       ],
+       "team": {
+        "id": "30",
+        "abbreviation": "MIN",
+        "displayName": "Minnesota Wild",
+        "shortDisplayName": "Wild",
+        "name": "Wild",
+        "location": "Minnesota",
+        "color": "124734",
+        "alternateColor": "ae122a"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401892461",
+   "date": "2026-10-08T23:00Z",
+   "name": "Vancouver Canucks at Carolina Hurricanes",
+   "shortName": "VAN @ CAR",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 3,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401892461",
+     "date": "2026-10-08T23:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 3,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "7",
+       "linescores": [
+        {
+         "value": 3.0,
+         "period": 1
+        },
+        {
+         "value": 3.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "3-1-1"
+        },
+        {
+         "type": "home",
+         "summary": "1-1-1"
+        },
+        {
+         "type": "road",
+         "summary": "2-0-0"
+        }
+       ],
+       "team": {
+        "id": "7",
+        "abbreviation": "CAR",
+        "displayName": "Carolina Hurricanes",
+        "shortDisplayName": "Hurricanes",
+        "name": "Hurricanes",
+        "location": "Carolina",
+        "color": "e30426",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 1.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "2-3-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-2-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-1-0"
+        }
+       ],
+       "team": {
+        "id": "22",
+        "abbreviation": "VAN",
+        "displayName": "Vancouver Canucks",
+        "shortDisplayName": "Canucks",
+        "name": "Canucks",
+        "location": "Vancouver",
+        "color": "003e7e",
+        "alternateColor": "008752"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401892462",
+   "date": "2026-10-08T23:30Z",
+   "name": "Chicago Blackhawks at New York Islanders",
+   "shortName": "CHI @ NYI",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 3,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401892462",
+     "date": "2026-10-08T23:30Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 3,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 2.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "2-2-0"
+        },
+        {
+         "type": "home",
+         "summary": "2-0-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-2-0"
+        }
+       ],
+       "team": {
+        "id": "12",
+        "abbreviation": "NYI",
+        "displayName": "New York Islanders",
+        "shortDisplayName": "Islanders",
+        "name": "Islanders",
+        "location": "New York",
+        "color": "00529b",
+        "alternateColor": "f47d31"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "1",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "1-4-0"
+        },
+        {
+         "type": "home",
+         "summary": "1-0-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-4-0"
+        }
+       ],
+       "team": {
+        "id": "4",
+        "abbreviation": "CHI",
+        "displayName": "Chicago Blackhawks",
+        "shortDisplayName": "Blackhawks",
+        "name": "Blackhawks",
+        "location": "Chicago",
+        "color": "e31937",
+        "alternateColor": "000000"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401891825",
+   "date": "2026-10-09T00:00Z",
+   "name": "San Jose Sharks at St. Louis Blues",
+   "shortName": "SJ @ STL",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final/OT",
+     "shortDetail": "Final/OT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401891825",
+     "date": "2026-10-09T00:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final/OT",
+       "shortDetail": "Final/OT"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "1-2-1"
+        },
+        {
+         "type": "home",
+         "summary": "0-0-1"
+        },
+        {
+         "type": "road",
+         "summary": "1-2-0"
+        }
+       ],
+       "team": {
+        "id": "19",
+        "abbreviation": "STL",
+        "displayName": "St. Louis Blues",
+        "shortDisplayName": "Blues",
+        "name": "Blues",
+        "location": "St. Louis",
+        "color": "0070b9",
+        "alternateColor": "fdb71a"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "3",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 1.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        },
+        {
+         "value": 1.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "3-1-0"
+        },
+        {
+         "type": "home",
+         "summary": "2-0-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-1-0"
+        }
+       ],
+       "team": {
+        "id": "18",
+        "abbreviation": "SJ",
+        "displayName": "San Jose Sharks",
+        "shortDisplayName": "Sharks",
+        "name": "Sharks",
+        "location": "San Jose",
+        "color": "00788a",
+        "alternateColor": "070707"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401892463",
+   "date": "2026-10-09T01:00Z",
+   "name": "Colorado Avalanche at Calgary Flames",
+   "shortName": "COL @ CGY",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 3,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401892463",
+     "date": "2026-10-09T01:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 3,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "3",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 2.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "0-4-0"
+        },
+        {
+         "type": "home",
+         "summary": "0-2-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-2-0"
+        }
+       ],
+       "team": {
+        "id": "3",
+        "abbreviation": "CGY",
+        "displayName": "Calgary Flames",
+        "shortDisplayName": "Flames",
+        "name": "Flames",
+        "location": "Calgary",
+        "color": "dd1a32",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "7",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 3.0,
+         "period": 2
+        },
+        {
+         "value": 3.0,
+         "period": 3
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "3-1-0"
+        },
+        {
+         "type": "home",
+         "summary": "2-0-0"
+        },
+        {
+         "type": "road",
+         "summary": "1-1-0"
+        }
+       ],
+       "team": {
+        "id": "17",
+        "abbreviation": "COL",
+        "displayName": "Colorado Avalanche",
+        "shortDisplayName": "Avalanche",
+        "name": "Avalanche",
+        "location": "Colorado",
+        "color": "860038",
+        "alternateColor": "005ea3"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401892464",
+   "date": "2026-10-09T02:00Z",
+   "name": "Toronto Maple Leafs at Vegas Golden Knights",
+   "shortName": "TOR @ VGK",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 5,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final/SO",
+     "shortDetail": "Final/SO"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401892464",
+     "date": "2026-10-09T02:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 5,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final/SO",
+       "shortDetail": "Final/SO"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 2.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 1.0,
+         "period": 5
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "4-1-0"
+        },
+        {
+         "type": "home",
+         "summary": "2-1-0"
+        },
+        {
+         "type": "road",
+         "summary": "2-0-0"
+        }
+       ],
+       "team": {
+        "id": "37",
+        "abbreviation": "VGK",
+        "displayName": "Vegas Golden Knights",
+        "shortDisplayName": "Golden Knights",
+        "name": "Golden Knights",
+        "location": "Vegas",
+        "color": "344043",
+        "alternateColor": "b4975a"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "3",
+       "linescores": [
+        {
+         "value": 3.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        }
+       ],
+       "records": [
+        {
+         "type": "ytd",
+         "summary": "2-2-1"
+        },
+        {
+         "type": "home",
+         "summary": "2-2-0"
+        },
+        {
+         "type": "road",
+         "summary": "0-0-1"
+        }
+       ],
+       "team": {
+        "id": "21",
+        "abbreviation": "TOR",
+        "displayName": "Toronto Maple Leafs",
+        "shortDisplayName": "Maple Leafs",
+        "name": "Maple Leafs",
+        "location": "Toronto",
+        "color": "003e7e",
+        "alternateColor": "ffffff"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

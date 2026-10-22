@@ -19,7 +19,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Rivalry Preview",
     id: "rivalry_preview",
     description:
-      "Rival matchup within 48 hours. Build anticipation before the game.",
+      "Rival matchup or derby within 48 hours. Build anticipation before kickoff.",
     category: "before",
   },
   {
@@ -33,7 +33,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Season Opener",
     id: "season_opener",
     description:
-      "Opening Day, Puck Drop, Kickoff. Best re-engagement of the year.",
+      "Opening Day, Puck Drop, Kickoff, Tip-Off. Best re-engagement of the year.",
     category: "before",
   },
   {
@@ -47,21 +47,35 @@ export const TRIGGERS: Trigger[] = [
     name: "Comeback Live",
     id: "comeback_live",
     description:
-      "Down 5+ and rallying. Highest real-time engagement of any trigger.",
+      "Down big and rallying. Highest real-time engagement of any trigger.",
     category: "during",
   },
   {
     name: "Clutch Moment",
     id: "clutch_moment",
     description:
-      "Bases loaded. Final at-bat. Last-second shot. Everyone watching.",
+      "Bases loaded. Final drive. Last-second shot. Everyone watching.",
     category: "during",
   },
   {
     name: "Walk-Off Win",
     id: "walkoff_win",
     description:
-      "Highest emotional spike. 30-min window. Timing is the conversion lever.",
+      "Highest emotional spike in sports. 30-minute window. Timing is the conversion lever.",
+    category: "after",
+  },
+  {
+    name: "Buzzer Beater",
+    id: "buzzer_beater",
+    description:
+      "Won on the final possession. NBA and college fans flood their phones.",
+    category: "after",
+  },
+  {
+    name: "Late Winner",
+    id: "late_winner",
+    description:
+      "Stoppage-time goal. The Premier League version of a walk-off.",
     category: "after",
   },
   {
@@ -75,14 +89,14 @@ export const TRIGGERS: Trigger[] = [
     name: "Rivalry Win",
     id: "rivalry_win",
     description:
-      "Yankees-Red Sox. Iron Bowl. Lakers-Celtics. Configurable per account.",
+      "Yankees-Red Sox. Iron Bowl. North London Derby. Configurable per brand.",
     category: "after",
   },
   {
     name: "Heartbreaker Loss",
     id: "heartbreak_loss",
     description:
-      "Lost by one. Consolation angle with soft offer converts well.",
+      "Lost by one. Consolation angle with a soft offer converts well.",
     category: "after",
   },
   {
@@ -93,17 +107,38 @@ export const TRIGGERS: Trigger[] = [
     category: "season",
   },
   {
+    name: "Series Win",
+    id: "playoff_advance",
+    description:
+      "Won a playoff round. Fans are already buying for the next one.",
+    category: "season",
+  },
+  {
     name: "Player Milestone",
     id: "player_milestone",
     description:
-      "Configurable. Records, awards, NIL moments. Big for NCAA brands.",
+      "Records, awards, NIL moments. Configurable per brand. Big for NCAA.",
+    category: "season",
+  },
+  {
+    name: "Big Signing",
+    id: "big_signing",
+    description:
+      "Star trade or transfer lands in your market. New jersey, new reason to buy.",
+    category: "season",
+  },
+  {
+    name: "Great Escape",
+    id: "great_escape",
+    description:
+      "Survived relegation on the final day. Relief sells almost as well as glory.",
     category: "season",
   },
   {
     name: "Championship Win",
     id: "title_won",
     description:
-      "World Series. Stanley Cup. National Championship. Once a year.",
+      "Super Bowl. Stanley Cup. Premier League title. Once a year, if you're lucky.",
     category: "season",
   },
 ];

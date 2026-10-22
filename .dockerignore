@@ -1,0 +1,8 @@
+# Docker builds only need the engine and the shared lib (engine/Dockerfile).
+node_modules
+.next
+.git
+dist
+public
+*.log
+.env*

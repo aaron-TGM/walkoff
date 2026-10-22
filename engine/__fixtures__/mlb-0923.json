@@ -1,0 +1,2902 @@
+{
+ "events": [
+  {
+   "id": "401817051",
+   "date": "2026-09-23T17:10Z",
+   "name": "Washington Nationals at Detroit Tigers",
+   "shortName": "WSH @ DET",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817051",
+     "date": "2026-09-23T17:10Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 1.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 1.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "74-85"
+        },
+        {
+         "type": "home",
+         "summary": "40-38"
+        },
+        {
+         "type": "road",
+         "summary": "34-47"
+        }
+       ],
+       "team": {
+        "id": "6",
+        "abbreviation": "DET",
+        "displayName": "Detroit Tigers",
+        "shortDisplayName": "Tigers",
+        "name": "Tigers",
+        "location": "Detroit",
+        "color": "0a2240",
+        "alternateColor": "ff4713"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 3.0,
+         "period": 6
+        },
+        {
+         "value": 1.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "75-84"
+        },
+        {
+         "type": "home",
+         "summary": "37-41"
+        },
+        {
+         "type": "road",
+         "summary": "38-43"
+        }
+       ],
+       "team": {
+        "id": "20",
+        "abbreviation": "WSH",
+        "displayName": "Washington Nationals",
+        "shortDisplayName": "Nationals",
+        "name": "Nationals",
+        "location": "Washington",
+        "color": "ab0003",
+        "alternateColor": "11225b"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401923610",
+   "date": "2026-09-23T17:35Z",
+   "name": "Toronto Blue Jays at Baltimore Orioles",
+   "shortName": "TOR @ BAL",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401923610",
+     "date": "2026-09-23T17:35Z",
+     "neutralSite": false,
+     "notes": [
+      {
+       "type": "event",
+       "headline": "Doubleheader - Game 1 - Makeup from Sep 22"
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 2.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 2.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "77-81"
+        },
+        {
+         "type": "home",
+         "summary": "38-42"
+        },
+        {
+         "type": "road",
+         "summary": "39-39"
+        }
+       ],
+       "team": {
+        "id": "1",
+        "abbreviation": "BAL",
+        "displayName": "Baltimore Orioles",
+        "shortDisplayName": "Orioles",
+        "name": "Orioles",
+        "location": "Baltimore",
+        "color": "df4601",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 2.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "77-81"
+        },
+        {
+         "type": "home",
+         "summary": "40-38"
+        },
+        {
+         "type": "road",
+         "summary": "37-43"
+        }
+       ],
+       "team": {
+        "id": "14",
+        "abbreviation": "TOR",
+        "displayName": "Toronto Blue Jays",
+        "shortDisplayName": "Blue Jays",
+        "name": "Blue Jays",
+        "location": "Toronto",
+        "color": "134a8e",
+        "alternateColor": "6cace5"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817058",
+   "date": "2026-09-23T19:45Z",
+   "name": "Minnesota Twins at San Francisco Giants",
+   "shortName": "MIN @ SF",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817058",
+     "date": "2026-09-23T19:45Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 2.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "65-94"
+        },
+        {
+         "type": "home",
+         "summary": "37-41"
+        },
+        {
+         "type": "road",
+         "summary": "28-53"
+        }
+       ],
+       "team": {
+        "id": "26",
+        "abbreviation": "SF",
+        "displayName": "San Francisco Giants",
+        "shortDisplayName": "Giants",
+        "name": "Giants",
+        "location": "San Francisco",
+        "color": "000000",
+        "alternateColor": "fd5a1e"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 1.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 2.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "75-84"
+        },
+        {
+         "type": "home",
+         "summary": "40-38"
+        },
+        {
+         "type": "road",
+         "summary": "35-46"
+        }
+       ],
+       "team": {
+        "id": "9",
+        "abbreviation": "MIN",
+        "displayName": "Minnesota Twins",
+        "shortDisplayName": "Twins",
+        "name": "Twins",
+        "location": "Minnesota",
+        "color": "031f40",
+        "alternateColor": "e20e32"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817050",
+   "date": "2026-09-23T22:35Z",
+   "name": "Toronto Blue Jays at Baltimore Orioles",
+   "shortName": "TOR @ BAL",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817050",
+     "date": "2026-09-23T22:35Z",
+     "neutralSite": false,
+     "notes": [
+      {
+       "type": "event",
+       "headline": "Doubleheader - Game 2"
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 3.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 1.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "78-81"
+        },
+        {
+         "type": "home",
+         "summary": "39-42"
+        },
+        {
+         "type": "road",
+         "summary": "39-39"
+        }
+       ],
+       "team": {
+        "id": "1",
+        "abbreviation": "BAL",
+        "displayName": "Baltimore Orioles",
+        "shortDisplayName": "Orioles",
+        "name": "Orioles",
+        "location": "Baltimore",
+        "color": "df4601",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 2.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "77-82"
+        },
+        {
+         "type": "home",
+         "summary": "40-38"
+        },
+        {
+         "type": "road",
+         "summary": "37-44"
+        }
+       ],
+       "team": {
+        "id": "14",
+        "abbreviation": "TOR",
+        "displayName": "Toronto Blue Jays",
+        "shortDisplayName": "Blue Jays",
+        "name": "Blue Jays",
+        "location": "Toronto",
+        "color": "134a8e",
+        "alternateColor": "6cace5"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817047",
+   "date": "2026-09-23T22:40Z",
+   "name": "Milwaukee Brewers at Philadelphia Phillies",
+   "shortName": "MIL @ PHI",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817047",
+     "date": "2026-09-23T22:40Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "1",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 1.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "87-71"
+        },
+        {
+         "type": "home",
+         "summary": "42-35"
+        },
+        {
+         "type": "road",
+         "summary": "45-36"
+        }
+       ],
+       "team": {
+        "id": "22",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Phillies",
+        "shortDisplayName": "Phillies",
+        "name": "Phillies",
+        "location": "Philadelphia",
+        "color": "e81828",
+        "alternateColor": "003278"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 1.0,
+         "period": 2
+        },
+        {
+         "value": 2.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "99-59"
+        },
+        {
+         "type": "home",
+         "summary": "52-26"
+        },
+        {
+         "type": "road",
+         "summary": "47-33"
+        }
+       ],
+       "team": {
+        "id": "8",
+        "abbreviation": "MIL",
+        "displayName": "Milwaukee Brewers",
+        "shortDisplayName": "Brewers",
+        "name": "Brewers",
+        "location": "Milwaukee",
+        "color": "13294b",
+        "alternateColor": "ffc72c"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817048",
+   "date": "2026-09-23T22:40Z",
+   "name": "St. Louis Cardinals at Pittsburgh Pirates",
+   "shortName": "STL @ PIT",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817048",
+     "date": "2026-09-23T22:40Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "1",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 1.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "80-78"
+        },
+        {
+         "type": "home",
+         "summary": "43-37"
+        },
+        {
+         "type": "road",
+         "summary": "37-41"
+        }
+       ],
+       "team": {
+        "id": "23",
+        "abbreviation": "PIT",
+        "displayName": "Pittsburgh Pirates",
+        "shortDisplayName": "Pirates",
+        "name": "Pirates",
+        "location": "Pittsburgh",
+        "color": "000000",
+        "alternateColor": "fdb827"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "5",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 3.0,
+         "period": 3
+        },
+        {
+         "value": 2.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "77-81"
+        },
+        {
+         "type": "home",
+         "summary": "38-43"
+        },
+        {
+         "type": "road",
+         "summary": "39-38"
+        }
+       ],
+       "team": {
+        "id": "24",
+        "abbreviation": "STL",
+        "displayName": "St. Louis Cardinals",
+        "shortDisplayName": "Cardinals",
+        "name": "Cardinals",
+        "location": "St. Louis",
+        "color": "be0a14",
+        "alternateColor": "001541"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817046",
+   "date": "2026-09-23T23:00Z",
+   "name": "Cleveland Guardians at Boston Red Sox",
+   "shortName": "CLE @ BOS",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817046",
+     "date": "2026-09-23T23:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "1",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 1.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "85-73"
+        },
+        {
+         "type": "home",
+         "summary": "39-38"
+        },
+        {
+         "type": "road",
+         "summary": "46-35"
+        }
+       ],
+       "team": {
+        "id": "2",
+        "abbreviation": "BOS",
+        "displayName": "Boston Red Sox",
+        "shortDisplayName": "Red Sox",
+        "name": "Red Sox",
+        "location": "Boston",
+        "color": "0d2b56",
+        "alternateColor": "bd3039"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "0",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "82-76"
+        },
+        {
+         "type": "home",
+         "summary": "41-40"
+        },
+        {
+         "type": "road",
+         "summary": "41-36"
+        }
+       ],
+       "team": {
+        "id": "5",
+        "abbreviation": "CLE",
+        "displayName": "Cleveland Guardians",
+        "shortDisplayName": "Guardians",
+        "name": "Guardians",
+        "location": "Cleveland",
+        "color": "002b5c",
+        "alternateColor": "e31937"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817049",
+   "date": "2026-09-23T23:05Z",
+   "name": "Tampa Bay Rays at New York Yankees",
+   "shortName": "TB @ NYY",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817049",
+     "date": "2026-09-23T23:05Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "9",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 1.0,
+         "period": 2
+        },
+        {
+         "value": 5.0,
+         "period": 3
+        },
+        {
+         "value": 1.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 1.0,
+         "period": 8
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "91-67"
+        },
+        {
+         "type": "home",
+         "summary": "44-33"
+        },
+        {
+         "type": "road",
+         "summary": "47-34"
+        }
+       ],
+       "team": {
+        "id": "10",
+        "abbreviation": "NYY",
+        "displayName": "New York Yankees",
+        "shortDisplayName": "Yankees",
+        "name": "Yankees",
+        "location": "New York",
+        "color": "132448",
+        "alternateColor": "c4ced4"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 1.0,
+         "period": 4
+        },
+        {
+         "value": 1.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "96-62"
+        },
+        {
+         "type": "home",
+         "summary": "55-26"
+        },
+        {
+         "type": "road",
+         "summary": "41-36"
+        }
+       ],
+       "team": {
+        "id": "30",
+        "abbreviation": "TB",
+        "displayName": "Tampa Bay Rays",
+        "shortDisplayName": "Rays",
+        "name": "Rays",
+        "location": "Tampa Bay",
+        "color": "092c5c",
+        "alternateColor": "8fbce6"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817045",
+   "date": "2026-09-23T23:15Z",
+   "name": "Cincinnati Reds at Atlanta Braves",
+   "shortName": "CIN @ ATL",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 10,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final/10",
+     "shortDetail": "Final/10"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817045",
+     "date": "2026-09-23T23:15Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 10,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final/10",
+       "shortDetail": "Final/10"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "3",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 1.0,
+         "period": 6
+        },
+        {
+         "value": 1.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        },
+        {
+         "value": 1.0,
+         "period": 10
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "93-65"
+        },
+        {
+         "type": "home",
+         "summary": "52-28"
+        },
+        {
+         "type": "road",
+         "summary": "41-37"
+        }
+       ],
+       "team": {
+        "id": "15",
+        "abbreviation": "ATL",
+        "displayName": "Atlanta Braves",
+        "shortDisplayName": "Braves",
+        "name": "Braves",
+        "location": "Atlanta",
+        "color": "0c2340",
+        "alternateColor": "ba0c2f"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 1.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 1.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        },
+        {
+         "value": 0.0,
+         "period": 10
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "73-85"
+        },
+        {
+         "type": "home",
+         "summary": "38-43"
+        },
+        {
+         "type": "road",
+         "summary": "35-42"
+        }
+       ],
+       "team": {
+        "id": "17",
+        "abbreviation": "CIN",
+        "displayName": "Cincinnati Reds",
+        "shortDisplayName": "Reds",
+        "name": "Reds",
+        "location": "Cincinnati",
+        "color": "c6011f",
+        "alternateColor": "ffffff"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817052",
+   "date": "2026-09-23T23:40Z",
+   "name": "Chicago White Sox at Kansas City Royals",
+   "shortName": "CHW @ KC",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817052",
+     "date": "2026-09-23T23:40Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "5",
+       "linescores": [
+        {
+         "value": 4.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 1.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "68-90"
+        },
+        {
+         "type": "home",
+         "summary": "40-37"
+        },
+        {
+         "type": "road",
+         "summary": "28-53"
+        }
+       ],
+       "team": {
+        "id": "7",
+        "abbreviation": "KC",
+        "displayName": "Kansas City Royals",
+        "shortDisplayName": "Royals",
+        "name": "Royals",
+        "location": "Kansas City",
+        "color": "004687",
+        "alternateColor": "7ab2dd"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 4.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "81-77"
+        },
+        {
+         "type": "home",
+         "summary": "46-32"
+        },
+        {
+         "type": "road",
+         "summary": "35-45"
+        }
+       ],
+       "team": {
+        "id": "4",
+        "abbreviation": "CHW",
+        "displayName": "Chicago White Sox",
+        "shortDisplayName": "White Sox",
+        "name": "White Sox",
+        "location": "Chicago",
+        "color": "000000",
+        "alternateColor": "c4ced4"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817053",
+   "date": "2026-09-23T23:40Z",
+   "name": "Miami Marlins at Chicago Cubs",
+   "shortName": "MIA @ CHC",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817053",
+     "date": "2026-09-23T23:40Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 2.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "87-71"
+        },
+        {
+         "type": "home",
+         "summary": "45-35"
+        },
+        {
+         "type": "road",
+         "summary": "42-36"
+        }
+       ],
+       "team": {
+        "id": "16",
+        "abbreviation": "CHC",
+        "displayName": "Chicago Cubs",
+        "shortDisplayName": "Cubs",
+        "name": "Cubs",
+        "location": "Chicago",
+        "color": "0e3386",
+        "alternateColor": "cc3433"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "3",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 2.0,
+         "period": 6
+        },
+        {
+         "value": 1.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "78-80"
+        },
+        {
+         "type": "home",
+         "summary": "45-33"
+        },
+        {
+         "type": "road",
+         "summary": "33-47"
+        }
+       ],
+       "team": {
+        "id": "28",
+        "abbreviation": "MIA",
+        "displayName": "Miami Marlins",
+        "shortDisplayName": "Marlins",
+        "name": "Marlins",
+        "location": "Miami",
+        "color": "00a3e0",
+        "alternateColor": "000000"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817054",
+   "date": "2026-09-24T00:05Z",
+   "name": "New York Mets at Texas Rangers",
+   "shortName": "NYM @ TEX",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817054",
+     "date": "2026-09-24T00:05Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 2.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "78-80"
+        },
+        {
+         "type": "home",
+         "summary": "44-36"
+        },
+        {
+         "type": "road",
+         "summary": "34-44"
+        }
+       ],
+       "team": {
+        "id": "13",
+        "abbreviation": "TEX",
+        "displayName": "Texas Rangers",
+        "shortDisplayName": "Rangers",
+        "name": "Rangers",
+        "location": "Texas",
+        "color": "003278",
+        "alternateColor": "c0111f"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "7",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 2.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 1.0,
+         "period": 8
+        },
+        {
+         "value": 4.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "73-85"
+        },
+        {
+         "type": "home",
+         "summary": "36-45"
+        },
+        {
+         "type": "road",
+         "summary": "37-40"
+        }
+       ],
+       "team": {
+        "id": "21",
+        "abbreviation": "NYM",
+        "displayName": "New York Mets",
+        "shortDisplayName": "Mets",
+        "name": "Mets",
+        "location": "New York",
+        "color": "002d72",
+        "alternateColor": "ff5910"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817055",
+   "date": "2026-09-24T00:40Z",
+   "name": "Arizona Diamondbacks at Colorado Rockies",
+   "shortName": "ARI @ COL",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817055",
+     "date": "2026-09-24T00:40Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "3",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 1.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 1.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "57-101"
+        },
+        {
+         "type": "home",
+         "summary": "32-48"
+        },
+        {
+         "type": "road",
+         "summary": "25-53"
+        }
+       ],
+       "team": {
+        "id": "27",
+        "abbreviation": "COL",
+        "displayName": "Colorado Rockies",
+        "shortDisplayName": "Rockies",
+        "name": "Rockies",
+        "location": "Colorado",
+        "color": "33006f",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "5",
+       "linescores": [
+        {
+         "value": 4.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 1.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "84-74"
+        },
+        {
+         "type": "home",
+         "summary": "45-36"
+        },
+        {
+         "type": "road",
+         "summary": "39-38"
+        }
+       ],
+       "team": {
+        "id": "29",
+        "abbreviation": "ARI",
+        "displayName": "Arizona Diamondbacks",
+        "shortDisplayName": "Diamondbacks",
+        "name": "Diamondbacks",
+        "location": "Arizona",
+        "color": "aa182c",
+        "alternateColor": "000000"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817056",
+   "date": "2026-09-24T01:40Z",
+   "name": "Los Angeles Angels at Athletics Athletics",
+   "shortName": "LAA @ ATH",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817056",
+     "date": "2026-09-24T01:40Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "7",
+       "linescores": [
+        {
+         "value": 4.0,
+         "period": 1
+        },
+        {
+         "value": 1.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 2.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "63-95"
+        },
+        {
+         "type": "home",
+         "summary": "31-46"
+        },
+        {
+         "type": "road",
+         "summary": "32-49"
+        }
+       ],
+       "team": {
+        "id": "11",
+        "abbreviation": "ATH",
+        "displayName": "Athletics",
+        "shortDisplayName": "Athletics",
+        "name": "Athletics",
+        "location": "Athletics",
+        "color": "003831",
+        "alternateColor": "efb21e"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "3",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 2.0,
+         "period": 4
+        },
+        {
+         "value": 1.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "60-98"
+        },
+        {
+         "type": "home",
+         "summary": "34-47"
+        },
+        {
+         "type": "road",
+         "summary": "26-51"
+        }
+       ],
+       "team": {
+        "id": "3",
+        "abbreviation": "LAA",
+        "displayName": "Los Angeles Angels",
+        "shortDisplayName": "Angels",
+        "name": "Angels",
+        "location": "Los Angeles",
+        "color": "ba0021",
+        "alternateColor": "c4ced4"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817057",
+   "date": "2026-09-24T02:00Z",
+   "name": "Houston Astros at Seattle Mariners",
+   "shortName": "HOU @ SEA",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 10,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final/10",
+     "shortDetail": "Final/10"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817057",
+     "date": "2026-09-24T02:00Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 10,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final/10",
+       "shortDetail": "Final/10"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "6",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 3.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 1.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        },
+        {
+         "value": 2.0,
+         "period": 10
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "74-84"
+        },
+        {
+         "type": "home",
+         "summary": "41-36"
+        },
+        {
+         "type": "road",
+         "summary": "33-48"
+        }
+       ],
+       "team": {
+        "id": "12",
+        "abbreviation": "SEA",
+        "displayName": "Seattle Mariners",
+        "shortDisplayName": "Mariners",
+        "name": "Mariners",
+        "location": "Seattle",
+        "color": "005c5c",
+        "alternateColor": "0c2c56"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "5",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 4.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        },
+        {
+         "value": 1.0,
+         "period": 10
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "78-80"
+        },
+        {
+         "type": "home",
+         "summary": "39-42"
+        },
+        {
+         "type": "road",
+         "summary": "39-38"
+        }
+       ],
+       "team": {
+        "id": "18",
+        "abbreviation": "HOU",
+        "displayName": "Houston Astros",
+        "shortDisplayName": "Astros",
+        "name": "Astros",
+        "location": "Houston",
+        "color": "002d62",
+        "alternateColor": "eb6e1f"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "401817059",
+   "date": "2026-09-24T02:10Z",
+   "name": "San Diego Padres at Los Angeles Dodgers",
+   "shortName": "SD @ LAD",
+   "season": {
+    "year": 2026,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401817059",
+     "date": "2026-09-24T02:10Z",
+     "neutralSite": false,
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "1",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 1.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "97-61"
+        },
+        {
+         "type": "home",
+         "summary": "51-29"
+        },
+        {
+         "type": "road",
+         "summary": "46-32"
+        }
+       ],
+       "team": {
+        "id": "19",
+        "abbreviation": "LAD",
+        "displayName": "Los Angeles Dodgers",
+        "shortDisplayName": "Dodgers",
+        "name": "Dodgers",
+        "location": "Los Angeles",
+        "color": "005a9c",
+        "alternateColor": "ffffff"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "5",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 2.0,
+         "period": 4
+        },
+        {
+         "value": 2.0,
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "period": 8
+        },
+        {
+         "value": 1.0,
+         "period": 9
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "88-70"
+        },
+        {
+         "type": "home",
+         "summary": "49-29"
+        },
+        {
+         "type": "road",
+         "summary": "39-41"
+        }
+       ],
+       "team": {
+        "id": "25",
+        "abbreviation": "SD",
+        "displayName": "San Diego Padres",
+        "shortDisplayName": "Padres",
+        "name": "Padres",
+        "location": "San Diego",
+        "color": "2f241d",
+        "alternateColor": "ffc425"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
