@@ -28,7 +28,7 @@ import { helpUrl } from "../help/pages";
 import { TRIGGERS } from "../triggers";
 import { sendWelcome } from "../welcome";
 import { teamAudience } from "./audience";
-import { buildCampaign, type CampaignMoment } from "./campaign";
+import { buildCampaign, KLAVIYO_TOOLS, type CampaignMoment } from "./campaign";
 import {
   brandFor,
   brandsFor,
@@ -625,7 +625,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     {
       title: "Log a send",
       description:
-        "Records what the brand did with a moment: drafted (a Klaviyo draft exists), sent (scheduled or sent) or skipped. Keeps trigger_queue clean and builds the history Walkoff reports results from. Call it after drafting in Klaviyo, again once it's scheduled, or to skip a moment.",
+        "Records what the brand did with a moment: drafted (a Klaviyo draft exists), sent (scheduled or sent) or skipped. Keeps trigger_queue clean and builds the send history. Call it after drafting in Klaviyo, again once it's scheduled, or to skip a moment. Pass the Klaviyo campaign id, so the send's results can be read from Klaviyo later.",
       inputSchema: {
         brand: brandArg,
         moment_id: z.string(),
@@ -670,7 +670,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     "send_history",
     {
       title: "Send history",
-      description: "What the brand drafted, sent and skipped, newest first, with the moment behind each.",
+      description: `What the brand drafted, sent and skipped, newest first, with the moment behind each. For how a send did, read its campaign_ref with the Klaviyo connector's campaign report (${KLAVIYO_TOOLS.report}): recipients, clicks, orders and revenue.`,
       inputSchema: {
         brand: brandArg,
         days: z.number().int().min(1).max(365).optional().describe("How far back. Default 30."),

@@ -41,7 +41,7 @@ export default function CampaignsPage() {
           <li>
             <strong>Draft it in Klaviyo.</strong> When you say go, Claude uses your Klaviyo
             connector to create the template and a draft campaign for that segment, with Smart
-            Sending on. <Link href={helpPath("klaviyo", "why")}>Klaviyo in Claude</Link>
+            Sending and UTM tracking on. <Link href={helpPath("klaviyo", "why")}>Klaviyo in Claude</Link>
           </li>
           <li>
             <strong>Send it.</strong> Schedule it in Klaviyo, or have Claude schedule it if your
@@ -49,6 +49,10 @@ export default function CampaignsPage() {
           </li>
           <li>
             <strong>Log it.</strong> Claude records what you did, so it leaves your queue.
+          </li>
+          <li>
+            <strong>See how it did.</strong> A few days later, ask Claude. It reads the orders and
+            revenue from Klaviyo. <Link href={helpPath("klaviyo", "tracking")}>Tracking and results</Link>
           </li>
         </ol>
       </HelpSection>
@@ -152,10 +156,16 @@ export default function CampaignsPage() {
           A logged moment leaves your queue. Ask &ldquo;What did we send last month?&rdquo; to
           see your history, with the moment behind each send.
         </p>
+        <p>
+          For results, ask &ldquo;How did our Walkoff sends do last month?&rdquo; Claude reads
+          each send&apos;s recipients, clicks, orders and revenue from Klaviyo, so you can compare
+          one kind of moment with another.{" "}
+          <Link href={helpPath("klaviyo", "tracking")}>Tracking and results</Link>
+        </p>
         <Callout title="Coming">
           <p>
-            Results: holdout groups that show what each moment added, and sends matched to your
-            orders.
+            Holdout groups that show what each moment added, beyond who clicked, and benchmarks
+            against brands like yours.
           </p>
         </Callout>
       </HelpSection>

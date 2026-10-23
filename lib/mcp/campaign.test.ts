@@ -116,6 +116,13 @@ describe("buildCampaign", () => {
     assert.match(audience, /audience\.klaviyo_segment_steps/);
   });
 
+  it("drafts with the brand's own UTM tracking, and reads results from Klaviyo", () => {
+    const steps = campaign(CHARGERS, "walkoff_win").klaviyo_steps;
+    const draft = steps.find((s) => s.startsWith("Draft:")) ?? "";
+    assert.match(draft, /Turn its UTM tracking on, with the account's own parameters/);
+    assert.match(steps.at(-1) ?? "", /^Results: .* \(get_campaign_report\): recipients, clicks, orders and revenue\.$/);
+  });
+
   it("escapes product text, including Klaviyo's braces", () => {
     const team = CHARGERS;
     const c = buildCampaign({

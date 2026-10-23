@@ -78,6 +78,7 @@ export const KLAVIYO_TOOLS = {
   createCampaign: "create_campaign",
   assignTemplate: "assign_template_to_campaign_message",
   render: "render_email_template",
+  report: "get_campaign_report",
 } as const;
 
 type Kind = "win" | "loss" | "pregame" | "live" | "season";
@@ -479,11 +480,12 @@ export function buildCampaign(input: {
         : "If it isn't there, Walkoff has no circles to build it from: ask the marketer which segment to use."
     } Don't send a team moment to the whole list.`,
     `Template: create an email template named "${name}" from html (${KLAVIYO_TOOLS.createTemplate}).`,
-    `Draft: create a campaign named "${name}" for that segment with subject "${subjects[0]}" and preview text "${copy.preview}" (${KLAVIYO_TOOLS.createCampaign}), then assign the template to its message (${KLAVIYO_TOOLS.assignTemplate}). Keep Smart Sending on, so nobody who just got an email from the brand gets another.`,
+    `Draft: create a campaign named "${name}" for that segment with subject "${subjects[0]}" and preview text "${copy.preview}" (${KLAVIYO_TOOLS.createCampaign}), then assign the template to its message (${KLAVIYO_TOOLS.assignTemplate}). Keep Smart Sending on, so nobody who just got an email from the brand gets another. Turn its UTM tracking on, with the account's own parameters, so the brand's analytics (Shopify, Google Analytics, Triple Whale) can credit the sales.`,
     `Check: render the template (${KLAVIYO_TOOLS.render}) and show the marketer the email, the audience and the send time: ${send.send_at_local}.`,
     `Send: schedule it for ${send.send_at_local} (${send.send_at_utc}) if the Klaviyo connector can schedule; otherwise ask the marketer to schedule it in Klaviyo.`,
   ];
   if (moment.id) steps.push(`Log it: call log_send with moment_id ${moment.id}, status "drafted" (or "sent" once scheduled) and the Klaviyo campaign id.`);
+  steps.push(`Results: once it's sent, when the marketer asks how it did, read its numbers from Klaviyo (${KLAVIYO_TOOLS.report}): recipients, clicks, orders and revenue.`);
 
   const html = renderEmail({
     brand: brand.name,

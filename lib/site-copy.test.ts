@@ -20,6 +20,10 @@ const UNTRUE = [
   "configurable per brand",
   "upcoming_moments",
   "mcp.walkoff.io",
+  // Walkoff adds no tracking of its own: the brand's Klaviyo UTMs and
+  // attribution do it.
+  "tracked to the order",
+  "matched to your store's orders",
 ];
 
 // Legal text changes when the founder says so. The terms still cover

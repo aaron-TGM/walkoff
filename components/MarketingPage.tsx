@@ -176,22 +176,24 @@ const CONTROLS = [
   },
 ];
 
-const PROOF_POINTS = [
+const PROOF_POINTS: { title: string; body: string; soon?: true }[] = [
   {
-    title: "Holdout groups",
-    body: "A random slice of every audience doesn't get the message, so you see what the moment added, not just who clicked.",
-  },
-  {
-    title: "Tracked to the order",
-    body: "Every send carries its own tracking and gets matched to your store's orders.",
+    title: "Tracked where you already look",
+    body: "Every send is a Klaviyo campaign with UTM tracking on, so Klaviyo, Shopify, Google Analytics and Triple Whale all see it. No new pixel.",
   },
   {
     title: "Revenue per moment",
-    body: "See what each walk-off, comeback or derby actually sold.",
+    body: "Ask Claude how your sends did. It reads each one's orders and revenue from Klaviyo, so you can see what each walk-off, comeback or derby brought in.",
+  },
+  {
+    title: "Holdout groups",
+    body: "A random slice of every audience doesn't get the message, so you see what the moment added, not just who clicked.",
+    soon: true,
   },
   {
     title: "Benchmarks",
     body: "Compare against brands like yours. We pool results, never customers.",
+    soon: true,
   },
 ];
 
@@ -561,14 +563,17 @@ export function MarketingPage() {
             <div>
               <div className="block-num">
                 <span className="eyebrow-dot" aria-hidden />
-                Proof &middot; Coming
+                Proof
               </div>
               <h2 className="section-title">
                 Results you can <em>defend.</em>
               </h2>
               <p className="section-lead">
-                Coming next. Today every moment you draft, send or skip is
-                logged, so you can see what went out and when.
+                Every moment you draft, send or skip is logged, and every send
+                shows up in the tracking you already use.{" "}
+                <Link href={helpPath("klaviyo", "tracking")} className="section-lead-link">
+                  How tracking works
+                </Link>
               </p>
               <ul className="proof-list">
                 {PROOF_POINTS.map((p) => (
@@ -577,7 +582,10 @@ export function MarketingPage() {
                       &rarr;
                     </span>
                     <div>
-                      <div className="proof-title">{p.title}</div>
+                      <div className="proof-title">
+                        {p.title}
+                        {p.soon && <span className="proof-soon">Coming</span>}
+                      </div>
                       <p className="proof-body">{p.body}</p>
                     </div>
                   </li>
