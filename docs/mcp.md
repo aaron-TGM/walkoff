@@ -79,6 +79,12 @@ OAuth 2.1 as the MCP authorization spec and Claude's connector expect:
   hours; refresh tokens 90 days, rotated on every use. `/oauth/revoke`
   revokes either.
 - Codes and tokens are stored only as SHA-256 hashes (`oauth_grants`).
+  Revoking any token ends the whole connection.
+- The email step answers the same way whether or not an address has
+  access, and only invited addresses get a code (10 an hour at most).
+- App registration and starting a sign-in are capped per caller and
+  overall (`lib/mcp/oauth/limits.ts`, `oauth_events`), and Walkoff only
+  fetches client metadata from hosts that resolve to public addresses.
 
 The server is stateless: each request builds a fresh server for the token's
 owner, and every query is scoped to the brands they approved.
@@ -89,10 +95,12 @@ Code: `lib/mcp/` (tools, campaign builder, audience, timing, queue),
 
 ## Setup
 
-1. Run `supabase/006_mcp.sql` in the Supabase SQL editor.
+1. Run `supabase/006_mcp.sql`, then `supabase/007_hardening.sql`, in the
+   Supabase SQL editor.
 2. On Vercel: `WALKOFF_OPERATOR_EMAILS`, plus `RESEND_API_KEY` and a
    `RESEND_FROM_EMAIL` on a domain verified in Resend (sign-in codes won't
-   send without them).
+   send without them), and `WALKOFF_PUBLIC_URL=https://www.walkoff.io` for
+   Production only.
 3. `npm run brand -- set <brand> --store https://…` and invite the people
    who'll use it.
 

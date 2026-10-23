@@ -3,8 +3,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { authorizationServerMetadata, canonicalResource, COOKIE, CORS, LIMITS, protectedResourceMetadata, SCOPE, TTL } from "./config";
 import { ClientError, getClient, redirectAllowed, redirectHost, registerClient, type OAuthClient } from "./clients";
-import { CHALLENGE, pkceMatches, sameHash, sixDigits } from "./crypto";
+import { CHALLENGE, pkceMatches, randomToken, sameHash, sixDigits } from "./crypto";
 import { sendSignInCode } from "./email";
+import { callerKey, overLimit, sweep } from "./limits";
 import { codePage, consentPage, emailPage, errorPage, HTML_HEADERS, type FlowView } from "./pages";
 import {
   accessFor,
@@ -41,6 +42,10 @@ export const authorizationServer = (origin: string) =>
 // ── Registration ───────────────────────────────────────────────────
 
 export async function register(db: SupabaseClient, req: Request): Promise<Response> {
+  if (await overLimit(db, "register", callerKey(req))) {
+    return json({ error: "temporarily_unavailable", error_description: "Too many registrations. Try again later." }, 429, { "Retry-After": "600" });
+  }
+  await sweep(db);
   let body: unknown;
   try {
     body = await req.json();
@@ -93,6 +98,10 @@ function backTo(redirectUri: string, params: Record<string, string | null>, head
 }
 
 export async function authorizeStart(db: SupabaseClient, req: Request, origin: string): Promise<Response> {
+  // Before anything else, including fetching an app's metadata.
+  if (await overLimit(db, "authorize", callerKey(req))) {
+    return html(errorPage("Too many sign-ins from your network in the last hour. Try again later."), 429, { "Retry-After": "600" });
+  }
   const p = new URL(req.url).searchParams;
   const clientId = p.get("client_id");
   if (!clientId) return html(errorPage("The app didn't say who it is (no client_id)."), 400);
@@ -150,18 +159,20 @@ export async function authorizeStep(db: SupabaseClient, req: Request, origin: st
       if ((await codesSentTo(db, email)) >= LIMITS.codesPerEmailHour) {
         return html(emailPage(v, { error: "We've sent that address a lot of codes this hour. Try again later.", email }), 429);
       }
+      // The same answer whether or not the address has access, so the page
+      // can't be used to find out who does. Only invited addresses get mail.
       const access = await accessFor(db, email);
-      if (!access.operator && !access.brands.length) {
-        return html(emailPage(v, { error: "That email doesn't have Walkoff access yet. Ask your Walkoff contact to invite you.", email }), 403);
-      }
-      const code = sixDigits();
+      const invited = access.operator || access.brands.length > 0;
+      const code = invited ? sixDigits() : randomToken();
       await updateRequest(db, r.id, { email, email_code_hash: emailCodeHash(r.id, code), codes_sent: r.codes_sent + 1, attempts: 0, verified_at: null });
-      let sent: "sent" | "dev";
-      try {
-        sent = await sendSignInCode(email, code, v.app);
-      } catch (err) {
-        console.error("Walkoff sign-in email failed", err);
-        return html(emailPage(v, { error: "We couldn't send the email just now. Try again in a minute.", email }), 502);
+      let sent: "sent" | "dev" | "none" = "none";
+      if (invited) {
+        try {
+          sent = await sendSignInCode(email, code, v.app);
+        } catch (err) {
+          console.error("Walkoff sign-in email failed", err);
+          return html(emailPage(v, { error: "We couldn't send the email just now. Try again in a minute.", email }), 502);
+        }
       }
       return html(codePage(v, email, { devNote: sent === "dev" }));
     }
@@ -229,8 +240,12 @@ async function readParams(req: Request): Promise<Record<string, string>> {
 function basicClientId(req: Request): string | undefined {
   const m = req.headers.get("authorization")?.match(/^Basic\s+(\S+)$/i);
   if (!m) return undefined;
-  const decoded = Buffer.from(m[1], "base64").toString("utf8");
-  return decodeURIComponent(decoded.split(":")[0] ?? "") || undefined;
+  try {
+    const decoded = Buffer.from(m[1], "base64").toString("utf8");
+    return decodeURIComponent(decoded.split(":")[0] ?? "") || undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 export async function token(db: SupabaseClient, req: Request, origin: string): Promise<Response> {

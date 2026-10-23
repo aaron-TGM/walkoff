@@ -4,6 +4,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Principal } from "../data";
 import { operatorEmails, SCOPE, TTL } from "./config";
 import { randomToken, sha256 } from "./crypto";
+import { sweep } from "./limits";
 
 export interface AuthRequest {
   id: string;
@@ -27,9 +28,7 @@ export async function createRequest(
   db: SupabaseClient,
   r: Pick<AuthRequest, "client_id" | "redirect_uri" | "state" | "code_challenge" | "resource">,
 ): Promise<AuthRequest> {
-  // Sweep sign-ins abandoned a day ago and grants expired a week ago.
-  await db.from("oauth_requests").delete().lt("expires_at", new Date(Date.now() - 86_400_000).toISOString());
-  await db.from("oauth_grants").delete().lt("expires_at", new Date(Date.now() - 7 * 86_400_000).toISOString());
+  await sweep(db);
   const row = { ...r, id: randomToken("", 24), scope: SCOPE, expires_at: later(TTL.request) };
   const { data, error } = await db.from("oauth_requests").insert(row).select("*").single();
   if (error) throw error;
@@ -165,10 +164,19 @@ export async function issueTokens(
   return { access_token: access, token_type: "Bearer", expires_in: TTL.access, refresh_token: refresh, scope: base.scope };
 }
 
-/** Revokes a token (RFC 7009): any kind, quietly. */
+/** Revokes a token (RFC 7009), quietly, and with it the whole connection:
+ *  every access and refresh token the same app holds for the same person. */
 export async function revoke(db: SupabaseClient, token: string): Promise<void> {
-  const { error } = await db.from("oauth_grants").delete().eq("token_hash", sha256(token));
+  const { data, error } = await db.from("oauth_grants").select("client_id, email").eq("token_hash", sha256(token)).maybeSingle();
   if (error) throw error;
+  if (!data) return;
+  const gone = await db
+    .from("oauth_grants")
+    .delete()
+    .eq("client_id", data.client_id)
+    .eq("email", data.email)
+    .in("kind", ["access", "refresh"]);
+  if (gone.error) throw gone.error;
 }
 
 /** Who an access token belongs to, with brand access checked again now, or

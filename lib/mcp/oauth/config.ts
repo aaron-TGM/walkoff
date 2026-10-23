@@ -17,9 +17,15 @@ export const COOKIE = "walkoff_oauth";
 
 /** This deployment's public origin: WALKOFF_PUBLIC_URL when set, else the
  *  request's own (https://www.walkoff.io in production). */
+let warned = false;
+
 export function originOf(req: Request): string {
   const configured = process.env.WALKOFF_PUBLIC_URL?.trim();
   if (configured) return configured.replace(/\/+$/, "");
+  if (process.env.VERCEL_ENV === "production" && !warned) {
+    warned = true;
+    console.warn("WALKOFF_PUBLIC_URL isn't set: OAuth uses each request's own host. Set it to https://www.walkoff.io.");
+  }
   return new URL(req.url).origin;
 }
 
