@@ -32,12 +32,12 @@ const COMING_ONLINE = [
   {
     name: "Walkoff MCP server",
     label: "Early access",
-    detail: "Founding brands first, at mcp.walkoff.io",
+    detail: "Founding brands first, at www.walkoff.io/mcp",
   },
   {
     name: "Automated moment engine",
     label: "Early access",
-    detail: "Moments are confirmed by hand while it ramps up",
+    detail: "Watches every game in Walkoff's leagues",
   },
   { name: "Postscript", label: "In progress", detail: "SMS sends from moments" },
   { name: "Attentive", label: "In progress", detail: "SMS sends from moments" },
@@ -46,8 +46,8 @@ const COMING_ONLINE = [
 
 const TARGETS = [
   { value: "60s", label: "Every check on this page re-runs at most once a minute" },
-  { value: "15 min", label: "Early access: moments confirmed and sent by hand" },
-  { value: "< 3 min", label: "Automated target: trigger fired after the final whistle" },
+  { value: "< 1 min", label: "From the final whistle to a moment in your queue" },
+  { value: "0", label: "Sends without your go-ahead" },
   { value: String(LEAGUES.length), label: "Leagues monitored live on this page" },
 ];
 

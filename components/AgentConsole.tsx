@@ -6,7 +6,7 @@ import { Swatches } from "@/components/upload/AffinityReportView";
 
 const AFFINITY = [
   { name: "Chargers territory", customers: "2,310", lift: 2.4 },
-  { name: "Heat wave zone", customers: "3,902", lift: 1.9 },
+  { name: "Packers territory", customers: "1,402", lift: 1.8 },
   { name: "Arsenal fans, UK", customers: "846", lift: 1.6 },
 ];
 
@@ -68,16 +68,12 @@ export function AgentConsole() {
 
         <div className="console-line console-tool" style={line(i++)}>
           <span className="console-bullet" aria-hidden />
-          walkoff.upcoming_moments
-          <span className="console-dim"> &middot; next 72h</span>
+          walkoff.upcoming_games
+          <span className="console-dim"> &middot; next 7 days</span>
         </div>
         <div className="console-line console-out" style={line(i++)}>
           <span className="console-when">SUN 1:05P</span> Raiders at Chargers
           <span className="console-chip">rivalry</span>
-        </div>
-        <div className="console-line console-out" style={line(i++)}>
-          <span className="console-when">SAT</span> Heat wave, Inland Empire
-          <span className="console-chip">weather</span>
         </div>
 
         <div className="console-line console-tool" style={line(i++)}>
@@ -92,23 +88,20 @@ export function AgentConsole() {
           </div>
         ))}
 
-        <div className="console-line console-tool" style={line(i++)}>
-          <span className="console-bullet" aria-hidden />
-          walkoff.create_trigger
-        </div>
-        <div className="console-line console-out" style={line(i++)}>
-          Chargers win &rarr; &ldquo;Powder Blue Sunday&rdquo; &rarr; Klaviyo
-        </div>
-        <div className="console-line console-ok" style={line(i++)}>
-          &#10003; Armed &middot; auto-fire rule on
-        </div>
-
         <div className="console-line console-fire" style={line(i++)}>
           <span className="console-fire-tag">Final</span>
           SUN 4:12P &middot; Chargers 27, Raiders 20
         </div>
+        <div className="console-line console-tool" style={line(i++)}>
+          <span className="console-bullet" aria-hidden />
+          walkoff.build_campaign
+        </div>
+        <div className="console-line console-out" style={line(i++)}>
+          &ldquo;Azure and sunflower kind of Sunday.&rdquo;{" "}
+          <span className="console-dim">&middot; 2,310 customers</span>
+        </div>
         <div className="console-line console-fired" style={line(i++)}>
-          Fired to 2,310 customers &middot; 2m 14s after the final
+          Drafted in Klaviyo &middot; waiting for your go-ahead
           <span className="console-cursor" aria-hidden />
         </div>
       </div>

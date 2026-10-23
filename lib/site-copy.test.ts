@@ -1,0 +1,50 @@
+import assert from "node:assert/strict";
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { describe, it } from "node:test";
+import { fileURLToPath } from "node:url";
+
+// Claims the product doesn't back. Walkoff drafts and the marketer sends,
+// moments arrive on their own, and the MCP server is www.walkoff.io/mcp.
+const UNTRUE = [
+  "auto-fire",
+  "or you go first",
+  "fires your message",
+  "fired to",
+  "confirmed by hand",
+  "sent by hand",
+  "quiet hours",
+  "frequency cap",
+  "instant pause",
+  "30-minute window",
+  "configurable per brand",
+  "upcoming_moments",
+  "mcp.walkoff.io",
+];
+
+// Legal text changes when the founder says so. The terms still cover
+// auto-fire rules.
+const ALLOWED: Record<string, string[]> = { "app/terms/page.tsx": ["auto-fire"] };
+
+const ROOT = fileURLToPath(new URL("..", import.meta.url));
+
+function sources(dir: string): string[] {
+  return readdirSync(join(ROOT, dir), { withFileTypes: true }).flatMap((e) => {
+    const path = `${dir}/${e.name}`;
+    if (e.isDirectory()) return path === "lib/testing" ? [] : sources(path);
+    return /\.tsx?$/.test(e.name) && !e.name.endsWith(".test.ts") ? [path] : [];
+  });
+}
+
+describe("site copy", () => {
+  it("only claims what Walkoff does today", () => {
+    const files = ["app", "components", "lib"].flatMap(sources);
+    assert.ok(files.includes("components/MarketingPage.tsx"));
+    for (const file of files) {
+      const text = readFileSync(join(ROOT, file), "utf8").toLowerCase();
+      for (const claim of UNTRUE) {
+        if (!ALLOWED[file]?.includes(claim)) assert.ok(!text.includes(claim), `${file} says "${claim}"`);
+      }
+    }
+  });
+});

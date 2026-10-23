@@ -6,23 +6,26 @@ export type GameStateName = "pre" | "in" | "post";
 export type HomeAway = "home" | "away";
 export type Phase = "before" | "during" | "after" | "season";
 
-/** Moment types the engine emits. Each one must exist in lib/triggers.ts. */
-export type MomentType =
-  | "rivalry_preview"
-  | "big_game_alert"
-  | "season_opener"
-  | "close_game"
-  | "comeback_live"
-  | "clutch_moment"
-  | "team_win"
-  | "walkoff_win"
-  | "buzzer_beater"
-  | "late_winner"
-  | "comeback_win"
-  | "rivalry_win"
-  | "heartbreak_loss"
-  | "playoff_advance"
-  | "title_won";
+/** Moment types the engine emits. lib/triggers.ts lists these, plus the
+ *  ones marked coming (types.test.ts keeps the two in step). */
+export const EMITTED_TYPES = [
+  "rivalry_preview",
+  "big_game_alert",
+  "season_opener",
+  "close_game",
+  "comeback_live",
+  "clutch_moment",
+  "team_win",
+  "walkoff_win",
+  "buzzer_beater",
+  "late_winner",
+  "comeback_win",
+  "rivalry_win",
+  "heartbreak_loss",
+  "playoff_advance",
+  "title_won",
+] as const;
+export type MomentType = (typeof EMITTED_TYPES)[number];
 
 export interface TeamRef {
   /** Engine id, e.g. "espn:nfl:21". */

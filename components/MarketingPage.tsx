@@ -11,8 +11,10 @@ import { Ticker } from "@/components/Ticker";
 import { TriggerCategory } from "@/components/TriggerCategory";
 import { Swatches } from "@/components/upload/AffinityReportView";
 import { WaitlistForm } from "@/components/WaitlistForm";
+import { CONNECTOR_STEPS } from "@/lib/connect";
 import { LEAGUES } from "@/lib/leagues";
 import { MOMENT_CATEGORIES, MOMENT_STATUS_LABEL } from "@/lib/moments";
+import { SEND_HOURS } from "@/lib/mcp/timing";
 import { PRICING } from "@/lib/pricing";
 import { TRIGGERS, TRIGGER_CATEGORIES } from "@/lib/triggers";
 
@@ -49,29 +51,29 @@ const STEPS = [
     body: "Your Shopify or Klaviyo export, read right in your browser. Only counts by postal area reach us, plus your product list. Never a customer list.",
     visual: (
       <>
-        <span className="c">{"// counts.csv"}</span>
+        <span className="c">{"// what leaves your browser"}</span>
         <br />
-        <span className="k">postal_code</span>,<span className="k">category</span>,
-        <span className="k">customers</span>
+        <span className="k">area</span>,<span className="k">customers</span>,
+        <span className="k">orders</span>
         <br />
-        <span className="v">19147</span>,<span className="v">hoodies</span>,
-        <span className="v">212</span>
+        <span className="v">191</span>,<span className="v">212</span>,
+        <span className="v">340</span>
         <br />
-        <span className="v">53202</span>,<span className="v">drinkware</span>,
-        <span className="v">96</span>
+        <span className="v">532</span>,<span className="v">96</span>,
+        <span className="v">121</span>
       </>
     ),
   },
   {
     title: "Get your affinity map",
-    body: "Walkoff finds the teams, places and seasons your customers lean toward, then matches your products and colorways to each one.",
+    body: "Walkoff finds the fan territories your customers lean toward, then matches your products and colorways to each team.",
     visual: (
       <>
         <span className="k">chargers_territory</span>:{" "}
         <span className="v">2.4×</span>
         <br />
-        <span className="k">heat_wave_zone</span>:{" "}
-        <span className="v">1.9×</span>
+        <span className="k">packers_territory</span>:{" "}
+        <span className="v">1.8×</span>
         <br />
         <span className="k">in_their_colors</span>:{" "}
         <span className="v">&quot;azure heather&quot;</span>
@@ -80,11 +82,11 @@ const STEPS = [
   },
   {
     title: "Moments get matched",
-    body: "We watch every game in your leagues, plus the weather and the calendar, and flag the moments your customers care about.",
+    body: "We watch every game in your leagues and flag the moments your customers care about, from walk-offs to rivalry wins.",
     visual: (
       <>
         <span className="k">moment</span>:{" "}
-        <span className="v">&quot;derby_win&quot;</span>
+        <span className="v">&quot;rivalry_win&quot;</span>
         <br />
         <span className="k">where</span>:{" "}
         <span className="v">&quot;North London&quot;</span>
@@ -94,15 +96,15 @@ const STEPS = [
     ),
   },
   {
-    title: "Approve, or go first",
-    body: "Approve each send, or set rules that fire on their own. Your email platform sends it while the moment is still hot.",
+    title: "You approve, Klaviyo sends",
+    body: "Claude drafts the campaign in your Klaviyo account, with the audience and the send time. You look it over and send it while the moment is still hot.",
     visual: (
       <>
         <span className="k">status</span>:{" "}
-        <span className="v">&quot;fired&quot;</span>
+        <span className="v">&quot;drafted&quot;</span>
         <br />
-        <span className="k">after_final</span>:{" "}
-        <span className="v">&quot;2m 14s&quot;</span>
+        <span className="k">waiting_on</span>:{" "}
+        <span className="v">&quot;you&quot;</span>
         <br />
         <span className="k">via</span>: <span className="v">&quot;klaviyo&quot;</span>
       </>
@@ -119,11 +121,11 @@ const AFFINITY_EXAMPLES = [
     swatches: ["2e8bd8", "ffc512"],
   },
   {
-    group: "First-freeze zone",
-    customers: "3,902",
+    group: "Padres territory",
+    customers: "1,880",
     lift: "1.9×",
-    match: "Blankets and beanies",
-    swatches: [],
+    match: "Brown and gold colorways",
+    swatches: ["2f241d", "ffc425"],
   },
   {
     group: "Packers territory",
@@ -177,30 +179,33 @@ const MCP_TOOLS: { name: string; body: string; soon?: boolean }[] = [
   },
 ];
 
+// 21 -> "9 PM", 8 -> "8 AM"
+const hour = (h: number) => `${h % 12 || 12} ${h < 12 ? "AM" : "PM"}`;
+
 const CONTROLS = [
   {
     title: "Approval first",
     body: "Every message waits for your yes. You see the moment, the audience and the message before anything sends.",
   },
   {
-    title: "Auto-fire rules",
-    body: "Trust a moment? Set a rule, like any Eagles win, and Walkoff fires the second it happens.",
+    title: "Triggers",
+    body: "Pick the moments that matter, like walk-off wins in your top markets. They land in your queue, and you still say go.",
   },
   {
-    title: "Quiet hours",
-    body: "Nothing goes out at 2am in your customers' time zone, however late the game ends.",
+    title: "Send timing",
+    body: `Each send is timed for your fans' time zone. A game that ends after ${hour(SEND_HOURS.latest)} waits for ${hour(SEND_HOURS.earliest)}, never 2 AM.`,
   },
   {
-    title: "Frequency caps",
-    body: "Customers hear from you only as often as you allow, even in a big week.",
+    title: "Smart Sending on",
+    body: "Klaviyo's Smart Sending stays on, so nobody who just heard from you gets another email.",
   },
   {
-    title: "Brand safety",
-    body: "No storm sales, nothing triggered by tragedy. Some moments are never marketing moments.",
+    title: "Copy rules",
+    body: "Without a license, copy never names the team, league, players or event. Your products in their colors do the talking.",
   },
   {
-    title: "Instant pause",
-    body: "Stop everything at once, any time, for any reason.",
+    title: "Skip any moment",
+    body: "Not every win fits your brand. Skip it and it leaves your queue.",
   },
 ];
 
@@ -215,7 +220,7 @@ const PROOF_POINTS = [
   },
   {
     title: "Revenue per moment",
-    body: "See what each walk-off, freeze or derby actually sold.",
+    body: "See what each walk-off, comeback or derby actually sold.",
   },
   {
     title: "Benchmarks",
@@ -240,10 +245,10 @@ export function MarketingPage() {
                 <span className="script">is a marketing moment.</span>
               </h1>
               <p className="hero-sub">
-                <BrandSpan /> watches the games, the weather and the calendar,
-                finds the customers who care, matches the right products, and
-                fires your message while the moment is still hot. One MCP
-                connection plugs it into Claude or any AI agent.
+                <BrandSpan /> watches every game, finds the customers who care,
+                matches the right products, and has the campaign ready while
+                the moment is still hot. You send it. One MCP connection plugs
+                it into Claude or any AI agent.
               </p>
               <div className="hero-actions">
                 <a href="#form" className="btn-primary">
@@ -332,7 +337,7 @@ export function MarketingPage() {
                 <span>Final</span>Chargers 27, Raiders 20
               </div>
               <div className="moment-card-meta">
-                2 minutes later &middot; 2,310 customers in their territory
+                Ready 2 minutes later &middot; 2,310 customers in their territory
               </div>
               <div className="moment-card-email">
                 <div className="moment-card-subject">Powder blue kind of Sunday.</div>
@@ -362,11 +367,12 @@ export function MarketingPage() {
             How it works
           </div>
           <h2 className="section-title">
-            Four steps. <em>We do them for you.</em>
+            Four steps. <em>We set them up for you.</em>
           </h2>
           <p className="section-lead">
-            During early access we run every step for you through our own
-            Claude setup. Self-serve onboarding comes next.
+            During early access we set up your brand, map your fans and tag
+            your catalog. Then your team works in Claude: it finds the moment,
+            builds the campaign and drafts it in Klaviyo for your go-ahead.
           </p>
           <ol className="how-grid how-grid-4">
             {STEPS.map((s, idx) => (
@@ -393,10 +399,10 @@ export function MarketingPage() {
             <em>something new about your customers.</em>
           </h2>
           <p className="section-lead section-lead-dark">
-            Drop in your exports and Walkoff shows which teams, places and
-            seasons your customers lean toward, using widely recognized fan
-            territory maps for every league. Then it matches your products to
-            each one, down to the colorway.
+            Drop in your exports and Walkoff shows which fan territories your
+            customers lean toward, using widely recognized fan territory maps
+            for every league. Then it matches your products to each team, down
+            to the colorway.
           </p>
           <div className="affinity-grid">
             {AFFINITY_EXAMPLES.map((a) => (
@@ -461,7 +467,9 @@ export function MarketingPage() {
                 The sports trigger library
               </div>
               <div className="trigger-library-count">
-                {TRIGGERS.length} triggers &middot; every brand gets all of them
+                {TRIGGERS.filter((t) => !t.coming).length} live,{" "}
+                {TRIGGERS.filter((t) => t.coming).length} coming &middot; every
+                brand gets all of them
               </div>
             </div>
             <div className="trigger-section">
@@ -508,7 +516,7 @@ export function MarketingPage() {
                 yes.
               </p>
               <div className="code-block">
-                <span className="c">{"# Claude: Customize → Connectors → Add custom connector"}</span>
+                <span className="c">{`# Claude: ${CONNECTOR_STEPS}`}</span>
                 {"\n"}
                 <span className="s">https://www.walkoff.io/mcp</span>
                 {"\n\n"}
@@ -559,7 +567,7 @@ export function MarketingPage() {
             You&apos;re in control
           </div>
           <h2 className="section-title">
-            You approve. <em>Or you go first.</em>
+            You approve. <em>Every send.</em>
           </h2>
           <div className="control-grid">
             {CONTROLS.map((c) => (
@@ -579,16 +587,20 @@ export function MarketingPage() {
             <div>
               <div className="block-num">
                 <span className="eyebrow-dot" aria-hidden />
-                Proof
+                Proof &middot; Coming
               </div>
               <h2 className="section-title">
                 Results you can <em>defend.</em>
               </h2>
+              <p className="section-lead">
+                Coming next. Today every moment you draft, send or skip is
+                logged, so you can see what went out and when.
+              </p>
               <ul className="proof-list">
                 {PROOF_POINTS.map((p) => (
                   <li key={p.title}>
                     <span className="proof-check" aria-hidden>
-                      &#10003;
+                      &rarr;
                     </span>
                     <div>
                       <div className="proof-title">{p.title}</div>
@@ -720,8 +732,8 @@ export function MarketingPage() {
               </h2>
               <p className="form-left-body">
                 We onboard by hand during early access. Tell us about your
-                brand and we&apos;ll build your affinity map, connect your
-                platform and set up your first moments for you.
+                brand and we&apos;ll build your affinity map, tag your catalog
+                and set up your first triggers with you.
               </p>
               <ul className="form-perks">
                 <li>
@@ -734,7 +746,7 @@ export function MarketingPage() {
                 </li>
                 <li>
                   <span className="form-perks-check">✓</span>
-                  Approval on every send until you say otherwise
+                  Approval on every send
                 </li>
                 <li>
                   <span className="form-perks-check">✓</span>
@@ -778,9 +790,10 @@ export function MarketingPage() {
             addresses. Our export guides take a few minutes.
           </FaqItem>
           <FaqItem num="03" question={<>Does <BrandSpan /> send the messages?</>}>
-            Your email or SMS platform does. Walkoff tells it when to send and
-            which segment gets it, so your deliverability, unsubscribes and
-            suppression rules stay exactly as they are.
+            Your email platform does, from your own account. Walkoff builds
+            the campaign, Claude drafts it in Klaviyo with your connector, and
+            you send it. Your deliverability, unsubscribes and suppression
+            rules stay exactly as they are.
           </FaqItem>
           <FaqItem num="04" question="What's MCP, and do I need it?">
             MCP (Model Context Protocol) is the open standard AI agents like
@@ -789,11 +802,10 @@ export function MarketingPage() {
             Claude, add Walkoff as a connector at www.walkoff.io/mcp, next to
             Klaviyo and Shopify, and ask it for a campaign.
           </FaqItem>
-          <FaqItem num="05" question="How fast does a trigger fire?">
-            During early access we confirm every moment by hand, usually
-            within 15 minutes. Automated triggers are built to fire within a
-            few minutes of the final whistle, and auto-fire rules skip the wait
-            for approval.
+          <FaqItem num="05" question="How fast do moments show up?">
+            Within about a minute of the final whistle, the moment is in your
+            queue in Claude, ready to build into a campaign. Nothing sends
+            until you say so.
           </FaqItem>
           <FaqItem num="06" question="Which leagues are covered?">
             NFL, NBA, NHL, NCAA football and basketball, and the Premier
@@ -801,9 +813,10 @@ export function MarketingPage() {
             isn&apos;t listed? Ask. It&apos;s usually quick to add.
           </FaqItem>
           <FaqItem num="07" question="How do you prove it worked?">
-            Every moment holds back a small random slice of the audience.
-            Comparing the two groups shows what the message actually added,
-            not just who clicked. Each send also carries its own tracking,
+            Today every moment you draft, send or skip is logged, so you can
+            see what went out and when. Coming next: a small random slice of
+            each audience won&apos;t get the message, so comparing the two
+            groups shows what the moment actually added, and each send gets
             matched to your orders.
           </FaqItem>
           <FaqItem num="08" question="Is my data safe?">
