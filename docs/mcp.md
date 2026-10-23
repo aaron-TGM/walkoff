@@ -5,6 +5,14 @@ marketers can use it in Claude next to the Klaviyo and Shopify connectors
 they already have. Walkoff knows the moments and the fans; it builds the
 campaign. Their own Klaviyo connector, on their own permissions, drafts it.
 
+For marketers, the help center explains all of this in plain words:
+[www.walkoff.io/help](https://www.walkoff.io/help), with the setup guide at
+[/onboarding](https://www.walkoff.io/onboarding). Its pages live in
+`app/(guide)/`; their list, sections and links are in `lib/help/pages.ts`,
+and `lib/help/help.test.ts` keeps them in step with the tools, messages and
+rules they describe. When a tool, a message people see or a number changes,
+the test says which help page to update.
+
 ## Connecting
 
 - **Claude (web, desktop, mobile):** Customize → Connectors → Add custom
@@ -110,8 +118,8 @@ The script and the tools share `lib/brands.ts` and `lib/welcome.ts`.
 Operators also get the onboarding tools above.
 
 There's also a `moment_campaign` prompt that runs the whole loop, and
-server instructions that tell Claude the flow and the copy rules (and, for
-operators, how to onboard a brand).
+server instructions that tell Claude the flow, the copy rules and where the
+help center is (and, for operators, how to onboard a brand).
 
 **The Klaviyo side.** Klaviyo's connector can create templates and draft
 campaigns but not segments, so the first time a brand acts on a team, the

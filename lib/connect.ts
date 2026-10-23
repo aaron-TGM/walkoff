@@ -2,6 +2,12 @@
 // brand script all say it this way, so when Claude's menus move, this is the
 // one place to change.
 
+/** The site's public address. Connectors need the www one. */
+export const SITE_URL = "https://www.walkoff.io";
+
+/** What people enter in Claude. */
+export const CONNECTOR_URL = `${SITE_URL}/mcp`;
+
 /** When these steps were last checked against Claude. */
 export const STEPS_CHECKED = "October 2026";
 

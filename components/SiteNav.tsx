@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { NavMenu } from "@/components/NavMenu";
 
 const LINKS = [
   { href: "/#how", label: "How it works" },
   { href: "/#moments", label: "Moments" },
   { href: "/#mcp", label: "MCP" },
   { href: "/#pricing", label: "Pricing" },
+  { href: "/help", label: "Help" },
   { href: "/status", label: "Status" },
 ];
 
@@ -30,9 +32,14 @@ export function SiteNav() {
             </Link>
           ))}
         </div>
-        <Link href="/#form" className="nav-cta">
-          <span>Get Early Access</span>
-        </Link>
+        <div className="nav-right">
+          <Link href="/#form" className="nav-cta">
+            <span>
+              <span className="nav-cta-long">Get </span>Early Access
+            </span>
+          </Link>
+          <NavMenu links={LINKS} />
+        </div>
       </div>
     </nav>
   );

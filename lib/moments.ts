@@ -20,8 +20,8 @@ export const MOMENT_CATEGORIES: MomentCategory[] = [
     name: "Sports",
     status: "now",
     description:
-      "Walk-offs, buzzer beaters, derby wins, comebacks and clinches across every V1 league.",
-    examples: ["Walk-off win", "Derby win", "Playoff clinch"],
+      "Walk-offs, buzzer beaters, derby wins, comebacks and series wins across every V1 league.",
+    examples: ["Walk-off win", "Derby win", "Series win"],
   },
   {
     id: "weather",

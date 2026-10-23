@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { AgentConsole } from "@/components/AgentConsole";
 import { BrandSpan } from "@/components/BrandSpan";
 import { Eyebrow } from "@/components/Eyebrow";
@@ -11,7 +12,9 @@ import { Ticker } from "@/components/Ticker";
 import { TriggerCategory } from "@/components/TriggerCategory";
 import { Swatches } from "@/components/upload/AffinityReportView";
 import { WaitlistForm } from "@/components/WaitlistForm";
-import { CONNECTOR_STEPS } from "@/lib/connect";
+import { CONNECTOR_STEPS, CONNECTOR_URL } from "@/lib/connect";
+import { helpPath } from "@/lib/help/pages";
+import { HOME_TOOLS } from "@/lib/help/tools";
 import { LEAGUES } from "@/lib/leagues";
 import { MOMENT_CATEGORIES, MOMENT_STATUS_LABEL } from "@/lib/moments";
 import { SEND_HOURS } from "@/lib/mcp/timing";
@@ -140,42 +143,6 @@ const AFFINITY_EXAMPLES = [
     lift: "1.6×",
     match: "Anything red and white",
     swatches: ["ef0107", "f7f7f5"],
-  },
-];
-
-const MCP_TOOLS: { name: string; body: string; soon?: boolean }[] = [
-  {
-    name: "trigger_queue",
-    body: "The moments to act on right now, for the teams your customers follow, most urgent first.",
-  },
-  {
-    name: "build_campaign",
-    body: "A ready-to-draft campaign: subject lines, the email, products in the team's colors, the audience and when to send.",
-  },
-  {
-    name: "get_affinity_map",
-    body: "Which fan territories hold more of your customers than population predicts, and by how much.",
-  },
-  {
-    name: "match_products",
-    body: "Your own products in each team's colors. No license needed.",
-  },
-  {
-    name: "get_territory",
-    body: "Each team's fans as a Klaviyo segment. Save it once, reuse it for every moment.",
-  },
-  {
-    name: "create_trigger",
-    body: "Your rules for which moments matter, like walk-off wins in your top markets.",
-  },
-  {
-    name: "send_history",
-    body: "Everything you drafted, sent and skipped, moment by moment.",
-  },
-  {
-    name: "benchmarks",
-    body: "How each type of moment performs for brands like yours.",
-    soon: true,
   },
 ];
 
@@ -334,7 +301,7 @@ export function MarketingPage() {
 
             <div className="moment-card" aria-label="Example: the email that goes out after a win">
               <div className="moment-card-final">
-                <span>Final</span>Chargers 27, Raiders 20
+                <span>Final</span>Chargers 27, Chiefs 20
               </div>
               <div className="moment-card-meta">
                 Ready 2 minutes later &middot; 2,310 customers in their territory
@@ -372,7 +339,10 @@ export function MarketingPage() {
           <p className="section-lead">
             During early access we set up your brand, map your fans and tag
             your catalog. Then your team works in Claude: it finds the moment,
-            builds the campaign and drafts it in Klaviyo for your go-ahead.
+            builds the campaign and drafts it in Klaviyo for your go-ahead.{" "}
+            <Link href={helpPath("onboarding")} className="section-lead-link">
+              See every step
+            </Link>
           </p>
           <ol className="how-grid how-grid-4">
             {STEPS.map((s, idx) => (
@@ -518,14 +488,14 @@ export function MarketingPage() {
               <div className="code-block">
                 <span className="c">{`# Claude: ${CONNECTOR_STEPS}`}</span>
                 {"\n"}
-                <span className="s">https://www.walkoff.io/mcp</span>
+                <span className="s">{CONNECTOR_URL}</span>
                 {"\n\n"}
                 <span className="c">{"# Claude Code"}</span>
                 {"\n"}
                 <span className="k">claude</span> mcp add --transport http{" "}
                 <span className="s">walkoff</span>
                 {" \\\n  "}
-                <span className="s">https://www.walkoff.io/mcp</span>
+                <span className="s">{CONNECTOR_URL}</span>
               </div>
               <ul className="mcp-notes">
                 <li>
@@ -542,14 +512,18 @@ export function MarketingPage() {
                   The engine watches every game around the clock, so the
                   moment is already in your queue when you open Claude.
                 </li>
+                <li>
+                  Every tool, and what to ask it:{" "}
+                  <Link href={helpPath("tools")}>Tools and asks</Link>.
+                </li>
               </ul>
             </div>
             <div className="mcp-tools">
-              {MCP_TOOLS.map((t) => (
+              {HOME_TOOLS.map((t) => (
                 <div key={t.name} className="mcp-tool">
                   <div className="mcp-tool-name">
                     {t.name}
-                    {t.soon && <span className="mcp-tool-soon">Coming</span>}
+                    {"soon" in t && <span className="mcp-tool-soon">Coming</span>}
                   </div>
                   <p className="mcp-tool-body">{t.body}</p>
                 </div>
@@ -832,6 +806,10 @@ export function MarketingPage() {
             feature we ship is included. {PRICING.trialDays} days free, no
             credit card.
           </FaqItem>
+          <p className="faq-more">
+            More answers, from setup to sending, in the{" "}
+            <Link href={helpPath("help")}>help center</Link>.
+          </p>
         </div>
       </section>
 

@@ -28,7 +28,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Big Game Alert",
     id: "big_game_alert",
     description:
-      "Playoff, primetime, or must-win. Fire while fans are already buzzing.",
+      "Playoff games, bowls and finals, within a day of kickoff. Reach fans while they're already buzzing.",
     category: "before",
   },
   {
@@ -84,7 +84,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Late Winner",
     id: "late_winner",
     description:
-      "Stoppage-time goal. The Premier League version of a walk-off.",
+      "Won it in the final minutes. In soccer, a winner from the 85th minute: the Premier League version of a walk-off.",
     category: "after",
   },
   {
@@ -105,7 +105,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Heartbreaker Loss",
     id: "heartbreak_loss",
     description:
-      "Lost by one. Consolation angle with a soft offer converts well.",
+      "Lost it late, or lost a close one. Consolation angle with a soft offer converts well.",
     category: "after",
   },
   {

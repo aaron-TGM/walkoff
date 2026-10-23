@@ -1,6 +1,7 @@
 // Where things live and how long they last, for the OAuth server Claude's
 // connector signs in through (MCP authorization spec; RFC 8414, 9728, 7591,
 // 8707, 9207 and the client ID metadata document draft).
+import { helpUrl } from "../../help/pages";
 
 export const SCOPE = "walkoff";
 export const TTL = {
@@ -48,7 +49,7 @@ export function protectedResourceMetadata(origin: string) {
     scopes_supported: [SCOPE],
     bearer_methods_supported: ["header"],
     resource_name: "Walkoff",
-    resource_documentation: `${origin}/#mcp`,
+    resource_documentation: helpUrl(origin, "tools"),
   };
 }
 
@@ -70,7 +71,7 @@ export function authorizationServerMetadata(origin: string) {
     scopes_supported: [SCOPE],
     client_id_metadata_document_supported: true,
     authorization_response_iss_parameter_supported: true,
-    service_documentation: `${origin}/#mcp`,
+    service_documentation: helpUrl(origin, "connect"),
   };
 }
 

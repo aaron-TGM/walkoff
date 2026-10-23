@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BrandSpan } from "@/components/BrandSpan";
+import { helpPath } from "@/lib/help/pages";
 
 export function SiteFooter() {
   return (
@@ -38,6 +39,26 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link href="/#faq">FAQ</Link>
+              </li>
+            </ul>
+          </div>
+          <div className="footer-col">
+            <div className="footer-col-title">Help</div>
+            <ul>
+              <li>
+                <Link href={helpPath("onboarding")}>Getting started</Link>
+              </li>
+              <li>
+                <Link href={helpPath("help")}>Help center</Link>
+              </li>
+              <li>
+                <Link href={helpPath("connect")}>Connect Claude</Link>
+              </li>
+              <li>
+                <Link href={helpPath("tools")}>Tools and asks</Link>
+              </li>
+              <li>
+                <Link href={helpPath("troubleshooting")}>Troubleshooting</Link>
               </li>
             </ul>
           </div>

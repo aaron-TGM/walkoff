@@ -14,6 +14,8 @@ export interface Welcome {
   uploadUrl: string;
   /** The MCP server: https://www.walkoff.io/mcp */
   connectorUrl: string;
+  /** The setup guide: https://www.walkoff.io/onboarding */
+  guideUrl: string;
   /** They've signed in to Walkoff for another brand, and a sign-in reaches
    *  only the brands picked when it was made. */
   reconnect?: boolean;
@@ -54,6 +56,9 @@ export function welcomeEmail(w: Welcome): { subject: string; text: string } {
     "3. Ask Claude",
     "",
     `Once your files are in, try: "What should we send this week?"`,
+    "",
+    "The setup guide walks through each step:",
+    w.guideUrl,
     "",
     w.invitedBy ? "Questions? Reply to this email." : "Questions? Email hello@walkoff.io.",
     "",

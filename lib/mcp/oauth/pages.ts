@@ -1,5 +1,6 @@
 // The sign-in pages Claude opens when someone connects Walkoff: email,
 // emailed code, then consent. Plain HTML served by the authorize route.
+import { helpPath } from "../../help/pages";
 
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]!);
@@ -58,6 +59,8 @@ function page(title: string, body: string): string {
 
 const hidden = (name: string, value: string) => `<input type="hidden" name="${name}" value="${esc(value)}">`;
 const errorBox = (error?: string) => (error ? `<p class="error" role="alert">${esc(error)}</p>` : "");
+/** Help opens in a new tab, so the sign-in stays where it is. */
+const helpLink = (href: string, text: string) => `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
 
 export interface FlowView {
   requestId: string;
@@ -79,7 +82,7 @@ ${hidden("request", v.requestId)}${hidden("step", "email")}
 <input id="email" name="email" type="email" autocomplete="email" required autofocus value="${esc(opts.email ?? "")}">
 <div class="actions"><button class="primary" type="submit">Email me a code</button></div>
 </form>
-<p class="note">After you approve, you'll go back to <strong>${esc(v.returnTo)}</strong>.</p>`,
+<p class="note">After you approve, you'll go back to <strong>${esc(v.returnTo)}</strong>. ${helpLink(helpPath("connect", "sign-in"), "How signing in works")}</p>`,
   );
 }
 
@@ -97,7 +100,7 @@ ${hidden("request", v.requestId)}${hidden("step", "code")}
 <div class="actions"><button class="primary" type="submit">Continue</button></div>
 </form>
 <form method="post">${hidden("request", v.requestId)}${hidden("step", "restart")}
-<p class="note">No code? Check the address, or ask your Walkoff contact for an invite. <button class="link" type="submit">Use a different email</button></p></form>`,
+<p class="note">No code? Check the address, or ask your Walkoff contact for an invite. ${helpLink(helpPath("troubleshooting", "sign-in"), "Troubleshooting")} <button class="link" type="submit">Use a different email</button></p></form>`,
   );
 }
 
@@ -137,6 +140,6 @@ export function errorPage(message: string): string {
     "Couldn't connect",
     `<h1>Couldn't connect</h1>
 <p>${esc(message)}</p>
-<p class="note">Close this window and try connecting again from Claude. If it keeps happening, email <a href="mailto:hello@walkoff.io">hello@walkoff.io</a>.</p>`,
+<p class="note">Close this window and try connecting again from Claude. ${helpLink(helpPath("troubleshooting", "sign-in"), "Troubleshooting")} has the fix for each message. If it keeps happening, email <a href="mailto:hello@walkoff.io">hello@walkoff.io</a>.</p>`,
   );
 }

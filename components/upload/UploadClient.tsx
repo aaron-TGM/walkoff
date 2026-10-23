@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Papa from "papaparse";
 import { useRef, useState } from "react";
 import { hexForColorName } from "@/lib/affinity/colors";
@@ -17,6 +18,7 @@ import {
   type Row,
 } from "@/lib/affinity/imports";
 import { tagProduct } from "@/lib/affinity/tagging";
+import { helpPath } from "@/lib/help/pages";
 import { AffinityReportView, Swatches } from "./AffinityReportView";
 import { ExportGuides } from "./ExportGuides";
 
@@ -393,6 +395,10 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
       <div className="upload-guides">
         <h2 className="upload-step-title">How to export your files</h2>
         <ExportGuides />
+        <p className="guide-note upload-help">
+          What leaves your browser, which files work best and how to update them:{" "}
+          <Link href={helpPath("uploads")}>Your uploads</Link>, in the help center.
+        </p>
       </div>
     </div>
   );

@@ -24,6 +24,7 @@ import {
   type BrandRecord,
   type OnboardingStatus,
 } from "../brands";
+import { helpUrl } from "../help/pages";
 import { TRIGGERS } from "../triggers";
 import { sendWelcome } from "../welcome";
 import { teamAudience } from "./audience";
@@ -216,7 +217,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           brands: rows,
           next: rows.length
             ? "trigger_queue shows the moments to act on now. recent_moments shows what just happened."
-            : "No brands yet. Ask your Walkoff contact to invite this email.",
+            : `No brands yet. Ask your Walkoff contact to invite this email. Help: ${helpUrl(ctx.origin, "troubleshooting", "in-claude")}`,
         };
       }),
   );
@@ -234,7 +235,11 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
       run(async () => {
         const b = await brandFor(db, principal, args.brand);
         const [report, catalog] = await Promise.all([latestReport(db, b.id), loadTaggedCatalog(db, b.id)]);
-        if (!report) throw new ToolError(`${b.name} hasn't uploaded customers yet, so there's no map. The upload link is in the welcome email from Walkoff.`);
+        if (!report) {
+          throw new ToolError(
+            `${b.name} hasn't uploaded customers yet, so there's no map. The upload link is in the welcome email from Walkoff. How to export: ${helpUrl(ctx.origin, "uploads", "export")}`,
+          );
+        }
         return {
           brand: b.name,
           computed_at: report.computedAt,
@@ -269,7 +274,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     {
       title: "Recent moments",
       description:
-        "Moments Walkoff detected for the brand's standout teams, or for one team: walk-off wins, buzzer beaters, comebacks, rivalry wins, heartbreakers, clinches, pre-game rivalries and big games. Each has an id for build_campaign, how long it's worth acting on, and what the brand already did with it. Headlines name teams for the marketer; campaign copy for brands without a license never does.",
+        "Moments Walkoff detected for the brand's standout teams, or for one team: walk-off wins, buzzer beaters, comebacks, rivalry wins, heartbreakers, series wins and titles, pre-game rivalries and big games. Each has an id for build_campaign, how long it's worth acting on, and what the brand already did with it. Headlines name teams for the marketer; campaign copy for brands without a license never does.",
       inputSchema: {
         brand: brandArg,
         team: teamArg.optional(),
@@ -381,7 +386,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           picks: picks.map((p) => pickView(p, b.store_url)),
           ...(picks.length
             ? {}
-            : { note: catalog.length ? "Nothing in the catalog is close to the team's colors." : "No catalog yet: upload a Shopify product export." }),
+            : { note: catalog.length ? "Nothing in the catalog is close to the team's colors." : `No catalog yet: upload a Shopify product export. How: ${helpUrl(ctx.origin, "uploads", "export")}` }),
         };
       }),
   );
