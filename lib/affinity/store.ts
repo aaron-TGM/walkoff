@@ -251,8 +251,9 @@ export async function loadBrandData(db: SupabaseClient, brandId: string): Promis
       colors: string[] | null;
       uses: string[] | null;
       colorways: CatalogItem["colorways"] | null;
+      price: number | string | null;
     }>((from, to) =>
-      db.from("brand_products").select("handle, title, teams, colors, uses, colorways").eq("brand_id", brandId).range(from, to),
+      db.from("brand_products").select("handle, title, teams, colors, uses, colorways, price").eq("brand_id", brandId).range(from, to),
     ),
     loadColorNames(db, brandId),
   ]);
@@ -265,6 +266,7 @@ export async function loadBrandData(db: SupabaseClient, brandId: string): Promis
       teams: p.teams ?? [],
       colors: p.colors ?? [],
       uses: p.uses ?? [],
+      price: p.price === null || p.price === undefined ? null : Number(p.price),
       colorways: (p.colorways ?? []).map((c) => ({
         ...c,
         hex: colorNames.get(c.name.toLowerCase())?.hex ?? hexForColorName(c.name),

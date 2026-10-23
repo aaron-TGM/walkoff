@@ -1,5 +1,6 @@
 // Builds data/geo/postal-areas.json: a centroid and population for every
-// postal area the affinity map uses.
+// postal area the affinity map uses, and the full postal code nearest its
+// center (for Klaviyo's "within N miles of a postal code" condition).
 //   US: 3-digit ZIP prefix  (Census 2023 ZCTA centroids, 2010 ZCTA population
 //       moved forward with 2025 county estimates)
 //   CA: forward sortation area, the first 3 characters (GeoNames)
@@ -9,7 +10,9 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { cached, columns, eachRow, SOURCES, STATE_FIPS } from "./lib/sources";
 
-type Row = [code: string, lat: number, lng: number, population: number, region: string];
+type Area = [code: string, lat: number, lng: number, population: number, region: string];
+type Row = [...Area, ref: string];
+type Visit = (area: string, code: string, lat: number, lng: number) => void;
 
 interface Acc {
   lat: number;
@@ -32,10 +35,10 @@ function add(map: Map<string, Acc>, code: string, lat: number, lng: number, weig
   a.regions.set(region, (a.regions.get(region) ?? 0) + weight);
 }
 
-function finish(map: Map<string, Acc>): Row[] {
-  return [...map.entries()]
+function finish(map: Map<string, Acc>, points: (visit: Visit) => void): Row[] {
+  const areas = [...map.entries()]
     .filter(([, a]) => a.weight > 0 && a.population > 0)
-    .map(([code, a]): Row => [
+    .map(([code, a]): Area => [
       code,
       Math.round((a.lat / a.weight) * 1000) / 1000,
       Math.round((a.lng / a.weight) * 1000) / 1000,
@@ -43,6 +46,21 @@ function finish(map: Map<string, Acc>): Row[] {
       [...a.regions.entries()].sort((x, y) => y[1] - x[1])[0][0],
     ])
     .sort((x, y) => x[0].localeCompare(y[0]));
+  return withRefs(areas, points);
+}
+
+/** The full postal code nearest each area's center. */
+function withRefs(areas: Area[], points: (visit: Visit) => void): Row[] {
+  const byCode = new Map(areas.map((a) => [a[0], a]));
+  const best = new Map<string, { code: string; d: number }>();
+  points((area, code, lat, lng) => {
+    const a = byCode.get(area);
+    if (!a) return;
+    const d = (lat - a[1]) ** 2 + ((lng - a[2]) * Math.cos((a[1] * Math.PI) / 180)) ** 2;
+    const b = best.get(area);
+    if (!b || d < b.d || (d === b.d && code < b.code)) best.set(area, { code, d });
+  });
+  return areas.map((a): Row => [...a, best.get(a[0])?.code ?? ""]);
 }
 
 async function unitedStates(): Promise<Row[]> {
@@ -96,7 +114,10 @@ async function unitedStates(): Promise<Row[]> {
     const pop = p.pop * growth(p.county, p.state);
     add(zip3, p.zcta.slice(0, 3), c[0], c[1], pop, pop, state);
   }
-  return finish(zip3);
+  const populated = new Set(parts.filter((p) => p.pop > 0).map((p) => p.zcta));
+  return finish(zip3, (visit) => {
+    for (const [zcta, [lat, lng]] of centroid) if (populated.has(zcta)) visit(zcta.slice(0, 3), zcta, lat, lng);
+  });
 }
 
 async function canada(): Promise<Row[]> {
@@ -104,17 +125,26 @@ async function canada(): Promise<Row[]> {
   // in for population, scaled to the 2021 Census total.
   const fsa = new Map<string, Acc>();
   let codes = 0;
-  eachRow(await cached(SOURCES.geonamesCA), "\t", (cells) => {
-    const code = cells[1]?.toUpperCase().replace(/\s+/g, "");
-    const lat = Number(cells[9]);
-    const lng = Number(cells[10]);
-    if (!code || code.length < 3 || !Number.isFinite(lat) || !Number.isFinite(lng)) return;
+  const source = await cached(SOURCES.geonamesCA);
+  const each = (visit: (cells: string[], code: string, lat: number, lng: number) => void) =>
+    eachRow(source, "\t", (cells) => {
+      const code = cells[1]?.toUpperCase().replace(/\s+/g, "");
+      const lat = Number(cells[9]);
+      const lng = Number(cells[10]);
+      if (!code || code.length < 3 || !Number.isFinite(lat) || !Number.isFinite(lng)) return;
+      visit(cells, code, lat, lng);
+    });
+  each((cells, code, lat, lng) => {
     add(fsa, code.slice(0, 3), lat, lng, 1, 1, cells[4] || "");
     codes++;
   });
   const perCode = 36_991_981 / codes;
   for (const a of fsa.values()) a.population *= perCode;
-  return finish(fsa);
+  return finish(fsa, (visit) =>
+    each((_, code, lat, lng) => {
+      if (code.length === 6) visit(code.slice(0, 3), `${code.slice(0, 3)} ${code.slice(3)}`, lat, lng);
+    }),
+  );
 }
 
 async function greatBritain(): Promise<Row[]> {
@@ -128,11 +158,16 @@ async function greatBritain(): Promise<Row[]> {
 
   const districts = new Map<string, Acc>();
   const postcodes = new Map<string, number>();
-  eachRow(await cached(SOURCES.geonamesGB), "\t", (cells) => {
-    const district = cells[1]?.trim().split(/\s+/)[0]?.toUpperCase();
-    const lat = Number(cells[9]);
-    const lng = Number(cells[10]);
-    if (!district || !Number.isFinite(lat) || !Number.isFinite(lng)) return;
+  const source = await cached(SOURCES.geonamesGB);
+  const each = (visit: (cells: string[], district: string, lat: number, lng: number) => void) =>
+    eachRow(source, "\t", (cells) => {
+      const district = cells[1]?.trim().split(/\s+/)[0]?.toUpperCase();
+      const lat = Number(cells[9]);
+      const lng = Number(cells[10]);
+      if (!district || !Number.isFinite(lat) || !Number.isFinite(lng)) return;
+      visit(cells, district, lat, lng);
+    });
+  each((cells, district, lat, lng) => {
     add(districts, district, lat, lng, 1, 0, cells[4] || "");
     postcodes.set(district, (postcodes.get(district) ?? 0) + 1);
   });
@@ -151,7 +186,12 @@ async function greatBritain(): Promise<Row[]> {
   for (const [d, a] of districts) {
     a.population = headcount.get(d) ?? (postcodes.get(d) ?? 0) * perPostcode;
   }
-  return finish(districts);
+  return finish(districts, (visit) =>
+    each((cells, district, lat, lng) => {
+      const postcode = cells[1].trim().toUpperCase().replace(/\s+/g, " ");
+      if (postcode.includes(" ")) visit(district, postcode, lat, lng);
+    }),
+  );
 }
 
 async function main() {
@@ -162,7 +202,7 @@ async function main() {
       "Canada and Great Britain postal codes: GeoNames (geonames.org), CC BY 4.0.",
       "England and Wales population: Office for National Statistics, Census 2021 postcode headcounts, Open Government Licence v3.0.",
     ],
-    fields: ["code", "lat", "lng", "population", "region"],
+    fields: ["code", "lat", "lng", "population", "region", "ref"],
     areas: { US, CA, GB },
   };
   mkdirSync("data/geo", { recursive: true });

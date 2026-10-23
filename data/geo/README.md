@@ -10,8 +10,10 @@ npx tsx scripts/build-teams.ts   # team-homes.json (reads the ESPN team feeds)
 
 ## postal-areas.json
 
-One row per postal area: `[code, lat, lng, population, region]`. Walkoff
-never works below this level.
+One row per postal area: `[code, lat, lng, population, region, ref]`, where
+`ref` is the full postal code nearest the area's center (Klaviyo's "within N
+miles of" segment condition needs a real code). Walkoff never works below
+this level.
 
 | Country | Area | Count | Centroid | Population |
 |---------|------|-------|----------|------------|
