@@ -57,7 +57,7 @@ export const HELP_TOOLS = {
   },
   get_territory: {
     summary:
-      "A team's fans as a Klaviyo segment: one to three proximity circles, how well they cover the fans, and how many of your customers live there.",
+      "A team's fans as a Klaviyo segment: one to three proximity circles, how well they cover the fans, and how many of your customers live there. Claude can create it in Klaviyo for you, once you say OK.",
     asks: ["Set up the Klaviyo segment for Chargers fans."],
     options: { reach: "Core fans only (the default), or wide to include shared markets." },
   },
@@ -108,7 +108,7 @@ export const HOME_TOOLS: ({ name: ToolName; body: string } | { name: string; bod
   },
   { name: "get_affinity_map", body: "Which fan territories hold more of your customers than population predicts, and by how much." },
   { name: "match_products", body: "Your own products in each team's colors. No license needed." },
-  { name: "get_territory", body: "Each team's fans as a Klaviyo segment. Save it once, reuse it for every moment." },
+  { name: "get_territory", body: "Each team's fans as a Klaviyo segment. Claude creates it once, with your OK, and every moment reuses it." },
   { name: "create_trigger", body: "Your rules for which moments matter, like walk-off wins in your top markets." },
   { name: "send_history", body: "Everything you drafted, sent and skipped, moment by moment." },
   { name: "benchmarks", body: "How each type of moment performs for brands like yours.", soon: true },

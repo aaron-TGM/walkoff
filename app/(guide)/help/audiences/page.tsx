@@ -31,7 +31,10 @@ export default function AudiencesPage() {
       <HelpSection page={P} id="example">
         <p>For the demo brand, the {SAMPLE_TEAM.team.nickname} segment looks like this:</p>
         <SegmentSummary audience={core} />
-        <p>The steps Claude gives you to create it:</p>
+        <p>
+          Claude can create it for you with Klaviyo&apos;s connector. If you&apos;d rather do it
+          yourself, these are the steps it gives you:
+        </p>
         <SegmentSteps audience={core} />
       </HelpSection>
 
@@ -73,16 +76,17 @@ export default function AudiencesPage() {
 
       <HelpSection page={P} id="save">
         <p>
-          Create each team&apos;s segment once. Klaviyo keeps it up to date as your profiles
-          change, so every later moment for that team reuses it.
+          Each team&apos;s segment is created once. The first time Claude needs it, it offers to
+          create it with Klaviyo&apos;s connector, and does once you say OK. Klaviyo keeps it up to
+          date as your profiles change, so every later moment for that team reuses it.
         </p>
         <p>
           Claude looks for the segment by name, so keep the name Walkoff gives it, like
           &ldquo;{core.segment_name}&rdquo;.
         </p>
         <p>
-          You can also ask Claude to create it for you with Klaviyo&apos;s connector.{" "}
-          <Link href={helpPath("klaviyo", "segments")}>Segments in Klaviyo</Link>
+          <Link href={helpPath("klaviyo", "segments")}>Segments in Klaviyo</Link>, and what to do if
+          one comes out small.
         </p>
       </HelpSection>
     </HelpPage>

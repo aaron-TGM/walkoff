@@ -73,6 +73,7 @@ export interface Campaign {
  *  (developers.klaviyo.com/en/docs/klaviyo_mcp_server_available_tools). */
 export const KLAVIYO_TOOLS = {
   findSegment: "get_segments",
+  createSegment: "create_segment",
   createTemplate: "create_email_template",
   createCampaign: "create_campaign",
   assignTemplate: "assign_template_to_campaign_message",
@@ -472,7 +473,11 @@ export function buildCampaign(input: {
   if (!audience.circles.length) warnings.push("Walkoff couldn't draw an audience for this team. Target a broader segment by hand.");
 
   const steps = [
-    `Audience: with the Klaviyo connector, look for a segment named "${audience.segment_name}" (${KLAVIYO_TOOLS.findSegment}). If it isn't there, ask the marketer to create it once, following audience.klaviyo_segment_steps. Don't send a team moment to the whole list.`,
+    `Audience: with the Klaviyo connector, look for a segment named "${audience.segment_name}" (${KLAVIYO_TOOLS.findSegment}). ${
+      audience.klaviyo_segment
+        ? `If it isn't there, ask the marketer whether to create it: it's once per team, and every later moment reuses it. With their OK, create it from audience.klaviyo_segment, which has its name and definition (${KLAVIYO_TOOLS.createSegment}). If that tool isn't there or fails, they can create it by hand from audience.klaviyo_segment_steps.`
+        : "If it isn't there, Walkoff has no circles to build it from: ask the marketer which segment to use."
+    } Don't send a team moment to the whole list.`,
     `Template: create an email template named "${name}" from html (${KLAVIYO_TOOLS.createTemplate}).`,
     `Draft: create a campaign named "${name}" for that segment with subject "${subjects[0]}" and preview text "${copy.preview}" (${KLAVIYO_TOOLS.createCampaign}), then assign the template to its message (${KLAVIYO_TOOLS.assignTemplate}). Keep Smart Sending on, so nobody who just got an email from the brand gets another.`,
     `Check: render the template (${KLAVIYO_TOOLS.render}) and show the marketer the email, the audience and the send time: ${send.send_at_local}.`,

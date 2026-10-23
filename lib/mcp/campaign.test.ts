@@ -108,6 +108,14 @@ describe("buildCampaign", () => {
     assert.deepEqual(c.warnings, []);
   });
 
+  it("has Claude offer to create a missing segment, with the marketer's OK", () => {
+    const [audience] = campaign(CHARGERS, "walkoff_win").klaviyo_steps;
+    assert.match(audience, /look for a segment named "Walkoff · Los Angeles Chargers fans" \(get_segments\)/);
+    assert.match(audience, /ask the marketer whether to create it/);
+    assert.match(audience, /With their OK, create it from audience\.klaviyo_segment, which has its name and definition \(create_segment\)/);
+    assert.match(audience, /audience\.klaviyo_segment_steps/);
+  });
+
   it("escapes product text, including Klaviyo's braces", () => {
     const team = CHARGERS;
     const c = buildCampaign({
