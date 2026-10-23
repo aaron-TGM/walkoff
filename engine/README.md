@@ -116,6 +116,19 @@ gcloud run deploy walkoff-engine \
   --set-secrets SUPABASE_SERVICE_ROLE_KEY=supabase-service-role-key:latest
 ```
 
+To ship an update later (from Cloud Shell, after the change is on `main`):
+
+```bash
+gcloud config set project walkoff-512421   # once per Cloud Shell session
+cd ~/walkoff && git checkout main && git pull
+gcloud builds submit --config engine/cloudbuild.yaml .
+gcloud run deploy walkoff-engine \
+  --image us-central1-docker.pkg.dev/walkoff-512421/walkoff/engine:latest \
+  --region us-central1
+```
+
+The deploy keeps the service's settings and secret; only the image changes.
+
 `cloudbuild.yaml` assumes `us-central1`; change it there too if you use
 another region. One always-on instance at this size typically costs tens of
 dollars a month; check the Cloud Run pricing calculator for your region.
