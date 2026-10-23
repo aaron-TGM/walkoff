@@ -508,7 +508,7 @@ export function MarketingPage() {
                 yes.
               </p>
               <div className="code-block">
-                <span className="c">{"# Claude: Settings → Connectors → Add custom connector"}</span>
+                <span className="c">{"# Claude: Customize → Connectors → Add custom connector"}</span>
                 {"\n"}
                 <span className="s">https://www.walkoff.io/mcp</span>
                 {"\n\n"}
