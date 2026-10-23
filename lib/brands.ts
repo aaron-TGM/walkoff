@@ -142,6 +142,8 @@ export interface BrandChanges {
   name?: string;
   storeUrl?: string;
   licensed?: boolean;
+  /** A new upload token: the old link stops working. */
+  newUploadLink?: boolean;
 }
 
 export async function updateBrand(db: SupabaseClient, id: string, c: BrandChanges): Promise<BrandRecord> {
@@ -154,6 +156,7 @@ export async function updateBrand(db: SupabaseClient, id: string, c: BrandChange
   }
   if (c.storeUrl !== undefined) changes.store_url = storeOrigin(c.storeUrl);
   if (c.licensed !== undefined) changes.licensed = c.licensed;
+  if (c.newUploadLink) changes.upload_token = newUploadToken();
   if (!Object.keys(changes).length) throw new BrandError("Nothing to change.");
   const { data, error } = await db.from("brands").update(changes).eq("id", id).select(COLUMNS).maybeSingle();
   if (error) throw error;
@@ -192,7 +195,8 @@ export async function addMember(db: SupabaseClient, brandId: string, rawEmail: s
   return { email, added: (data ?? []).length > 0 };
 }
 
-/** Their access ends on their next request (principalFor checks again). */
+/** Their access in Claude ends on their next request (principalFor checks
+ *  again). The brand's upload link doesn't change: updateBrand replaces it. */
 export async function removeMember(db: SupabaseClient, brandId: string, rawEmail: string): Promise<{ email: string; removed: boolean }> {
   const email = normalizeEmail(rawEmail);
   const { data, error } = await db.from("brand_members").delete().eq("brand_id", brandId).eq("email", email).select("email");

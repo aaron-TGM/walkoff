@@ -31,6 +31,7 @@ npm run brand -- invite "Frost Buddy" marketer@frostbuddy.com --by you@walkoff.i
 npm run brand -- members "Frost Buddy"                            # who has access, who's connected
 npm run brand -- members "Frost Buddy" --remove marketer@frostbuddy.com
 npm run brand -- set "Frost Buddy" --store frostbuddy.com [--licensed | --unlicensed]
+npm run brand -- set "Frost Buddy" --new-upload-link            # after removing someone
 ```
 
 `WALKOFF_OPERATOR_EMAILS` (comma-separated, on Vercel) can use every brand.
@@ -54,10 +55,10 @@ welcome. Later: "Where is each brand in onboarding?"
 | Tool | What it does |
 |------|--------------|
 | `create_brand` | Name, store, `licensed` (default false) and a contact. Returns the brand's id and private upload link. Refuses a name another brand has (any case or spacing) unless `allow_duplicate` is true. |
-| `update_brand` | Changes the name, store or license. |
+| `update_brand` | Changes the name, store or license. `new_upload_link: true` replaces the upload link, say after removing someone: the old link stops working, and `invite_member` sends the new one. |
 | `invite_member` | Adds someone to a brand and emails them the welcome (`send_email: false` skips it). Safe to repeat: it resends the welcome. |
-| `list_members`, `remove_member` | Who can use a brand and whether each has connected; removing takes effect on their next request. |
-| `onboarding_status` | One brand or all: store and license, members and whether each has connected (a live sign-in that reaches the brand), customers uploaded and when, customers mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step. |
+| `list_members`, `remove_member` | Who can use a brand and whether each has connected. Removing someone ends their access in Claude on their next request; the brand's upload link keeps working until it's replaced. |
+| `onboarding_status` | One brand or all: store and license, members and whether each has connected (a live refresh token whose brands include this one), customers uploaded and when, customers mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step. |
 
 The next step follows the onboarding order: store, invite, customer upload,
 product export, Claude's tagging (`npm run affinity:tag`), connecting
@@ -66,7 +67,9 @@ Claude, then a first campaign.
 Only operators get these tools. They aren't registered for anyone else
 (`tools/list` doesn't show them and calling one fails), each handler checks
 again, and brands are found through the operator's own access
-(`brandFor`). The consent page tells operators what they're allowing.
+(`brandFor`). The tools that change a brand or its people need the brand's
+exact name or id: with every brand in reach, "Sun" mustn't land on Sunday
+Supply. The consent page tells operators what they're allowing.
 
 **The welcome email** goes only to the person invited, through Resend
 (`RESEND_API_KEY`, from `RESEND_FROM_EMAIL`), with replies to the operator
@@ -74,16 +77,18 @@ who invited them. It says who invited them and to which brand, links the
 brand's upload page (which has the export guides: Shopify orders or
 customers, then products), gives the connector steps above with the
 address they sign in with, and suggests a first thing to ask Claude ("What
-should we send this week?"). Someone who already connected Walkoff for
-another brand is told to disconnect and connect again, since a sign-in
+should we send this week?"). Someone already signed in for another brand
+also gets a line about disconnecting and connecting again, since a sign-in
 reaches only the brands picked when it was made. Without `RESEND_API_KEY`
 outside production, the email is printed to the server log. In production
 without it, `invite_member` keeps the invite and says the email didn't go.
 
 The upload link is the brand's secret: anyone with it can upload for the
 brand. `create_brand` shows it to the operator, and `invite_member` emails
-it to the people invited. Don't send it anywhere else. Links in the email
-use this server's address (`WALKOFF_PUBLIC_URL` in production).
+it to the people invited. Don't send it anywhere else. When someone leaves,
+replace it (`update_brand` with `new_upload_link`) and invite the others
+again. Links in the email use this server's address (`WALKOFF_PUBLIC_URL`
+in production).
 
 The script and the tools share `lib/brands.ts` and `lib/welcome.ts`.
 

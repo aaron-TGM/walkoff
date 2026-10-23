@@ -717,6 +717,7 @@ const operatorOnly = (ctx: ToolContext, fn: () => Promise<unknown>) =>
   });
 
 const requiredBrand = z.string().describe("Brand name or id.");
+const exactBrand = z.string().describe("The brand's exact name or id.");
 const emailArg = z.string().max(254).describe("Their work email. They sign in to Walkoff with it.");
 const storeArg = z.string().max(200).describe('The store\'s address, like "frostbuddy.com". Campaigns link to its products.');
 const licensedArg = z
@@ -796,23 +797,41 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
     {
       title: "Update a brand",
       description:
-        "Walkoff operators only. Changes a brand's name, store address or license. Licensed brands' campaigns may name their teams; the rest only nod with the colors.",
+        "Walkoff operators only. Changes a brand's name, store address or license, or replaces its upload link. Licensed brands' campaigns may name their teams; the rest only nod with the colors.",
       inputSchema: {
-        brand: requiredBrand,
+        brand: exactBrand,
         name: z.string().min(1).max(100).optional().describe("A new name."),
         store_url: storeArg.optional(),
         licensed: licensedArg.optional(),
+        new_upload_link: z
+          .boolean()
+          .optional()
+          .describe("Replace the upload link, say after removing someone. The old link stops working; invite_member sends the new one to each person who should still upload."),
       },
-      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },
     (args) =>
       operatorOnly(ctx, async () => {
-        const b = await brandFor(db, principal, args.brand);
-        if (args.name === undefined && args.store_url === undefined && args.licensed === undefined) {
-          throw new ToolError("Nothing to change. Pass name, store_url or licensed.");
+        const b = await brandFor(db, principal, args.brand, { exact: true });
+        if (args.name === undefined && args.store_url === undefined && args.licensed === undefined && !args.new_upload_link) {
+          throw new ToolError("Nothing to change. Pass name, store_url, licensed or new_upload_link.");
         }
-        const updated = await updateBrand(db, b.id, { name: args.name, storeUrl: args.store_url, licensed: args.licensed });
-        return { updated: brandView(updated), copy_rule: copyRule(updated.licensed) };
+        const updated = await updateBrand(db, b.id, {
+          name: args.name,
+          storeUrl: args.store_url,
+          licensed: args.licensed,
+          newUploadLink: args.new_upload_link,
+        });
+        return {
+          updated: brandView(updated),
+          copy_rule: copyRule(updated.licensed),
+          ...(args.new_upload_link
+            ? {
+                upload_link: uploadLink(updated.upload_token, ctx.origin),
+                note: "The old upload link no longer works. invite_member sends the new one to each person who should still upload. Don't share it anywhere else.",
+              }
+            : {}),
+        };
       }),
   );
 
@@ -823,7 +842,7 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
       description:
         "Walkoff operators only. Lets someone use Walkoff for a brand in Claude, and emails them a welcome: who invited them, the brand's private upload link (the page has the export guides), how to add Walkoff as a connector in Claude, and a first thing to ask. Safe to repeat: inviting someone again sends the welcome again.",
       inputSchema: {
-        brand: requiredBrand,
+        brand: exactBrand,
         email: emailArg,
         send_email: z.boolean().optional().describe("Send the welcome email. Default true. With false, they're added and nothing is sent."),
       },
@@ -831,7 +850,7 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
     },
     (args) =>
       operatorOnly(ctx, async () => {
-        const b = await brandFor(db, principal, args.brand);
+        const b = await brandFor(db, principal, args.brand, { exact: true });
         const brand = await brandRecord(db, b.id);
         if (!brand) throw new ToolError("That brand doesn't exist anymore.");
         const { email, added } = await addMember(db, brand.id, args.email);
@@ -880,19 +899,24 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
     "remove_member",
     {
       title: "Remove someone from a brand",
-      description: "Walkoff operators only. Stops someone using Walkoff for a brand, from their next request in Claude.",
-      inputSchema: { brand: requiredBrand, email: emailArg },
+      description:
+        "Walkoff operators only. Stops someone using Walkoff for a brand in Claude, from their next request. If they have the brand's upload link, it keeps working: update_brand with new_upload_link replaces it.",
+      inputSchema: { brand: exactBrand, email: emailArg },
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
     },
     (args) =>
       operatorOnly(ctx, async () => {
-        const b = await brandFor(db, principal, args.brand);
+        const b = await brandFor(db, principal, args.brand, { exact: true });
         const { email, removed } = await removeMember(db, b.id, args.email);
         if (!removed) {
           const members = (await listMembers(db, b.id, ctx.now())).map((m) => m.email);
           throw new ToolError(`${email} isn't a member of ${b.name}. ${members.length ? `Its members: ${members.join(", ")}.` : "It has no members."}`);
         }
-        return { brand: b.name, removed: email, note: "Their access ends on their next request in Claude." };
+        return {
+          brand: b.name,
+          removed: email,
+          note: "Their access in Claude ends on their next request. If they have the brand's upload link, it keeps working until you replace it: update_brand with new_upload_link, then invite_member the people who should still upload.",
+        };
       }),
   );
 

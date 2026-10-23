@@ -15,13 +15,14 @@ jane@frostbuddy.com"), and ask there where each brand is
 
    ```bash
    npm run brand -- create "Brand name" --store brand.com [--licensed] [--email owner@brand.com]
-   npm run brand -- set <brand> [--store brand.com] [--licensed | --unlicensed] [--name "New name"]
+   npm run brand -- set <brand> [--store brand.com] [--licensed | --unlicensed] [--name "New name"] [--new-upload-link]
    ```
 
    A name another brand has (in any case or spacing) is refused; add
    `--allow-duplicate` if it really is a different brand. Anyone with the
    upload link can upload to that brand, so it only goes to the people you
-   invite.
+   invite. `--new-upload-link` replaces it when someone leaves; invite the
+   others again to send them the new one.
 
 2. **Invite the people who'll use it.** Each gets a welcome email: who
    invited them, their upload link (the page has the export guides), how to

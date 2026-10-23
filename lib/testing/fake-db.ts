@@ -1,7 +1,9 @@
 // An in-memory stand-in for the Supabase client in unit tests: the part of
-// the query builder Walkoff uses, over plain arrays of rows. The end-to-end
-// checks in CLAUDE.md run the same code against PostgREST.
+// the query builder Walkoff uses, over plain arrays of rows. Tables and
+// columns are checked against the migrations. The end-to-end checks in
+// CLAUDE.md run the same code against PostgREST.
 import { randomUUID } from "node:crypto";
+import { readdirSync, readFileSync } from "node:fs";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 export type Row = Record<string, unknown>;
@@ -11,6 +13,32 @@ export type Tables = Record<string, Row[]>;
 const UUID_IDS = new Set(["brands", "brand_uploads", "affinity_reports", "triggers", "sends", "moments"]);
 
 type Filter = (row: Row) => boolean;
+
+let schema: Map<string, Set<string>> | null = null;
+
+/** A table's columns from supabase/0*.sql, so a query naming one that
+ *  doesn't exist fails here as it would in PostgREST. */
+function columnsOf(table: string): Set<string> | undefined {
+  if (!schema) {
+    schema = new Map();
+    const dir = new URL("../../supabase/", import.meta.url);
+    for (const file of readdirSync(dir).filter((f) => /^0\d+_.*\.sql$/.test(f)).sort()) {
+      const sql = readFileSync(new URL(file, dir), "utf8");
+      for (const [, name, body] of sql.matchAll(/CREATE TABLE IF NOT EXISTS (\w+) \(([\s\S]*?)\n\);/g)) {
+        const cols = schema.get(name) ?? new Set<string>();
+        for (const line of body.split("\n")) {
+          const col = line.trim().match(/^([a-z_]+)\s+[a-z]/)?.[1];
+          if (col) cols.add(col);
+        }
+        schema.set(name, cols);
+      }
+      for (const [, name, col] of sql.matchAll(/ALTER TABLE (\w+) ADD COLUMN IF NOT EXISTS (\w+)/g)) {
+        schema.set(name, (schema.get(name) ?? new Set<string>()).add(col));
+      }
+    }
+  }
+  return schema.get(table);
+}
 type Result = { data: unknown; error: { message: string; code?: string } | null; count?: number | null };
 
 /** "a, alias:b->c->>d" into output keys and paths into each row. */
@@ -48,13 +76,25 @@ class Query implements PromiseLike<Result> {
   private orders: { column: string; ascending: boolean }[] = [];
   private window: { from: number; to: number } | null = null;
   private one: "single" | "maybe" | null = null;
+  private problem: string | null = null;
+  private readonly known: Set<string> | undefined;
 
   constructor(
     private readonly tables: Tables,
     private readonly table: string,
-  ) {}
+  ) {
+    this.known = columnsOf(table);
+    if (!this.known) this.problem = `relation "public.${table}" does not exist`;
+  }
+
+  private uses(...columns: string[]) {
+    for (const c of columns) if (this.known && !this.known.has(c)) this.problem ??= `column ${this.table}.${c} does not exist`;
+  }
 
   select(columns = "*", opts: { count?: "exact"; head?: boolean } = {}) {
+    for (const item of columns.split(",").map((s) => s.trim())) {
+      if (item && item !== "*") this.uses((item.includes(":") ? item.split(":")[1] : item).split(/->>?/)[0]);
+    }
     this.columns = columns;
     this.countRows = opts.count === "exact";
     this.head = !!opts.head;
@@ -64,6 +104,7 @@ class Query implements PromiseLike<Result> {
   insert(rows: Row | Row[]) {
     this.op = "insert";
     this.payload = Array.isArray(rows) ? rows : [rows];
+    this.payload.forEach((r) => this.uses(...Object.keys(r)));
     return this;
   }
 
@@ -72,12 +113,15 @@ class Query implements PromiseLike<Result> {
     this.payload = Array.isArray(rows) ? rows : [rows];
     this.conflict = (opts.onConflict ?? "id").split(",").map((s) => s.trim());
     this.ignoreDuplicates = !!opts.ignoreDuplicates;
+    this.payload.forEach((r) => this.uses(...Object.keys(r)));
+    this.uses(...this.conflict);
     return this;
   }
 
   update(changes: Row) {
     this.op = "update";
     this.changes = changes;
+    this.uses(...Object.keys(changes));
     return this;
   }
 
@@ -87,37 +131,44 @@ class Query implements PromiseLike<Result> {
   }
 
   eq(column: string, value: unknown) {
+    this.uses(column);
     this.filters.push((r) => r[column] === value);
     return this;
   }
 
   neq(column: string, value: unknown) {
+    this.uses(column);
     // jsonb columns compare with their JSON text, like neq("teams", "[]").
     this.filters.push((r) => (r[column] !== null && typeof r[column] === "object" ? JSON.stringify(r[column]) : r[column]) !== value);
     return this;
   }
 
   in(column: string, values: unknown[]) {
+    this.uses(column);
     this.filters.push((r) => values.includes(r[column]));
     return this;
   }
 
   is(column: string, value: null) {
+    this.uses(column);
     this.filters.push((r) => (r[column] ?? null) === value);
     return this;
   }
 
   gt(column: string, value: unknown) {
+    this.uses(column);
     this.filters.push((r) => compare(r[column], value) > 0 && r[column] != null);
     return this;
   }
 
   gte(column: string, value: unknown) {
+    this.uses(column);
     this.filters.push((r) => compare(r[column], value) >= 0 && r[column] != null);
     return this;
   }
 
   not(column: string, operator: string, value: string) {
+    this.uses(column);
     if (operator !== "in") throw new Error(`fake db: not.${operator} isn't supported`);
     const values = value.replace(/^\(|\)$/g, "").split(",");
     this.filters.push((r) => !values.includes(String(r[column])));
@@ -125,6 +176,7 @@ class Query implements PromiseLike<Result> {
   }
 
   order(column: string, opts: { ascending?: boolean } = {}) {
+    this.uses(column);
     this.orders.push({ column, ascending: opts.ascending ?? true });
     return this;
   }
@@ -160,6 +212,7 @@ class Query implements PromiseLike<Result> {
   }
 
   private run(): Result {
+    if (this.problem) return { data: null, error: { message: this.problem, code: "42703" } };
     const rows = (this.tables[this.table] ??= []);
     let out: Row[];
     if (this.op === "select") {

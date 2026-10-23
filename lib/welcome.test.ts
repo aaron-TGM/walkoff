@@ -54,11 +54,13 @@ describe("welcomeEmail", () => {
     assert.match(text, /"What should we send this week\?"/);
   });
 
-  it("tells someone already connected for another brand to connect again", () => {
+  it("tells someone signed in for another brand to connect again, and still gives every step", () => {
     const { text } = welcomeEmail({ ...jane, reconnect: true });
-    assert.match(text, /You already use Walkoff in Claude\. To add Frost Buddy, disconnect Walkoff/);
-    assert.ok(!text.includes("Add custom connector"));
+    assert.match(text, /Already connected Walkoff for another brand\? Disconnect it in Claude's connector settings and connect again, so you can pick Frost Buddy too\./);
+    assert.ok(text.includes(`\n${jane.connectorUrl}\n`), "they may be connecting from a different app");
+    assert.match(text, /Customize → Connectors → Add custom connector/);
     assert.ok(text.includes(jane.uploadUrl));
+    assert.ok(!welcomeEmail(jane).text.includes("Already connected"));
   });
 
   it("without an inviter, sends questions to hello@walkoff.io", () => {

@@ -5,7 +5,7 @@
 //   npm run brand -- create "Sample Co" [--email owner@sample.co] [--store sample.co] [--licensed] [--allow-duplicate]
 //   npm run brand -- list
 //   npm run brand -- report <brand> [--refresh] [--json]
-//   npm run brand -- set <brand> [--name "New name"] [--store sample.co] [--licensed | --unlicensed]
+//   npm run brand -- set <brand> [--name "New name"] [--store sample.co] [--licensed | --unlicensed] [--new-upload-link]
 //   npm run brand -- invite <brand> person@sample.co [--by you@walkoff.io] [--no-welcome]
 //   npm run brand -- members <brand> [--remove person@sample.co]
 //
@@ -15,7 +15,8 @@
 // (they sign in with a code emailed to that address) and emails them a
 // welcome with the upload link and how to connect; --by says who invited
 // them, --no-welcome skips the email. --licensed lets campaigns name the
-// brand's teams; without it they nod, not name.
+// brand's teams; without it they nod, not name. --new-upload-link replaces
+// the link, say after removing someone; invite sends the new one.
 import "./lib/env";
 import { parseArgs } from "node:util";
 import type { AffinityReport, TeamGroup } from "../lib/affinity/compute";
@@ -42,7 +43,6 @@ import { scriptDb } from "./lib/db";
 
 const { values: args, positionals } = parseArgs({
   allowPositionals: true,
-  allowNegative: true,
   options: {
     email: { type: "string" },
     store: { type: "string" },
@@ -51,7 +51,8 @@ const { values: args, positionals } = parseArgs({
     unlicensed: { type: "boolean" },
     "allow-duplicate": { type: "boolean", default: false },
     by: { type: "string" },
-    welcome: { type: "boolean", default: true },
+    "no-welcome": { type: "boolean", default: false },
+    "new-upload-link": { type: "boolean", default: false },
     remove: { type: "string" },
     refresh: { type: "boolean", default: false },
     json: { type: "boolean", default: false },
@@ -64,7 +65,7 @@ function usage(message?: string): never {
   npm run brand -- create "Brand name" [--email owner@brand.com] [--store brand.com] [--licensed] [--allow-duplicate]
   npm run brand -- list
   npm run brand -- report <brand> [--refresh] [--json]
-  npm run brand -- set <brand> [--name "New name"] [--store brand.com] [--licensed | --unlicensed]
+  npm run brand -- set <brand> [--name "New name"] [--store brand.com] [--licensed | --unlicensed] [--new-upload-link]
   npm run brand -- invite <brand> person@brand.com [--by you@walkoff.io] [--no-welcome]
   npm run brand -- members <brand> [--remove person@brand.com]
 
@@ -131,9 +132,13 @@ async function main() {
     if (args.store) changes.storeUrl = args.store;
     if (args.licensed) changes.licensed = true;
     if (args.unlicensed) changes.licensed = false;
-    if (!Object.keys(changes).length) usage("Nothing to change: pass --name, --store, --licensed or --unlicensed.");
+    if (args["new-upload-link"]) changes.newUploadLink = true;
+    if (!Object.keys(changes).length) usage("Nothing to change: pass --name, --store, --licensed, --unlicensed or --new-upload-link.");
     const b = await updateBrand(db, brand.id, changes);
     console.log(`${b.name}: store ${b.store_url ?? "not set"}, ${b.licensed ? "licensed (campaigns may name teams)" : "not licensed (campaigns nod, never name)"}.`);
+    if (changes.newUploadLink) {
+      console.log(`New upload link: ${uploadLink(b.upload_token)}\nThe old one no longer works. invite sends the new one to each person who should still upload.`);
+    }
     return;
   }
 
@@ -143,7 +148,7 @@ async function main() {
     const invitedBy = args.by ? normalizeEmail(args.by) : null;
     const { email, added } = await addMember(db, brand.id, who);
     console.log(added ? `${email} can now connect Walkoff for ${brand.name}.` : `${email} could already connect Walkoff for ${brand.name}.`);
-    if (!args.welcome) {
+    if (args["no-welcome"]) {
       console.log(`In Claude: Customize → Connectors → Add custom connector → ${resourceOf(siteOrigin())}, then sign in with this email.`);
       return;
     }
@@ -165,7 +170,11 @@ async function main() {
     const brand = await resolveBrand(db, rest.join(" "));
     if (args.remove) {
       const { email, removed } = await removeMember(db, brand.id, args.remove);
-      console.log(removed ? `Removed ${email} from ${brand.name}.` : `${email} wasn't a member of ${brand.name}.`);
+      console.log(
+        removed
+          ? `Removed ${email} from ${brand.name}. If they have the upload link, it still works: set --new-upload-link replaces it.`
+          : `${email} wasn't a member of ${brand.name}.`,
+      );
     }
     const members = await listMembers(db, brand.id);
     const state = (m: (typeof members)[number]) => (m.connected ? "connected" : m.needs_reconnect ? "needs to reconnect" : "not connected yet");

@@ -40,8 +40,10 @@ export async function brandsFor(db: SupabaseClient, p: Principal): Promise<Brand
   return (data ?? []) as BrandRow[];
 }
 
-/** The brand a tool call means: by id or name, or the only one there is. */
-export async function brandFor(db: SupabaseClient, p: Principal, ref?: string | null): Promise<BrandRow> {
+/** The brand a tool call means: by id or name, or the only one there is.
+ *  exact turns off matching part of a name, for operator changes: with
+ *  every brand in reach, "Sun" shouldn't land on Sunday Supply. */
+export async function brandFor(db: SupabaseClient, p: Principal, ref?: string | null, opts: { exact?: boolean } = {}): Promise<BrandRow> {
   const brands = await brandsFor(db, p);
   if (!brands.length) throw new ToolError("No brands are set up for you yet. Ask your Walkoff contact to invite you.");
   const r = ref?.trim().toLowerCase();
@@ -55,6 +57,10 @@ export async function brandFor(db: SupabaseClient, p: Principal, ref?: string | 
   if (named.length === 1) return named[0];
   if (named.length > 1) throw new ToolError(`More than one brand is named ${named[0].name}. Use its id: ${named.map((b) => b.id).join(" or ")}.`);
   const partial = brands.filter((b) => b.name.toLowerCase().includes(r));
+  if (opts.exact) {
+    const close = partial.length ? ` Names like it: ${partial.map((b) => b.name).join(", ")}.` : "";
+    throw new ToolError(`No brand is named "${ref}". Use a brand's exact name or id.${close}`);
+  }
   if (partial.length === 1) return partial[0];
   throw new ToolError(`No brand matches "${ref}". You have ${brands.map((b) => b.name).join(", ")}.`);
 }

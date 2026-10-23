@@ -167,6 +167,43 @@ describe("onboarding a brand from Claude", () => {
     await client.close();
   });
 
+  it("make changes only to the brand named exactly, never one whose name contains it", async (t) => {
+    t.mock.method(console, "log", () => {});
+    const db = fakeDb();
+    const client = await connect(createWalkoffServer(ctxFor(operator, db)));
+    await call(client, "create_brand", { name: "Sunday Supply", store_url: "sundaysupply.com" });
+    // create_brand "Sun" failed, so "Sun" must not fall through to Sunday Supply.
+    assert.ok((await call(client, "create_brand", { name: "Sun", store_url: "http://sun.co" })).isError);
+    for (const [name, args] of [
+      ["invite_member", { brand: "Sun", email: "bob@sun.co" }],
+      ["update_brand", { brand: "Sun", licensed: true }],
+      ["remove_member", { brand: "Sun", email: "bob@sun.co" }],
+    ] as const) {
+      const r = await call(client, name, args);
+      assert.ok(r.isError, name);
+      assert.equal(r.text, 'No brand is named "Sun". Use a brand\'s exact name or id. Names like it: Sunday Supply.', name);
+    }
+    assert.deepEqual([db.tables.brand_members ?? [], db.tables.brands[0].licensed], [[], false]);
+    assert.ok(!(await call(client, "list_members", { brand: "sunday" })).isError, "reading can still use part of a name");
+    assert.ok(!(await call(client, "invite_member", { brand: "sunday supply", email: "bob@sun.co", send_email: false })).isError);
+    await client.close();
+  });
+
+  it("replace the upload link when asked, and say removal doesn't", async () => {
+    const db = fakeDb();
+    const client = await connect(createWalkoffServer(ctxFor(operator, db)));
+    const before = (await call(client, "create_brand", { name: "Frost Buddy" })).json().upload_link;
+    await call(client, "invite_member", { brand: "Frost Buddy", email: "jane@frostbuddy.com", send_email: false });
+    const removed = (await call(client, "remove_member", { brand: "Frost Buddy", email: "jane@frostbuddy.com" })).json();
+    assert.match(removed.note, /If they have the brand's upload link, it keeps working until you replace it: update_brand with new_upload_link/);
+    const rotated = (await call(client, "update_brand", { brand: "Frost Buddy", new_upload_link: true })).json();
+    assert.notEqual(rotated.upload_link, before);
+    assert.equal(rotated.upload_link, `${ORIGIN}/upload/${db.tables.brands[0].upload_token}`);
+    assert.match(rotated.note, /The old upload link no longer works/);
+    assert.equal((await call(client, "update_brand", { brand: "Frost Buddy", licensed: true })).json().upload_link, undefined);
+    await client.close();
+  });
+
   it("asks for the id when two brands share a name", async () => {
     const db = fakeDb();
     const client = await connect(createWalkoffServer(ctxFor(operator, db)));

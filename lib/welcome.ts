@@ -13,24 +13,23 @@ export interface Welcome {
   uploadUrl: string;
   /** The MCP server: https://www.walkoff.io/mcp */
   connectorUrl: string;
-  /** They already connected Walkoff for another brand, so they connect again
-   *  to reach this one. */
+  /** They've signed in to Walkoff for another brand, and a sign-in reaches
+   *  only the brands picked when it was made. */
   reconnect?: boolean;
 }
 
 export function welcomeEmail(w: Welcome): { subject: string; text: string } {
-  const connect = w.reconnect
-    ? [
-        `You already use Walkoff in Claude. To add ${w.brand}, disconnect Walkoff in Claude's connector settings, then connect it again and sign in with ${w.to}.`,
-      ]
-    : [
-        "In Claude, go to Customize → Connectors → Add custom connector, and enter this address:",
-        w.connectorUrl,
-        "",
-        `Then sign in with this email address (${w.to}). Walkoff emails you a 6-digit code.`,
-        "",
-        "On a Team or Enterprise plan, an owner adds the connector first, under Organization settings → Connectors.",
-      ];
+  const connect = [
+    "In Claude, go to Customize → Connectors → Add custom connector, and enter this address:",
+    w.connectorUrl,
+    "",
+    `Then sign in with this email address (${w.to}). Walkoff emails you a 6-digit code.`,
+    "",
+    "On a Team or Enterprise plan, an owner adds the connector first, under Organization settings → Connectors.",
+    ...(w.reconnect
+      ? ["", `Already connected Walkoff for another brand? Disconnect it in Claude's connector settings and connect again, so you can pick ${w.brand} too.`]
+      : []),
+  ];
   const text = [
     w.invitedBy ? `${w.invitedBy} invited you to use Walkoff for ${w.brand}.` : `You're invited to use Walkoff for ${w.brand}.`,
     "",

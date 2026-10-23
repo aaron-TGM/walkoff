@@ -137,6 +137,17 @@ describe("updateBrand", () => {
     assert.equal((await updateBrand(db, b.id, { licensed: false })).licensed, false);
   });
 
+  it("replaces the upload link only when asked", async () => {
+    const db = fakeDb();
+    const b = await createBrand(db, { name: "Frost Buddy" });
+    assert.equal((await updateBrand(db, b.id, { licensed: true })).upload_token, b.upload_token);
+    const rotated = await updateBrand(db, b.id, { newUploadLink: true });
+    assert.notEqual(rotated.upload_token, b.upload_token);
+    assert.match(rotated.upload_token, /^[A-Za-z0-9_-]{24}$/);
+    await assert.rejects(resolveBrand(db, b.upload_token), /No brand named/);
+    assert.equal((await resolveBrand(db, rotated.upload_token)).id, b.id);
+  });
+
   it("renames, but not onto another brand's name", async () => {
     const db = fakeDb();
     const b = await createBrand(db, { name: "frost buddy" });
@@ -182,15 +193,21 @@ describe("members", () => {
     const db = fakeDb();
     const b = await createBrand(db, { name: "Frost Buddy" });
     const other = await createBrand(db, { name: "Sun Buddy" });
-    const people = ["live@x.com", "expired@x.com", "rotated@x.com", "elsewhere@x.com", "code@x.com", "never@x.com", "op@walkoff.io"];
+    const people = ["live@x.com", "expired@x.com", "rotated@x.com", "elsewhere@x.com", "narrowed@x.com", "code@x.com", "never@x.com", "op@walkoff.io"];
     for (const email of people) await addMember(db, b.id, email);
     db.tables.oauth_grants = [
       grant("live@x.com", "refresh", [b.id]),
-      grant("expired@x.com", "access", [b.id], { expires_at: hoursFromNow(-1) }),
+      grant("live@x.com", "access", [b.id]),
+      grant("expired@x.com", "refresh", [b.id], { expires_at: hoursFromNow(-1) }),
       grant("rotated@x.com", "refresh", [b.id], { used_at: hoursFromNow(-2) }),
-      grant("elsewhere@x.com", "access", [other.id]),
+      grant("elsewhere@x.com", "refresh", [other.id]),
+      // Removed from Frost Buddy, then refreshed: the access token from before
+      // still names it, but the connection now reaches only Sun Buddy.
+      grant("narrowed@x.com", "access", [b.id, other.id]),
+      grant("narrowed@x.com", "refresh", [b.id, other.id], { used_at: hoursFromNow(-1) }),
+      grant("narrowed@x.com", "refresh", [other.id]),
       grant("code@x.com", "code", [b.id]),
-      grant("op@walkoff.io", "access", null),
+      grant("op@walkoff.io", "refresh", null),
     ];
     const members = new Map((await listMembers(db, b.id, NOW)).map((m) => [m.email, m]));
     assert.deepEqual([...members.keys()], people);
@@ -200,8 +217,10 @@ describe("members", () => {
       assert.equal(members.get(email)?.connected, false, email);
       assert.equal(members.get(email)?.needs_reconnect, undefined, email);
     }
-    assert.equal(members.get("elsewhere@x.com")?.connected, false);
-    assert.equal(members.get("elsewhere@x.com")?.needs_reconnect, true);
+    for (const email of ["elsewhere@x.com", "narrowed@x.com"]) {
+      assert.equal(members.get(email)?.connected, false, email);
+      assert.equal(members.get(email)?.needs_reconnect, true, email);
+    }
   });
 
   it("writes the welcome with this server's links", async () => {
