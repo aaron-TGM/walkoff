@@ -10,14 +10,14 @@ const ITEMS: { tag: string; headline: string; detail: string }[] = [
     detail: "North London · Home-kit colors flagged",
   },
   {
-    tag: "First freeze",
-    headline: "Twin Cities, Saturday",
-    detail: "3,902 customers · Blankets and beanies",
+    tag: "Walk-off win",
+    headline: "Padres 4, Dodgers 3",
+    detail: "1,880 customers in Padres territory · Campaign ready",
   },
   {
     tag: "Buzzer beater",
     headline: "Celtics 112, Knicks 110",
-    detail: "Fired 2m 14s after the final",
+    detail: "In your queue a minute after the final",
   },
   {
     tag: "Rivalry in 48h",
@@ -25,14 +25,14 @@ const ITEMS: { tag: string; headline: string; detail: string }[] = [
     detail: "Pre-game email waiting for approval",
   },
   {
-    tag: "Tour stop",
-    headline: "3 nights in Chicago",
-    detail: "1,140 customers within 30 miles",
+    tag: "Comeback win",
+    headline: "Packers 31, Bears 28",
+    detail: "Down 14, won it late · Green and gold picks",
   },
   {
-    tag: "Playoff clinch",
-    headline: "Oilers lock a spot",
-    detail: "Edmonton · Limited drop queued",
+    tag: "Series win",
+    headline: "Oilers advance",
+    detail: "Edmonton · Playoff picks drafted for approval",
   },
 ];
 

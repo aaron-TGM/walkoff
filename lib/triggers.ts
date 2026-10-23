@@ -5,6 +5,8 @@ export interface Trigger {
   id: string;
   description: string;
   category: TriggerCategory;
+  /** The engine doesn't detect it yet (engine/moments/types.ts). */
+  coming?: boolean;
 }
 
 export const TRIGGER_CATEGORIES: { id: TriggerCategory; label: string }[] = [
@@ -68,7 +70,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Walk-Off Win",
     id: "walkoff_win",
     description:
-      "Highest emotional spike in sports. 30-minute window. Timing is the conversion lever.",
+      "Highest emotional spike in sports. Timing is the conversion lever.",
     category: "after",
   },
   {
@@ -96,7 +98,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Rivalry Win",
     id: "rivalry_win",
     description:
-      "Yankees-Red Sox. Iron Bowl. North London Derby. Configurable per brand.",
+      "Yankees-Red Sox. Iron Bowl. North London Derby. Walkoff knows the rivalries in every league.",
     category: "after",
   },
   {
@@ -112,6 +114,7 @@ export const TRIGGERS: Trigger[] = [
     description:
       "Postseason berth locked. Pairs with limited drops or playoff bundles.",
     category: "season",
+    coming: true,
   },
   {
     name: "Series Win",
@@ -124,8 +127,9 @@ export const TRIGGERS: Trigger[] = [
     name: "Player Milestone",
     id: "player_milestone",
     description:
-      "Records, awards, NIL moments. Configurable per brand. Big for NCAA.",
+      "Records, awards, NIL moments. Big for NCAA.",
     category: "season",
+    coming: true,
   },
   {
     name: "Big Signing",
@@ -133,6 +137,7 @@ export const TRIGGERS: Trigger[] = [
     description:
       "Star trade or transfer lands in your market. New jersey, new reason to buy.",
     category: "season",
+    coming: true,
   },
   {
     name: "Great Escape",
@@ -140,6 +145,7 @@ export const TRIGGERS: Trigger[] = [
     description:
       "Survived relegation on the final day. Relief sells almost as well as glory.",
     category: "season",
+    coming: true,
   },
   {
     name: "Championship Win",

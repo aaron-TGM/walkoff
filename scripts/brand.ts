@@ -37,6 +37,7 @@ import {
   welcomeFor,
   type BrandChanges,
 } from "../lib/brands";
+import { CONNECTOR_STEPS } from "../lib/connect";
 import { resourceOf } from "../lib/mcp/oauth/config";
 import { sendWelcome } from "../lib/welcome";
 import { scriptDb } from "./lib/db";
@@ -149,7 +150,7 @@ async function main() {
     const { email, added } = await addMember(db, brand.id, who);
     console.log(added ? `${email} can now connect Walkoff for ${brand.name}.` : `${email} could already connect Walkoff for ${brand.name}.`);
     if (args["no-welcome"]) {
-      console.log(`In Claude: Customize → Connectors → Add custom connector → ${resourceOf(siteOrigin())}, then sign in with this email.`);
+      console.log(`In Claude: ${CONNECTOR_STEPS} → ${resourceOf(siteOrigin())}, then sign in with this email.`);
       return;
     }
     try {

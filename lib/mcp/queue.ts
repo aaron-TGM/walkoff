@@ -69,16 +69,18 @@ export interface MomentWindow {
 
 const HOUR = 3_600_000;
 
-/** How long a moment is worth acting on: a result for about a day, a
- *  season moment for three, a pre-game moment until kickoff, a live one
- *  only for a few hours. */
+/** How long a moment is worth acting on, in hours: a result for about a
+ *  day, a season moment for three, a live one only for a few hours. A
+ *  pre-game moment lasts until kickoff, or a day when the start isn't known. */
+export const WINDOW_HOURS = { result: 30, season: 72, live: 3, pregame: 24 } as const;
+
 export function momentWindow(m: QueueMoment, now: Date): MomentWindow {
   const kind = momentKind(m.type);
   const start = m.occurredAt.getTime();
   const closes =
     kind === "pregame"
-      ? (m.gameStart?.getTime() ?? start + 24 * HOUR)
-      : start + (kind === "live" ? 3 : kind === "season" ? 72 : 30) * HOUR;
+      ? (m.gameStart?.getTime() ?? start + WINDOW_HOURS.pregame * HOUR)
+      : start + (kind === "live" ? WINDOW_HOURS.live : kind === "season" ? WINDOW_HOURS.season : WINDOW_HOURS.result) * HOUR;
   const left = closes - now.getTime();
   const closesAt = new Date(closes).toISOString();
   if (left <= 0) return { status: "closed", closes_at: closesAt, note: kind === "pregame" ? "The game has started." : "The window has passed." };

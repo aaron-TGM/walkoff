@@ -3,6 +3,7 @@
 // first thing to ask. Sent with Resend, like the sign-in codes
 // (lib/mcp/oauth/email.ts).
 import { Resend } from "resend";
+import { CONNECTOR_STEPS, ORG_CONNECTOR_STEPS } from "./connect";
 
 export interface Welcome {
   to: string;
@@ -20,12 +21,12 @@ export interface Welcome {
 
 export function welcomeEmail(w: Welcome): { subject: string; text: string } {
   const connect = [
-    "In Claude, go to Customize → Connectors → Add custom connector, and enter this address:",
+    `In Claude, go to ${CONNECTOR_STEPS}, and enter this address:`,
     w.connectorUrl,
     "",
     `Then sign in with this email address (${w.to}). Walkoff emails you a 6-digit code.`,
     "",
-    "On a Team or Enterprise plan, an owner adds the connector first, under Organization settings → Connectors.",
+    `On a Team or Enterprise plan, an owner adds the connector first, under ${ORG_CONNECTOR_STEPS}.`,
     ...(w.reconnect
       ? ["", `Already connected Walkoff for another brand? Disconnect it in Claude's connector settings and connect again, so you can pick ${w.brand} too.`]
       : []),

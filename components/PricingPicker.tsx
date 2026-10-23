@@ -9,8 +9,8 @@ const INCLUDED = [
   "Every new moment category as it launches",
   "Your affinity map and product matching",
   "MCP access for Claude and AI agents",
-  "Done-for-you setup, approvals and auto-fire rules",
-  "Holdout-tested results and benchmarks",
+  "Done-for-you setup, triggers and approvals",
+  "Holdout results and benchmarks as they launch",
 ];
 
 export function PricingPicker() {

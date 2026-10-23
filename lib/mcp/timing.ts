@@ -91,8 +91,8 @@ export interface SendTiming {
   why: string;
 }
 
-const EARLIEST = 8;
-const LATEST = 21;
+/** Sends go out between 8 AM and 9 PM where the fans live. */
+export const SEND_HOURS = { earliest: 8, latest: 21 } as const;
 
 /** After a result: send now if it's a decent hour where the fans are, else
  *  at 8 AM. Before a game: the morning of game day, or now if that's past. */
@@ -106,7 +106,7 @@ export function sendTiming(opts: { phase: string; occurredAt: Date; gameStart?: 
   });
   const morningOf = (date: Date, addDays = 0) => {
     const l = localTime(date, tz);
-    return zonedTime(l.year, l.month, l.day + addDays, EARLIEST, 0, tz);
+    return zonedTime(l.year, l.month, l.day + addDays, SEND_HOURS.earliest, 0, tz);
   };
 
   if (opts.phase === "before" && opts.gameStart) {
@@ -120,9 +120,9 @@ export function sendTiming(opts: { phase: string; occurredAt: Date; gameStart?: 
 
   const ref = opts.occurredAt.getTime() > now.getTime() ? opts.occurredAt : now;
   const h = localTime(ref, tz).hour;
-  if (h >= EARLIEST && h < LATEST) {
+  if (h >= SEND_HOURS.earliest && h < SEND_HOURS.latest) {
     return at(ref, "Right away: fans are still buzzing, and it's a decent hour where they live.");
   }
-  const next = h >= LATEST ? morningOf(ref, 1) : morningOf(ref);
+  const next = h >= SEND_HOURS.latest ? morningOf(ref, 1) : morningOf(ref);
   return at(next, "It ended late where the fans live, so the morning after, at 8 AM local time.");
 }

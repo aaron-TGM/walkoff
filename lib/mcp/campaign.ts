@@ -353,7 +353,7 @@ function money(price: number | null | undefined, currency: string): string | nul
   }
 }
 
-function copyRules(brand: CampaignBrand, t: TeamRef): string[] {
+export function copyRules(brand: CampaignBrand, t: TeamRef): string[] {
   if (brand.licensed) {
     return [
       `${brand.name} is licensed for team marks, so naming the ${t.team.nickname} is fine within the license.`,
