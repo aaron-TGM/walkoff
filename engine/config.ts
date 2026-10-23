@@ -1,3 +1,4 @@
+import { DEFAULT_MODEL, EFFORTS, type Effort } from "../lib/affinity/claude-tagger";
 import { LEAGUES } from "../lib/leagues";
 import { LEAGUE_RULES } from "./moments/sports";
 
@@ -15,6 +16,11 @@ export interface EngineConfig {
   idlePollMs: number;
   /** How often date-based leagues also fetch the next two days. */
   lookaheadMs: number;
+  /** Claude tags each brand's new products (engine/tagger.ts). On when
+   *  there's an Anthropic API key, unless TAG_CATALOGS is 0. */
+  tagCatalogs: boolean;
+  tagModel: string;
+  tagEffort: Effort;
 }
 
 function seconds(value: string | undefined, fallback: number): number {
@@ -36,6 +42,12 @@ export function loadConfig(
   const supabaseUrl = env.SUPABASE_URL ?? env.NEXT_PUBLIC_SUPABASE_URL ?? null;
   const supabaseKey = env.SUPABASE_SERVICE_ROLE_KEY ?? null;
 
+  // The same model and effort settings as scripts/tag-catalog.ts.
+  const tagEffort = (env.WALKOFF_TAG_EFFORT || "medium") as Effort;
+  if (!EFFORTS.includes(tagEffort)) {
+    throw new Error(`Unknown WALKOFF_TAG_EFFORT ${tagEffort}. Known: ${EFFORTS.join(", ")}`);
+  }
+
   return {
     leagues,
     supabaseUrl,
@@ -47,5 +59,8 @@ export function loadConfig(
     soonPollMs: seconds(env.SOON_POLL_SECONDS, 60),
     idlePollMs: seconds(env.IDLE_POLL_SECONDS, 300),
     lookaheadMs: seconds(env.LOOKAHEAD_SECONDS, 1800),
+    tagCatalogs: !!env.ANTHROPIC_API_KEY && env.TAG_CATALOGS !== "0",
+    tagModel: env.WALKOFF_TAG_MODEL || DEFAULT_MODEL,
+    tagEffort,
   };
 }

@@ -47,9 +47,14 @@ jane@frostbuddy.com"), and ask there where each brand is
    Common color names ("Azure Heather", "Navy/Gold") get their colors right
    away.
 
-4. **Tag the catalog with Claude**: teams, colors, uses, seasons and
-   interests for each product, with a reason for every team, plus what each
-   fanciful color name looks like ("Dune", "Cove"):
+4. **Claude tags the catalog**: teams, colors, uses, seasons and interests
+   for each product, with a reason for every team, plus what each fanciful
+   color name looks like ("Dune", "Cove"). The engine does this on its own a
+   minute or so after each product upload, and refreshes the report
+   (`engine/README.md`, Catalog tagging). Nothing to run.
+
+   The same pass by hand, to look first, redo a catalog or cover for the
+   engine:
 
    ```bash
    npm run affinity:tag -- --brand <brand id or upload token> --dry-run   # look first
@@ -57,7 +62,8 @@ jane@frostbuddy.com"), and ask there where each brand is
    ```
 
    It tags products and color names Claude hasn't done yet; `--all` redoes
-   everything. Later catalog uploads keep Claude's work. Needs `ANTHROPIC_API_KEY`, or
+   everything. Later catalog uploads keep Claude's work, except for products
+   whose text changed, which get tagged again. Needs `ANTHROPIC_API_KEY`, or
    `ant auth login`. Uses `DEFAULT_MODEL` in `lib/affinity/claude-tagger.ts`
    at medium effort (`--model`, `--effort`, or `WALKOFF_TAG_MODEL` /
    `WALKOFF_TAG_EFFORT`).

@@ -21,7 +21,8 @@ export default function DataAndSafetyPage() {
           no customer list to leak. Klaviyo, which already has your list, does the sending.
         </p>
         <p>
-          Product files hold product details only.{" "}
+          Product files hold product details only. Claude reads those details, through
+          Anthropic&apos;s API, to tag your catalog. No customer data goes with them.{" "}
           <Link href={helpPath("uploads", "what-leaves")}>What leaves your browser</Link>
         </p>
       </HelpSection>

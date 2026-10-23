@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type { GameStateName, Moment, TeamRef, TrackedGame } from "../moments/types";
 import type { Heartbeat, Store, StoredGame } from "./types";
 
@@ -61,10 +61,15 @@ export function momentRow(m: Moment) {
   };
 }
 
-export function createSupabaseStore(url: string, serviceKey: string): Store {
-  const db = createClient(url, serviceKey, {
+/** A server-side client with the service role key, which never signs in. */
+export function serviceClient(url: string, serviceKey: string): SupabaseClient {
+  return createClient(url, serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
+}
+
+export function createSupabaseStore(url: string, serviceKey: string): Store {
+  const db = serviceClient(url, serviceKey);
 
   return {
     kind: "supabase",

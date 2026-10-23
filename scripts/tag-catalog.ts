@@ -9,20 +9,23 @@
 // both and refreshes the brand's report (add --dry-run to only look).
 // --file prints what Claude found and saves nothing. Needs
 // ANTHROPIC_API_KEY, or a profile from `ant auth login`.
+//
+// The engine already does this for each brand a minute or so after a
+// product upload (engine/tagger.ts). This is for a look first, redoing
+// everything (--all) or trying a file.
 import "./lib/env";
 import { readFileSync, writeFileSync } from "node:fs";
 import { parseArgs } from "node:util";
 import Anthropic from "@anthropic-ai/sdk";
 import Papa from "papaparse";
+import { pendingWork, runCatalogPass } from "../lib/affinity/catalog-tagging";
 import {
   claudeSend,
   colorTask,
   DEFAULT_MODEL,
   EFFORTS,
   estimateCost,
-  nameColorsWithClaude,
   productTask,
-  tagWithClaude,
   type ColorRun,
   type Effort,
   type ProductInput,
@@ -32,8 +35,8 @@ import {
 import { colorFamily, hexForColorName } from "../lib/affinity/colors";
 import { TEAM_HOMES } from "../lib/affinity/geo";
 import { detectFormat, formatKind, parseCatalog, type Colorway, type Row } from "../lib/affinity/imports";
-import { findBrand, loadCatalog, loadColorNames, recomputeReport, saveClaudeTags, saveColorNames } from "../lib/affinity/store";
-import { tagProduct, type ProductTags, type TeamTag } from "../lib/affinity/tagging";
+import { findBrand } from "../lib/affinity/store";
+import { tagProduct, type TeamTag } from "../lib/affinity/tagging";
 import { scriptDb } from "./lib/db";
 
 const { values: args } = parseArgs({
@@ -149,15 +152,11 @@ async function main() {
   let products: (ProductInput & { colorways: Colorway[] })[];
   let colorNames: string[];
   if (db && brand) {
-    const saved = await loadCatalog(db, brand.id);
-    if (!saved.length) usage(`${brand.name} has no products yet. They upload them in step 2 of their upload page.`);
-    products = saved.filter((p) => args.all || p.taggedBy !== "claude");
-    const known = await loadColorNames(db, brand.id);
-    colorNames = distinct(saved.flatMap((p) => p.colorways.map((c) => c.name))).filter(
-      (n) => args.all || known.get(n.toLowerCase())?.taggedBy !== "claude",
-    );
+    const work = await pendingWork(db, brand, { all: args.all });
+    if (!work.total) usage(`${brand.name} has no products yet. They upload them in step 2 of their upload page.`);
+    ({ products, colorNames } = work);
     console.log(
-      `${brand.name}: ${saved.length} products, ${products.length} to tag, ${colorNames.length} color names to read` +
+      `${brand.name}: ${work.total} products, ${products.length} to tag, ${colorNames.length} color names to read` +
         (args.all ? "." : " (--all redoes what Claude already did)."),
     );
   } else {
@@ -168,22 +167,26 @@ async function main() {
   products = products.slice(0, limit);
   if (!products.length && !colorNames.length) return console.log("Nothing to tag.");
 
+  // Saves a slice at a time as it goes, unless this is a dry run or a file.
   const claude = { model: args.model, effort };
-  const log = (line: string) => process.stderr.write(`\n  ${line}\n`);
-  let run: TagRun | null = null;
-  if (products.length) {
-    run = await tagWithClaude(products, {
-      send: claudeSend(productTask(), claude),
+  const saveTo = db && brand && !args["dry-run"] ? { db, brand } : undefined;
+  const pass = await runCatalogPass(
+    { products, colorNames },
+    {
+      send: { products: claudeSend(productTask(), claude), colors: claudeSend(colorTask(), claude) },
+      saveTo,
       batchSize: Number(args["batch-size"]),
       concurrency: Number(args.concurrency),
       onProgress: (done, total) => process.stderr.write(`\r  ${done}/${total} products`),
-      log,
-    });
+      log: (line) => process.stderr.write(`\n  ${line}\n`),
+    },
+  );
+  const { run, colors } = pass;
+  if (run) {
     process.stderr.write("\n");
     console.log("\nWhat Claude changed from the keyword rules:");
     printChanges(products, run);
   }
-  const colors = colorNames.length ? await nameColorsWithClaude(colorNames, { send: claudeSend(colorTask(), claude), log }) : null;
   if (colors) printColors(colorNames, colors);
   printSummary(products, run, colors, args.model!);
 
@@ -200,20 +203,14 @@ async function main() {
   }
 
   if (!db || !brand) return;
-  if (args["dry-run"]) return console.log("Dry run: nothing saved.");
-  const tagged = products.flatMap((p) => {
-    const tags: ProductTags | undefined = run?.tags.get(p.handle);
-    return tags ? [{ handle: p.handle, title: p.title, tags }] : [];
-  });
-  await saveClaudeTags(db, brand, tagged);
-  if (colors) {
-    await saveColorNames(db, brand, [...colors.colors].map(([name, hex]) => ({ name, hex })), "claude");
-  }
-  const report = await recomputeReport(db, brand);
-  console.log(
-    `Saved ${tagged.length} products and ${colors?.colors.size ?? 0} color names.` +
-      (report ? ` Report refreshed: ${report.standouts.length} standout territories.` : " No report yet: the brand hasn't uploaded customers."),
-  );
+  if (!saveTo) return console.log("Dry run: nothing saved.");
+  const named = colors?.colors.size ?? 0;
+  const report = pass.report
+    ? ` Report refreshed: ${pass.report.standouts.length} standout territories.`
+    : pass.saved || named
+      ? " No report yet: the brand hasn't uploaded customers."
+      : "";
+  console.log(`Saved ${pass.saved} products and ${named} color names.${report}`);
 }
 
 main().catch((err) => {

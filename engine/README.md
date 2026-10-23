@@ -1,15 +1,37 @@
 # Walkoff moment engine
 
 An always-on worker that watches every game in the V1 leagues, detects the
-moments fans care about, and saves them to Supabase. It runs separately from
-the website: Vercel functions time out, and this needs to keep polling all
-night.
+moments fans care about, and saves them to Supabase. It also has Claude tag
+each brand's new products a minute or so after they're uploaded. It runs
+separately from the website: Vercel functions time out, and this needs to
+keep polling all night.
 
 ```
 ESPN scoreboards ─► normalize ─► moment rules ─► Supabase
  (per league)       (GameState)   (rules.ts)      teams, games, moments,
                                                   engine_heartbeats ─► walkoff.io/status
 ```
+
+## Catalog tagging
+
+When a brand uploads products, the upload page saves them with keyword
+tags. Every minute the engine looks for products and color names only the
+keyword rules have read, and runs Claude's pass on them (`tagger.ts`,
+`lib/affinity/catalog-tagging.ts`): the teams a product is made for, its
+colors, uses, seasons and interests, and what names like "Dune" look like.
+Then it refreshes the brand's fan map, so picks use Claude's tags.
+
+- One brand at a time, the newest upload first. Products are saved 200 at a
+  time, so a restart keeps what's done. A typical catalog takes a few
+  minutes.
+- Claude's tags stick. A later upload keeps them, unless a product's title,
+  type, category, tags or description changed: then it's tagged again.
+- Products Claude couldn't tag keep their keyword tags and get another try
+  an hour later. If Claude rejects the API key or the model, tagging pauses
+  for an hour and logs an error.
+- It's on when `ANTHROPIC_API_KEY` is set. Each run logs its token count and
+  an estimated cost. `scripts/tag-catalog.ts` is still there for a dry run,
+  redoing a catalog (`--all`) or trying a file.
 
 ## What it detects
 
@@ -77,6 +99,10 @@ not saved.
 | `IDLE_POLL_SECONDS`         | `300`          | |
 | `PORT`                      | `8080`         | Serves `/healthz` |
 | `LOG_LEVEL`                 | `info`         | `debug` for more |
+| `ANTHROPIC_API_KEY`         |                | Turns on catalog tagging |
+| `TAG_CATALOGS`              | `1`            | `0` turns catalog tagging off |
+| `WALKOFF_TAG_MODEL`         | `DEFAULT_MODEL`| In `lib/affinity/claude-tagger.ts` |
+| `WALKOFF_TAG_EFFORT`        | `medium`       | `low` to `max` |
 
 ## Set up Supabase
 
@@ -96,13 +122,16 @@ gcloud config set project $PROJECT
 gcloud services enable run.googleapis.com cloudbuild.googleapis.com \
   artifactregistry.googleapis.com secretmanager.googleapis.com
 
-# One time: image repository and the Supabase key as a secret.
+# One time: image repository, and the Supabase and Anthropic keys as secrets.
 gcloud artifacts repositories create walkoff --repository-format=docker --location=$REGION
 printf '%s' "YOUR_SERVICE_ROLE_KEY" | gcloud secrets create supabase-service-role-key --data-file=-
+printf '%s' "YOUR_ANTHROPIC_API_KEY" | gcloud secrets create anthropic-api-key --data-file=-
 PROJECT_NUMBER=$(gcloud projects describe $PROJECT --format='value(projectNumber)')
-gcloud secrets add-iam-policy-binding supabase-service-role-key \
-  --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
-  --role=roles/secretmanager.secretAccessor
+for SECRET in supabase-service-role-key anthropic-api-key; do
+  gcloud secrets add-iam-policy-binding $SECRET \
+    --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
+    --role=roles/secretmanager.secretAccessor
+done
 
 # Build (from the repo root) and deploy. Repeat both to ship an update.
 gcloud builds submit --config engine/cloudbuild.yaml .
@@ -113,8 +142,13 @@ gcloud run deploy walkoff-engine \
   --cpu 1 --memory 512Mi \
   --no-allow-unauthenticated \
   --set-env-vars SUPABASE_URL=https://YOUR-PROJECT.supabase.co \
-  --set-secrets SUPABASE_SERVICE_ROLE_KEY=supabase-service-role-key:latest
+  --set-secrets SUPABASE_SERVICE_ROLE_KEY=supabase-service-role-key:latest,ANTHROPIC_API_KEY=anthropic-api-key:latest
 ```
+
+Already running without the Anthropic key? Create the `anthropic-api-key`
+secret and its binding as above, then build and deploy with the new
+`--set-secrets` line. The log line "Moment engine starting" says
+`"tagging":true` once it's on.
 
 `cloudbuild.yaml` assumes `us-central1`; change it there too if you use
 another region. One always-on instance at this size typically costs tens of

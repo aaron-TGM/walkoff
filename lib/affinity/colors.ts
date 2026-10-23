@@ -1,6 +1,6 @@
 // Colors for matching a brand's colorways to a team. Brand color names
 // ("Azure Heather", "Sunflower") become hex values from a lexicon of common
-// fashion color words; Claude names the fanciful rest (scripts/tag-catalog).
+// fashion color words; Claude names the fanciful rest (catalog-tagging.ts).
 // Closeness is measured in Lab space, which tracks how people see color.
 import { COLORS } from "./tagging";
 

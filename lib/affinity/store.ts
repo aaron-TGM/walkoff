@@ -94,20 +94,39 @@ function tagColumns(tags: ProductTags) {
   return { teams: tags.teams, colors: tags.colors, uses: tags.uses, seasons: tags.seasons, interests: tags.interests };
 }
 
+/** The text Claude tags a product from, as saved. */
+const taggedText = (p: { title: string; product_type: string | null; category: string | null; tags: string[] | null; description: string | null }) =>
+  JSON.stringify([p.title, p.product_type, p.category, p.tags ?? [], p.description]);
+
 /** Saves the catalog with rule-based tags. Products Claude already tagged
- *  keep Claude's tags. */
+ *  keep Claude's tags, unless their text changed: those go back to the
+ *  rules until Claude's next pass (engine/tagger.ts). */
 export async function saveCatalog(
   db: SupabaseClient,
   brand: Brand,
   format: string,
   items: CatalogItem[],
 ): Promise<void> {
-  const existing = await selectAll<{ handle: string; tagged_by: string }>((from, to) =>
-    db.from("brand_products").select("handle, tagged_by").eq("brand_id", brand.id).range(from, to),
+  const existing = await selectAll<{
+    handle: string;
+    tagged_by: string;
+    title: string;
+    product_type: string | null;
+    category: string | null;
+    tags: string[] | null;
+    description: string | null;
+  }>((from, to) =>
+    db
+      .from("brand_products")
+      .select("handle, tagged_by, title, product_type, category, tags, description")
+      .eq("brand_id", brand.id)
+      .range(from, to),
   );
-  const byClaude = new Set(existing.filter((p) => p.tagged_by === "claude").map((p) => p.handle));
+  const byClaude = new Map(existing.filter((p) => p.tagged_by === "claude").map((p) => [p.handle, taggedText(p)]));
   const now = new Date().toISOString();
-  const rows = items.map((item) => {
+  const kept: Record<string, unknown>[] = [];
+  const ruled: Record<string, unknown>[] = [];
+  for (const item of items) {
     const base = {
       brand_id: brand.id,
       handle: item.handle,
@@ -120,18 +139,23 @@ export async function saveCatalog(
       colorways: item.colorways,
       updated_at: now,
     };
-    if (byClaude.has(item.handle)) return base;
-    return { ...base, ...tagColumns(tagProduct(item)), tagged_by: "rules" };
-  });
-  for (let i = 0; i < rows.length; i += PAGE) {
-    const { error } = await db.from("brand_products").upsert(rows.slice(i, i + PAGE), { onConflict: "brand_id,handle" });
-    if (error) throw error;
+    if (byClaude.get(item.handle) === taggedText(base)) kept.push(base);
+    else ruled.push({ ...base, ...tagColumns(tagProduct(item)), tagged_by: "rules" });
+  }
+  // Separate writes: PostgREST gives every row in one write the same
+  // columns, so a kept row next to rows with tags would have its tags
+  // nulled.
+  for (const rows of [kept, ruled]) {
+    for (let i = 0; i < rows.length; i += PAGE) {
+      const { error } = await db.from("brand_products").upsert(rows.slice(i, i + PAGE), { onConflict: "brand_id,handle" });
+      if (error) throw error;
+    }
   }
   const { error } = await db.from("brand_uploads").insert({
     brand_id: brand.id,
     format,
     rows_read: items.length,
-    rows_saved: rows.length,
+    rows_saved: items.length,
   });
   if (error) throw error;
   await saveColorNames(

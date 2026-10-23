@@ -2,7 +2,8 @@
 // (nicknames, chants, stadiums, team colors) and returns the same
 // ProductTags as the keyword rules, with a reason for every team.
 // Products go 25 to a request; the instructions and team list are one
-// cached system prompt. scripts/tag-catalog.ts runs it.
+// cached system prompt. catalog-tagging.ts runs it over a brand's catalog,
+// for the engine after each product upload and for scripts/tag-catalog.ts.
 import Anthropic from "@anthropic-ai/sdk";
 import { TEAM_HOMES } from "./geo";
 import type { CatalogItem } from "./imports";

@@ -60,6 +60,13 @@ function projection(columns: string): ((row: Row) => [string, unknown][]) {
     });
 }
 
+/** supabase-js writes an array of rows with every key any of them has, and
+ *  PostgREST stores null where a row leaves one out, existing rows included. */
+function sameColumns(rows: Row[]): Row[] {
+  const keys = [...new Set(rows.flatMap((r) => Object.keys(r)))];
+  return rows.map((r) => Object.fromEntries(keys.map((k) => [k, k in r ? r[k] : null])));
+}
+
 const compare = (a: unknown, b: unknown) =>
   a === b ? 0 : a === null || a === undefined ? 1 : b === null || b === undefined ? -1 : (a as string) < (b as string) ? -1 : 1;
 
@@ -103,14 +110,14 @@ class Query implements PromiseLike<Result> {
 
   insert(rows: Row | Row[]) {
     this.op = "insert";
-    this.payload = Array.isArray(rows) ? rows : [rows];
+    this.payload = Array.isArray(rows) ? sameColumns(rows) : [rows];
     this.payload.forEach((r) => this.uses(...Object.keys(r)));
     return this;
   }
 
   upsert(rows: Row | Row[], opts: { onConflict?: string; ignoreDuplicates?: boolean } = {}) {
     this.op = "upsert";
-    this.payload = Array.isArray(rows) ? rows : [rows];
+    this.payload = Array.isArray(rows) ? sameColumns(rows) : [rows];
     this.conflict = (opts.onConflict ?? "id").split(",").map((s) => s.trim());
     this.ignoreDuplicates = !!opts.ignoreDuplicates;
     this.payload.forEach((r) => this.uses(...Object.keys(r)));

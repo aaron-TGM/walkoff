@@ -305,7 +305,10 @@ describe("onboardingStatus", () => {
     });
     assert.deepEqual(s.triggers, { active: 1, total: 2 });
     assert.deepEqual(s.last_send, { status: "drafted", at: "2026-10-22T09:00:00Z", moment: "Chargers walk it off" });
-    assert.equal(s.next, `Tag the catalog with Claude: npm run affinity:tag -- --brand ${b.id}. 1 product has only rule-based tags.`);
+    assert.equal(
+      s.next,
+      `Claude hasn't tagged 1 product an hour after the last product upload. Check the engine is running with ANTHROPIC_API_KEY (engine/README.md), or run npm run affinity:tag -- --brand ${b.id}.`,
+    );
   });
 
   it("starts with the operator's setup for a brand with nothing yet", async () => {
@@ -333,17 +336,18 @@ describe("nextStep", () => {
     last_send: { status: "sent", at: "2026-10-22T09:00:00Z", moment: null },
   };
   const jane = ready.members[0];
+  const next = (s: Omit<OnboardingStatus, "next">) => nextStep(s, NOW);
   const steps = [
-    nextStep({ ...ready, store_url: null, members: [] }),
-    nextStep({ ...ready, members: [] }),
-    nextStep({ ...ready, customers: null, map: null }),
-    nextStep({ ...ready, map: { ...ready.map!, customers_mapped: 0 } }),
-    nextStep({ ...ready, catalog: { ...ready.catalog, products: 0, tagged_by_claude: 0 } }),
-    nextStep({ ...ready, catalog: { ...ready.catalog, tagged_by_claude: 7, tagged_by_rules: 3 } }),
-    nextStep({ ...ready, members: [{ ...jane, connected: false }] }),
-    nextStep({ ...ready, members: [{ ...jane, connected: false, needs_reconnect: true }] }),
-    nextStep({ ...ready, last_send: null }),
-    nextStep(ready),
+    next({ ...ready, store_url: null, members: [] }),
+    next({ ...ready, members: [] }),
+    next({ ...ready, customers: null, map: null }),
+    next({ ...ready, map: { ...ready.map!, customers_mapped: 0 } }),
+    next({ ...ready, catalog: { ...ready.catalog, products: 0, tagged_by_claude: 0 } }),
+    next({ ...ready, catalog: { ...ready.catalog, tagged_by_claude: 7, tagged_by_rules: 3 } }),
+    next({ ...ready, members: [{ ...jane, connected: false }] }),
+    next({ ...ready, members: [{ ...jane, connected: false, needs_reconnect: true }] }),
+    next({ ...ready, last_send: null }),
+    next(ready),
   ];
 
   it("follows onboarding in order", () => {
@@ -352,16 +356,24 @@ describe("nextStep", () => {
     assert.match(steps[2], /^Waiting on jane@frostbuddy\.com to upload customers or orders/);
     assert.match(steps[3], /didn't place anyone in a postal area/);
     assert.match(steps[4], /^Waiting on the product export/);
-    assert.match(steps[5], /npm run affinity:tag -- --brand b1\. 3 products have only rule-based tags\.$/);
+    assert.match(steps[5], /^Claude hasn't tagged 3 products an hour after the last product upload\. .*npm run affinity:tag -- --brand b1\.$/);
     assert.match(steps[6], /^Waiting on jane@frostbuddy\.com to connect Walkoff in Claude/);
     assert.match(steps[7], /^jane@frostbuddy\.com signed in before this invite, so they need to disconnect Walkoff in Claude and connect it again to reach Frost Buddy\.$/);
     assert.match(steps[8], /^Ready for a first campaign/);
     assert.equal(steps[9], "Live. The last campaign was sent on 2026-10-22.");
   });
 
+  it("doesn't wait on Claude's tagging while the engine has time, or for a few leftovers", () => {
+    const tenMinutesAgo = new Date(NOW.getTime() - 10 * 60_000).toISOString();
+    const justUploaded = { ...ready.catalog, tagged_by_claude: 0, tagged_by_rules: 10, claude_share: 0, uploaded_at: tenMinutesAgo };
+    assert.equal(next({ ...ready, catalog: justUploaded }), "Live. The last campaign was sent on 2026-10-22.");
+    const leftovers = { ...ready.catalog, products: 20, tagged_by_claude: 19, tagged_by_rules: 1 };
+    assert.equal(next({ ...ready, catalog: leftovers }), "Live. The last campaign was sent on 2026-10-22.");
+  });
+
   it("names everyone it's waiting on", () => {
     const members = ["a@x.com", "b@x.com", "c@x.com"].map((email) => ({ ...jane, email, connected: false }));
-    assert.match(nextStep({ ...ready, members }), /^Waiting on a@x\.com, b@x\.com and c@x\.com to connect/);
+    assert.match(next({ ...ready, members }), /^Waiting on a@x\.com, b@x\.com and c@x\.com to connect/);
   });
 
   it("writes plain sentences without em dashes", () => {

@@ -81,10 +81,11 @@ export default function OnboardingPage() {
               away.
             </p>
             <p>
-              Then we run a full pass with Claude: the teams a product is made for, its colors,
-              uses and seasons, and what names like &ldquo;Dune&rdquo; look like. You don&apos;t
-              do anything here, and your map and picks work before it&apos;s done. Later product
-              uploads keep this work.
+              Then Claude reads every product, usually within a few minutes of your upload: the
+              teams it&apos;s made for, its colors, uses and seasons, and what names like
+              &ldquo;Dune&rdquo; look like. You don&apos;t do anything here, and your map and
+              picks work before it&apos;s done. Later product uploads keep this work, and new or
+              changed products get the same pass.
             </p>
           </Step>
 
@@ -144,6 +145,10 @@ export default function OnboardingPage() {
           <li>
             <strong>Your fan map</strong> appears right after your first customers or orders
             upload, on your upload page and in Claude.
+          </li>
+          <li>
+            <strong>Claude&apos;s product tags</strong> come a few minutes after your product
+            upload, longer for a catalog in the thousands. Your picks get sharper when they land.
           </li>
           <li>
             <strong>Moments</strong> show up within about a minute of the final whistle.
