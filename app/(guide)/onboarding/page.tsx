@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Ask, CopyLine, HelpFaq, Step, Steps } from "@/components/help/blocks";
 import { HelpPage, HelpSection } from "@/components/help/HelpPage";
 import { CONNECTOR_STEPS, CONNECTOR_URL, ORG_CONNECTOR_STEPS, STEPS_CHECKED } from "@/lib/connect";
+import { TRACKING } from "@/lib/help/klaviyo";
 import { helpMetadata, helpPath } from "@/lib/help/pages";
 import { DEFAULT_RULE, WINDOW_HOURS } from "@/lib/mcp/queue";
 import { PRICING } from "@/lib/pricing";
@@ -104,6 +105,11 @@ export default function OnboardingPage() {
               <Link href={helpPath("klaviyo", "connect")}>Connecting Klaviyo</Link>
             </p>
             <p>
+              In Klaviyo, check UTM tracking is on, under {TRACKING.utmSettings}. Then your sends
+              show up in Shopify, Google Analytics and Triple Whale.{" "}
+              <Link href={helpPath("klaviyo", "tracking")}>Tracking your sends</Link>
+            </p>
+            <p>
               <Link href={helpPath("connect")}>Connecting, step by step</Link> &middot; checked
               against Claude in {STEPS_CHECKED}
             </p>
@@ -124,7 +130,7 @@ export default function OnboardingPage() {
             <p>
               When it looks right, tell Claude to go, and it drafts the campaign in Klaviyo.
               Schedule it there, or have Claude schedule it if your Klaviyo connector can. Then
-              ask Claude to log it, so it leaves your queue.
+              ask Claude to log it, so it leaves your queue. A few days later, ask how it did.
             </p>
             <p>
               <Link href={helpPath("campaigns")}>Campaigns, in detail</Link>
@@ -189,6 +195,18 @@ export default function OnboardingPage() {
                 <p>
                   No. Klaviyo does, from your account, when you say so. Your unsubscribes,
                   suppressions and Smart Sending stay as they are.
+                </p>
+              ),
+            },
+            {
+              id: "tracking",
+              q: "Do we need to add tracking?",
+              a: (
+                <p>
+                  No. Walkoff&apos;s emails are ordinary Klaviyo campaigns, so Klaviyo, Shopify,
+                  Google Analytics, Triple Whale and your Meta pixel see them like any other. Just
+                  check UTM tracking is on in Klaviyo.{" "}
+                  <Link href={helpPath("klaviyo", "tracking")}>Tracking your sends</Link>
                 </p>
               ),
             },

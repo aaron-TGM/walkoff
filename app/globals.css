@@ -1337,6 +1337,9 @@ select.form-input {
 .proof-title {
   @apply mb-1 font-display text-[0.98rem] font-bold uppercase;
 }
+.proof-soon {
+  @apply ml-2 bg-mustard px-1.5 py-0.5 align-middle font-mono text-[0.5rem] font-normal uppercase tracking-[0.18em] text-ink;
+}
 .proof-body {
   @apply text-[0.88rem] leading-[1.55] text-inkMuted;
 }

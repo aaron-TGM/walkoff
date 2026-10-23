@@ -155,6 +155,16 @@ describe("help facts", () => {
     assert.ok(read(pageFile("/help/klaviyo")).includes("KLAVIYO_FLOW.map"), "the table comes from KLAVIYO_FLOW");
   });
 
+  it("results come from Klaviyo's report, as the guide says", async () => {
+    const client = await memberClient();
+    const instructions = client.getInstructions() ?? "";
+    assert.ok(instructions.includes(`(${KLAVIYO_TOOLS.report})`), "Claude is told where results are");
+    assert.ok(instructions.includes(helpUrl("https://www.walkoff.io", "klaviyo", "tracking")), "and where the guide is");
+    const history = (await client.listTools()).tools.find((t) => t.name === "send_history");
+    assert.ok(history?.description?.includes(KLAVIYO_TOOLS.report), "send_history points to the report too");
+    await client.close();
+  });
+
   it("the sample campaign never names the team, and shows no Klaviyo tags", () => {
     const c = sampleCampaign();
     assertNeverNames([...c.subject_lines, c.preview_text, c.headline, c.body, c.html].join("\n"), SAMPLE_TEAM);

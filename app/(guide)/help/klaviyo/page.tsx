@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { Callout, CopyLine, HelpFaq } from "@/components/help/blocks";
+import { Ask, Callout, CopyLine, HelpFaq } from "@/components/help/blocks";
 import { HelpPage, HelpSection } from "@/components/help/HelpPage";
 import { CONNECTOR_STEPS, CONNECTORS_PAGE, ORG_CONNECTOR_STEPS } from "@/lib/connect";
-import { KLAVIYO, KLAVIYO_FLOW } from "@/lib/help/klaviyo";
+import { KLAVIYO, KLAVIYO_FLOW, TRACKING } from "@/lib/help/klaviyo";
 import { helpMetadata, helpPath } from "@/lib/help/pages";
-import { clubAudience, sampleAudience } from "@/lib/help/samples";
+import { clubAudience, sampleAudience, sampleCampaign } from "@/lib/help/samples";
 
 export const metadata = helpMetadata("klaviyo");
 
@@ -16,6 +16,7 @@ const either = (xs: readonly string[]) => `${xs.slice(0, -1).join(", ")} or ${xs
 export default function KlaviyoPage() {
   const segment = sampleAudience().segment_name;
   const district = clubAudience().circles[0]?.postal_code;
+  const campaignName = sampleCampaign().campaign_name;
   return (
     <HelpPage slug={P}>
       <HelpSection page={P} id="why">
@@ -132,6 +133,10 @@ export default function KlaviyoPage() {
             send campaigns that use them, so schedule those in Klaviyo. Walkoff&apos;s drafts use
             neither: they go at a set time, with Smart Sending on.
           </li>
+          <li>
+            <strong>Turn on UTM tracking.</strong> Then Shopify, Google Analytics and Triple Whale
+            can credit Walkoff&apos;s sends. <Link href={helpPath("klaviyo", "tracking")}>Tracking and results</Link>
+          </li>
         </ul>
       </HelpSection>
 
@@ -166,6 +171,54 @@ export default function KlaviyoPage() {
             </li>
           ) : null}
         </ul>
+      </HelpSection>
+
+      <HelpSection page={P} id="tracking">
+        <p>
+          Walkoff&apos;s emails are ordinary Klaviyo campaigns, so the tracking you already use
+          sees them. There&apos;s nothing to tag by hand.
+        </p>
+        <ul>
+          <li>
+            <strong>Turn on UTM tracking in Klaviyo, once.</strong> Click your account name, then{" "}
+            {TRACKING.utmSettings}. Klaviyo then adds UTM parameters to the links in your
+            emails, and Claude turns them on for each Walkoff draft. Shopify, Google Analytics and
+            Triple Whale read them to credit the sales.
+          </li>
+          <li>
+            <strong>Use Triple Whale?</strong> Keep the UTM settings from{" "}
+            <a href={TRACKING.tripleWhale.setup} target="_blank" rel="noopener">
+              its Klaviyo guide
+            </a>
+            . Walkoff&apos;s sends show up there like your other Klaviyo campaigns.
+          </li>
+          <li>
+            <strong>Your Meta pixel needs nothing.</strong> It sees the visits and orders your
+            emails bring. Meta credits only its own ads, so email won&apos;t show in Meta&apos;s
+            results either way.
+          </li>
+          <li>
+            <strong>Find them by name.</strong> Every Walkoff campaign&apos;s name starts with
+            &ldquo;Walkoff ·&rdquo;, like &ldquo;{campaignName}&rdquo;.
+          </li>
+        </ul>
+        <p>To see how your sends did, ask Claude:</p>
+        <Ask>How did our Walkoff sends do last month?</Ask>
+        <p>
+          Claude takes each send from your history and reads its numbers from Klaviyo:
+          recipients, clicks, orders and revenue. They&apos;re Klaviyo&apos;s numbers, counted by
+          your Klaviyo attribution settings. Walkoff doesn&apos;t keep them: Claude reads them
+          fresh from Klaviyo each time.
+        </p>
+        <Callout>
+          <p>
+            These steps follow{" "}
+            <a href={KLAVIYO.docs.utm} target="_blank" rel="noopener">
+              Klaviyo&apos;s guide to UTM tracking
+            </a>
+            , checked in {KLAVIYO.checked}.
+          </p>
+        </Callout>
       </HelpSection>
 
       <HelpSection page={P} id="trouble">
@@ -222,6 +275,31 @@ export default function KlaviyoPage() {
                 <p>
                   Klaviyo counts only profiles with a zip code and country, or a location it can
                   place. Walkoff&apos;s numbers come from your uploads, so the two can differ.
+                </p>
+              ),
+            },
+            {
+              id: "not-set",
+              q: "Our Walkoff sends show up as direct, or (not set), in our analytics.",
+              a: (
+                <p>
+                  Their links had no UTM parameters. Turn on UTM tracking in Klaviyo, under{" "}
+                  {TRACKING.utmSettings}, and check &ldquo;{TRACKING.campaignSwitch}&rdquo; is on
+                  in the campaign. Emails already sent stay as they are.
+                </p>
+              ),
+            },
+            {
+              id: "numbers-differ",
+              q: "Klaviyo and Triple Whale show different revenue.",
+              a: (
+                <p>
+                  Each counts orders its own way. Klaviyo credits an email by your Klaviyo
+                  attribution settings, and Triple Whale uses its own pixel and model.{" "}
+                  <a href={TRACKING.tripleWhale.differences} target="_blank" rel="noopener">
+                    Triple Whale explains the difference
+                  </a>
+                  .
                 </p>
               ),
             },

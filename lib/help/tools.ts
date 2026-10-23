@@ -83,12 +83,16 @@ export const HELP_TOOLS = {
   log_send: {
     summary: "Records what you did with a moment: drafted, sent or skipped. Logged moments leave your queue and build your history.",
     asks: ["Log it as sent.", "Skip that one."],
-    options: { status: "drafted, sent or skipped.", campaign_ref: "The Klaviyo campaign, so the history links to it." },
+    options: {
+      status: "drafted, sent or skipped.",
+      campaign_ref: "The Klaviyo campaign id, so the history links to it and Claude can read how it did.",
+    },
     changes: true,
   },
   send_history: {
-    summary: "What you drafted, sent and skipped, newest first, with the moment behind each.",
-    asks: ["What did we send last month?"],
+    summary:
+      "What you drafted, sent and skipped, newest first, with the moment and the Klaviyo campaign behind each. Claude reads how each did from Klaviyo: recipients, clicks, orders and revenue.",
+    asks: ["What did we send last month?", "How did our Walkoff sends do last month?"],
     options: { days: "How far back. Default 30." },
   },
   list_brands: {
@@ -110,6 +114,6 @@ export const HOME_TOOLS: ({ name: ToolName; body: string } | { name: string; bod
   { name: "match_products", body: "Your own products in each team's colors. No license needed." },
   { name: "get_territory", body: "Each team's fans as a Klaviyo segment. Claude creates it once, with your OK, and every moment reuses it." },
   { name: "create_trigger", body: "Your rules for which moments matter, like walk-off wins in your top markets." },
-  { name: "send_history", body: "Everything you drafted, sent and skipped, moment by moment." },
+  { name: "send_history", body: "Everything you drafted, sent and skipped, moment by moment, and how each did in Klaviyo." },
   { name: "benchmarks", body: "How each type of moment performs for brands like yours.", soon: true },
 ];

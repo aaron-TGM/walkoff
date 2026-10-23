@@ -113,7 +113,7 @@ The script and the tools share `lib/brands.ts` and `lib/welcome.ts`.
 | `get_territory` | A team's fans as a Klaviyo segment: one to three "Someone's proximity to a location" circles on real postal codes (postcode districts for UK clubs, which also get their district list), the segment ready for Klaviyo's `create_segment`, coverage, and how many of the brand's customers live there. `reach: "wide"` adds shared markets. |
 | `build_campaign` | Subject lines, preview text, a finished email (Klaviyo HTML with `{% unsubscribe %}` and the address tags), products with links and prices, the audience, the send time (now, or 8 AM local after a late finish), copy rules and the Klaviyo steps. Takes a `moment_id`, or a team and `moment_type` for a sample. |
 | `create_trigger`, `list_triggers`, `delete_trigger` | The brand's rules for which moments matter. |
-| `log_send`, `send_history` | What the brand drafted, sent or skipped. Logged moments leave the queue. |
+| `log_send`, `send_history` | What the brand drafted, sent or skipped, with the Klaviyo campaign id. Logged moments leave the queue. |
 
 Operators also get the onboarding tools above.
 
@@ -129,10 +129,21 @@ Klaviyo's `create_segment` takes (one `profile-postal-code-distance`
 condition per circle, ORed in one group, three-letter country codes). The
 first time a team's segment is missing, Claude offers to create it and does
 once the marketer says OK; `klaviyo_segment_steps` is the same segment as
-steps, for doing it by hand. Every later moment reuses it. Klaviyo's proximity condition reads only the district of a UK
-postcode ("SW1W", not "SW1W 0NY"), so club circles are centered on one.
+steps, for doing it by hand. Every later moment reuses it. Klaviyo's
+proximity condition reads only the district of a UK postcode ("SW1W", not
+"SW1W 0NY"), so club circles are centered on one.
 Sending or scheduling waits for the marketer's go-ahead. The marketer's
 guide to all of this is [/help/klaviyo](https://www.walkoff.io/help/klaviyo).
+
+**Tracking and results.** Walkoff adds no pixel and no tracking of its own:
+its emails are ordinary Klaviyo campaigns, so the brand's own tracking sees
+them. The drafting steps have Claude turn on the campaign's UTM tracking
+with the account's own parameters, which Shopify, Google Analytics and
+Triple Whale read, and every campaign's name starts with "Walkoff ·". For
+results, Claude takes the campaign ids from `send_history` and reads each
+campaign's recipients, clicks, orders and revenue with Klaviyo's
+`get_campaign_report`. Walkoff stores none of it. The marketer's side is
+[/help/klaviyo#tracking](https://www.walkoff.io/help/klaviyo#tracking).
 
 ## How sign-in works
 
