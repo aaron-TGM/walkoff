@@ -6,6 +6,8 @@ import { randomBytes } from "node:crypto";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { FORMAT_LABEL, formatKind, type ImportFormat } from "./affinity/imports";
 import { catalogStats } from "./affinity/store";
+import { SITE_URL } from "./connect";
+import { helpUrl } from "./help/pages";
 import { resourceOf } from "./mcp/oauth/config";
 import { liveGrants } from "./mcp/oauth/store";
 import type { Welcome } from "./welcome";
@@ -44,7 +46,7 @@ export const newUploadToken = () => randomBytes(18).toString("base64url");
 
 /** Where links point outside a request (the scripts): WALKOFF_PUBLIC_URL,
  *  else www.walkoff.io. Connectors need the www address. */
-export const siteOrigin = () => (process.env.WALKOFF_PUBLIC_URL?.trim() || "https://www.walkoff.io").replace(/\/+$/, "");
+export const siteOrigin = () => (process.env.WALKOFF_PUBLIC_URL?.trim() || SITE_URL).replace(/\/+$/, "");
 
 export const uploadLink = (token: string, origin = siteOrigin()) => `${origin.replace(/\/+$/, "")}/upload/${token}`;
 
@@ -228,6 +230,7 @@ export async function welcomeFor(
     invitedBy: opts.invitedBy ?? null,
     uploadUrl: uploadLink(brand.upload_token, origin),
     connectorUrl: resourceOf(origin),
+    guideUrl: helpUrl(origin, "onboarding"),
     reconnect: !!connection(grants, email, brand.id).needs_reconnect,
   };
 }

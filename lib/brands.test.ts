@@ -234,6 +234,7 @@ describe("members", () => {
       invitedBy: "op@walkoff.io",
       uploadUrl: `http://localhost:3000/upload/${b.upload_token}`,
       connectorUrl: "http://localhost:3000/mcp",
+      guideUrl: "http://localhost:3000/onboarding",
       reconnect: false,
     });
     db.tables.oauth_grants = [grant("jane@frostbuddy.com", "refresh", [other.id])];

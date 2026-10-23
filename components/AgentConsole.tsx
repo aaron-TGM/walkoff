@@ -72,7 +72,7 @@ export function AgentConsole() {
           <span className="console-dim"> &middot; next 7 days</span>
         </div>
         <div className="console-line console-out" style={line(i++)}>
-          <span className="console-when">SUN 1:05P</span> Raiders at Chargers
+          <span className="console-when">SUN 1:05P</span> Chiefs at Chargers
           <span className="console-chip">rivalry</span>
         </div>
 
@@ -90,7 +90,7 @@ export function AgentConsole() {
 
         <div className="console-line console-fire" style={line(i++)}>
           <span className="console-fire-tag">Final</span>
-          SUN 4:12P &middot; Chargers 27, Raiders 20
+          SUN 4:12P &middot; Chargers 27, Chiefs 20
         </div>
         <div className="console-line console-tool" style={line(i++)}>
           <span className="console-bullet" aria-hidden />

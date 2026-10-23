@@ -85,7 +85,8 @@ export interface AffinityReport {
 }
 
 export const STANDOUT = { minLift: 1.25, minZ: 2.5, minCustomers: 15, max: 12 } as const;
-const PRODUCT = { minOrders: 3, minLift: 1.15, max: 3 } as const;
+/** What a territory "buys more of": enough orders, a clear lift, a few products. */
+export const PRODUCT = { minOrders: 3, minLift: 1.15, max: 3 } as const;
 
 function round(n: number, places: number): number {
   const f = 10 ** places;

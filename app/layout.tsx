@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/connect";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Walkoff · Every moment is a marketing moment.",
+  title: "Walkoff · The moment engine for brands and their AI agents",
   description:
     "Walkoff finds the real-world moments your customers care about, starting with sports, matches your products, and has your campaign ready while the moment is still hot. Plugs into Claude and any AI agent through MCP.",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://walkoff.io",
-  ),
+  // Canonical and share links: walkoff.io redirects here.
+  metadataBase: new URL(SITE_URL),
   openGraph: {
-    title: "Walkoff · Every moment is a marketing moment.",
+    title: "Walkoff · The moment engine for brands and their AI agents",
     description:
-      "The moment engine for brands and their AI agents. Sports first, then weather, events and culture.",
+      "Sports moments matched to your customers and your products, ready as campaigns in Claude. Weather, events and culture next.",
     url: "/",
     siteName: "Walkoff",
     type: "website",

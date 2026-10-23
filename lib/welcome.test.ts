@@ -9,6 +9,7 @@ const jane: Welcome = {
   invitedBy: "op@walkoff.io",
   uploadUrl: "https://www.walkoff.io/upload/AbCdEfGhIjKlMnOpQrStUvWx",
   connectorUrl: "https://www.walkoff.io/mcp",
+  guideUrl: "https://www.walkoff.io/onboarding",
 };
 
 const env = process.env as Record<string, string | undefined>;
@@ -52,6 +53,11 @@ describe("welcomeEmail", () => {
     assert.match(text, /sign in with this email address \(jane@frostbuddy\.com\)/);
     assert.match(text, /On a Team or Enterprise plan, an owner adds the connector first, under Organization settings → Connectors\./);
     assert.match(text, /"What should we send this week\?"/);
+  });
+
+  it("links the setup guide, on its own line", () => {
+    const { text } = welcomeEmail(jane);
+    assert.ok(text.includes(`The setup guide walks through each step:\n${jane.guideUrl}\n`));
   });
 
   it("tells someone signed in for another brand to connect again, and still gives every step", () => {

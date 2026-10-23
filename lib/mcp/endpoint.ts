@@ -2,6 +2,7 @@
 // fresh, stateless server for that person.
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { helpUrl } from "../help/pages";
 import { CORS, resourceMetadataUrl, resourceOf, SCOPE } from "./oauth/config";
 import { principalFor } from "./oauth/store";
 import { createWalkoffServer } from "./server";
@@ -10,7 +11,7 @@ function unauthorized(origin: string, hadToken: boolean): Response {
   const params = [`resource_metadata="${resourceMetadataUrl(origin)}"`, `scope="${SCOPE}"`];
   if (hadToken) params.push('error="invalid_token"', 'error_description="The access token is invalid or expired"');
   return Response.json(
-    { error: hadToken ? "invalid_token" : "unauthorized", error_description: "Sign in by connecting Walkoff in Claude." },
+    { error: hadToken ? "invalid_token" : "unauthorized", error_description: `Sign in by connecting Walkoff in Claude: ${helpUrl(origin, "connect")}` },
     { status: 401, headers: { ...CORS, "WWW-Authenticate": `Bearer ${params.join(", ")}`, "Cache-Control": "no-store" } },
   );
 }

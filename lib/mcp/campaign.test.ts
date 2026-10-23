@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 
 import { hexForColorName } from "../affinity/colors";
 import { pickForTeam, type PickProduct } from "../affinity/pick";
+import { assertNeverNames } from "../testing/names";
 import { teamAudience } from "./audience";
 import { buildCampaign, colorWords, type CampaignMoment } from "./campaign";
 import { teamByKey, type TeamRef } from "./teams";
@@ -45,12 +46,6 @@ function campaign(
 
 /** Everything a shopper sees. */
 const seen = (c: ReturnType<typeof campaign>) => [...c.subject_lines, c.preview_text, c.headline, c.body, c.html].join("\n");
-
-function assertNeverNames(text: string, t: TeamRef) {
-  for (const name of [t.team.name, t.team.nickname]) assert.ok(!text.includes(name), `names ${name}`);
-  assert.ok(!new RegExp(`\\b${t.team.abbr}\\b`).test(text), `names ${t.team.abbr}`);
-  for (const mark of ["NFL", "NCAA", "Premier League", "Super Bowl"]) assert.ok(!text.includes(mark), `names ${mark}`);
-}
 
 describe("buildCampaign", () => {
   it("nods to the city and the colors, never the team, for brands without a license", () => {
