@@ -241,8 +241,8 @@ export function MarketingPage() {
             <div>
               <Eyebrow>Sports first &middot; Built for AI agents</Eyebrow>
               <h1>
-                Every moment
-                <span className="script">is a marketing moment.</span>
+                The moment engine
+                <span className="script">for brands and their AI&nbsp;agents.</span>
               </h1>
               <p className="hero-sub">
                 <BrandSpan /> watches every game, finds the customers who care,
