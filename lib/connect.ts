@@ -11,8 +11,11 @@ export const CONNECTOR_URL = `${SITE_URL}/mcp`;
 /** When these steps were last checked against Claude. */
 export const STEPS_CHECKED = "October 2026";
 
+/** Where Claude lists connectors. */
+export const CONNECTORS_PAGE = ["Customize", "Connectors"].join(" → ");
+
 /** Where a person adds a custom connector. */
-export const CONNECTOR_STEPS = ["Customize", "Connectors", "Add custom connector"].join(" → ");
+export const CONNECTOR_STEPS = `${CONNECTORS_PAGE} → Add custom connector`;
 
 /** Where an owner adds it for a Team or Enterprise organization first. */
 export const ORG_CONNECTOR_STEPS = ["Organization settings", "Connectors"].join(" → ");

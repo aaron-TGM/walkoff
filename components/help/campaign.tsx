@@ -63,7 +63,9 @@ export function SegmentSummary({ audience }: { audience: TeamAudience }) {
       <dd>{audience.segment_name}</dd>
       <dt>Circles</dt>
       <dd>
-        {audience.circles.map((x) => `Within ${x.radius_miles} miles of ${x.postal_code} (${x.center_area})`).join("; or ")}
+        {audience.circles
+          .map((x) => `Within ${x.radius_miles} miles of ${x.postal_code}${x.center_area === `around ${x.postal_code}` ? "" : ` (${x.center_area})`}`)
+          .join("; or ")}
       </dd>
       <dt>Covers</dt>
       <dd>

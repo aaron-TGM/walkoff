@@ -110,7 +110,7 @@ The script and the tools share `lib/brands.ts` and `lib/welcome.ts`.
 | `recent_moments` | What just happened for the brand's teams, or any team. |
 | `upcoming_games` | Games coming up for those teams, in the fans' time zone, with pre-game moments. |
 | `match_products` | The brand's products in a team's colors. |
-| `get_territory` | A team's fans as a Klaviyo segment: one to three "Someone's proximity to a location" circles on real postal codes (UK clubs also get outward codes), coverage, and how many of the brand's customers live there. `reach: "wide"` adds shared markets. |
+| `get_territory` | A team's fans as a Klaviyo segment: one to three "Someone's proximity to a location" circles on real postal codes (postcode districts for UK clubs, which also get their district list), coverage, and how many of the brand's customers live there. `reach: "wide"` adds shared markets. |
 | `build_campaign` | Subject lines, preview text, a finished email (Klaviyo HTML with `{% unsubscribe %}` and the address tags), products with links and prices, the audience, the send time (now, or 8 AM local after a late finish), copy rules and the Klaviyo steps. Takes a `moment_id`, or a team and `moment_type` for a sample. |
 | `create_trigger`, `list_triggers`, `delete_trigger` | The brand's rules for which moments matter. |
 | `log_send`, `send_history` | What the brand drafted, sent or skipped. Logged moments leave the queue. |
@@ -121,11 +121,16 @@ There's also a `moment_campaign` prompt that runs the whole loop, and
 server instructions that tell Claude the flow, the copy rules and where the
 help center is (and, for operators, how to onboard a brand).
 
-**The Klaviyo side.** Klaviyo's connector can create templates and draft
-campaigns but not segments, so the first time a brand acts on a team, the
-marketer saves the segment once from `get_territory`'s steps (about a
-minute). Every later moment reuses it. Scheduling stays with the marketer
-unless their Klaviyo connector can do it.
+**The Klaviyo side.** Claude drafts with Klaviyo's own connector (its remote
+MCP server, `https://mcp.klaviyo.com/mcp`, signed in as the marketer). The
+tools the drafting steps name are in `KLAVIYO_TOOLS` (`lib/mcp/campaign.ts`).
+Klaviyo's connector can create segments too (`create_segment`), but
+Walkoff's flow has the marketer save each team's segment once from
+`get_territory`'s steps, or ask Claude to create it. Every later moment
+reuses it. Klaviyo's proximity condition reads only the district of a UK
+postcode ("SW1W", not "SW1W 0NY"), so club circles are centered on one.
+Sending or scheduling waits for the marketer's go-ahead. The marketer's
+guide to all of this is [/help/klaviyo](https://www.walkoff.io/help/klaviyo).
 
 ## How sign-in works
 

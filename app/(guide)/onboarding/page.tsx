@@ -27,7 +27,8 @@ export default function OnboardingPage() {
           </li>
           <li>
             <strong>Claude, with the Klaviyo connector.</strong> Walkoff finds the moment and
-            builds the campaign. Your Klaviyo connector drafts it in your account.
+            builds the campaign. Your Klaviyo connector drafts it in your account.{" "}
+            <Link href={helpPath("klaviyo")}>Klaviyo in Claude</Link>
           </li>
         </ul>
       </HelpSection>
@@ -99,7 +100,8 @@ export default function OnboardingPage() {
             </p>
             <p>
               Connect Klaviyo too, if you haven&apos;t. Claude drafts each campaign with your
-              Klaviyo connector, in your account.
+              Klaviyo connector, in your account.{" "}
+              <Link href={helpPath("klaviyo", "connect")}>Connecting Klaviyo</Link>
             </p>
             <p>
               <Link href={helpPath("connect")}>Connecting, step by step</Link> &middot; checked

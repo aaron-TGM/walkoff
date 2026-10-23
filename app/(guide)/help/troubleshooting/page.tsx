@@ -25,7 +25,10 @@ export default function TroubleshootingPage() {
       </HelpSection>
 
       <HelpSection page={P} id="in-claude">
-        <p>In Claude&apos;s answers, when it uses Walkoff.</p>
+        <p>
+          In Claude&apos;s answers, when it uses Walkoff. For Klaviyo&apos;s side, see{" "}
+          <Link href={helpPath("klaviyo", "trouble")}>Klaviyo in Claude</Link>.
+        </p>
         <TroubleList items={TROUBLE["in-claude"]} />
       </HelpSection>
 

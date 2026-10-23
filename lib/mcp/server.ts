@@ -21,7 +21,7 @@ Copy rules: most brands aren't licensed to use team marks. For them, campaign co
 /** What every connection starts with: the instructions, and where the
  *  marketer's help is. */
 export const memberInstructions = (origin: string) =>
-  `${INSTRUCTIONS}\n\nWhen the marketer asks how something works or hits a problem, Walkoff's help center has the answer, ready to link: ${helpUrl(origin, "help")}. Connecting: ${helpUrl(origin, "connect")}. Messages and fixes: ${helpUrl(origin, "troubleshooting")}.`;
+  `${INSTRUCTIONS}\n\nWhen the marketer asks how something works or hits a problem, Walkoff's help center has the answer, ready to link: ${helpUrl(origin, "help")}. Connecting: ${helpUrl(origin, "connect")}. Connecting Klaviyo, and saving a team's segment: ${helpUrl(origin, "klaviyo")}. Messages and fixes: ${helpUrl(origin, "troubleshooting")}.`;
 
 /** Added for Walkoff operators, who also set brands up. */
 export const OPERATOR_INSTRUCTIONS = `This person is a Walkoff operator, so they can also set brands up. To onboard a brand: create_brand with its name, store and whether it's licensed to name its teams (most aren't), then invite_member for each marketer, which emails them the brand's upload link and how to connect Walkoff in Claude. onboarding_status shows where each brand is and the next step. update_brand, list_members and remove_member handle changes; the tools that change a brand need its exact name or id. Upload links are secret: only invite_member sends them, to the people invited. After removing someone, update_brand with new_upload_link replaces the brand's link, and invite_member sends the new one to the people who should keep it.`;

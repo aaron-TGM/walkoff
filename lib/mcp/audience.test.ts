@@ -24,11 +24,16 @@ describe("territoryCircles", () => {
     assert.ok(wide.inside.has("US:900"), "Los Angeles");
   });
 
-  it("club circles are small and centered on a full UK postcode", () => {
+  it("club circles are small and centered on a postcode district, the part Klaviyo reads", () => {
+    // Klaviyo's proximity condition takes UK outward codes: for "SW1W 0NY"
+    // only "SW1W" works (help.klaviyo.com/hc/en-us/articles/115005065887).
     const { circles } = territoryCircles(SPURS);
     assert.ok(circles.length >= 1);
     assert.ok(circles.every((c) => c.radius_miles <= 15));
-    assert.match(circles[0].postal_code, /^[A-Z]{1,2}\d[A-Z\d]? \d[A-Z]{2}$/);
+    for (const c of circles) {
+      assert.match(c.postal_code, /^[A-Z]{1,2}\d[A-Z\d]?$/);
+      assert.equal(c.center_area, `around ${c.postal_code}`);
+    }
   });
 });
 
@@ -40,8 +45,10 @@ describe("teamAudience", () => {
     assert.equal(a.outward_codes, undefined);
   });
 
-  it("clubs get their outward codes for Klaviyo's zip filter", () => {
+  it("clubs get their outward codes, and steps that use them", () => {
     const a = teamAudience(SPURS);
+    assert.match(a.klaviyo_segment_steps.join("\n"), /is within \d+ miles of [A-Z]{1,2}\d[A-Z\d]? \(United Kingdom\)/);
+    assert.match(a.klaviyo_segment_steps.join("\n"), /check the segment isn't empty/);
     assert.ok(a.outward_codes!.includes("N17"));
     assert.ok(a.outward_codes!.every((c) => POSTAL_AREAS.some((p) => p.country === "GB" && p.code === c)));
   });
