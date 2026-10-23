@@ -48,6 +48,21 @@ export const HELP_PAGES = [
     ],
   },
   {
+    slug: "klaviyo",
+    path: "/help/klaviyo",
+    nav: "Klaviyo in Claude",
+    title: "Klaviyo in Claude",
+    description: "Connect Klaviyo in Claude, see what Claude does in your account, and save each team's segment once.",
+    sections: [
+      { id: "why", title: "What Claude does in Klaviyo" },
+      { id: "connect", title: "Connecting Klaviyo" },
+      { id: "accounts", title: "More than one Klaviyo account" },
+      { id: "settings", title: "Settings that matter" },
+      { id: "segments", title: "Saving each team's segment" },
+      { id: "trouble", title: "When something's off" },
+    ],
+  },
+  {
     slug: "uploads",
     path: "/help/uploads",
     nav: "Your uploads",

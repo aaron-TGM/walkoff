@@ -32,7 +32,8 @@ export default function ConnectPage() {
         </ol>
         <p>
           Connect Klaviyo too, if you haven&apos;t. Claude drafts campaigns with your Klaviyo
-          connector, in your own account.
+          connector, in your own account.{" "}
+          <Link href={helpPath("klaviyo", "connect")}>Connecting Klaviyo</Link>
         </p>
         <Callout>
           <p>

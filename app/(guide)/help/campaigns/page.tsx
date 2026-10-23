@@ -40,7 +40,7 @@ export default function CampaignsPage() {
           <li>
             <strong>Draft it in Klaviyo.</strong> When you say go, Claude uses your Klaviyo
             connector to create the template and a draft campaign for that segment, with Smart
-            Sending on.
+            Sending on. <Link href={helpPath("klaviyo", "why")}>Klaviyo in Claude</Link>
           </li>
           <li>
             <strong>Send it.</strong> Schedule it in Klaviyo, or have Claude schedule it if your

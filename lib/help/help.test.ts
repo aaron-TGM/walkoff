@@ -11,9 +11,11 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 
 import { parseCustomerUpload } from "../affinity/validate";
+import { KLAVIYO_TOOLS } from "../mcp/campaign";
 import { createWalkoffServer } from "../mcp/server";
 import { noDb } from "../testing/fake-db";
 import { assertNeverNames } from "../testing/names";
+import { KLAVIYO_FLOW } from "./klaviyo";
 import { FINISHES } from "./moments";
 import { HELP_PAGES, helpMetadata, helpUrl } from "./pages";
 import { sampleCampaign, sampleCopyRules, sampleEmailHtml, SAMPLE_TEAM, timingExamples } from "./samples";
@@ -143,6 +145,14 @@ describe("help facts", () => {
     const upload = parseCustomerUpload({ format: "counts_csv", rows: 3, skipped: 0, areas: areas.map((a) => ({ ...a, customers: 10 })) });
     assert.equal(upload.areas.length, 3);
     assert.throws(() => parseCustomerUpload({ format: "counts_csv", areas: [{ country: "US", area: "92101", customers: 1 }] }), /coarse/);
+  });
+
+  it("the Klaviyo guide names the tools Walkoff's drafting steps use", () => {
+    const steps = sampleCampaign().klaviyo_steps.join("\n");
+    const named = KLAVIYO_FLOW.flatMap((f) => f.tools).filter((t) => t !== "send_campaign");
+    for (const tool of Object.values(KLAVIYO_TOOLS)) assert.ok(named.includes(tool), `the guide leaves out ${tool}`);
+    for (const tool of named) assert.ok(steps.includes(`(${tool})`), `the drafting steps don't use ${tool}`);
+    assert.ok(read(pageFile("/help/klaviyo")).includes("KLAVIYO_FLOW.map"), "the table comes from KLAVIYO_FLOW");
   });
 
   it("the sample campaign never names the team, and shows no Klaviyo tags", () => {

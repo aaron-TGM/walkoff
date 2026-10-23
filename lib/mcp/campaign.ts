@@ -69,6 +69,16 @@ export interface Campaign {
   warnings: string[];
 }
 
+/** The tools of Klaviyo's own connector that the drafting steps name
+ *  (developers.klaviyo.com/en/docs/klaviyo_mcp_server_available_tools). */
+export const KLAVIYO_TOOLS = {
+  findSegment: "get_segments",
+  createTemplate: "create_email_template",
+  createCampaign: "create_campaign",
+  assignTemplate: "assign_template_to_campaign_message",
+  render: "render_email_template",
+} as const;
+
 type Kind = "win" | "loss" | "pregame" | "live" | "season";
 
 const KIND: Record<string, Kind> = {
@@ -462,10 +472,10 @@ export function buildCampaign(input: {
   if (!audience.circles.length) warnings.push("Walkoff couldn't draw an audience for this team. Target a broader segment by hand.");
 
   const steps = [
-    `Audience: with the Klaviyo connector, look for a segment named "${audience.segment_name}" (get_segments). If it isn't there, ask the marketer to create it once, following audience.klaviyo_segment_steps. Don't send a team moment to the whole list.`,
-    `Template: create an email template named "${name}" from html (create_email_template).`,
-    `Draft: create a campaign named "${name}" for that segment with subject "${subjects[0]}" and preview text "${copy.preview}" (create_campaign), then assign the template to its message (assign_template_to_campaign_message). Keep Smart Sending on, so nobody who just got an email from the brand gets another.`,
-    `Check: render the template (render_email_template) and show the marketer the email, the audience and the send time: ${send.send_at_local}.`,
+    `Audience: with the Klaviyo connector, look for a segment named "${audience.segment_name}" (${KLAVIYO_TOOLS.findSegment}). If it isn't there, ask the marketer to create it once, following audience.klaviyo_segment_steps. Don't send a team moment to the whole list.`,
+    `Template: create an email template named "${name}" from html (${KLAVIYO_TOOLS.createTemplate}).`,
+    `Draft: create a campaign named "${name}" for that segment with subject "${subjects[0]}" and preview text "${copy.preview}" (${KLAVIYO_TOOLS.createCampaign}), then assign the template to its message (${KLAVIYO_TOOLS.assignTemplate}). Keep Smart Sending on, so nobody who just got an email from the brand gets another.`,
+    `Check: render the template (${KLAVIYO_TOOLS.render}) and show the marketer the email, the audience and the send time: ${send.send_at_local}.`,
     `Send: schedule it for ${send.send_at_local} (${send.send_at_utc}) if the Klaviyo connector can schedule; otherwise ask the marketer to schedule it in Klaviyo.`,
   ];
   if (moment.id) steps.push(`Log it: call log_send with moment_id ${moment.id}, status "drafted" (or "sent" once scheduled) and the Klaviyo campaign id.`);

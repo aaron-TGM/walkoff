@@ -1,7 +1,8 @@
+import Link from "next/link";
 import { SegmentSteps, SegmentSummary } from "@/components/help/campaign";
 import { HelpPage, HelpSection } from "@/components/help/HelpPage";
 import { KLAVIYO_ZIP_LIMIT, REACH } from "@/lib/mcp/audience";
-import { helpMetadata } from "@/lib/help/pages";
+import { helpMetadata, helpPath } from "@/lib/help/pages";
 import { clubAudience, sampleAudience, SAMPLE_TEAM } from "@/lib/help/samples";
 
 export const metadata = helpMetadata("audiences");
@@ -14,14 +15,15 @@ const pct = (n: number) => `${Math.round(n * 100)}%`;
 export default function AudiencesPage() {
   const core = sampleAudience();
   const wide = sampleAudience("wide");
+  const club = clubAudience();
   return (
     <HelpPage slug={P}>
       <HelpSection page={P} id="circles">
         <p>
           A team moment goes to that team&apos;s fans, not your whole list. Walkoff draws each
-          team&apos;s fan territory as a Klaviyo segment: one to three circles, each a real postal
-          code and a radius, for Klaviyo&apos;s &ldquo;Someone&apos;s proximity to a
-          location&rdquo; condition.
+          team&apos;s fan territory as a Klaviyo segment: one to three circles, each a postal code
+          and a radius, for Klaviyo&apos;s &ldquo;Someone&apos;s proximity to a location&rdquo;
+          condition.
         </p>
         <p>The circles are chosen to cover the team&apos;s core fans and as few other people as possible.</p>
       </HelpSection>
@@ -56,11 +58,13 @@ export default function AudiencesPage() {
 
       <HelpSection page={P} id="uk">
         <p>
-          Premier League clubs get smaller circles, plus the exact list of postcode districts.
-          Klaviyo&apos;s zip filter takes districts as they are, so the segment can match the
-          club&apos;s territory exactly.
+          Premier League clubs get smaller circles, centered on a postcode district like{" "}
+          {club.circles[0]?.postal_code}: for UK postcodes, Klaviyo&apos;s proximity condition
+          reads only that first half. Walkoff also lists the club&apos;s districts, if you&apos;d
+          rather use Klaviyo&apos;s Zip Code filter. If you do, check the segment isn&apos;t empty
+          before you use it.
         </p>
-        <SegmentSummary audience={clubAudience()} />
+        <SegmentSummary audience={club} />
         <p>
           Klaviyo takes up to {KLAVIYO_ZIP_LIMIT} codes in one condition. For a longer list, the
           steps say how to split it.
@@ -75,6 +79,10 @@ export default function AudiencesPage() {
         <p>
           Claude looks for the segment by name, so keep the name Walkoff gives it, like
           &ldquo;{core.segment_name}&rdquo;.
+        </p>
+        <p>
+          You can also ask Claude to create it for you with Klaviyo&apos;s connector.{" "}
+          <Link href={helpPath("klaviyo", "segments")}>Segments in Klaviyo</Link>
         </p>
       </HelpSection>
     </HelpPage>
