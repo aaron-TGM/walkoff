@@ -146,9 +146,22 @@ gcloud run deploy walkoff-engine \
 ```
 
 Already running without the Anthropic key? Create the `anthropic-api-key`
-secret and its binding as above, then build and deploy with the new
-`--set-secrets` line. The log line "Moment engine starting" says
-`"tagging":true` once it's on.
+secret and its binding as above, then build and add the key to the running
+service. `--update-secrets` keeps the service's other settings and secrets:
+
+```bash
+gcloud builds submit --config engine/cloudbuild.yaml .
+gcloud run deploy walkoff-engine \
+  --image $REGION-docker.pkg.dev/$PROJECT/walkoff/engine:latest \
+  --region $REGION \
+  --update-secrets ANTHROPIC_API_KEY=anthropic-api-key:latest
+```
+
+The log line "Moment engine starting" says `"tagging":true` once it's on.
+On its first start it tags every brand's products that only have keyword
+tags, so the first runs cost the most. To turn tagging off without a
+deploy: `gcloud run services update walkoff-engine --region $REGION
+--update-env-vars TAG_CATALOGS=0`.
 
 `cloudbuild.yaml` assumes `us-central1`; change it there too if you use
 another region. One always-on instance at this size typically costs tens of
