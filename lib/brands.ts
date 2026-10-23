@@ -356,24 +356,30 @@ export async function onboardingStatus(db: SupabaseClient, brandId: string, now 
     triggers: { active: (triggers.data ?? []).filter((t) => t.active).length, total: (triggers.data ?? []).length },
     last_send: send,
   };
-  return { ...status, next: nextStep(status) };
+  return { ...status, next: nextStep(status, now) };
 }
 
 const and = (items: string[]) => (items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`);
 
+/** The engine tags new products within minutes of an upload; this long
+ *  after, something's wrong. */
+const TAGGING_DUE_MS = 60 * 60 * 1000;
+
 /** The one thing that moves the brand along, in the order onboarding goes:
- *  the operator's setup, the brand's uploads, Claude's tagging, connecting
- *  Claude, then a first campaign. */
-export function nextStep(s: Omit<OnboardingStatus, "next">): string {
+ *  the operator's setup, the brand's uploads, connecting Claude, then a
+ *  first campaign. Claude's tagging runs on its own in the engine, so it
+ *  comes up only when it's an hour behind on a tenth of the catalog. */
+export function nextStep(s: Omit<OnboardingStatus, "next">, now = new Date()): string {
   const emails = s.members.map((m) => m.email);
   if (!s.store_url) return "Add the store's address with update_brand, so campaigns link to its products.";
   if (!emails.length) return "Invite the brand's marketer with invite_member. It emails them the upload link and how to connect Walkoff in Claude.";
   if (!s.customers) return `Waiting on ${and(emails)} to upload customers or orders (step 1 on the upload page). invite_member sends the welcome email again.`;
   if (!s.map?.customers_mapped) return "The customer upload didn't place anyone in a postal area. Ask the brand for an export with shipping addresses.";
   if (!s.catalog.products) return "Waiting on the product export (step 2 on the upload page).";
-  if (s.catalog.tagged_by_rules) {
-    const n = s.catalog.tagged_by_rules;
-    return `Tag the catalog with Claude: npm run affinity:tag -- --brand ${s.id}. ${n} ${n === 1 ? "product has" : "products have"} only rule-based tags.`;
+  const untagged = s.catalog.tagged_by_rules;
+  const uploadedAt = s.catalog.uploaded_at ? Date.parse(s.catalog.uploaded_at) : NaN;
+  if (untagged > s.catalog.products / 10 && now.getTime() - uploadedAt > TAGGING_DUE_MS) {
+    return `Claude hasn't tagged ${untagged} ${untagged === 1 ? "product" : "products"} an hour after the last product upload. Check the engine is running with ANTHROPIC_API_KEY (engine/README.md), or run npm run affinity:tag -- --brand ${s.id}.`;
   }
   if (!s.members.some((m) => m.connected)) {
     const again = s.members.filter((m) => m.needs_reconnect).map((m) => m.email);

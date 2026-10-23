@@ -7,6 +7,8 @@ RUN npm ci --no-audit --no-fund
 COPY tsconfig.json ./
 COPY lib ./lib
 COPY engine ./engine
+# Team homes and postal areas, for catalog tagging and the fan map.
+COPY data ./data
 RUN npm run engine:build
 
 # The bundle includes its dependencies, so the runtime image needs no npm.

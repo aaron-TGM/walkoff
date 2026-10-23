@@ -116,11 +116,12 @@ export default function UploadsPage() {
         <p>
           Common color names like &ldquo;Azure Heather&rdquo; or &ldquo;Navy/Gold&rdquo; get
           their colors right away. Names Walkoff can&apos;t read yet, like &ldquo;Dune&rdquo; or
-          &ldquo;Cove&rdquo;, get named in our full tagging pass with Claude.
+          &ldquo;Cove&rdquo;, get named when Claude reads your catalog, a few minutes after you
+          upload it.
         </p>
         <p>
-          You don&apos;t need team gear. If you do make products for a team, the tagging pass
-          finds them, and they&apos;re featured first.
+          You don&apos;t need team gear. If you do make products for a team, Claude finds them,
+          and they&apos;re featured first.
         </p>
       </HelpSection>
 
@@ -132,7 +133,8 @@ export default function UploadsPage() {
           </li>
           <li>
             <strong>Products.</strong> Each upload adds new products and updates the ones
-            you&apos;ve uploaded before. Nothing is removed, and our tagging work is kept.
+            you&apos;ve uploaded before. Nothing is removed. Claude&apos;s tags are kept, and it
+            reads new products, and ones whose title or description changed, within minutes.
           </li>
         </ul>
         <p>

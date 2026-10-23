@@ -69,8 +69,10 @@ welcome. Later: "Where is each brand in onboarding?"
 | `onboarding_status` | One brand or all: store and license, members and whether each has connected (a live refresh token whose brands include this one), customers uploaded and when, customers mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step. |
 
 The next step follows the onboarding order: store, invite, customer upload,
-product export, Claude's tagging (`npm run affinity:tag`), connecting
-Claude, then a first campaign.
+product export, connecting Claude, then a first campaign. Claude's tagging
+runs on its own in the engine within minutes of a product upload, so it's
+the next step only when it's an hour behind on more than a tenth of the
+catalog (then: check the engine, or run `npm run affinity:tag`).
 
 Only operators get these tools. They aren't registered for anyone else
 (`tools/list` doesn't show them and calling one fails), each handler checks

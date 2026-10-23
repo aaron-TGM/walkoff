@@ -358,7 +358,9 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
                 </div>
               ) : null}
               {colorways.some((n) => !hexForColorName(n).length) ? (
-                <p className="preview-more">Names we can&apos;t read yet, like the dashed ones, get named in our full pass.</p>
+                <p className="preview-more">
+                  Claude names the ones we can&apos;t read yet, like the dashed ones, a few minutes after they&apos;re uploaded.
+                </p>
               ) : null}
               <button
                 type="button"
@@ -370,6 +372,11 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
                   {catalog.status === "uploading" ? "Tagging…" : catalog.status === "done" ? "Tagged ✓" : "Tag my products →"}
                 </span>
               </button>
+              {catalog.status === "done" && !demo ? (
+                <p className="preview-more">
+                  Saved. Claude reads each product next, usually within a few minutes, and your picks get sharper when it&apos;s done.
+                </p>
+              ) : null}
             </div>
           ) : catalogStats.products ? (
             <p className="preview-line">

@@ -1,5 +1,7 @@
 // Walkoff moment engine: polls live sports data, detects moments and saves
-// them to Supabase. See engine/README.md.
+// them to Supabase. It also has Claude tag each brand's new products
+// (tagger.ts). See engine/README.md.
+import { claudeSend, colorTask, productTask } from "../lib/affinity/claude-tagger";
 import { LEAGUES } from "../lib/leagues";
 import { loadConfig } from "./config";
 import { createEspnClient } from "./espn/client";
@@ -8,8 +10,9 @@ import { errorMessage, log } from "./log";
 import { rulesFor } from "./moments/sports";
 import { LeaguePoller } from "./poller";
 import { MemoryStore } from "./store/memory";
-import { createSupabaseStore } from "./store/supabase";
+import { createSupabaseStore, serviceClient } from "./store/supabase";
 import type { Store } from "./store/types";
+import { CatalogTagger } from "./tagger";
 
 async function main(): Promise<void> {
   const config = loadConfig();
@@ -27,7 +30,20 @@ async function main(): Promise<void> {
     if (!league) throw new Error(`Unknown league ${id}`);
     return new LeaguePoller(league, rulesFor(id), { client, store, config });
   });
-  log("INFO", "Moment engine starting", { leagues: config.leagues, store: store.kind, once: config.once });
+
+  // Claude's pass over each brand's new products, when it can save them.
+  const claude = { model: config.tagModel, effort: config.tagEffort };
+  const tagger =
+    config.tagCatalogs && !config.once && store.kind === "supabase" && config.supabaseUrl && config.supabaseKey
+      ? new CatalogTagger(serviceClient(config.supabaseUrl, config.supabaseKey), {
+          send: { products: claudeSend(productTask(), claude), colors: claudeSend(colorTask(), claude) },
+          model: config.tagModel,
+        })
+      : null;
+  if (store.kind === "supabase" && !config.once && !tagger) {
+    log("WARNING", "Catalog tagging is off (no ANTHROPIC_API_KEY, or TAG_CATALOGS=0): new products keep their rule-based tags.");
+  }
+  log("INFO", "Moment engine starting", { leagues: config.leagues, store: store.kind, once: config.once, tagging: !!tagger });
 
   if (config.once) {
     await Promise.all(pollers.map((p) => p.tick()));
@@ -51,11 +67,21 @@ async function main(): Promise<void> {
   // Stagger the first polls so leagues don't all hit the feed at once.
   pollers.forEach((p, i) => timers.set(p, setTimeout(() => void loop(p), i * 1500)));
 
+  // The tagger looks for new uploads once the first polls are under way.
+  let tagTimer: NodeJS.Timeout | undefined;
+  const tagLoop = async (t: CatalogTagger): Promise<void> => {
+    if (stopping) return;
+    const delay = await t.tick();
+    if (!stopping) tagTimer = setTimeout(() => void tagLoop(t), delay);
+  };
+  if (tagger) tagTimer = setTimeout(() => void tagLoop(tagger), 15_000);
+
   const shutdown = (signal: string) => {
     if (stopping) return;
     stopping = true;
     log("INFO", `Shutting down on ${signal}`);
     for (const t of timers.values()) clearTimeout(t);
+    clearTimeout(tagTimer);
     server.close();
     setTimeout(() => process.exit(0), 2000).unref();
   };
