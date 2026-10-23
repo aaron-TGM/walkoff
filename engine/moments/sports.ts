@@ -18,6 +18,10 @@ export interface LeagueRules {
   lateWindow: number;
   /** Longest a game normally lasts, minutes. Used to skip stale finals. */
   maxDurationMinutes: number;
+  /** Intensity of an ordinary win. Weekly sports clear the default bar
+   *  for acting (0.6); sports with a game most days don't, so fans don't
+   *  hear from a brand after every one. */
+  winIntensity: number;
   /** How to read the scoreboard: by week (football) or by date. */
   scoreboard: "week" | "date";
   /** Extra scoreboard query params, e.g. all FBS games instead of featured. */
@@ -34,6 +38,7 @@ export const LEAGUE_RULES: Record<string, LeagueRules> = {
     oneScore: 8,
     lateWindow: 300,
     maxDurationMinutes: 240,
+    winIntensity: 0.7,
     scoreboard: "week",
   },
   ncaaf: {
@@ -45,6 +50,7 @@ export const LEAGUE_RULES: Record<string, LeagueRules> = {
     oneScore: 8,
     lateWindow: 300,
     maxDurationMinutes: 270,
+    winIntensity: 0.65,
     scoreboard: "week",
     query: "groups=80&limit=300",
   },
@@ -57,6 +63,7 @@ export const LEAGUE_RULES: Record<string, LeagueRules> = {
     oneScore: 3,
     lateWindow: 180,
     maxDurationMinutes: 180,
+    winIntensity: 0.4,
     scoreboard: "date",
   },
   ncaab: {
@@ -68,6 +75,7 @@ export const LEAGUE_RULES: Record<string, LeagueRules> = {
     oneScore: 3,
     lateWindow: 180,
     maxDurationMinutes: 165,
+    winIntensity: 0.4,
     scoreboard: "date",
     query: "groups=50&limit=500",
   },
@@ -80,6 +88,7 @@ export const LEAGUE_RULES: Record<string, LeagueRules> = {
     oneScore: 0,
     lateWindow: 300,
     maxDurationMinutes: 180,
+    winIntensity: 0.4,
     scoreboard: "date",
   },
   epl: {
@@ -91,6 +100,7 @@ export const LEAGUE_RULES: Record<string, LeagueRules> = {
     oneScore: 0,
     lateWindow: 85,
     maxDurationMinutes: 135,
+    winIntensity: 0.65,
     scoreboard: "date",
   },
   mlb: {
@@ -102,6 +112,7 @@ export const LEAGUE_RULES: Record<string, LeagueRules> = {
     oneScore: 1,
     lateWindow: 8,
     maxDurationMinutes: 270,
+    winIntensity: 0.3,
     scoreboard: "date",
   },
 };

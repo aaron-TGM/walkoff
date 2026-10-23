@@ -87,7 +87,7 @@ export function codePage(v: FlowView, email: string, opts: { error?: string; dev
   return page(
     "Check your email",
     `<h1>Check your email</h1>
-<p>We sent a 6-digit code to <strong>${esc(email)}</strong>. It works for 15 minutes.</p>
+<p>If <strong>${esc(email)}</strong> has Walkoff access, we've sent it a 6-digit code. It works for 15 minutes.</p>
 ${opts.devNote ? `<p class="dev">Development: email isn't set up, so the code is in the server log.</p>` : ""}
 ${errorBox(opts.error)}
 <form method="post">
@@ -97,7 +97,7 @@ ${hidden("request", v.requestId)}${hidden("step", "code")}
 <div class="actions"><button class="primary" type="submit">Continue</button></div>
 </form>
 <form method="post">${hidden("request", v.requestId)}${hidden("step", "restart")}
-<p class="note"><button class="link" type="submit">Use a different email</button></p></form>`,
+<p class="note">No code? Check the address, or ask your Walkoff contact for an invite. <button class="link" type="submit">Use a different email</button></p></form>`,
   );
 }
 

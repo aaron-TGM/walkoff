@@ -236,14 +236,27 @@ export interface BrandData {
   catalog: TaggedProduct[];
 }
 
-export async function loadBrandData(db: SupabaseClient, brandId: string): Promise<BrandData> {
-  const [areas, products, catalog, colorNames] = await Promise.all([
-    selectAll<{ country: Country; area: string; customers: number; orders: number; revenue: number }>((from, to) =>
-      db.from("brand_area_counts").select("country, area, customers, orders, revenue").eq("brand_id", brandId).range(from, to),
-    ),
-    selectAll<{ country: Country; area: string; product: string; orders: number; revenue: number }>((from, to) =>
-      db.from("brand_product_counts").select("country, area, product, orders, revenue").eq("brand_id", brandId).range(from, to),
-    ),
+/** Customers per postal area. */
+export async function loadAreaCounts(db: SupabaseClient, brandId: string): Promise<AreaCount[]> {
+  const rows = await selectAll<{ country: Country; area: string; customers: number; orders: number; revenue: number }>((from, to) =>
+    db.from("brand_area_counts").select("country, area, customers, orders, revenue").eq("brand_id", brandId).range(from, to),
+  );
+  return rows.map((a) => ({ ...a, revenue: Number(a.revenue) }));
+}
+
+/** Orders per product per area. Can run to tens of thousands of rows, so
+ *  only the affinity computation reads it. */
+async function loadProductCounts(db: SupabaseClient, brandId: string): Promise<ProductCount[]> {
+  const rows = await selectAll<{ country: Country; area: string; product: string; orders: number; revenue: number }>((from, to) =>
+    db.from("brand_product_counts").select("country, area, product, orders, revenue").eq("brand_id", brandId).range(from, to),
+  );
+  return rows.map((p) => ({ ...p, revenue: Number(p.revenue) }));
+}
+
+/** The catalog with team tags, prices and colorway colors, for picking
+ *  what to feature. */
+export async function loadTaggedCatalog(db: SupabaseClient, brandId: string): Promise<TaggedProduct[]> {
+  const [catalog, colorNames] = await Promise.all([
     selectAll<{
       handle: string;
       title: string;
@@ -257,22 +270,27 @@ export async function loadBrandData(db: SupabaseClient, brandId: string): Promis
     ),
     loadColorNames(db, brandId),
   ]);
-  return {
-    areas: areas.map((a) => ({ ...a, revenue: Number(a.revenue) })),
-    products: products.map((p) => ({ ...p, revenue: Number(p.revenue) })),
-    catalog: catalog.map((p) => ({
-      handle: p.handle,
-      title: p.title,
-      teams: p.teams ?? [],
-      colors: p.colors ?? [],
-      uses: p.uses ?? [],
-      price: p.price === null || p.price === undefined ? null : Number(p.price),
-      colorways: (p.colorways ?? []).map((c) => ({
-        ...c,
-        hex: colorNames.get(c.name.toLowerCase())?.hex ?? hexForColorName(c.name),
-      })),
+  return catalog.map((p) => ({
+    handle: p.handle,
+    title: p.title,
+    teams: p.teams ?? [],
+    colors: p.colors ?? [],
+    uses: p.uses ?? [],
+    price: p.price === null || p.price === undefined ? null : Number(p.price),
+    colorways: (p.colorways ?? []).map((c) => ({
+      ...c,
+      hex: colorNames.get(c.name.toLowerCase())?.hex ?? hexForColorName(c.name),
     })),
-  };
+  }));
+}
+
+export async function loadBrandData(db: SupabaseClient, brandId: string): Promise<BrandData> {
+  const [areas, products, catalog] = await Promise.all([
+    loadAreaCounts(db, brandId),
+    loadProductCounts(db, brandId),
+    loadTaggedCatalog(db, brandId),
+  ]);
+  return { areas, products, catalog };
 }
 
 /** Recomputes and saves the brand's affinity report. Null until the brand
@@ -303,6 +321,18 @@ export interface CatalogStats {
   /** Products tagged to a team. */
   tagged: number;
   colorways: number;
+}
+
+/** Products and how many are tagged to a team, without reading the rows. */
+export async function catalogCounts(db: SupabaseClient, brandId: string): Promise<Omit<CatalogStats, "colorways">> {
+  const count = (q: PromiseLike<{ count: number | null; error: unknown }>) =>
+    Promise.resolve(q).then(({ count: n, error }) => {
+      if (error) throw error;
+      return n ?? 0;
+    });
+  const base = () => db.from("brand_products").select("handle", { count: "exact", head: true }).eq("brand_id", brandId);
+  const [products, tagged] = await Promise.all([count(base()), count(base().neq("teams", "[]"))]);
+  return { products, tagged };
 }
 
 export async function catalogStats(db: SupabaseClient, brandId: string): Promise<CatalogStats> {

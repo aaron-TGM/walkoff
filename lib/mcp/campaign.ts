@@ -72,6 +72,7 @@ export interface Campaign {
 type Kind = "win" | "loss" | "pregame" | "live" | "season";
 
 const KIND: Record<string, Kind> = {
+  team_win: "win",
   walkoff_win: "win",
   buzzer_beater: "win",
   late_winner: "win",
@@ -189,6 +190,8 @@ function copyFor(type: string, c: Ctx): Copy {
   });
 
   switch (type) {
+    case "team_win":
+      return win("That's a win.", Who ? `${Who}, enjoy this one.` : "Enjoy this one.", `Wins look good in ${c.color}.`, "Good game.");
     case "walkoff_win":
       return win("What a finish.", Who ? `${Who}, that finish.` : "That finish.", "Right down to the last second.", "Some wins you feel all week.");
     case "buzzer_beater":
@@ -461,7 +464,7 @@ export function buildCampaign(input: {
   const steps = [
     `Audience: with the Klaviyo connector, look for a segment named "${audience.segment_name}" (get_segments). If it isn't there, ask the marketer to create it once, following audience.klaviyo_segment_steps. Don't send a team moment to the whole list.`,
     `Template: create an email template named "${name}" from html (create_email_template).`,
-    `Draft: create a campaign named "${name}" for that segment with subject "${subjects[0]}" and preview text "${copy.preview}" (create_campaign), then assign the template to its message (assign_template_to_campaign_message).`,
+    `Draft: create a campaign named "${name}" for that segment with subject "${subjects[0]}" and preview text "${copy.preview}" (create_campaign), then assign the template to its message (assign_template_to_campaign_message). Keep Smart Sending on, so nobody who just got an email from the brand gets another.`,
     `Check: render the template (render_email_template) and show the marketer the email, the audience and the send time: ${send.send_at_local}.`,
     `Send: schedule it for ${send.send_at_local} (${send.send_at_utc}) if the Klaviyo connector can schedule; otherwise ask the marketer to schedule it in Klaviyo.`,
   ];

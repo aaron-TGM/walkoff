@@ -1,0 +1,49 @@
+// Caps on the sign-in endpoints anyone can call before signing in (app
+// registration and starting a sign-in), so nobody can fill the database or
+// make Walkoff fetch pages for them: per caller per hour, and overall as a
+// backstop. Uses oauth_events (supabase/007_hardening.sql).
+import { createHmac } from "node:crypto";
+import type { SupabaseClient } from "@supabase/supabase-js";
+
+export const RATE = {
+  register: { perCaller: 20, total: 300 },
+  authorize: { perCaller: 60, total: 1500 },
+} as const;
+export type RateKind = keyof typeof RATE;
+
+/** The caller, as a keyed hash of their IP: enough to count calls, never
+ *  the address itself. Vercel sets x-real-ip and x-forwarded-for. */
+export function callerKey(req: Request): string {
+  const ip =
+    req.headers.get("x-real-ip")?.trim() || req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  return createHmac("sha256", process.env.SUPABASE_SERVICE_ROLE_KEY ?? "walkoff").update(ip).digest("hex").slice(0, 32);
+}
+
+/** Records the call and says whether it went over a cap. Lets calls through
+ *  if the events table isn't there yet (before 007_hardening.sql). */
+export async function overLimit(db: SupabaseClient, kind: RateKind, caller: string): Promise<boolean> {
+  const since = new Date(Date.now() - 3_600_000).toISOString();
+  const count = async (q: PromiseLike<{ count: number | null; error: unknown }>) => {
+    const { count: n, error } = await q;
+    if (error) throw error;
+    return n ?? 0;
+  };
+  try {
+    const events = () => db.from("oauth_events").select("id", { count: "exact", head: true }).eq("kind", kind).gte("at", since);
+    const [mine, all] = await Promise.all([count(events().eq("ip", caller)), count(events())]);
+    if (mine >= RATE[kind].perCaller || all >= RATE[kind].total) return true;
+    const { error } = await db.from("oauth_events").insert({ kind, ip: caller });
+    if (error) throw error;
+    return false;
+  } catch (err) {
+    console.warn("Walkoff sign-in limits are off until supabase/007_hardening.sql runs", err);
+    return false;
+  }
+}
+
+/** Clears finished sign-ins, expired tokens, old call records and apps that
+ *  never signed anyone in. Best effort: skipped until 007 runs. */
+export async function sweep(db: SupabaseClient): Promise<void> {
+  const { error } = await db.rpc("walkoff_sweep_oauth");
+  if (error) console.warn("Walkoff sign-in sweep skipped", error.message);
+}
