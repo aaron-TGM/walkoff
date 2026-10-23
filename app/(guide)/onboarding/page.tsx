@@ -117,8 +117,8 @@ export default function OnboardingPage() {
               subject lines, the email, the audience and the send time.
             </p>
             <p>
-              The first time you use a team, save its Klaviyo segment. Claude gives you the
-              steps, and you only do it once per team.{" "}
+              The first time you use a team, Claude offers to create its Klaviyo segment. Say OK,
+              and every later moment for that team reuses it.{" "}
               <Link href={helpPath("audiences", "save")}>Why once</Link>
             </p>
             <p>

@@ -66,7 +66,7 @@ export default function DataAndSafetyPage() {
         <p>
           Walkoff never sends anything. It builds the campaign, Claude drafts it in your Klaviyo
           account, and it goes out only when you say so. Walkoff tells Claude never to schedule or
-          send without your go-ahead.
+          send without your go-ahead, and to ask before it creates a segment.
         </p>
         <p>
           Your Klaviyo settings stay as they are: unsubscribes, suppressions and Smart Sending all

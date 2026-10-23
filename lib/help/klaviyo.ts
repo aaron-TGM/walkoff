@@ -11,6 +11,9 @@ export const KLAVIYO = {
   roles: ["Owner", "Admin", "Manager"],
   /** Claude plans that can add custom connectors. */
   customPlans: ["Pro", "Max", "Team", "Enterprise"],
+  /** Klaviyo's cap on segments created per day
+   *  (developers.klaviyo.com/en/reference/segments_api_overview). */
+  segmentsPerDay: 100,
   docs: {
     connect: "https://developers.klaviyo.com/en/docs/connect_to_the_klaviyo_mcp_server",
     tools: "https://developers.klaviyo.com/en/docs/klaviyo_mcp_server_available_tools",
@@ -24,6 +27,11 @@ export const KLAVIYO = {
  *  Klaviyo's send tool, which Claude uses only on the marketer's go-ahead. */
 export const KLAVIYO_FLOW: { step: string; tools: string[]; changes: string }[] = [
   { step: "Finds the team's segment by its name", tools: [KLAVIYO_TOOLS.findSegment], changes: "Nothing" },
+  {
+    step: "Creates the segment the first time, once you say OK",
+    tools: [KLAVIYO_TOOLS.createSegment],
+    changes: "Adds a segment",
+  },
   { step: "Creates the email template from Walkoff's email", tools: [KLAVIYO_TOOLS.createTemplate], changes: "Adds a template" },
   {
     step: "Creates a draft campaign for the segment, with the subject and preview text",

@@ -34,8 +34,9 @@ export default function CampaignsPage() {
             offer.
           </li>
           <li>
-            <strong>Save the segment, once per team.</strong> The first time, Claude gives you the
-            steps. <Link href={helpPath("audiences", "save")}>Audiences</Link>
+            <strong>Save the segment, once per team.</strong> The first time, Claude offers to
+            create it in Klaviyo. Say OK, or create it yourself from the steps it gives you.{" "}
+            <Link href={helpPath("audiences", "save")}>Audiences</Link>
           </li>
           <li>
             <strong>Draft it in Klaviyo.</strong> When you say go, Claude uses your Klaviyo

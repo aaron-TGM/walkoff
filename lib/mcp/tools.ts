@@ -396,7 +396,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     {
       title: "Team audience",
       description:
-        "A team's fan territory as a Klaviyo segment: one to three circles for Klaviyo's \"Someone's proximity to a location\" condition (each a real postal code and a radius), UK outward codes for clubs, how well it covers the team's fans, and how many of the brand's customers live there. Create the segment once per team in Klaviyo; every later moment reuses it.",
+        "A team's fan territory as a Klaviyo segment: one to three circles for Klaviyo's \"Someone's proximity to a location\" condition (each a postal code and a radius), the segment ready for the Klaviyo connector's create_segment (klaviyo_segment), the same as steps for creating it by hand, UK outward codes for clubs, how well it covers the team's fans, and how many of the brand's customers live there. The segment is created once per team, with the marketer's OK; every later moment reuses it.",
       inputSchema: { brand: brandArg, team: teamArg, league: leagueArg, reach: reachArg },
       annotations: { readOnlyHint: true, openWorldHint: false },
     },

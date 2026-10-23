@@ -23,6 +23,25 @@ const RADII: Record<"pro" | "soccer", number[]> = {
 export const KLAVIYO_ZIP_LIMIT = 500;
 
 const COUNTRY_NAME: Record<Country, string> = { US: "United States", CA: "Canada", GB: "United Kingdom" };
+/** Klaviyo's segment API names countries by three-letter ISO code. */
+const KLAVIYO_COUNTRY: Record<Country, string> = { US: "USA", CA: "CAN", GB: "GBR" };
+
+/** A segment as Klaviyo's create_segment takes it (its Segments API:
+ *  condition groups are ANDed, the conditions in a group ORed). */
+export interface KlaviyoSegment {
+  name: string;
+  definition: {
+    condition_groups: {
+      conditions: {
+        type: "profile-postal-code-distance";
+        country_code: string;
+        postal_code: string;
+        unit: "miles";
+        filter: { type: "numeric"; operator: "less-than"; value: number };
+      }[];
+    }[];
+  };
+}
 
 export interface Circle {
   /** What Klaviyo's proximity condition takes at the circle's center: a
@@ -52,6 +71,10 @@ export interface TeamAudience {
   outward_codes?: string[];
   /** From the brand's uploaded customer counts, when there are any. */
   customers?: { in_circles: number; in_core_areas: number; uploaded: number };
+  /** The segment for Klaviyo's create_segment, one condition per circle.
+   *  Null when there are no circles. */
+  klaviyo_segment: KlaviyoSegment | null;
+  /** The same segment, as steps for creating it by hand in Klaviyo. */
   klaviyo_segment_steps: string[];
 }
 
@@ -145,6 +168,17 @@ export function territoryCircles(
   };
 }
 
+function klaviyoSegment(name: string, circles: Circle[]): KlaviyoSegment {
+  const conditions = circles.map((c) => ({
+    type: "profile-postal-code-distance" as const,
+    country_code: KLAVIYO_COUNTRY[c.country],
+    postal_code: c.postal_code,
+    unit: "miles" as const,
+    filter: { type: "numeric" as const, operator: "less-than" as const, value: c.radius_miles },
+  }));
+  return { name, definition: { condition_groups: [{ conditions }] } };
+}
+
 export const segmentName = (t: TeamRef, reach: Reach = "core") =>
   `Walkoff · ${t.team.name} fans${reach === "wide" ? " (wide)" : ""}`;
 
@@ -179,6 +213,7 @@ export function teamAudience(t: TeamRef, opts: { reach?: Reach; customersByArea?
     includes_home: includesHome,
     core: { areas: core.length, population: Math.round(core.reduce((s, a) => s + a.area.population, 0)) },
     ...(outward ? { outward_codes: outward } : {}),
+    klaviyo_segment: circles.length ? klaviyoSegment(name, circles) : null,
     klaviyo_segment_steps: steps,
   };
   if (customersByArea?.size) {

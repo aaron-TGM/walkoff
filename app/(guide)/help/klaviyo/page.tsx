@@ -120,7 +120,7 @@ export default function KlaviyoPage() {
           <li>
             <strong>Leave read-only mode off.</strong> Klaviyo&apos;s connector can run read-only
             (read-only=true in a custom connector&apos;s address). Then Claude can&apos;t create
-            the template or the draft.
+            the segment, the template or the draft.
           </li>
           <li>
             <strong>Choose what needs your OK.</strong> In Claude&apos;s settings for the Klaviyo
@@ -142,7 +142,11 @@ export default function KlaviyoPage() {
         </p>
         <ul>
           <li>
-            The first time Claude needs one, it gives you the steps: Lists &amp; segments, then
+            The first time Claude needs one, it offers to create it with Klaviyo&apos;s connector.
+            Say OK and it&apos;s done: Walkoff hands Claude the segment, ready to go.
+          </li>
+          <li>
+            Rather do it yourself? Claude gives you the steps instead: Lists &amp; segments, then
             Create → Segment, then one to three &ldquo;Someone&apos;s proximity to a
             location&rdquo; conditions. <Link href={helpPath("audiences", "example")}>An example</Link>
           </li>
@@ -150,10 +154,7 @@ export default function KlaviyoPage() {
             Keep the name Walkoff gives it, like &ldquo;{segment}&rdquo;. Claude finds it by name
             next time.
           </li>
-          <li>
-            Klaviyo&apos;s connector can create segments too, so you can ask Claude to make it from
-            the same steps. Either way, look at it once in Klaviyo before your first send.
-          </li>
+          <li>Look at it once in Klaviyo before your first send.</li>
           <li>
             A customer counts only if their Klaviyo profile has a zip code and country, or a
             location Klaviyo can place.
@@ -177,7 +178,18 @@ export default function KlaviyoPage() {
                 <p>
                   It looks for the exact name, like &ldquo;{segment}&rdquo;. Check the name in
                   Klaviyo, and that Claude is connected to the right Klaviyo account. New team?
-                  Create the segment once from the steps Claude gives you.
+                  Say OK when Claude offers to create the segment.
+                </p>
+              ),
+            },
+            {
+              id: "no-create",
+              q: "Claude couldn't create the segment.",
+              a: (
+                <p>
+                  Check your Klaviyo role is {either(KLAVIYO.roles)}, and that read-only mode is off.
+                  Klaviyo also creates at most {KLAVIYO.segmentsPerDay} segments a day per account.
+                  You can always create it from the steps Claude gives you.
                 </p>
               ),
             },

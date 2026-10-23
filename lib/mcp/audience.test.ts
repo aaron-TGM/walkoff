@@ -53,6 +53,26 @@ describe("teamAudience", () => {
     assert.ok(a.outward_codes!.every((c) => POSTAL_AREAS.some((p) => p.country === "GB" && p.code === c)));
   });
 
+  it("hands Claude the segment in the shape Klaviyo's create_segment takes", () => {
+    for (const [team, country] of [[CHARGERS, "USA"], [SPURS, "GBR"]] as const) {
+      const a = teamAudience(team);
+      assert.equal(a.klaviyo_segment!.name, a.segment_name);
+      // One group: a profile in any circle is in the segment.
+      const [group, ...more] = a.klaviyo_segment!.definition.condition_groups;
+      assert.equal(more.length, 0);
+      assert.deepEqual(
+        group.conditions,
+        a.circles.map((c) => ({
+          type: "profile-postal-code-distance",
+          country_code: country,
+          postal_code: c.postal_code,
+          unit: "miles",
+          filter: { type: "numeric", operator: "less-than", value: c.radius_miles },
+        })),
+      );
+    }
+  });
+
   it("counts the brand's customers inside the audience", () => {
     const a = teamAudience(CHARGERS, { customersByArea: new Map([["US:921", 840], ["US:100", 300]]) });
     assert.deepEqual(a.customers, { in_circles: 840, in_core_areas: 840, uploaded: 1140 });

@@ -13,7 +13,7 @@ export const INSTRUCTIONS = `Walkoff turns sports moments into ready-made campai
 The usual flow:
 1. list_brands, then trigger_queue for the moments to act on now.
 2. build_campaign with a moment_id: subject lines, preview text, a finished email, products, the audience and when to send.
-3. With the marketer's Klaviyo connector: find the audience segment (or have them create it once from the steps given), create the template and a draft campaign, and show them. Never schedule or send without their go-ahead.
+3. With the marketer's Klaviyo connector: find the audience segment (if it's missing, offer to create it from the klaviyo_segment given, and do it once they say OK), create the template and a draft campaign, and show them. Never schedule or send without their go-ahead.
 4. log_send, so the queue stays clean and the history builds.
 
 Copy rules: most brands aren't licensed to use team marks. For them, campaign copy never names the team, league, players, stadium or event. It nods with the city (pro teams only) and the colors, through the brand's own products. Moment headlines name teams for the marketer's eyes only. If you rewrite the copy, keep the rules that build_campaign returns.`;
@@ -44,7 +44,7 @@ export function createWalkoffServer(ctx: ToolContext): McpServer {
           role: "user",
           content: {
             type: "text",
-            text: `Using Walkoff${brand ? ` for ${brand}` : ""}: check trigger_queue for the best moment to act on right now. If there is one, build_campaign for it and show me the subject lines, the email and the audience. When I say go, use my Klaviyo connector to create the template and a draft campaign for the Walkoff segment, then log it with log_send. Follow Walkoff's copy rules exactly.`,
+            text: `Using Walkoff${brand ? ` for ${brand}` : ""}: check trigger_queue for the best moment to act on right now. If there is one, build_campaign for it and show me the subject lines, the email and the audience. When I say go, use my Klaviyo connector to create the template and a draft campaign for the Walkoff segment (if the segment doesn't exist yet, ask me before creating it), then log it with log_send. Follow Walkoff's copy rules exactly.`,
           },
         },
       ],
