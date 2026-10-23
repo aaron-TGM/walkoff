@@ -30,7 +30,7 @@ export async function handleMcp(db: SupabaseClient, req: Request, origin: string
     return new Response(null, { status: 405, headers: { ...CORS, Allow: "POST, OPTIONS" } });
   }
 
-  const server = createWalkoffServer({ db, principal, now });
+  const server = createWalkoffServer({ db, principal, now, origin });
   const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true });
   await server.connect(transport);
   try {

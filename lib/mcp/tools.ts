@@ -1,5 +1,6 @@
 // The Walkoff MCP tools. Each works within the brands the signed-in person
-// may use and returns JSON for Claude to read.
+// may use and returns JSON for Claude to read. Operators also get the tools
+// that set brands up.
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -8,7 +9,23 @@ import { colorFamily } from "../affinity/colors";
 import type { AffinityReport } from "../affinity/compute";
 import { pickForTeam, type Pick, type PickProduct } from "../affinity/pick";
 import { catalogCounts, latestReport, loadAreaCounts, loadTaggedCatalog } from "../affinity/store";
+import {
+  addMember,
+  BrandError,
+  brandRecord,
+  createBrand,
+  DuplicateBrand,
+  listMembers,
+  onboardingStatus,
+  removeMember,
+  updateBrand,
+  uploadLink,
+  welcomeFor,
+  type BrandRecord,
+  type OnboardingStatus,
+} from "../brands";
 import { TRIGGERS } from "../triggers";
+import { sendWelcome } from "../welcome";
 import { teamAudience } from "./audience";
 import { buildCampaign, type CampaignMoment } from "./campaign";
 import {
@@ -17,6 +34,7 @@ import {
   createTrigger,
   deleteTrigger,
   gamesById,
+  isOperator,
   latestByMoment,
   listTriggers,
   logSend,
@@ -34,6 +52,7 @@ import {
   type Principal,
   type TriggerRow,
 } from "./data";
+import { resourceOf } from "./oauth/config";
 import { DEFAULT_RULE, matchingRule, momentWindow, type TriggerRule } from "./queue";
 import { feedIdOf, resolveTeam, teamByKey, teamFromFeedId, type TeamRef } from "./teams";
 import { formatLocal, teamTimeZone } from "./timing";
@@ -42,6 +61,8 @@ export interface ToolContext {
   db: SupabaseClient;
   principal: Principal;
   now: () => Date;
+  /** This server's public origin, for links in welcome emails. */
+  origin: string;
 }
 
 const HOUR = 3_600_000;
@@ -69,7 +90,7 @@ async function run(fn: () => Promise<unknown>): Promise<CallToolResult> {
   try {
     return json(await fn());
   } catch (err) {
-    if (err instanceof ToolError) return { isError: true, content: [{ type: "text", text: err.message }] };
+    if (err instanceof ToolError || err instanceof BrandError) return { isError: true, content: [{ type: "text", text: err.message }] };
     console.error("Walkoff MCP tool failed", err);
     return { isError: true, content: [{ type: "text", text: "Walkoff hit an error reading its data. Try again in a minute." }] };
   }
@@ -213,7 +234,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
       run(async () => {
         const b = await brandFor(db, principal, args.brand);
         const [report, catalog] = await Promise.all([latestReport(db, b.id), loadTaggedCatalog(db, b.id)]);
-        if (!report) throw new ToolError(`${b.name} hasn't uploaded customers yet, so there's no map. The upload link is with your Walkoff contact.`);
+        if (!report) throw new ToolError(`${b.name} hasn't uploaded customers yet, so there's no map. The upload link is in the welcome email from Walkoff.`);
         return {
           brand: b.name,
           computed_at: report.computedAt,
@@ -679,6 +700,221 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
             };
           }),
         };
+      }),
+  );
+
+  if (isOperator(principal)) registerOperatorTools(server, ctx);
+}
+
+// ── Operator tools ─────────────────────────────────────────────────
+// Setting brands up from Claude. Registered only for Walkoff operators, and
+// every handler checks again, so a mistake in registration can't open them.
+
+const operatorOnly = (ctx: ToolContext, fn: () => Promise<unknown>) =>
+  run(async () => {
+    if (!isOperator(ctx.principal)) throw new ToolError("Only Walkoff operators can do that.");
+    return fn();
+  });
+
+const requiredBrand = z.string().describe("Brand name or id.");
+const emailArg = z.string().max(254).describe("Their work email. They sign in to Walkoff with it.");
+const storeArg = z.string().max(200).describe('The store\'s address, like "frostbuddy.com". Campaigns link to its products.');
+const licensedArg = z
+  .boolean()
+  .describe("True only if the brand may use its teams' names and marks. Without a license (most brands), campaigns nod with colors and never name a team.");
+
+const brandView = (b: BrandRecord) => ({
+  id: b.id,
+  name: b.name,
+  store_url: b.store_url,
+  licensed: b.licensed,
+  contact_email: b.contact_email,
+  created_at: b.created_at,
+});
+
+const copyRule = (licensed: boolean) =>
+  licensed
+    ? "Licensed: campaign copy may name the brand's teams."
+    : "Not licensed: campaign copy never names a team, league, player or event. It nods with the colors, and the city for pro teams.";
+
+export function registerOperatorTools(server: McpServer, ctx: ToolContext): void {
+  const { db, principal } = ctx;
+
+  server.registerTool(
+    "create_brand",
+    {
+      title: "Create a brand",
+      description:
+        "Walkoff operators only. Sets up a new brand with its store and whether it's licensed to name its teams, and returns its id and private upload link. Then invite_member for each marketer: it emails them the link and how to connect Walkoff in Claude. Refuses a name another brand has unless allow_duplicate is true.",
+      inputSchema: {
+        name: z.string().min(1).max(100).describe('The brand\'s name, like "Frost Buddy".'),
+        store_url: storeArg.optional(),
+        licensed: licensedArg.optional(),
+        contact_email: z
+          .string()
+          .max(254)
+          .optional()
+          .describe("The brand's main contact, for Walkoff's records. It doesn't invite them: use invite_member for that."),
+        allow_duplicate: z
+          .boolean()
+          .optional()
+          .describe("Create it even though a brand already has this name. Only once the operator confirms it's a different brand."),
+      },
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    },
+    (args) =>
+      operatorOnly(ctx, async () => {
+        let b: BrandRecord;
+        try {
+          b = await createBrand(db, {
+            name: args.name,
+            storeUrl: args.store_url,
+            licensed: args.licensed,
+            contactEmail: args.contact_email,
+            allowDuplicate: args.allow_duplicate,
+          });
+        } catch (err) {
+          if (err instanceof DuplicateBrand) {
+            throw new ToolError(
+              `${err.message} Ask the operator. If it's a different brand, call create_brand again with allow_duplicate: true. To change the existing one, use update_brand.`,
+            );
+          }
+          throw err;
+        }
+        return {
+          created: brandView(b),
+          copy_rule: copyRule(b.licensed),
+          upload_link: uploadLink(b.upload_token, ctx.origin),
+          note: "The upload link is private: anyone with it can upload for this brand. invite_member emails it to each person you invite. Don't share it anywhere else.",
+          next: `${b.store_url ? "" : "update_brand with the store's address, then "}invite_member for each marketer at ${b.name}.`,
+        };
+      }),
+  );
+
+  server.registerTool(
+    "update_brand",
+    {
+      title: "Update a brand",
+      description:
+        "Walkoff operators only. Changes a brand's name, store address or license. Licensed brands' campaigns may name their teams; the rest only nod with the colors.",
+      inputSchema: {
+        brand: requiredBrand,
+        name: z.string().min(1).max(100).optional().describe("A new name."),
+        store_url: storeArg.optional(),
+        licensed: licensedArg.optional(),
+      },
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
+    },
+    (args) =>
+      operatorOnly(ctx, async () => {
+        const b = await brandFor(db, principal, args.brand);
+        if (args.name === undefined && args.store_url === undefined && args.licensed === undefined) {
+          throw new ToolError("Nothing to change. Pass name, store_url or licensed.");
+        }
+        const updated = await updateBrand(db, b.id, { name: args.name, storeUrl: args.store_url, licensed: args.licensed });
+        return { updated: brandView(updated), copy_rule: copyRule(updated.licensed) };
+      }),
+  );
+
+  server.registerTool(
+    "invite_member",
+    {
+      title: "Invite someone to a brand",
+      description:
+        "Walkoff operators only. Lets someone use Walkoff for a brand in Claude, and emails them a welcome: who invited them, the brand's private upload link (the page has the export guides), how to add Walkoff as a connector in Claude, and a first thing to ask. Safe to repeat: inviting someone again sends the welcome again.",
+      inputSchema: {
+        brand: requiredBrand,
+        email: emailArg,
+        send_email: z.boolean().optional().describe("Send the welcome email. Default true. With false, they're added and nothing is sent."),
+      },
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    },
+    (args) =>
+      operatorOnly(ctx, async () => {
+        const b = await brandFor(db, principal, args.brand);
+        const brand = await brandRecord(db, b.id);
+        if (!brand) throw new ToolError("That brand doesn't exist anymore.");
+        const { email, added } = await addMember(db, brand.id, args.email);
+        const member = { brand: brand.name, email, added, ...(added ? {} : { note: `${email} was already a member.` }) };
+        if (args.send_email === false) {
+          return {
+            ...member,
+            welcome_email: "Not sent.",
+            next: `To connect, ${email} adds ${resourceOf(ctx.origin)} as a custom connector in Claude and signs in with this email.`,
+          };
+        }
+        let sent: "sent" | "dev";
+        try {
+          sent = await sendWelcome(await welcomeFor(db, brand, email, { invitedBy: principal.email, origin: ctx.origin, now: ctx.now() }));
+        } catch (err) {
+          console.error("Walkoff welcome email failed", err);
+          throw new ToolError(
+            `${email} ${added ? "can now" : "can still"} use Walkoff for ${brand.name}, but the welcome email didn't send. Try invite_member again in a minute. It's safe to repeat.`,
+          );
+        }
+        return {
+          ...member,
+          welcome_email: sent === "sent" ? `Sent to ${email}.` : "Printed to the server log, because email isn't set up on this server.",
+          next: "onboarding_status shows when they upload and connect.",
+        };
+      }),
+  );
+
+  server.registerTool(
+    "list_members",
+    {
+      title: "List a brand's members",
+      description: "Walkoff operators only. Who can use Walkoff for a brand, when each was invited, and whether they've connected it in Claude.",
+      inputSchema: { brand: requiredBrand },
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    (args) =>
+      operatorOnly(ctx, async () => {
+        const b = await brandFor(db, principal, args.brand);
+        const members = await listMembers(db, b.id, ctx.now());
+        return { brand: b.name, members, ...(members.length ? {} : { note: "No members yet. invite_member adds one." }) };
+      }),
+  );
+
+  server.registerTool(
+    "remove_member",
+    {
+      title: "Remove someone from a brand",
+      description: "Walkoff operators only. Stops someone using Walkoff for a brand, from their next request in Claude.",
+      inputSchema: { brand: requiredBrand, email: emailArg },
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
+    },
+    (args) =>
+      operatorOnly(ctx, async () => {
+        const b = await brandFor(db, principal, args.brand);
+        const { email, removed } = await removeMember(db, b.id, args.email);
+        if (!removed) {
+          const members = (await listMembers(db, b.id, ctx.now())).map((m) => m.email);
+          throw new ToolError(`${email} isn't a member of ${b.name}. ${members.length ? `Its members: ${members.join(", ")}.` : "It has no members."}`);
+        }
+        return { brand: b.name, removed: email, note: "Their access ends on their next request in Claude." };
+      }),
+  );
+
+  server.registerTool(
+    "onboarding_status",
+    {
+      title: "Onboarding status",
+      description:
+        "Walkoff operators only. Where a brand is in onboarding, or every brand: store and license, members and whether each has connected Walkoff in Claude, customers uploaded and mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step.",
+      inputSchema: { brand: z.string().optional().describe("Brand name or id. Leave it out for every brand.") },
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    (args) =>
+      operatorOnly(ctx, async () => {
+        const now = ctx.now();
+        if (args.brand) return onboardingStatus(db, (await brandFor(db, principal, args.brand)).id, now);
+        const brands = await brandsFor(db, principal);
+        const out: OnboardingStatus[] = [];
+        for (let i = 0; i < brands.length; i += 4) {
+          out.push(...(await Promise.all(brands.slice(i, i + 4).map((b) => onboardingStatus(db, b.id, now)))));
+        }
+        return { brands: out, ...(out.length ? {} : { note: "No brands yet. create_brand sets one up." }) };
       }),
   );
 }

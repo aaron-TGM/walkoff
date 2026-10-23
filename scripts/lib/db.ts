@@ -11,8 +11,3 @@ export function scriptDb(): SupabaseClient {
   }
   return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
 }
-
-export function uploadLink(token: string): string {
-  const site = (process.env.NEXT_PUBLIC_SITE_URL || "https://walkoff.io").replace(/\/$/, "");
-  return `${site}/upload/${token}`;
-}

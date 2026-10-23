@@ -3,6 +3,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { TEAM_HOMES } from "../affinity/geo";
 import { TRIGGERS } from "../triggers";
+import { operatorEmails } from "./oauth/config";
 import { teamFromFeedId } from "./teams";
 
 export interface Principal {
@@ -12,6 +13,10 @@ export interface Principal {
   clientId: string;
   scope: string;
 }
+
+/** A Walkoff operator (WALKOFF_OPERATOR_EMAILS) signed in for every brand:
+ *  the only people who can set brands up and invite others. */
+export const isOperator = (p: Principal) => p.brandIds === null && operatorEmails().has(p.email.toLowerCase());
 
 /** A problem the person can fix, said in words they can act on. */
 export class ToolError extends Error {}
@@ -44,8 +49,11 @@ export async function brandFor(db: SupabaseClient, p: Principal, ref?: string | 
     if (brands.length === 1) return brands[0];
     throw new ToolError(`Which brand? You have ${brands.map((b) => b.name).join(", ")}.`);
   }
-  const exact = brands.find((b) => b.id === r || b.name.toLowerCase() === r);
-  if (exact) return exact;
+  const byId = brands.find((b) => b.id === r);
+  if (byId) return byId;
+  const named = brands.filter((b) => b.name.toLowerCase() === r);
+  if (named.length === 1) return named[0];
+  if (named.length > 1) throw new ToolError(`More than one brand is named ${named[0].name}. Use its id: ${named.map((b) => b.id).join(" or ")}.`);
   const partial = brands.filter((b) => b.name.toLowerCase().includes(r));
   if (partial.length === 1) return partial[0];
   throw new ToolError(`No brand matches "${ref}". You have ${brands.map((b) => b.name).join(", ")}.`);

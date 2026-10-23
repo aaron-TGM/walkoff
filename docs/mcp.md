@@ -7,8 +7,10 @@ campaign. Their own Klaviyo connector, on their own permissions, drafts it.
 
 ## Connecting
 
-- **Claude (web, desktop, mobile):** Settings → Connectors → Add custom
-  connector → `https://www.walkoff.io/mcp`, then sign in.
+- **Claude (web, desktop, mobile):** Customize → Connectors → Add custom
+  connector → `https://www.walkoff.io/mcp`, then sign in. On Team and
+  Enterprise plans an owner adds it first, under Organization settings →
+  Connectors.
 - **Claude Code:** `claude mcp add --transport http walkoff https://www.walkoff.io/mcp`,
   then `/mcp` to sign in.
 
@@ -21,11 +23,14 @@ and where it sends them back (claude.ai, or localhost for Claude Code).
 
 ## Who can sign in
 
+People invited to a brand, by an operator in Claude (below) or with the
+script:
+
 ```bash
-npm run brand -- invite "Frost Buddy" marketer@frostbuddy.com   # one brand
-npm run brand -- members "Frost Buddy"                            # who has access
+npm run brand -- invite "Frost Buddy" marketer@frostbuddy.com --by you@walkoff.io   # emails the welcome
+npm run brand -- members "Frost Buddy"                            # who has access, who's connected
 npm run brand -- members "Frost Buddy" --remove marketer@frostbuddy.com
-npm run brand -- set "Frost Buddy" --store https://frostbuddy.com [--licensed | --unlicensed]
+npm run brand -- set "Frost Buddy" --store frostbuddy.com [--licensed | --unlicensed]
 ```
 
 `WALKOFF_OPERATOR_EMAILS` (comma-separated, on Vercel) can use every brand.
@@ -35,6 +40,52 @@ Removing someone cuts access on their next request; refresh stops working.
 `--licensed` lets campaign copy name the brand's teams. Without it (the
 default, and most brands) copy never names a team, league, player or event:
 it nods with the city, for pro teams, and the colors.
+
+## Operators: onboarding brands in Claude
+
+An operator (an address in `WALKOFF_OPERATOR_EMAILS`, signed in with
+"Every brand" on the consent page) can set up a brand in one message:
+
+> Set up Frost Buddy: store frostbuddy.com, not licensed, invite jane@frostbuddy.com.
+
+Claude creates the brand, then invites Jane, and Walkoff emails them a
+welcome. Later: "Where is each brand in onboarding?"
+
+| Tool | What it does |
+|------|--------------|
+| `create_brand` | Name, store, `licensed` (default false) and a contact. Returns the brand's id and private upload link. Refuses a name another brand has (any case or spacing) unless `allow_duplicate` is true. |
+| `update_brand` | Changes the name, store or license. |
+| `invite_member` | Adds someone to a brand and emails them the welcome (`send_email: false` skips it). Safe to repeat: it resends the welcome. |
+| `list_members`, `remove_member` | Who can use a brand and whether each has connected; removing takes effect on their next request. |
+| `onboarding_status` | One brand or all: store and license, members and whether each has connected (a live sign-in that reaches the brand), customers uploaded and when, customers mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step. |
+
+The next step follows the onboarding order: store, invite, customer upload,
+product export, Claude's tagging (`npm run affinity:tag`), connecting
+Claude, then a first campaign.
+
+Only operators get these tools. They aren't registered for anyone else
+(`tools/list` doesn't show them and calling one fails), each handler checks
+again, and brands are found through the operator's own access
+(`brandFor`). The consent page tells operators what they're allowing.
+
+**The welcome email** goes only to the person invited, through Resend
+(`RESEND_API_KEY`, from `RESEND_FROM_EMAIL`), with replies to the operator
+who invited them. It says who invited them and to which brand, links the
+brand's upload page (which has the export guides: Shopify orders or
+customers, then products), gives the connector steps above with the
+address they sign in with, and suggests a first thing to ask Claude ("What
+should we send this week?"). Someone who already connected Walkoff for
+another brand is told to disconnect and connect again, since a sign-in
+reaches only the brands picked when it was made. Without `RESEND_API_KEY`
+outside production, the email is printed to the server log. In production
+without it, `invite_member` keeps the invite and says the email didn't go.
+
+The upload link is the brand's secret: anyone with it can upload for the
+brand. `create_brand` shows it to the operator, and `invite_member` emails
+it to the people invited. Don't send it anywhere else. Links in the email
+use this server's address (`WALKOFF_PUBLIC_URL` in production).
+
+The script and the tools share `lib/brands.ts` and `lib/welcome.ts`.
 
 ## Tools
 
@@ -51,8 +102,11 @@ it nods with the city, for pro teams, and the colors.
 | `create_trigger`, `list_triggers`, `delete_trigger` | The brand's rules for which moments matter. |
 | `log_send`, `send_history` | What the brand drafted, sent or skipped. Logged moments leave the queue. |
 
+Operators also get the onboarding tools above.
+
 There's also a `moment_campaign` prompt that runs the whole loop, and
-server instructions that tell Claude the flow and the copy rules.
+server instructions that tell Claude the flow and the copy rules (and, for
+operators, how to onboard a brand).
 
 **The Klaviyo side.** Klaviyo's connector can create templates and draft
 campaigns but not segments, so the first time a brand acts on a team, the
@@ -98,10 +152,11 @@ Code: `lib/mcp/` (tools, campaign builder, audience, timing, queue),
 1. Run `supabase/006_mcp.sql`, then `supabase/007_hardening.sql`, in the
    Supabase SQL editor.
 2. On Vercel: `WALKOFF_OPERATOR_EMAILS`, plus `RESEND_API_KEY` and a
-   `RESEND_FROM_EMAIL` on a domain verified in Resend (sign-in codes won't
-   send without them), and `WALKOFF_PUBLIC_URL=https://www.walkoff.io` for
-   Production only.
-3. `npm run brand -- set <brand> --store https://…` and invite the people
-   who'll use it.
+   `RESEND_FROM_EMAIL` on a domain verified in Resend (sign-in codes and
+   welcome emails won't send without them), and
+   `WALKOFF_PUBLIC_URL=https://www.walkoff.io` for Production only.
+3. Set brands up in Claude as an operator, or with `npm run brand`
+   (`scripts/README.md`), and invite the people who'll use them.
 
-Locally, without `RESEND_API_KEY`, sign-in codes print to the dev server log.
+Locally, without `RESEND_API_KEY`, sign-in codes and welcome emails print
+to the dev server log.
