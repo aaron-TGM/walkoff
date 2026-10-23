@@ -1,9 +1,10 @@
 // Who to send to: a team's fan territory, written as a Klaviyo segment.
 // Klaviyo's zip filter takes whole codes and its proximity condition takes a
 // real postal code, so the territory becomes a few circles ("within 40 miles
-// of 92108") chosen to cover the team's core fans and little else. UK
-// outward codes ("N17") also work in Klaviyo's zip filter, so clubs get the
-// exact district list too.
+// of 92108") chosen to cover the team's core fans and little else. For UK
+// postcodes the proximity condition reads only the district ("SW1W", not
+// "SW1W 0NY"), so club circles are centered on one. Clubs also get their
+// district list, for Klaviyo's zip filter.
 import { haversineKm, POSTAL_AREAS, type Country, type PostalArea } from "../affinity/geo";
 import { territory } from "../affinity/territories";
 import type { TeamRef } from "./teams";
@@ -24,7 +25,8 @@ export const KLAVIYO_ZIP_LIMIT = 500;
 const COUNTRY_NAME: Record<Country, string> = { US: "United States", CA: "Canada", GB: "United Kingdom" };
 
 export interface Circle {
-  /** A real postal code at the circle's center, for Klaviyo. */
+  /** What Klaviyo's proximity condition takes at the circle's center: a
+   *  real ZIP or postal code, or for the UK a postcode district. */
   postal_code: string;
   country: Country;
   radius_miles: number;
@@ -117,7 +119,8 @@ export function territoryCircles(
     if (best.i < 0 || best.gain <= 0.05 * coreGain) break;
     const { i, miles } = best;
     const center = centers[i].area;
-    circles.push({ postal_code: center.ref, country: center.country, radius_miles: miles, center_area: `around ${center.code}` });
+    const code = center.country === "GB" ? center.code : center.ref;
+    circles.push({ postal_code: code, country: center.country, radius_miles: miles, center_area: `around ${center.code}` });
     if (haversineKm(center, t.team) <= miles * KM_PER_MILE) includesHome = true;
     for (const x of near[i]) if (x.km <= miles * KM_PER_MILE) inside.add(x.a.area.key);
   }
@@ -162,7 +165,7 @@ export function teamAudience(t: TeamRef, opts: { reach?: Reach; customersByArea?
   });
   if (outward?.length) {
     steps.push(
-      `More exact for UK clubs: instead of the circles, use "Properties about someone" → Zip Code → includes any of, and paste the ${outward.length} outward codes in outward_codes${outward.length > KLAVIYO_ZIP_LIMIT ? ` (Klaviyo takes ${KLAVIYO_ZIP_LIMIT} per condition, so split them across OR conditions)` : ""}.`,
+      `For UK clubs, outward_codes lists the club's ${outward.length} postcode districts, if you'd rather use "Properties about someone" → Zip Code → includes any of${outward.length > KLAVIYO_ZIP_LIMIT ? ` (Klaviyo takes ${KLAVIYO_ZIP_LIMIT} per condition, so split them across OR conditions)` : ""}. If you do, check the segment isn't empty before using it.`,
     );
   }
   steps.push("Save it once. Klaviyo keeps it up to date, so every future moment for this team can reuse it.");
