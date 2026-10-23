@@ -464,7 +464,7 @@ export function buildCampaign(input: {
   const steps = [
     `Audience: with the Klaviyo connector, look for a segment named "${audience.segment_name}" (get_segments). If it isn't there, ask the marketer to create it once, following audience.klaviyo_segment_steps. Don't send a team moment to the whole list.`,
     `Template: create an email template named "${name}" from html (create_email_template).`,
-    `Draft: create a campaign named "${name}" for that segment with subject "${subjects[0]}" and preview text "${copy.preview}" (create_campaign), then assign the template to its message (assign_template_to_campaign_message).`,
+    `Draft: create a campaign named "${name}" for that segment with subject "${subjects[0]}" and preview text "${copy.preview}" (create_campaign), then assign the template to its message (assign_template_to_campaign_message). Keep Smart Sending on, so nobody who just got an email from the brand gets another.`,
     `Check: render the template (render_email_template) and show the marketer the email, the audience and the send time: ${send.send_at_local}.`,
     `Send: schedule it for ${send.send_at_local} (${send.send_at_utc}) if the Klaviyo connector can schedule; otherwise ask the marketer to schedule it in Klaviyo.`,
   ];

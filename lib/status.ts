@@ -167,7 +167,8 @@ export function engineChecks(
     const detail =
       state === "operational" && lastPoll
         ? `Polled ${ago(now - Date.parse(lastPoll))} · ${r.live_games} live · ${moments} ${moments === 1 ? "moment" : "moments"} today`
-        : `Last good poll ${r.last_ok_at ? ago(sinceOk) : "never"}${r.last_error ? ` · ${r.last_error}` : ""}`;
+        : // Raw errors can name internal URLs and tables; they stay in the logs.
+          `Last good poll ${r.last_ok_at ? ago(sinceOk) : "never"}${r.last_error ? " · retrying" : ""}`;
     return { id: `engine-${l.id}`, name: `${l.name} moments`, state, detail };
   });
 }
