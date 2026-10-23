@@ -179,6 +179,23 @@ export async function revoke(db: SupabaseClient, token: string): Promise<void> {
   if (gone.error) throw gone.error;
 }
 
+/** Connections these people still have, with the brands each reaches (null:
+ *  every brand). A connection is its current refresh token: each sign-in and
+ *  refresh writes a new one and spends the last, while an access token from
+ *  before a refresh can reach more brands than the connection now does. */
+export async function liveGrants(db: SupabaseClient, emails: string[], now = new Date()): Promise<Pick<Grant, "email" | "brand_ids">[]> {
+  if (!emails.length) return [];
+  const { data, error } = await db
+    .from("oauth_grants")
+    .select("email, brand_ids")
+    .in("email", emails)
+    .eq("kind", "refresh")
+    .is("used_at", null)
+    .gt("expires_at", now.toISOString());
+  if (error) throw error;
+  return (data ?? []) as Pick<Grant, "email" | "brand_ids">[];
+}
+
 /** Who an access token belongs to, with brand access checked again now, or
  *  null when it isn't valid for this resource. */
 export async function principalFor(db: SupabaseClient, token: string, resource: string): Promise<Principal | null> {

@@ -122,6 +122,7 @@ ${errorBox(opts.error)}
 <form method="post">
 ${hidden("request", v.requestId)}${hidden("step", "consent")}
 ${list}
+${opts.operator ? `<p>As an operator, ${esc(v.app)} can also create brands, change their settings, and invite or remove people.</p>` : ""}
 <div class="actions">
 <button class="primary" type="submit" name="decision" value="allow">Allow</button>
 <button class="secondary" type="submit" name="decision" value="deny">Cancel</button>
