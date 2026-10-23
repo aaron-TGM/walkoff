@@ -21,6 +21,7 @@ ESPN scoreboards ─► normalize ─► moment rules ─► Supabase
 | During | `close_game`      | Late in the game and within one score |
 | During | `comeback_live`   | A team that trailed big is back within one score in the second half |
 | During | `clutch_moment`   | Bases loaded or the tying run in scoring position late (MLB), final drive (football), last shot (basketball) |
+| After  | `team_win`        | Any other regular-season or playoff win. Intensity follows how often the sport plays: NFL 0.7, college football and Premier League 0.65, NBA, NHL and college basketball 0.4, MLB 0.3 |
 | After  | `walkoff_win`     | MLB walk-off, NHL overtime or shootout, football winning score in OT or the last 10 seconds |
 | After  | `buzzer_beater`   | Basketball go-ahead score with 3 seconds or less left |
 | After  | `late_winner`     | Soccer winner at 85'+, football go-ahead in the last 2:00, basketball in the last minute |
@@ -127,5 +128,6 @@ Logs are JSON lines with `severity`, so Cloud Logging filters work, e.g.
 - `playoff_clinch` (needs standings), `player_milestone`, `big_signing` and
   `great_escape` are in the site's trigger library but not detected yet.
 - Hockey late winners need hockey play-by-play.
-- Matching moments to brands' customers and products, and sending through
-  Klaviyo, are the next two weeks of the build.
+- Brands act on moments through the MCP server (docs/mcp.md): it matches
+  each moment to the brand's fan territories and products and drafts the
+  campaign in the marketer's own Klaviyo.

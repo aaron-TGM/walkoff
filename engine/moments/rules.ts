@@ -18,6 +18,7 @@ const PHASE: Record<MomentType, Phase> = {
   rivalry_preview: "before",
   big_game_alert: "before",
   season_opener: "before",
+  team_win: "after",
   close_game: "during",
   comeback_live: "during",
   clutch_moment: "during",
@@ -594,6 +595,15 @@ export function finalMoments(
         at,
       ),
     );
+  }
+
+  // Any other win in a game that counts. Only when nothing above already
+  // marks it, so a walk-off isn't also a plain win. US feeds number the
+  // season part (2 regular, 3 postseason); soccer feeds carry a season id.
+  const counts = g.sport === "soccer" || g.seasonType === 2 || g.seasonType === 3;
+  const competitive = counts && !NOT_COMPETITIVE.test(g.headline ?? "");
+  if (competitive && !out.some((m) => m.team.id === W.team.id)) {
+    out.push(moment(g, "team_win", winner, `Win: ${line}`, rules.winIntensity + boost, { margin: W.score - L.score }, at));
   }
 
   const margin = W.score - L.score;

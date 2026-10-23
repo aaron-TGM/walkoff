@@ -7,7 +7,7 @@ import { z } from "zod";
 import { colorFamily } from "../affinity/colors";
 import type { AffinityReport } from "../affinity/compute";
 import { pickForTeam, type Pick, type PickProduct } from "../affinity/pick";
-import { catalogStats, latestReport, loadBrandData } from "../affinity/store";
+import { catalogCounts, latestReport, loadAreaCounts, loadTaggedCatalog } from "../affinity/store";
 import { TRIGGERS } from "../triggers";
 import { teamAudience } from "./audience";
 import { buildCampaign, type CampaignMoment } from "./campaign";
@@ -172,7 +172,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         const brands = await brandsFor(db, principal);
         const rows = await Promise.all(
           brands.map(async (b) => {
-            const [report, stats] = await Promise.all([latestReport(db, b.id), catalogStats(db, b.id)]);
+            const [report, stats] = await Promise.all([latestReport(db, b.id), catalogCounts(db, b.id)]);
             return {
               id: b.id,
               name: b.name,
@@ -212,7 +212,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     (args) =>
       run(async () => {
         const b = await brandFor(db, principal, args.brand);
-        const [report, data] = await Promise.all([latestReport(db, b.id), loadBrandData(db, b.id)]);
+        const [report, catalog] = await Promise.all([latestReport(db, b.id), loadTaggedCatalog(db, b.id)]);
         if (!report) throw new ToolError(`${b.name} hasn't uploaded customers yet, so there's no map. The upload link is with your Walkoff contact.`);
         return {
           brand: b.name,
@@ -231,7 +231,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
               share_of_customers: g.share,
               team_colors: colors.map((h) => `#${h} (${colorFamily(h)})`),
               buys_more_of: g.products.map((p) => `${p.product} (${p.lift}x)`),
-              feature_on_a_moment: pickForTeam(data.catalog, g.league, { id: g.teamId, colors }, 3).map((p) => pickView(p, b.store_url)),
+              feature_on_a_moment: pickForTeam(catalog, g.league, { id: g.teamId, colors }, 3).map((p) => pickView(p, b.store_url)),
             };
           }),
           biggest_by_league: report.leagues.map((l) => ({
@@ -350,9 +350,9 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     (args) =>
       run(async () => {
         const b = await brandFor(db, principal, args.brand);
-        const [report, data] = await Promise.all([latestReport(db, b.id), loadBrandData(db, b.id)]);
+        const [report, catalog] = await Promise.all([latestReport(db, b.id), loadTaggedCatalog(db, b.id)]);
         const t = team(args.team, args.league, standoutTeams(report));
-        const picks = pickForTeam(data.catalog, t.league, t.team, args.limit ?? 3);
+        const picks = pickForTeam(catalog, t.league, t.team, args.limit ?? 3);
         return {
           brand: b.name,
           team: t.team.name,
@@ -360,7 +360,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           picks: picks.map((p) => pickView(p, b.store_url)),
           ...(picks.length
             ? {}
-            : { note: data.catalog.length ? "Nothing in the catalog is close to the team's colors." : "No catalog yet: upload a Shopify product export." }),
+            : { note: catalog.length ? "Nothing in the catalog is close to the team's colors." : "No catalog yet: upload a Shopify product export." }),
         };
       }),
   );
@@ -377,9 +377,9 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     (args) =>
       run(async () => {
         const brand = await maybeBrand(ctx, args.brand);
-        const [report, data] = brand ? await Promise.all([latestReport(db, brand.id), loadBrandData(db, brand.id)]) : [null, null];
+        const [report, areas] = brand ? await Promise.all([latestReport(db, brand.id), loadAreaCounts(db, brand.id)]) : [null, null];
         const t = team(args.team, args.league, standoutTeams(report));
-        const customersByArea = data ? new Map(data.areas.map((a) => [`${a.country}:${a.area}`, a.customers])) : undefined;
+        const customersByArea = areas ? new Map(areas.map((a) => [`${a.country}:${a.area}`, a.customers])) : undefined;
         return { brand: brand?.name ?? null, team: t.team.name, key: t.key, ...teamAudience(t, { reach: args.reach, customersByArea }) };
       }),
   );
@@ -408,7 +408,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
       run(async () => {
         const b = await brandFor(db, principal, args.brand);
         const now = ctx.now();
-        const [report, data] = await Promise.all([latestReport(db, b.id), loadBrandData(db, b.id)]);
+        const [report, catalog, areas] = await Promise.all([latestReport(db, b.id), loadTaggedCatalog(db, b.id), loadAreaCounts(db, b.id)]);
         let moment: CampaignMoment;
         if (args.moment_id) {
           const row = await momentById(db, args.moment_id);
@@ -447,17 +447,17 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         let picks: Pick[];
         if (args.products?.length) {
           const wanted = new Set(args.products.map((s) => s.trim().toLowerCase()));
-          const chosen = data.catalog.filter((p) => wanted.has((p.handle ?? "").toLowerCase()) || wanted.has(p.title.toLowerCase()));
+          const chosen = catalog.filter((p) => wanted.has((p.handle ?? "").toLowerCase()) || wanted.has(p.title.toLowerCase()));
           if (!chosen.length) throw new ToolError("None of those products are in the catalog. Use handles or exact titles from match_products.");
           const matched = pickForTeam(chosen, t.league, t.team, chosen.length);
           const have = new Set(matched.map((p) => p.handle));
           picks = [...matched, ...chosen.filter((p) => !have.has(p.handle)).map(plainPick)];
         } else {
-          picks = pickForTeam(data.catalog, t.league, t.team, 3);
+          picks = pickForTeam(catalog, t.league, t.team, 3);
         }
         const audience = teamAudience(t, {
           reach: args.reach,
-          customersByArea: new Map(data.areas.map((a) => [`${a.country}:${a.area}`, a.customers])),
+          customersByArea: new Map(areas.map((a) => [`${a.country}:${a.area}`, a.customers])),
         });
         const campaign = buildCampaign({
           brand: { name: b.name, storeUrl: args.store_url ?? b.store_url, licensed: b.licensed },

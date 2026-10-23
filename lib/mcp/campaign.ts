@@ -72,6 +72,7 @@ export interface Campaign {
 type Kind = "win" | "loss" | "pregame" | "live" | "season";
 
 const KIND: Record<string, Kind> = {
+  team_win: "win",
   walkoff_win: "win",
   buzzer_beater: "win",
   late_winner: "win",
@@ -189,6 +190,8 @@ function copyFor(type: string, c: Ctx): Copy {
   });
 
   switch (type) {
+    case "team_win":
+      return win("That's a win.", Who ? `${Who}, enjoy this one.` : "Enjoy this one.", `Wins look good in ${c.color}.`, "Good game.");
     case "walkoff_win":
       return win("What a finish.", Who ? `${Who}, that finish.` : "That finish.", "Right down to the last second.", "Some wins you feel all week.");
     case "buzzer_beater":

@@ -22,11 +22,13 @@ export interface QueueMoment {
 }
 
 /** With no rules of its own, a brand acts on its standout teams' wins,
- *  heartbreakers, big games and season moments. */
+ *  heartbreakers, big games and season moments. Ordinary wins in sports
+ *  with a game most days fall under the intensity bar (engine/moments/sports). */
 export const DEFAULT_RULE: TriggerRule = {
   id: "default",
   name: "Big moments for your standout teams",
   moment_types: [
+    "team_win",
     "walkoff_win",
     "buzzer_beater",
     "late_winner",

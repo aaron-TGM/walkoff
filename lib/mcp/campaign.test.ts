@@ -79,6 +79,13 @@ describe("buildCampaign", () => {
     }
   });
 
+  it("an ordinary win gets its own copy", () => {
+    const c = campaign(CHARGERS, "team_win", { reach: "wide" });
+    assert.equal(c.headline, "That's a win.");
+    assert.deepEqual(c.subject_lines, ["Azure and sunflower kind of Sunday.", "LA, enjoy this one.", "Wins look good in blue."]);
+    assertNeverNames(seen(c), CHARGERS);
+  });
+
   it("licensed brands may name the team", () => {
     const c = campaign(CHARGERS, "comeback_win", { licensed: true });
     assert.equal(c.subject_lines[0], "Chargers win. Azure and sunflower kind of Sunday.");

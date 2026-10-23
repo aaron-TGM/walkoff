@@ -14,6 +14,7 @@ export type MomentType =
   | "close_game"
   | "comeback_live"
   | "clutch_moment"
+  | "team_win"
   | "walkoff_win"
   | "buzzer_beater"
   | "late_winner"

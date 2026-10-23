@@ -42,7 +42,7 @@ it nods with the city, for pro teams, and the colors.
 |------|--------------|
 | `list_brands` | Brands this person can use, with store, license, customers mapped, catalog and standout teams. |
 | `get_affinity_map` | Standout fan territories (lift, customers, what they buy) and what to feature for each. |
-| `trigger_queue` | Moments to act on now: matching the brand's triggers (or, with none, big moments for its standout teams), not yet drafted, sent or skipped, with how long each keeps. |
+| `trigger_queue` | Moments to act on now: matching the brand's triggers (or, with none, big moments for its standout teams), not yet drafted, sent or skipped, with how long each keeps. The default takes ordinary wins in weekly sports (NFL, college football, Premier League) but not in sports with a game most days. |
 | `recent_moments` | What just happened for the brand's teams, or any team. |
 | `upcoming_games` | Games coming up for those teams, in the fans' time zone, with pre-game moments. |
 | `match_products` | The brand's products in a team's colors. |

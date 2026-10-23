@@ -24,6 +24,11 @@ describe("matchingRule", () => {
     assert.equal(matchingRule(moment({ intensity: 0.5 }), [DEFAULT_RULE], ["nfl:24"]), null);
   });
 
+  it("takes an ordinary football win by default, not every basketball win", () => {
+    assert.equal(matchingRule(moment({ type: "team_win", intensity: 0.7 }), [DEFAULT_RULE], ["nfl:24"])?.id, "default");
+    assert.equal(matchingRule(moment({ type: "team_win", intensity: 0.4, teamKey: "nba:13" }), [DEFAULT_RULE], ["nba:13"]), null);
+  });
+
   it("matches a brand's own rules by type, team and intensity", () => {
     assert.equal(matchingRule(moment({ type: "rivalry_win", teamKey: "nba:13" }), [rivals], [])?.id, "t1");
     assert.equal(matchingRule(moment({ type: "walkoff_win", teamKey: "nba:13" }), [rivals], []), null);

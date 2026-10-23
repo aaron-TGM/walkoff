@@ -86,9 +86,12 @@ describe("final moments from real games", () => {
     assert.equal(decisive.period, 5);
   });
 
-  it("a go-ahead score with 5:50 left is not a walk-off", () => {
+  it("a go-ahead score with 5:50 left is not a walk-off, just a win", () => {
     const ms = finals(game("nfl", "nfl-week1", "NE @ SEA"), "nfl-summary-401872656");
-    assert.deepEqual(kinds(ms), ["heartbreak_loss:NE"]);
+    assert.deepEqual(kinds(ms), ["heartbreak_loss:NE", "team_win:SEA"]);
+    const win = ms.find((m) => m.type === "team_win")!;
+    assert.match(win.headline, /^Win: Seahawks \d+, Patriots \d+$/);
+    assert.equal(win.intensity, 0.7, "an NFL win clears the default bar (0.6)");
   });
 
   it("division rivals get a rivalry win", () => {
@@ -100,7 +103,8 @@ describe("final moments from real games", () => {
 
   it("basketball go-ahead with 1:23 left is not a buzzer beater", () => {
     const ms = finals(game("nba", "nba-1021", "IND @ NO"), "nba-summary-401909839");
-    assert.deepEqual(kinds(ms), ["heartbreak_loss:NO"]);
+    assert.deepEqual(kinds(ms), ["heartbreak_loss:NO", "team_win:IND"]);
+    assert.equal(ms.find((m) => m.type === "team_win")?.intensity, 0.4, "one of 82: under the default bar");
   });
 
   it("soccer late winners from the goal list", () => {
@@ -111,8 +115,20 @@ describe("final moments from real games", () => {
     assert.equal(ipswich.find((m) => m.type === "late_winner")?.intensity, 0.9);
   });
 
-  it("soccer: early winner and late consolation goal is nothing special", () => {
-    assert.deepEqual(finals(game("epl", "epl-0830", "BHA @ CHE")), []);
+  it("soccer: early winner and late consolation goal is a plain win", () => {
+    const ms = finals(game("epl", "epl-0830", "BHA @ CHE"));
+    assert.deepEqual(kinds(ms), ["team_win:CHE"]);
+    assert.equal(ms[0].headline, "Win: Chelsea 4, Brighton 3");
+  });
+
+  it("a win already marked as something better isn't also a plain win", () => {
+    for (const ms of [
+      finals(game("mlb", "mlb-nlds-walkoff", "SD @ MIL")),
+      finals(game("nfl", "nfl-week1", "WSH @ PHI")),
+      finals(game("epl", "epl-0830", "IPS @ MAN")),
+    ]) {
+      assert.ok(!ms.some((m) => m.type === "team_win"), kinds(ms).join(", "));
+    }
   });
 
   it("a lopsided loss after an early lead is not a heartbreaker", () => {
@@ -123,6 +139,7 @@ describe("final moments from real games", () => {
   it("every emitted moment type is in the site's trigger library", () => {
     const ids = new Set(TRIGGERS.map((t) => t.id));
     const types: MomentType[] = [
+      "team_win",
       "rivalry_preview",
       "big_game_alert",
       "season_opener",

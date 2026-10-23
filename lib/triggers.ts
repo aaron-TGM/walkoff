@@ -58,6 +58,13 @@ export const TRIGGERS: Trigger[] = [
     category: "during",
   },
   {
+    name: "Win",
+    id: "team_win",
+    description:
+      "Any win. Weekly sports make the cut by default; daily ones don't, so fans don't hear from you after every game.",
+    category: "after",
+  },
+  {
     name: "Walk-Off Win",
     id: "walkoff_win",
     description:
