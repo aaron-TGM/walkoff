@@ -9,7 +9,7 @@ const INCLUDED = [
   "Every new moment category as it launches",
   "Your affinity map and product matching",
   "MCP access for Claude and AI agents",
-  "Done-for-you setup, triggers and approvals",
+  "Setup done for you during early access",
   "Holdout results and benchmarks as they launch",
 ];
 
@@ -82,9 +82,12 @@ export function PricingPicker() {
         ))}
       </ul>
 
-      <a href="#form" className="btn-green block text-center">
-        <span>Start {PRICING.trialDays} days free</span>
+      <a href="#form" className="btn-green block text-center" data-cta="pricing">
+        <span>Get early access</span>
       </a>
+      <p className="pricing-cta-note">
+        {PRICING.trialDays} days free &middot; No credit card
+      </p>
     </div>
   );
 }

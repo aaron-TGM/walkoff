@@ -3,7 +3,14 @@ import { Resend } from "resend";
 
 import { LEAGUE_IDS, LEAGUES } from "@/lib/leagues";
 import { getServiceSupabase } from "@/lib/supabase";
-import { PLATFORMS, ROLES, type WaitlistSubmission } from "@/lib/waitlist";
+import {
+  cleanAttribution,
+  insertSignup,
+  PLATFORMS,
+  ROLES,
+  sourceLines,
+  type WaitlistSubmission,
+} from "@/lib/waitlist";
 
 const MAX_LEN = 300;
 
@@ -68,25 +75,34 @@ export async function POST(req: Request) {
     .map((id) => LEAGUES.find((l) => l.id === id)?.name ?? id)
     .join(", ");
 
+  // Where the request came from. Never a reason to turn it away.
+  const attribution = cleanAttribution(raw.attribution);
+
   // Save to Supabase, but never lose a lead over it: if the insert fails,
   // the notification email below still carries every field.
   let saved = false;
+  let missingColumns = false;
   try {
     const supabase = getServiceSupabase();
-    const { error } = await supabase.from("waitlist").insert({
-      company: submission.company,
-      email: submission.email,
-      website: submission.website || null,
-      role: submission.role,
-      platform: submission.platform,
-      leagues: submission.leagues,
-      teams: submission.teams || null,
-      // Legacy columns from the first waitlist schema.
-      league: leagueNames || null,
-      team: submission.teams || null,
-    });
-    if (error) throw error;
+    const result = await insertSignup(
+      supabase,
+      {
+        company: submission.company,
+        email: submission.email,
+        website: submission.website || null,
+        role: submission.role,
+        platform: submission.platform,
+        leagues: submission.leagues,
+        teams: submission.teams || null,
+        // Legacy columns from the first waitlist schema.
+        league: leagueNames || null,
+        team: submission.teams || null,
+      },
+      attribution,
+    );
+    if (result.error) throw result.error;
     saved = true;
+    missingColumns = result.missingColumns;
   } catch (e) {
     console.error("Waitlist insert failed", e);
   }
@@ -114,9 +130,13 @@ export async function POST(req: Request) {
           `Leagues: ${leagueNames || "-"}`,
           `Teams / markets: ${submission.teams || "-"}`,
           "",
-          saved
-            ? "Saved to Supabase."
-            : "NOT saved to Supabase (insert failed). This email is the only record.",
+          ...sourceLines(attribution),
+          "",
+          !saved
+            ? "NOT saved to Supabase (insert failed). This email is the only record."
+            : missingColumns
+              ? "Saved to Supabase, without where it came from: run supabase/008_waitlist_attribution.sql."
+              : "Saved to Supabase.",
         ].join("\n"),
       });
       if (error) throw error;

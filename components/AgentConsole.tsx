@@ -7,7 +7,7 @@ import { Swatches } from "@/components/upload/AffinityReportView";
 const AFFINITY = [
   { name: "Chargers territory", customers: "2,310", lift: 2.4 },
   { name: "Packers territory", customers: "1,402", lift: 1.8 },
-  { name: "Arsenal fans, UK", customers: "846", lift: 1.6 },
+  { name: "Arsenal territory, UK", customers: "846", lift: 1.6 },
 ];
 
 // A brand with no license: its own colorways, in the team's colors.

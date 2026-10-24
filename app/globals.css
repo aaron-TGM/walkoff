@@ -284,8 +284,10 @@
 .hero-actions {
   @apply mb-8 flex flex-wrap gap-3;
 }
+/* The offer lines (here, .form-fine, .final-cta-foot, .pricing-cta-note) are
+   inkMuted: inkFaint is 2.25:1 on cream, too faint for text people need. */
 .hero-note {
-  @apply font-mono text-[0.68rem] uppercase tracking-[0.12em] text-inkFaint;
+  @apply font-mono text-[0.75rem] uppercase tracking-[0.12em] text-inkMuted;
 }
 
 .result-card {
@@ -321,6 +323,9 @@
 }
 .result-card-attr {
   @apply mt-4 border-t border-rule pt-4 font-mono text-[0.6rem] uppercase tracking-[0.1em] text-inkMuted leading-relaxed;
+}
+.result-card-note {
+  @apply mt-3 text-[0.8rem] leading-snug text-inkMuted;
 }
 .result-card-stat-num {
   font-family: var(--font-amerik), sans-serif;
@@ -512,7 +517,10 @@ section.block {
   @apply font-mono text-[0.65rem] uppercase tracking-[0.1em] text-inkMuted;
 }
 .pricing-billed {
-  @apply mb-5 text-[0.85rem] text-inkFaint;
+  @apply mb-5 text-[0.85rem] text-inkMuted;
+}
+.pricing-cta-note {
+  @apply mt-3 text-center font-mono text-[0.75rem] uppercase tracking-[0.1em] text-inkMuted;
 }
 .pricing-features {
   @apply mb-5 list-none border-t border-rule py-4;
@@ -577,7 +585,10 @@ section.block {
 }
 .faq-toggle-h,
 .faq-toggle-v {
-  @apply absolute left-1/2 top-1/2 block -translate-x-1/2 -translate-y-1/2 rounded-full;
+  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full;
+  /* Not @apply block: that also copies section.block's padding onto the
+     bar, stretching it into a 160px line. */
+  display: block;
   background: rgb(26 20 16);
 }
 .faq-toggle-h {
@@ -599,6 +610,10 @@ section.block {
 .faq-a {
   @apply max-w-[68ch] text-[0.95rem] leading-[1.6] text-inkMuted;
 }
+/* Links in answers are redDeep: red is 4.24:1 on cream. */
+.faq-a a {
+  @apply font-bold text-redDeep underline underline-offset-2;
+}
 
 /* Final CTA */
 .final-cta {
@@ -619,7 +634,7 @@ section.block {
   @apply flex flex-wrap justify-center gap-4;
 }
 .final-cta-foot {
-  @apply mt-7 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-inkFaint;
+  @apply mt-7 font-mono text-[0.75rem] uppercase tracking-[0.15em] text-inkMuted;
 }
 
 /* Footer */
@@ -731,7 +746,7 @@ select.form-input {
   transform: skewX(10deg);
 }
 .form-fine {
-  @apply mt-3 text-center font-mono text-[0.62rem] uppercase leading-normal tracking-[0.1em] text-inkFaint;
+  @apply mt-3 text-center font-mono text-[0.75rem] uppercase leading-normal tracking-[0.1em] text-inkMuted;
 }
 .form-error {
   @apply mt-3 font-mono text-[0.7rem] text-red;
@@ -747,6 +762,12 @@ select.form-input {
 }
 .form-success-p {
   @apply text-[0.92rem] leading-[1.55] text-inkMuted;
+}
+.form-success-p + .form-success-p {
+  @apply mt-3;
+}
+.form-success-p a {
+  @apply font-bold text-redDeep underline underline-offset-2;
 }
 .form-hp {
   position: absolute;
@@ -769,6 +790,23 @@ select.form-input {
 .ticker-viewport {
   @apply flex-1 overflow-hidden;
   mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent);
+}
+/* Pause and play: the checkbox before the viewport (Ticker.tsx). */
+.ticker-pause {
+  @apply relative z-[2] flex flex-shrink-0 cursor-pointer select-none items-center border-l border-cream/15 px-4 font-mono text-[0.6rem] uppercase tracking-[0.2em] text-cream/70 hover:text-cream;
+}
+.ticker-pause-on,
+.ticker-pause-input:checked ~ .ticker-pause .ticker-pause-off {
+  display: none;
+}
+.ticker-pause-input:checked ~ .ticker-pause .ticker-pause-on {
+  display: inline;
+}
+.ticker-pause-input:checked ~ .ticker-viewport .ticker-track {
+  animation-play-state: paused;
+}
+.ticker-pause-input:focus-visible ~ .ticker-pause {
+  @apply text-cream outline outline-2 -outline-offset-2 outline-mustard;
 }
 .ticker-track {
   display: flex;
@@ -1091,7 +1129,7 @@ select.form-input {
   @apply mt-8 text-[0.95rem] text-inkMuted;
 }
 .faq-more a {
-  @apply font-bold text-red underline underline-offset-2;
+  @apply font-bold text-redDeep underline underline-offset-2;
 }
 
 /* Affinity map */
@@ -1124,9 +1162,10 @@ select.form-input {
   @apply mb-1 block font-mono text-[0.55rem] uppercase tracking-[0.15em];
   color: rgb(244 239 228 / 0.4);
 }
+/* What the lift means, so it has to be readable: 5.9:1 or more. */
 .affinity-foot {
-  @apply mt-6 font-mono text-[0.6rem] uppercase leading-relaxed tracking-[0.1em];
-  color: rgb(244 239 228 / 0.4);
+  @apply mt-6 font-mono text-[0.75rem] uppercase leading-relaxed tracking-[0.1em];
+  color: rgb(244 239 228 / 0.6);
 }
 .swatches {
   @apply ml-2 inline-flex shrink-0 gap-1 align-[0.1em];
@@ -2098,6 +2137,8 @@ select.form-input {
 
 @media (prefers-reduced-motion: reduce) {
   .ticker-track,
+  .ticker-dot,
+  .result-card-badge-dot,
   .console-cursor {
     animation: none;
   }

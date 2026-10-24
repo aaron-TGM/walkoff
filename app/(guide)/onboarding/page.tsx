@@ -19,7 +19,7 @@ export default function OnboardingPage() {
           <li>
             <strong>An invite.</strong> During early access, Walkoff sets up every brand and
             invites the people who&apos;ll use it. Not invited yet?{" "}
-            <Link href="/#form">Ask for early access</Link>.
+            <Link href="/#form" data-cta="onboarding">Ask for early access</Link>.
           </li>
           <li>
             <strong>Your exports.</strong> A Shopify orders or customers export, or a Klaviyo

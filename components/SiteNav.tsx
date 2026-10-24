@@ -33,9 +33,9 @@ export function SiteNav() {
           ))}
         </div>
         <div className="nav-right">
-          <Link href="/#form" className="nav-cta">
+          <Link href="/#form" className="nav-cta" data-cta="nav">
             <span>
-              <span className="nav-cta-long">Get </span>Early Access
+              <span className="nav-cta-long">Get </span>early access
             </span>
           </Link>
           <NavMenu links={LINKS} />

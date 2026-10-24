@@ -198,6 +198,15 @@ export function helpMetadata(slug: HelpSlug): Metadata {
     title,
     description: p.description,
     alternates: { canonical: p.path },
-    openGraph: { title, description: p.description, url: p.path, siteName: "Walkoff", type: "article" },
+    // An openGraph here replaces the layout's, share image included
+    // (app/opengraph-image.png), so it names the image again.
+    openGraph: {
+      title,
+      description: p.description,
+      url: p.path,
+      siteName: "Walkoff",
+      type: "article",
+      images: [{ url: "/opengraph-image.png", width: 1200, height: 630 }],
+    },
   };
 }

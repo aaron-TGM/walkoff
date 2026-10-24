@@ -1,22 +1,27 @@
 import type { Metadata } from "next";
+import { SiteAnalytics } from "@/components/SiteAnalytics";
 import { SITE_URL } from "@/lib/connect";
+import { PRICING } from "@/lib/pricing";
 
 import "./globals.css";
 
+const TITLE = "Walkoff · Sports moments, ready as Klaviyo campaigns";
+const DESCRIPTION = `When their team wins, Walkoff builds your Klaviyo campaign: your own products in the team's colors, for customers in its territory. In Claude. ${PRICING.trialDays} days free.`;
+
+// The share image is app/opengraph-image.png.
 export const metadata: Metadata = {
-  title: "Walkoff · The moment engine for brands and their AI agents",
-  description:
-    "Walkoff finds the real-world moments your customers care about, starting with sports, matches your products, and has your campaign ready while the moment is still hot. Plugs into Claude and any AI agent through MCP.",
+  title: TITLE,
+  description: DESCRIPTION,
   // Canonical and share links: walkoff.io redirects here.
   metadataBase: new URL(SITE_URL),
   openGraph: {
-    title: "Walkoff · The moment engine for brands and their AI agents",
-    description:
-      "Sports moments matched to your customers and your products, ready as campaigns in Claude. Weather, events and culture next.",
+    title: TITLE,
+    description: DESCRIPTION,
     url: "/",
     siteName: "Walkoff",
     type: "website",
   },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({
@@ -26,7 +31,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans text-base">{children}</body>
+      <body className="font-sans text-base">
+        {children}
+        <SiteAnalytics />
+      </body>
     </html>
   );
 }

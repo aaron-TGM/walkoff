@@ -24,6 +24,12 @@ const UNTRUE = [
   // attribution do it.
   "tracked to the order",
   "matched to your store's orders",
+  "gets matched to your orders",
+  // Walkoff holds no Klaviyo or Shopify keys: Claude's connectors do the work.
+  "encrypt keys",
+  // The marketer reviews and approves every send.
+  "triggers and approvals",
+  "done for you, start to finish",
 ];
 
 // Legal text changes when the founder says so. The terms still cover
