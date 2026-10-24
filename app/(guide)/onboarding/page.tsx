@@ -22,14 +22,15 @@ export default function OnboardingPage() {
             <Link href="/#form" data-cta="onboarding">Ask for early access</Link>.
           </li>
           <li>
-            <strong>Your exports.</strong> A Shopify orders or customers export, or a Klaviyo
-            profile export, plus your Shopify products export. Other platforms work with a
-            spreadsheet of counts.
+            <strong>Claude, with the Shopify and Klaviyo connectors.</strong> Claude sets your
+            brand up from your Shopify store, with no files. Walkoff finds the moment and builds
+            the campaign, and your Klaviyo connector drafts it in your account.{" "}
+            <Link href={helpPath("shopify")}>Shopify in Claude</Link> &middot;{" "}
+            <Link href={helpPath("klaviyo")}>Klaviyo in Claude</Link>
           </li>
           <li>
-            <strong>Claude, with the Klaviyo connector.</strong> Walkoff finds the moment and
-            builds the campaign. Your Klaviyo connector drafts it in your account.{" "}
-            <Link href={helpPath("klaviyo")}>Klaviyo in Claude</Link>
+            <strong>Not on Shopify?</strong> Your exports, on a private upload page.{" "}
+            <Link href={helpPath("uploads")}>Uploading files</Link>
           </li>
         </ul>
       </HelpSection>
@@ -44,8 +45,9 @@ export default function OnboardingPage() {
             </p>
             <p>
               Then we invite each person who&apos;ll use Walkoff. Each gets an email with who
-              invited them, your private upload link, how to connect Walkoff in Claude, and a
-              first thing to ask.
+              invited them, how to connect Walkoff in Claude and set your brand up there, and a
+              first thing to ask. It also has your private upload link, for stores not on
+              Shopify.
             </p>
             <p>
               The upload link is private to your brand, so keep it within your team.{" "}
@@ -53,43 +55,7 @@ export default function OnboardingPage() {
             </p>
           </Step>
 
-          <Step who="you" title="Upload your exports">
-            <p>
-              Open the upload link from your email. In step 1, drop in a Shopify orders export.
-              It&apos;s the best file, because it also shows what each territory buys. A
-              customers export, a Klaviyo profile export or a spreadsheet of counts works too.
-            </p>
-            <p>
-              In step 2, drop in your Shopify products export, so Walkoff can match your
-              colorways to each team&apos;s colors.
-            </p>
-            <p>
-              Your browser reads each file and keeps only counts by postal area. Names, emails,
-              street addresses and full postal codes never leave your computer. Your fan map
-              appears as soon as the counts are in.
-            </p>
-            <p>
-              <Link href={helpPath("uploads", "export")}>How to export each file</Link> &middot;{" "}
-              <Link href="/upload/demo">Try the demo first</Link>
-            </p>
-          </Step>
-
-          <Step who="walkoff" title="We tag your catalog">
-            <p>
-              Your products get keyword tags as they upload, and every colorway is read from the
-              export. Common color names like &ldquo;Azure Heather&rdquo; get their colors right
-              away.
-            </p>
-            <p>
-              Then Claude reads every product, usually within a few minutes of your upload: the
-              teams it&apos;s made for, its colors, uses and seasons, and what names like
-              &ldquo;Dune&rdquo; look like. You don&apos;t do anything here, and your map and
-              picks work before it&apos;s done. Later product uploads keep this work, and new or
-              changed products get the same pass.
-            </p>
-          </Step>
-
-          <Step who="you" title="Connect Claude and Klaviyo">
+          <Step who="you" title="Connect Claude, Shopify and Klaviyo">
             <p>In Claude, go to {CONNECTOR_STEPS}, and enter this address:</p>
             <CopyLine>{CONNECTOR_URL}</CopyLine>
             <p>
@@ -101,8 +67,13 @@ export default function OnboardingPage() {
               {ORG_CONNECTOR_STEPS}.
             </p>
             <p>
-              Connect Klaviyo too, if you haven&apos;t. Claude drafts each campaign with your
-              Klaviyo connector, in your account.{" "}
+              Connect Shopify too, with an account that can see your store&apos;s reports. Claude
+              sets your brand up with it.{" "}
+              <Link href={helpPath("shopify", "connect")}>Connecting Shopify</Link>
+            </p>
+            <p>
+              And Klaviyo, if you haven&apos;t. Claude drafts each campaign with your Klaviyo
+              connector, in your account.{" "}
               <Link href={helpPath("klaviyo", "connect")}>Connecting Klaviyo</Link>
             </p>
             <p>
@@ -116,8 +87,37 @@ export default function OnboardingPage() {
             </p>
           </Step>
 
+          <Step who="you" title="Set up your brand in Claude">
+            <p>Ask Claude:</p>
+            <Ask>Set up Walkoff from our Shopify store.</Ask>
+            <p>
+              Walkoff reads your products from your store. Claude reads customer counts by postal
+              code from Shopify&apos;s analytics, and Walkoff keeps only each code&apos;s area and
+              the count. No names, emails or street addresses reach Walkoff. Your fan map is ready
+              in a few minutes.
+            </p>
+            <p>
+              <Link href={helpPath("shopify", "set-up")}>Setting up, in detail</Link> &middot; Not
+              on Shopify? <Link href={helpPath("uploads", "export")}>Upload your exports instead</Link>
+            </p>
+          </Step>
+
+          <Step who="walkoff" title="We tag your catalog">
+            <p>
+              Your products get keyword tags as they come in, and every colorway is read from your
+              variants&apos; color option. Common color names like &ldquo;Azure Heather&rdquo; get
+              their colors right away.
+            </p>
+            <p>
+              Then Claude reads every product, usually within a few minutes: the teams it&apos;s
+              made for, its colors, uses and seasons, and what names like &ldquo;Dune&rdquo; look
+              like. You don&apos;t do anything here, and your map and picks work before it&apos;s
+              done. Later imports keep this work, and new or changed products get the same pass.
+            </p>
+          </Step>
+
           <Step who="you" title="Your first campaign">
-            <p>Once your files are in, ask Claude:</p>
+            <p>Once your brand is set up, ask Claude:</p>
             <Ask>What should we send this week?</Ask>
             <p>
               Claude checks your queue, builds a campaign for the best moment, and shows you the
@@ -143,12 +143,13 @@ export default function OnboardingPage() {
       <HelpSection page={P} id="what-to-expect">
         <ul>
           <li>
-            <strong>Your fan map</strong> appears right after your first customers or orders
-            upload, on your upload page and in Claude.
+            <strong>Your fan map</strong> appears a few minutes after you ask Claude to set your
+            brand up, or right after an upload.
           </li>
           <li>
-            <strong>Claude&apos;s product tags</strong> come a few minutes after your product
-            upload, longer for a catalog in the thousands. Your picks get sharper when they land.
+            <strong>Claude&apos;s product tags</strong> come a few minutes after your catalog
+            comes in, longer for a catalog in the thousands. Your picks get sharper when they
+            land.
           </li>
           <li>
             <strong>Moments</strong> show up within about a minute of the final whistle.
@@ -216,12 +217,25 @@ export default function OnboardingPage() {
               ),
             },
             {
-              id: "platforms",
-              q: "We don't use Shopify. Can we still upload?",
+              id: "shopify-data",
+              q: "What does Walkoff see from Shopify?",
               a: (
                 <p>
-                  Yes. For customers, make a spreadsheet with postal_code, country and customers
-                  columns. For products, a spreadsheet with title, product type and tags works.
+                  Your products, from your store&apos;s public product feed, and customer counts
+                  by postal code from Shopify&apos;s analytics. Walkoff cuts each code to its area
+                  and keeps only the area and the count. Never names, emails or addresses.{" "}
+                  <Link href={helpPath("shopify", "privacy")}>What Walkoff sees</Link>
+                </p>
+              ),
+            },
+            {
+              id: "platforms",
+              q: "We don't use Shopify. Can we still use Walkoff?",
+              a: (
+                <p>
+                  Yes, with the private upload page in your welcome email. A Klaviyo profile export
+                  works for customers, or a spreadsheet with postal_code, country and customers
+                  columns. For products, a spreadsheet with title, product type and tags.
                   Campaigns are built for Klaviyo.
                 </p>
               ),
@@ -242,8 +256,9 @@ export default function OnboardingPage() {
               q: "Can I try it first?",
               a: (
                 <p>
-                  Yes. <Link href="/upload/demo">The demo</Link> reads your own file in your
-                  browser and shows your map. Nothing is uploaded.
+                  Yes. <Link href="/upload/demo">The demo</Link> shows a sample brand&apos;s map,
+                  with no file needed. It can also read your own file in your browser. Nothing is
+                  uploaded.
                 </p>
               ),
             },

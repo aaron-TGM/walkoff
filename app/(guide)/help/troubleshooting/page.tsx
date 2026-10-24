@@ -19,8 +19,16 @@ export default function TroubleshootingPage() {
         <TroubleList items={TROUBLE["sign-in"]} />
       </HelpSection>
 
+      <HelpSection page={P} id="setup">
+        <p>
+          In Claude, while it sets your brand up from Shopify.{" "}
+          <Link href={helpPath("shopify")}>Shopify in Claude</Link>
+        </p>
+        <TroubleList items={TROUBLE.setup} />
+      </HelpSection>
+
       <HelpSection page={P} id="uploads">
-        <p>On your upload page.</p>
+        <p>On your upload page, for stores not on Shopify.</p>
         <TroubleList items={TROUBLE.uploads} />
       </HelpSection>
 

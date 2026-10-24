@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 
+import { SHOPIFY_TOOLS, SHOPIFYQL } from "../affinity/shopify-counts";
 import { parseCustomerUpload } from "../affinity/validate";
 import { KLAVIYO_TOOLS } from "../mcp/campaign";
 import { createWalkoffServer } from "../mcp/server";
@@ -20,6 +21,7 @@ import { FINISHES } from "./moments";
 import { HELP_PAGES, helpMetadata, helpUrl } from "./pages";
 import { sampleCampaign, sampleCopyRules, sampleEmailHtml, SAMPLE_TEAM, timingExamples } from "./samples";
 import { SESSIONS } from "./sessions";
+import { SHOPIFY } from "./shopify";
 import { HELP_TOOLS, HOME_TOOLS, type HelpTool } from "./tools";
 import { TROUBLE } from "./troubleshooting";
 
@@ -97,6 +99,7 @@ describe("tool reference", () => {
     }
     const prompts = (await client.listPrompts()).prompts;
     assert.ok(prompts.some((p) => p.name === "moment_campaign" && p.title === "Campaign for the moment"));
+    assert.ok(prompts.some((p) => p.name === "set_up_brand" && p.title === "Set up from Shopify"));
     assert.ok(client.getInstructions()?.includes("https://www.walkoff.io/help"), "Claude knows where the help is");
     await client.close();
   });
@@ -162,6 +165,18 @@ describe("help facts", () => {
     assert.ok(instructions.includes(helpUrl("https://www.walkoff.io", "klaviyo", "tracking")), "and where the guide is");
     const history = (await client.listTools()).tools.find((t) => t.name === "send_history");
     assert.ok(history?.description?.includes(KLAVIYO_TOOLS.report), "send_history points to the report too");
+    await client.close();
+  });
+
+  it("the Shopify guide shows the queries Claude is told to run, from the code", async () => {
+    assert.equal(SHOPIFY.queries, SHOPIFYQL);
+    assert.equal(SHOPIFY.analyticsTool, SHOPIFY_TOOLS.analytics);
+    const src = read(pageFile("/help/shopify"));
+    for (const q of ["SHOPIFY.queries.postalCodes", "SHOPIFY.queries.regions"]) assert.ok(src.includes(q), `the page doesn't render ${q}`);
+    const client = await memberClient();
+    const instructions = client.getInstructions() ?? "";
+    for (const q of Object.values(SHOPIFYQL)) assert.ok(instructions.includes(q), "Claude runs the queries the guide shows");
+    assert.ok(instructions.includes(helpUrl("https://www.walkoff.io", "shopify")), "and knows where the guide is");
     await client.close();
   });
 

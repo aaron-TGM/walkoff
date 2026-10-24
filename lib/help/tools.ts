@@ -11,11 +11,25 @@ export interface HelpTool {
   asks: string[];
   /** Options worth knowing, by their real argument names. */
   options?: Record<string, string>;
-  /** It saves something (a trigger, a log entry) rather than only reading. */
+  /** It saves something (a catalog, counts, a trigger, a log entry) rather
+   *  than only reading. */
   changes?: true;
 }
 
 export const HELP_TOOLS = {
+  import_catalog: {
+    summary:
+      "Reads your products from your Shopify store's public product feed: titles, types, tags, descriptions, prices, colorways, SKUs and photos. New products are added and the rest updated. No customer data.",
+    asks: ["Set up Walkoff from our Shopify store.", "Update our catalog from the store."],
+    changes: true,
+  },
+  import_customer_counts: {
+    summary:
+      "Makes your fan map from customer counts Claude reads in Shopify's analytics: customers by postal code, and by state or province. Walkoff keeps only each code's area and the count.",
+    asks: ["Refresh our fan map from Shopify."],
+    options: { regions: "The second query's state and province totals. They place the customers outside your top postal codes." },
+    changes: true,
+  },
   trigger_queue: {
     summary:
       "Your to-do list: recent moments that match your triggers, or big moments for your standout teams if you have none, that you haven't drafted, sent or skipped. Most urgent first, with how long each is worth acting on.",

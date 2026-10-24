@@ -141,6 +141,8 @@ describe("onboarding a brand from Claude", () => {
     assert.match(emails[0], /op@walkoff\.io invited you to use Walkoff for Frost Buddy/);
     assert.ok(emails[0].includes(`${ORIGIN}/upload/${brand.upload_token}`));
     assert.ok(emails[0].includes(`${ORIGIN}/mcp`));
+    assert.ok(emails[0].includes('Ask Claude: "Set up Walkoff for Frost Buddy from our Shopify store."'));
+    assert.ok(emails[0].indexOf("Set up Walkoff for Frost Buddy") < emails[0].indexOf(`${ORIGIN}/upload/`), "the upload link is the fallback");
 
     const quiet = await call(client, "invite_member", { brand: "frost buddy", email: "jane@frostbuddy.com", send_email: false });
     assert.deepEqual([quiet.json().added, quiet.json().welcome_email], [false, "Not sent."]);
@@ -150,7 +152,7 @@ describe("onboarding a brand from Claude", () => {
     assert.deepEqual(members.json().members.map((m: { email: string; connected: boolean }) => [m.email, m.connected]), [["jane@frostbuddy.com", false]]);
 
     const status = await call(client, "onboarding_status", { brand: "Frost Buddy" });
-    assert.match(status.json().next, /^Waiting on jane@frostbuddy\.com to upload customers or orders/);
+    assert.match(status.json().next, /^Waiting on jane@frostbuddy\.com to connect Walkoff in Claude/);
     const all = await call(client, "onboarding_status");
     assert.deepEqual(all.json().brands.map((s: { brand: string }) => s.brand), ["Frost Buddy"]);
 

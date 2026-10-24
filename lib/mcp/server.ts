@@ -2,6 +2,7 @@
 // stateless) for the person the access token belongs to.
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
+import { SHOPIFY_TOOLS, SHOPIFYQL } from "../affinity/shopify-counts";
 import { helpUrl } from "../help/pages";
 import { KLAVIYO_TOOLS } from "./campaign";
 import { isOperator } from "./data";
@@ -11,8 +12,17 @@ export const SERVER_INFO = { name: "walkoff", title: "Walkoff", version: "1.0.0"
 
 export const INSTRUCTIONS = `Walkoff turns sports moments into ready-made campaigns for brands whose customers are fans. It knows each brand's fan territories (from its own customer data), its catalog by color, and live moments from every game in its leagues: walk-off wins, buzzer beaters, comebacks, rivalry wins, heartbreakers, series wins and titles, rivalry and big-game previews.
 
+Setup, once per brand, with the marketer's Shopify connector and no files (list_brands shows setup_needed):
+1. import_catalog: Walkoff reads the products from the store's public product feed.
+2. Run these two queries with the Shopify connector's ${SHOPIFY_TOOLS.analytics}, exactly as written:
+   ${SHOPIFYQL.postalCodes}
+   ${SHOPIFYQL.regions}
+3. import_customer_counts, with the first query's rows as postal_codes and the second's as regions, one row per line (country, postal code or state, customers), every row in one call.
+4. get_affinity_map, to show the marketer their standout teams.
+Counts only: never read, ask for or pass on customers' names, emails, phone numbers or addresses, and don't use the Shopify connector's customer or order tools for this. If a query fails, fix only its syntax and keep its columns. If the tool returns only part of the rows, page with OFFSET and pass them all together. A store not on Shopify, or no Shopify connector: the marketer uploads files with the link in their welcome email.
+
 The usual flow:
-1. list_brands, then trigger_queue for the moments to act on now.
+1. list_brands (if a brand shows setup_needed, run Setup first), then trigger_queue for the moments to act on now.
 2. build_campaign with a moment_id: subject lines, preview text, a finished email, products, the audience and when to send.
 3. With the marketer's Klaviyo connector: find the audience segment (if it's missing, offer to create it from the klaviyo_segment given, and do it once they say OK), create the template and a draft campaign, and show them. Never schedule or send without their go-ahead.
 4. log_send, so the queue stays clean and the history builds.
@@ -23,16 +33,38 @@ Copy rules: most brands aren't licensed to use team marks. For them, campaign co
 /** What every connection starts with: the instructions, and where the
  *  marketer's help is. */
 export const memberInstructions = (origin: string) =>
-  `${INSTRUCTIONS}\n\nWhen the marketer asks how something works or hits a problem, Walkoff's help center has the answer, ready to link: ${helpUrl(origin, "help")}. Connecting: ${helpUrl(origin, "connect")}. Connecting Klaviyo, and saving a team's segment: ${helpUrl(origin, "klaviyo")}. Tracking and results: ${helpUrl(origin, "klaviyo", "tracking")}. Messages and fixes: ${helpUrl(origin, "troubleshooting")}.`;
+  `${INSTRUCTIONS}\n\nWhen the marketer asks how something works or hits a problem, Walkoff's help center has the answer, ready to link: ${helpUrl(origin, "help")}. Connecting: ${helpUrl(origin, "connect")}. Setting up from Shopify: ${helpUrl(origin, "shopify")}. Uploading files instead: ${helpUrl(origin, "uploads")}. Connecting Klaviyo, and saving a team's segment: ${helpUrl(origin, "klaviyo")}. Tracking and results: ${helpUrl(origin, "klaviyo", "tracking")}. Messages and fixes: ${helpUrl(origin, "troubleshooting")}.`;
 
 /** Added for Walkoff operators, who also set brands up. */
-export const OPERATOR_INSTRUCTIONS = `This person is a Walkoff operator, so they can also set brands up. To onboard a brand: create_brand with its name, store and whether it's licensed to name its teams (most aren't), then invite_member for each marketer, which emails them the brand's upload link and how to connect Walkoff in Claude. onboarding_status shows where each brand is and the next step. update_brand, list_members and remove_member handle changes; the tools that change a brand need its exact name or id. Upload links are secret: only invite_member sends them, to the people invited. After removing someone, update_brand with new_upload_link replaces the brand's link, and invite_member sends the new one to the people who should keep it.`;
+export const OPERATOR_INSTRUCTIONS = `This person is a Walkoff operator, so they can also set brands up. To onboard a brand: create_brand with its name, store and whether it's licensed to name its teams (most aren't), then invite_member for each marketer. Its welcome email tells them how to connect Walkoff and Shopify in Claude and set the brand up there, with the brand's upload link for stores not on Shopify. Once a brand's store is set, you can run import_catalog for it yourself. onboarding_status shows where each brand is and the next step. update_brand, list_members and remove_member handle changes; the tools that change a brand need its exact name or id. Upload links are secret: only invite_member sends them, to the people invited. After removing someone, update_brand with new_upload_link replaces the brand's link, and invite_member sends the new one to the people who should keep it.`;
 
 export function createWalkoffServer(ctx: ToolContext): McpServer {
   const member = memberInstructions(ctx.origin);
   const instructions = isOperator(ctx.principal) ? `${member}\n\n${OPERATOR_INSTRUCTIONS}` : member;
   const server = new McpServer(SERVER_INFO, { instructions });
   registerTools(server, ctx);
+  server.registerPrompt(
+    "set_up_brand",
+    {
+      title: "Set up from Shopify",
+      description: "Set a brand up from its Shopify store: its products, its customer counts and its fan map, with no files.",
+      argsSchema: { brand: z.string().optional().describe("Brand name, when you have more than one.") },
+    },
+    ({ brand }) => ({
+      messages: [
+        {
+          role: "user",
+          content: {
+            type: "text",
+            text: `Set up Walkoff${brand ? ` for ${brand}` : ""} from our Shopify store. First, import_catalog. Then run these two queries with my Shopify connector's ${SHOPIFY_TOOLS.analytics}, exactly as written:
+1. ${SHOPIFYQL.postalCodes}
+2. ${SHOPIFYQL.regions}
+Pass the first query's rows as postal_codes and the second's as regions to import_customer_counts, one row per line, every row in one call. Counts only: don't read or pass on any customer's name, email or address, and don't use the customer or order tools. Then show me our fan map with get_affinity_map, and tell me what Walkoff kept.`,
+          },
+        },
+      ],
+    }),
+  );
   server.registerPrompt(
     "moment_campaign",
     {

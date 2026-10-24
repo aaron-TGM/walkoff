@@ -230,6 +230,165 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
     ? [...new Map(catalog.items.flatMap((i) => i.colorways).map((cw) => [cw.name.toLowerCase(), cw.name])).values()]
     : [];
 
+  const steps = (
+    <div className="upload-steps">
+      <section className="upload-step">
+        <div className="upload-step-num">Step 1</div>
+        <h2 className="upload-step-title">Customers or orders</h2>
+        <p className="upload-step-body">
+          A Shopify order or customer export, a Klaviyo profile export, or a spreadsheet
+          of counts. Orders work best: they also show what each territory buys.
+        </p>
+        <DropZone
+          label="Drop your export here, or click to choose"
+          hint="CSV · read on your computer"
+          busy={customers.status === "reading"}
+          onFile={(f) => readFile(f, "customers")}
+        />
+        {customers.error ? <p className="form-error">{customers.error}</p> : null}
+        {c && customers.status !== "idle" ? (
+          <div className="preview">
+            <div className="preview-head">
+              <span className="preview-format">{FORMAT_LABEL[c.format]}</span>
+              <span className="preview-file">{customers.file}</span>
+            </div>
+            <p className="preview-line">
+              {fmt(c.rows)} rows read &middot; <strong>{fmt(placed)} customers</strong> in{" "}
+              {fmt(c.areas.length)} postal areas
+              {c.skipped ? ` · ${fmt(c.skipped)} without a usable postal code` : ""}
+              {c.products.length ? ` · orders for ${fmt(new Set(c.products.map((p) => p.product)).size)} products` : ""}
+            </p>
+            <div className="preview-label">Exactly what {demo ? "would leave" : "leaves"} your computer</div>
+            <table className="report-table preview-table">
+              <thead>
+                <tr>
+                  <th>Country</th>
+                  <th>Postal area</th>
+                  <th>Customers</th>
+                  <th>Orders</th>
+                  <th>Revenue</th>
+                </tr>
+              </thead>
+              <tbody>
+                {c.areas.slice(0, 6).map((a) => (
+                  <tr key={`${a.country}${a.area}`}>
+                    <td>{a.country}</td>
+                    <td>{a.area}</td>
+                    <td>{fmt(a.customers)}</td>
+                    <td>{fmt(a.orders ?? 0)}</td>
+                    <td>${fmt(a.revenue ?? 0)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {c.areas.length > 6 ? <p className="preview-more">…and {fmt(c.areas.length - 6)} more rows like these.</p> : null}
+            <button
+              type="button"
+              className="form-submit"
+              disabled={customers.status === "uploading" || customers.status === "done"}
+              onClick={uploadCustomers}
+            >
+              <span>
+                {customers.status === "uploading"
+                  ? "Mapping…"
+                  : customers.status === "done"
+                    ? "Mapped ✓"
+                    : demo
+                      ? "Map my customers →"
+                      : "Upload counts and map my customers →"}
+              </span>
+            </button>
+          </div>
+        ) : null}
+      </section>
+
+      <section className="upload-step">
+        <div className="upload-step-num">Step 2 &middot; optional</div>
+        <h2 className="upload-step-title">Products</h2>
+        <p className="upload-step-body">
+          Your Shopify product export, or a spreadsheet of products. We read every colorway,
+          so when a team wins we can feature the pieces in its colors. No team gear needed.
+        </p>
+        <DropZone
+          label="Drop your product export here"
+          hint="CSV · product details only"
+          busy={catalog.status === "reading"}
+          onFile={(f) => readFile(f, "catalog")}
+        />
+        {catalog.error ? <p className="form-error">{catalog.error}</p> : null}
+        {catalog.items && catalog.status !== "idle" ? (
+          <div className="preview">
+            <p className="preview-line">
+              <strong>{fmt(catalog.items.length)} products</strong> found, for example{" "}
+              {catalog.items
+                .slice(0, 3)
+                .map((i) => i.title)
+                .join(", ")}
+              .
+              {colorways.length ? ` They come in ${fmt(colorways.length)} colors:` : ""}
+            </p>
+            {colorways.length ? (
+              <div className="colorway-chips">
+                {colorways.slice(0, 14).map((name) => {
+                  const hex = hexForColorName(name);
+                  return (
+                    <span key={name} className={`colorway-chip${hex.length ? "" : " colorway-chip-unknown"}`}>
+                      <Swatches hex={hex} />
+                      {name}
+                    </span>
+                  );
+                })}
+                {colorways.length > 14 ? <span className="colorway-chip">+{fmt(colorways.length - 14)} more</span> : null}
+              </div>
+            ) : null}
+            {colorways.some((n) => !hexForColorName(n).length) ? (
+              <p className="preview-more">
+                Claude names the ones we can&apos;t read yet, like the dashed ones, a few minutes after they&apos;re uploaded.
+              </p>
+            ) : null}
+            <button
+              type="button"
+              className="form-submit"
+              disabled={catalog.status === "uploading" || catalog.status === "done"}
+              onClick={uploadCatalog}
+            >
+              <span>
+                {catalog.status === "uploading" ? "Tagging…" : catalog.status === "done" ? "Tagged ✓" : "Tag my products →"}
+              </span>
+            </button>
+            {catalog.status === "done" && !demo ? (
+              <p className="preview-more">
+                Saved. Claude reads each product next, usually within a few minutes, and your picks get sharper when it&apos;s done.
+              </p>
+            ) : null}
+          </div>
+        ) : catalogStats.products ? (
+          <p className="preview-line">
+            {fmt(catalogStats.products)} products on file, {fmt(catalogStats.tagged)} tagged to a team
+            {catalogStats.colorways ? `, ${fmt(catalogStats.colorways)} colorways` : ""}.
+          </p>
+        ) : null}
+      </section>
+    </div>
+  );
+
+  const territories = (
+    <div ref={reportRef} className={`upload-report${demo ? " upload-report-first" : ""}`}>
+      <h2 className="section-title section-title-stack">
+        {demo ? "Fan territories" : "Your territories"}
+        <em>{report ? (demo ? "who the customers cheer for" : "who your customers cheer for") : "appear here"}</em>
+      </h2>
+      {report ? (
+        <AffinityReportView report={report} />
+      ) : (
+        <p className="report-empty">Upload customers or orders in step 1 to see your map.</p>
+      )}
+    </div>
+  );
+
+  const privacy =
+    "Your browser reads each file and keeps only counts by postal area. Names, emails, street addresses and full postal codes never leave your computer.";
+
   return (
     <div className="container-w upload">
       <div className="block-num">
@@ -238,173 +397,52 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
       </div>
       <h1 className="upload-h1">
         {brandName}
-        <em>{demo ? "Try it with your own file" : "Find your fans"}</em>
+        <em>{demo ? "A sample brand's map" : "Find your fans"}</em>
       </h1>
-      <p className="upload-lead">
-        Drop in an export from Shopify or Klaviyo. Your browser reads it and keeps only
-        counts by postal area. Names, emails, street addresses and full postal codes never
-        leave your computer.
-        {demo ? " This demo doesn't upload anything at all." : ""}
-      </p>
 
-      <div className="upload-steps">
-        <section className="upload-step">
-          <div className="upload-step-num">Step 1</div>
-          <h2 className="upload-step-title">Customers or orders</h2>
-          <p className="upload-step-body">
-            A Shopify order or customer export, a Klaviyo profile export, or a spreadsheet
-            of counts. Orders work best: they also show what each territory buys.
+      {demo ? (
+        <>
+          <p className="upload-lead">
+            No file needed. This is a sample brand&apos;s fan map: the teams its customers lean
+            toward, and what to feature for each. On Shopify, your own map takes one ask in
+            Claude, with no files.{" "}
+            <Link href={helpPath("shopify")}>Shopify in Claude</Link>
           </p>
-          <DropZone
-            label="Drop your export here, or click to choose"
-            hint="CSV · read on your computer"
-            busy={customers.status === "reading"}
-            onFile={(f) => readFile(f, "customers")}
-          />
-          {customers.error ? <p className="form-error">{customers.error}</p> : null}
-          {c && customers.status !== "idle" ? (
-            <div className="preview">
-              <div className="preview-head">
-                <span className="preview-format">{FORMAT_LABEL[c.format]}</span>
-                <span className="preview-file">{customers.file}</span>
-              </div>
-              <p className="preview-line">
-                {fmt(c.rows)} rows read &middot; <strong>{fmt(placed)} customers</strong> in{" "}
-                {fmt(c.areas.length)} postal areas
-                {c.skipped ? ` · ${fmt(c.skipped)} without a usable postal code` : ""}
-                {c.products.length ? ` · orders for ${fmt(new Set(c.products.map((p) => p.product)).size)} products` : ""}
-              </p>
-              <div className="preview-label">Exactly what {demo ? "would leave" : "leaves"} your computer</div>
-              <table className="report-table preview-table">
-                <thead>
-                  <tr>
-                    <th>Country</th>
-                    <th>Postal area</th>
-                    <th>Customers</th>
-                    <th>Orders</th>
-                    <th>Revenue</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {c.areas.slice(0, 6).map((a) => (
-                    <tr key={`${a.country}${a.area}`}>
-                      <td>{a.country}</td>
-                      <td>{a.area}</td>
-                      <td>{fmt(a.customers)}</td>
-                      <td>{fmt(a.orders ?? 0)}</td>
-                      <td>${fmt(a.revenue ?? 0)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {c.areas.length > 6 ? <p className="preview-more">…and {fmt(c.areas.length - 6)} more rows like these.</p> : null}
-              <button
-                type="button"
-                className="form-submit"
-                disabled={customers.status === "uploading" || customers.status === "done"}
-                onClick={uploadCustomers}
-              >
-                <span>
-                  {customers.status === "uploading"
-                    ? "Mapping…"
-                    : customers.status === "done"
-                      ? "Mapped ✓"
-                      : demo
-                        ? "Map my customers →"
-                        : "Upload counts and map my customers →"}
-                </span>
-              </button>
-            </div>
-          ) : null}
-        </section>
-
-        <section className="upload-step">
-          <div className="upload-step-num">Step 2 &middot; optional</div>
-          <h2 className="upload-step-title">Products</h2>
-          <p className="upload-step-body">
-            Your Shopify product export, or a spreadsheet of products. We read every colorway,
-            so when a team wins we can feature the pieces in its colors. No team gear needed.
+          {territories}
+          <details className="upload-try">
+            <summary>Try it with your own file (optional)</summary>
+            <p className="upload-step-body">{privacy} This demo doesn&apos;t upload anything at all.</p>
+            {steps}
+          </details>
+          <p className="upload-invited">
+            Invited already? In Claude, ask: &ldquo;Show me a sample campaign for a Chargers walk-off.&rdquo;
           </p>
-          <DropZone
-            label="Drop your product export here"
-            hint="CSV · product details only"
-            busy={catalog.status === "reading"}
-            onFile={(f) => readFile(f, "catalog")}
-          />
-          {catalog.error ? <p className="form-error">{catalog.error}</p> : null}
-          {catalog.items && catalog.status !== "idle" ? (
-            <div className="preview">
-              <p className="preview-line">
-                <strong>{fmt(catalog.items.length)} products</strong> found, for example{" "}
-                {catalog.items
-                  .slice(0, 3)
-                  .map((i) => i.title)
-                  .join(", ")}
-                .
-                {colorways.length ? ` They come in ${fmt(colorways.length)} colors:` : ""}
-              </p>
-              {colorways.length ? (
-                <div className="colorway-chips">
-                  {colorways.slice(0, 14).map((name) => {
-                    const hex = hexForColorName(name);
-                    return (
-                      <span key={name} className={`colorway-chip${hex.length ? "" : " colorway-chip-unknown"}`}>
-                        <Swatches hex={hex} />
-                        {name}
-                      </span>
-                    );
-                  })}
-                  {colorways.length > 14 ? <span className="colorway-chip">+{fmt(colorways.length - 14)} more</span> : null}
-                </div>
-              ) : null}
-              {colorways.some((n) => !hexForColorName(n).length) ? (
-                <p className="preview-more">
-                  Claude names the ones we can&apos;t read yet, like the dashed ones, a few minutes after they&apos;re uploaded.
-                </p>
-              ) : null}
-              <button
-                type="button"
-                className="form-submit"
-                disabled={catalog.status === "uploading" || catalog.status === "done"}
-                onClick={uploadCatalog}
-              >
-                <span>
-                  {catalog.status === "uploading" ? "Tagging…" : catalog.status === "done" ? "Tagged ✓" : "Tag my products →"}
-                </span>
-              </button>
-              {catalog.status === "done" && !demo ? (
-                <p className="preview-more">
-                  Saved. Claude reads each product next, usually within a few minutes, and your picks get sharper when it&apos;s done.
-                </p>
-              ) : null}
-            </div>
-          ) : catalogStats.products ? (
-            <p className="preview-line">
-              {fmt(catalogStats.products)} products on file, {fmt(catalogStats.tagged)} tagged to a team
-              {catalogStats.colorways ? `, ${fmt(catalogStats.colorways)} colorways` : ""}.
+        </>
+      ) : (
+        <>
+          <aside className="upload-banner">
+            <div className="upload-banner-title">On Shopify? You don&apos;t need this page</div>
+            <p>
+              In Claude, with Walkoff and Shopify connected, ask: &ldquo;Set up Walkoff for{" "}
+              {brandName} from our Shopify store.&rdquo; No files to export.{" "}
+              <Link href={helpPath("shopify", "set-up")}>How it works</Link>
             </p>
-          ) : null}
-        </section>
-      </div>
-
-      <div ref={reportRef} className="upload-report">
-        <h2 className="section-title section-title-stack">
-          Your territories
-          <em>{report ? "who your customers cheer for" : "appear here"}</em>
-        </h2>
-        {report ? (
-          <AffinityReportView report={report} />
-        ) : (
-          <p className="report-empty">Upload customers or orders in step 1 to see your map.</p>
-        )}
-      </div>
+          </aside>
+          <p className="upload-lead">
+            For stores not on Shopify, or if you&apos;d rather use files: drop in an export from
+            your store or Klaviyo. {privacy}
+          </p>
+          {steps}
+          {territories}
+        </>
+      )}
 
       <div className="upload-guides">
         <h2 className="upload-step-title">How to export your files</h2>
         <ExportGuides />
         <p className="guide-note upload-help">
           What leaves your browser, which files work best and how to update them:{" "}
-          <Link href={helpPath("uploads")}>Your uploads</Link>, in the help center.
+          <Link href={helpPath("uploads")}>Uploading files</Link>, in the help center.
         </p>
       </div>
     </div>

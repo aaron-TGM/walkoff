@@ -30,11 +30,19 @@ const UNTRUE = [
   // The marketer reviews and approves every send.
   "triggers and approvals",
   "done for you, start to finish",
+  // Brands on Shopify set up in Claude, with no files, and their postal
+  // codes reach Walkoff (cut to areas on arrival). Only the upload page, for
+  // files, can say they stay on the computer.
+  "drop in your exports",
+  "never leave your computer",
 ];
 
 // Legal text changes when the founder says so. The terms still cover
-// auto-fire rules.
-const ALLOWED: Record<string, string[]> = { "app/terms/page.tsx": ["auto-fire"] };
+// auto-fire rules. The upload page reads files in the browser.
+const ALLOWED: Record<string, string[]> = {
+  "app/terms/page.tsx": ["auto-fire"],
+  "components/upload/UploadClient.tsx": ["never leave your computer"],
+};
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 

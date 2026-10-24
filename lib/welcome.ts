@@ -1,9 +1,10 @@
 // The email someone gets when they're invited to use Walkoff for a brand:
-// who invited them, their upload page, how to connect Walkoff in Claude and a
-// first thing to ask. Sent with Resend, like the sign-in codes
+// who invited them, how to connect Walkoff in Claude and set the brand up
+// from Shopify there, a first thing to ask, and the upload page for stores
+// not on Shopify. Sent with Resend, like the sign-in codes
 // (lib/mcp/oauth/email.ts).
 import { Resend } from "resend";
-import { CONNECTOR_STEPS, ORG_CONNECTOR_STEPS } from "./connect";
+import { CONNECTOR_STEPS, CONNECTORS_PAGE, ORG_CONNECTOR_STEPS } from "./connect";
 
 export interface Welcome {
   to: string;
@@ -38,24 +39,26 @@ export function welcomeEmail(w: Welcome): { subject: string; text: string } {
     "",
     "Walkoff watches every game and turns big moments into ready-made Klaviyo campaigns for your fans: products in the team's colors, the audience and the send time. You use it in Claude, and nothing goes out without your go-ahead.",
     "",
-    "1. Upload your exports",
-    "",
-    "Your upload page:",
-    w.uploadUrl,
-    "",
-    "In step 1, add a Shopify orders export (best) or a customers export. In step 2, add your products export. The page shows how to export each one. Your browser keeps only counts by postal area. Names, emails and street addresses never leave your computer.",
-    "",
-    `This link is private to ${w.brand}. Anyone with it can upload for you, so please don't share it.`,
-    "",
-    "2. Connect Walkoff in Claude",
+    "1. Connect Walkoff in Claude",
     "",
     ...connect,
     "",
-    "Claude drafts the campaigns with your Klaviyo connector, so connect Klaviyo too if you haven't.",
+    "2. Connect Shopify and Klaviyo in Claude",
     "",
-    "3. Ask Claude",
+    `Both are in Claude's connectors, under ${CONNECTORS_PAGE}. Connect Shopify with an account that can see your store's reports. Claude drafts the campaigns with your Klaviyo connector.`,
     "",
-    `Once your files are in, try: "What should we send this week?"`,
+    `3. Set up ${w.brand} in Claude`,
+    "",
+    `Ask Claude: "Set up Walkoff for ${w.brand} from our Shopify store."`,
+    "",
+    "Walkoff reads your products from your store. Claude reads customer counts by postal code from Shopify's analytics, and Walkoff keeps only the area. No names, emails or street addresses reach Walkoff.",
+    "",
+    `Then try: "What should we send this week?"`,
+    "",
+    "Not on Shopify? Use your private upload page instead:",
+    w.uploadUrl,
+    "",
+    `This link is private to ${w.brand}. Anyone with it can upload for you, so please don't share it.`,
     "",
     "The setup guide walks through each step:",
     w.guideUrl,

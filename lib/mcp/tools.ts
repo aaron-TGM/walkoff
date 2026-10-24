@@ -7,8 +7,21 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import { colorFamily } from "../affinity/colors";
 import type { AffinityReport } from "../affinity/compute";
+import type { CatalogItem } from "../affinity/imports";
 import { pickForTeam, type Pick, type PickProduct } from "../affinity/pick";
-import { catalogCounts, latestReport, loadAreaCounts, loadTaggedCatalog } from "../affinity/store";
+import { customerCountsImport, SHOPIFY_TOOLS, type CountsImport } from "../affinity/shopify-counts";
+import {
+  catalogCounts,
+  catalogStats,
+  latestReport,
+  loadAreaCounts,
+  loadTaggedCatalog,
+  recomputeReport,
+  saveCatalog,
+  saveCustomerUpload,
+} from "../affinity/store";
+import { fetchStorefrontCatalog, StorefrontError, type StorefrontCatalog } from "../affinity/storefront";
+import { parseCatalogItems, UploadError } from "../affinity/validate";
 import {
   addMember,
   BrandError,
@@ -25,6 +38,7 @@ import {
   type OnboardingStatus,
 } from "../brands";
 import { helpUrl } from "../help/pages";
+import type { Lookup } from "../public-fetch";
 import { TRIGGERS } from "../triggers";
 import { sendWelcome } from "../welcome";
 import { teamAudience } from "./audience";
@@ -64,6 +78,11 @@ export interface ToolContext {
   now: () => Date;
   /** This server's public origin, for links in welcome emails. */
   origin: string;
+  /** Reads brands' public store pages (import_catalog). Tests pass their own. */
+  fetch?: typeof fetch;
+  /** Resolves a store's host before each request, so nothing reaches a
+   *  private address. Tests pass their own. */
+  lookup?: Lookup;
 }
 
 const HOUR = 3_600_000;
@@ -121,7 +140,11 @@ async function teamsFor(ctx: ToolContext, args: { brand?: string; team?: string;
   const standouts = standoutTeams(report);
   if (args.team) return { brand, teams: [team(args.team, args.league, standouts)] };
   if (!standouts.length) {
-    throw new ToolError(`${brand!.name} has no standout fan territories yet (it needs a customer upload). Name a team instead.`);
+    throw new ToolError(
+      report
+        ? `No team stands out on ${brand!.name}'s fan map, so name a team instead.`
+        : `${brand!.name} has no fan map yet, so it has no standout teams. Set it up first, or name a team.`,
+    );
   }
   return { brand, teams: standouts };
 }
@@ -185,7 +208,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     {
       title: "List brands",
       description:
-        "The brands you can use Walkoff for, with what Walkoff knows about each: store, whether it's licensed to name teams, customers mapped, catalog, and its standout fan territories. Start here.",
+        "The brands you can use Walkoff for, with what Walkoff knows about each: store, whether it's licensed to name teams, customers mapped, catalog, and its standout fan territories. Start here. A brand with setup_needed isn't set up yet: run Setup first.",
       inputSchema: {},
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -195,6 +218,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         const rows = await Promise.all(
           brands.map(async (b) => {
             const [report, stats] = await Promise.all([latestReport(db, b.id), catalogCounts(db, b.id)]);
+            const setup = [...(stats.products ? [] : ["catalog"]), ...(report ? [] : ["customer counts"])];
             return {
               id: b.id,
               name: b.name,
@@ -209,15 +233,126 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
                 lift: g.lift,
                 customers: g.customers,
               })),
+              ...(setup.length ? { setup_needed: setup } : {}),
             };
           }),
         );
+        const unset = rows.filter((r) => r.setup_needed).map((r) => r.name);
         return {
           signed_in_as: principal.email,
           brands: rows,
-          next: rows.length
-            ? "trigger_queue shows the moments to act on now. recent_moments shows what just happened."
-            : `No brands yet. Ask your Walkoff contact to invite this email. Help: ${helpUrl(ctx.origin, "troubleshooting", "in-claude")}`,
+          next: !rows.length
+            ? `No brands yet. Ask your Walkoff contact to invite this email. Help: ${helpUrl(ctx.origin, "troubleshooting", "in-claude")}`
+            : unset.length
+              ? `Set up ${unset.join(" and ")} first, with the Setup steps: import_catalog, Walkoff's two Shopify queries, then import_customer_counts. How: ${helpUrl(ctx.origin, "shopify", "set-up")}`
+              : "trigger_queue shows the moments to act on now. recent_moments shows what just happened.",
+        };
+      }),
+  );
+
+  const notOnShopify = (what: string) => `Not on Shopify? Upload ${what} with the link in your welcome email: ${helpUrl(ctx.origin, "uploads", "export")}`;
+
+  server.registerTool(
+    "import_catalog",
+    {
+      title: "Import the catalog from the store",
+      description:
+        "Reads the brand's products from its Shopify store's public product feed: titles, types, tags, descriptions, prices, colorways, SKUs and photos. No customer data. New products are added and the rest updated; nothing is removed. Claude tags them for teams and colors within minutes. Use it to set a brand up, or when its catalog changes. A store that isn't on Shopify uploads a product export instead.",
+      inputSchema: { brand: brandArg },
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+    },
+    (args) =>
+      run(async () => {
+        const b = await brandFor(db, principal, args.brand);
+        if (!b.store_url) {
+          throw new ToolError(`Walkoff doesn't have ${b.name}'s store address yet. Ask your Walkoff contact to add it. ${notOnShopify("a product export")}`);
+        }
+        let feed: StorefrontCatalog;
+        try {
+          feed = await fetchStorefrontCatalog(b.store_url, { fetch: ctx.fetch, lookup: ctx.lookup });
+        } catch (err) {
+          if (err instanceof StorefrontError) throw new ToolError(`${err.message} ${notOnShopify("a product export")}`);
+          throw err;
+        }
+        let items: CatalogItem[];
+        try {
+          items = parseCatalogItems(feed.items);
+        } catch (err) {
+          if (err instanceof UploadError) throw new ToolError(err.message);
+          throw err;
+        }
+        await saveCatalog(db, b, "shopify_store", items);
+        const [stats, report] = await Promise.all([catalogStats(db, b.id), recomputeReport(db, b)]);
+        return {
+          brand: b.name,
+          store: feed.origin,
+          products_read: items.length,
+          pages: feed.pages,
+          complete: feed.complete,
+          ...(feed.note ? { note: feed.note } : {}),
+          examples: items.slice(0, 3).map((i) => i.title),
+          catalog: stats,
+          map_refreshed: !!report,
+          next: report
+            ? "Claude tags the new products for teams and colors within minutes. match_products and build_campaign can use them now."
+            : `Next: customer counts. Run Walkoff's two Shopify queries with ${SHOPIFY_TOOLS.analytics}, then import_customer_counts.`,
+        };
+      }),
+  );
+
+  server.registerTool(
+    "import_customer_counts",
+    {
+      title: "Import customer counts from Shopify",
+      description: `Builds the brand's fan map from customer counts by postal code, from Shopify's analytics: Walkoff's two queries, run with the Shopify connector's ${SHOPIFY_TOOLS.analytics}. Counts only, never names, emails or addresses. Walkoff keeps only each code's area (a US 3-digit ZIP, a Canadian FSA, a UK district), spreads each state's or province's other customers over its areas by population, replaces the brand's customer counts and redraws the map. Pass every row in one call.`,
+      inputSchema: {
+        brand: brandArg,
+        postal_codes: z
+          .string()
+          .min(1)
+          .max(250_000)
+          .describe('The first query\'s rows, one per line: country code, postal code, customers. Like "US,92101,37". As the query returns them: a header row, tabs, quotes or a table are fine.'),
+        regions: z
+          .string()
+          .max(100_000)
+          .optional()
+          .describe('The second query\'s rows, one per line: country code, state or province, customers. Like "US,California,1204". It places the customers outside the top postal codes. Leave it out only if that query failed.'),
+      },
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
+    },
+    (args) =>
+      run(async () => {
+        const b = await brandFor(db, principal, args.brand);
+        let counts: CountsImport;
+        try {
+          counts = customerCountsImport({ postalCodes: args.postal_codes, regions: args.regions });
+        } catch (err) {
+          if (err instanceof UploadError) throw new ToolError(err.message);
+          throw err;
+        }
+        await saveCustomerUpload(db, b, counts.upload, "shopify_analytics");
+        const report = await recomputeReport(db, b);
+        const { build } = counts;
+        return {
+          brand: b.name,
+          customers_mapped: build.customers,
+          placed_by_postal_code: build.fromPostalCodes,
+          spread_by_state_or_province: build.spreadByRegion,
+          spread_across_the_country: build.spreadCountryWide,
+          share_placed_by_postal_code: build.coverage,
+          areas: counts.upload.areas.length,
+          by_country: build.byCountry,
+          not_placed: {
+            other_countries: build.skipped.otherCountries,
+            unknown_postal_codes: build.skipped.unknownAreas,
+            unreadable_rows: counts.unreadable,
+          },
+          ...(build.overCounted ? { counted_twice: build.overCounted } : {}),
+          ...(build.regionsNotMatched.length ? { regions_not_matched: build.regionsNotMatched } : {}),
+          standout_teams: (report?.standouts ?? []).slice(0, 5).map((g) => ({ team: g.teamName, key: `${g.league}:${g.teamId}`, lift: g.lift, customers: g.customers })),
+          kept: "Customers per area only (a 3-digit ZIP, an FSA or a UK district). No full postal codes, names, emails or addresses.",
+          ...(counts.notes.length ? { note: counts.notes.join(" ") } : {}),
+          next: "get_affinity_map shows the whole map.",
         };
       }),
   );
@@ -237,7 +372,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         const [report, catalog] = await Promise.all([latestReport(db, b.id), loadTaggedCatalog(db, b.id)]);
         if (!report) {
           throw new ToolError(
-            `${b.name} hasn't uploaded customers yet, so there's no map. The upload link is in the welcome email from Walkoff. How to export: ${helpUrl(ctx.origin, "uploads", "export")}`,
+            `${b.name} has no fan map yet: it needs its customer counts. Set it up from Shopify in Claude: Walkoff's two Shopify queries, then import_customer_counts. How: ${helpUrl(ctx.origin, "shopify", "customers")} Not on Shopify? Upload customers or orders with the link in your welcome email.`,
           );
         }
         return {
@@ -386,7 +521,11 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           picks: picks.map((p) => pickView(p, b.store_url)),
           ...(picks.length
             ? {}
-            : { note: catalog.length ? "Nothing in the catalog is close to the team's colors." : `No catalog yet: upload a Shopify product export. How: ${helpUrl(ctx.origin, "uploads", "export")}` }),
+            : {
+                note: catalog.length
+                  ? "Nothing in the catalog is close to the team's colors."
+                  : `No catalog yet: import_catalog reads it from the store. Not on Shopify? Upload a product export. How: ${helpUrl(ctx.origin, "uploads", "export")}`,
+              }),
         };
       }),
   );
@@ -724,7 +863,10 @@ const operatorOnly = (ctx: ToolContext, fn: () => Promise<unknown>) =>
 const requiredBrand = z.string().describe("Brand name or id.");
 const exactBrand = z.string().describe("The brand's exact name or id.");
 const emailArg = z.string().max(254).describe("Their work email. They sign in to Walkoff with it.");
-const storeArg = z.string().max(200).describe('The store\'s address, like "frostbuddy.com". Campaigns link to its products.');
+const storeArg = z
+  .string()
+  .max(200)
+  .describe('The store\'s address, like "frostbuddy.com". import_catalog reads the catalog from it, and campaigns link to its products.');
 const licensedArg = z
   .boolean()
   .describe("True only if the brand may use its teams' names and marks. Without a license (most brands), campaigns nod with colors and never name a team.");
@@ -751,7 +893,7 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
     {
       title: "Create a brand",
       description:
-        "Walkoff operators only. Sets up a new brand with its store and whether it's licensed to name its teams, and returns its id and private upload link. Then invite_member for each marketer: it emails them the link and how to connect Walkoff in Claude. Refuses a name another brand has unless allow_duplicate is true.",
+        "Walkoff operators only. Sets up a new brand with its store and whether it's licensed to name its teams, and returns its id and private upload link. Then invite_member for each marketer: it emails them how to connect Walkoff and Shopify in Claude and set the brand up there, with the upload link for stores not on Shopify. Refuses a name another brand has unless allow_duplicate is true.",
       inputSchema: {
         name: z.string().min(1).max(100).describe('The brand\'s name, like "Frost Buddy".'),
         store_url: storeArg.optional(),
@@ -792,7 +934,7 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
           copy_rule: copyRule(b.licensed),
           upload_link: uploadLink(b.upload_token, ctx.origin),
           note: "The upload link is private: anyone with it can upload for this brand. invite_member emails it to each person you invite. Don't share it anywhere else.",
-          next: `${b.store_url ? "" : "update_brand with the store's address, then "}invite_member for each marketer at ${b.name}.`,
+          next: `${b.store_url ? "" : "update_brand with the store's address (import_catalog reads the catalog from it), then "}invite_member for each marketer at ${b.name}.`,
         };
       }),
   );
@@ -845,7 +987,7 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
     {
       title: "Invite someone to a brand",
       description:
-        "Walkoff operators only. Lets someone use Walkoff for a brand in Claude, and emails them a welcome: who invited them, the brand's private upload link (the page has the export guides), how to add Walkoff as a connector in Claude, and a first thing to ask. Safe to repeat: inviting someone again sends the welcome again.",
+        "Walkoff operators only. Lets someone use Walkoff for a brand in Claude, and emails them a welcome: who invited them, how to add Walkoff as a connector in Claude, how to set the brand up from Shopify there, the brand's private upload link for stores not on Shopify, and a first thing to ask. Safe to repeat: inviting someone again sends the welcome again.",
       inputSchema: {
         brand: exactBrand,
         email: emailArg,
@@ -879,7 +1021,7 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
         return {
           ...member,
           welcome_email: sent === "sent" ? `Sent to ${email}.` : "Printed to the server log, because email isn't set up on this server.",
-          next: "onboarding_status shows when they upload and connect.",
+          next: "onboarding_status shows when they connect and set the brand up.",
         };
       }),
   );
@@ -930,7 +1072,7 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
     {
       title: "Onboarding status",
       description:
-        "Walkoff operators only. Where a brand is in onboarding, or every brand: store and license, members and whether each has connected Walkoff in Claude, customers uploaded and mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step.",
+        "Walkoff operators only. Where a brand is in onboarding, or every brand: store and license, members and whether each has connected Walkoff in Claude, customer counts (from Shopify or an upload) and how many were mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step.",
       inputSchema: { brand: z.string().optional().describe("Brand name or id. Leave it out for every brand.") },
       annotations: { readOnlyHint: true, openWorldHint: false },
     },

@@ -31,8 +31,9 @@ export default function ConnectPage() {
           </li>
         </ol>
         <p>
-          Connect Klaviyo too, if you haven&apos;t. Claude drafts campaigns with your Klaviyo
-          connector, in your own account.{" "}
+          Connect Shopify and Klaviyo too, if you haven&apos;t. Claude sets your brand up from
+          your Shopify store, and drafts campaigns with your Klaviyo connector, in your own
+          account. <Link href={helpPath("shopify", "connect")}>Connecting Shopify</Link> &middot;{" "}
           <Link href={helpPath("klaviyo", "connect")}>Connecting Klaviyo</Link>
         </p>
         <Callout>

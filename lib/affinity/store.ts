@@ -1,9 +1,10 @@
 // Server-side storage for brands, their counts, catalogs and reports
-// (supabase/004_affinity.sql). Used by the upload API and the scripts.
+// (supabase/004_affinity.sql). Used by the upload API, the MCP setup tools
+// and the scripts.
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { computeAffinity, type AffinityReport, type AreaCount, type ProductCount, type TaggedProduct } from "./compute";
 import type { Country } from "./geo";
-import type { CatalogItem, CustomerImport } from "./imports";
+import type { CatalogItem, CustomerImport, DataSource } from "./imports";
 import { hexForColorName } from "./colors";
 import { tagProduct, type ProductTags } from "./tagging";
 
@@ -48,8 +49,14 @@ export async function brandByToken(db: SupabaseClient, token: string): Promise<B
 }
 
 /** Replaces the brand's customer counts (and product counts, for an order
- *  export) with this upload. */
-export async function saveCustomerUpload(db: SupabaseClient, brand: Brand, upload: CustomerImport): Promise<void> {
+ *  export) with this upload. source is what brand_uploads records: the file
+ *  format, or shopify_analytics for counts Claude read from Shopify. */
+export async function saveCustomerUpload(
+  db: SupabaseClient,
+  brand: Brand,
+  upload: CustomerImport,
+  source: DataSource = upload.format,
+): Promise<void> {
   const del = await db.from("brand_area_counts").delete().eq("brand_id", brand.id);
   if (del.error) throw del.error;
   await insertChunks(
@@ -82,7 +89,7 @@ export async function saveCustomerUpload(db: SupabaseClient, brand: Brand, uploa
   }
   const { error } = await db.from("brand_uploads").insert({
     brand_id: brand.id,
-    format: upload.format,
+    format: source,
     rows_read: upload.rows,
     rows_saved: upload.areas.length + upload.products.length,
     customers: upload.areas.reduce((s, a) => s + a.customers, 0),
@@ -104,7 +111,7 @@ const taggedText = (p: { title: string; product_type: string | null; category: s
 export async function saveCatalog(
   db: SupabaseClient,
   brand: Brand,
-  format: string,
+  format: DataSource,
   items: CatalogItem[],
 ): Promise<void> {
   const existing = await selectAll<{

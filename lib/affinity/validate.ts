@@ -107,24 +107,28 @@ function colorways(v: unknown): Colorway[] {
 export function parseCatalogUpload(body: unknown): { format: ImportFormat; items: CatalogItem[] } {
   const b = (body ?? {}) as Record<string, unknown>;
   const items = Array.isArray(b.items) ? b.items : fail("No products in the upload");
+  return { format: format(b.format, "catalog"), items: parseCatalogItems(items) };
+}
+
+/** Products checked and trimmed the same way, from an upload or a store's
+ *  public feed. */
+export function parseCatalogItems(raw: unknown): CatalogItem[] {
+  const items = Array.isArray(raw) ? raw : fail("No products in the upload");
   if (items.length === 0) fail("No products found in the file");
   if (items.length > LIMITS.items) fail("Too many products");
-  return {
-    format: format(b.format, "catalog"),
-    items: items.map((raw): CatalogItem => {
-      const r = raw as Record<string, unknown>;
-      const title = text(r.title, 200) || fail("Every product needs a title");
-      const price = r.price === null || r.price === undefined ? null : count(r.price, 1e9);
-      return {
-        handle: text(r.handle, 200) || title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-        title,
-        productType: text(r.productType, 100),
-        category: text(r.category, 200),
-        tags: Array.isArray(r.tags) ? r.tags.slice(0, 30).map((t) => text(t, 60)).filter(Boolean) : [],
-        description: text(r.description, 500),
-        price,
-        colorways: colorways(r.colorways),
-      };
-    }),
-  };
+  return items.map((raw): CatalogItem => {
+    const r = raw as Record<string, unknown>;
+    const title = text(r.title, 200) || fail("Every product needs a title");
+    const price = r.price === null || r.price === undefined ? null : count(r.price, 1e9);
+    return {
+      handle: text(r.handle, 200) || title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      title,
+      productType: text(r.productType, 100),
+      category: text(r.category, 200),
+      tags: Array.isArray(r.tags) ? r.tags.slice(0, 30).map((t) => text(t, 60)).filter(Boolean) : [],
+      description: text(r.description, 500),
+      price,
+      colorways: colorways(r.colorways),
+    };
+  });
 }

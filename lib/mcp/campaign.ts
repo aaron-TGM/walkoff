@@ -468,7 +468,7 @@ export function buildCampaign(input: {
   if (audience.customers && audience.customers.in_circles < 100) {
     const n = audience.customers.in_circles;
     warnings.push(
-      `${n ? `Only about ${n}` : "None"} of the brand's uploaded customers live in this audience. Consider reach "wide", or skipping.`,
+      `${n ? `Only about ${n}` : "None"} of the brand's mapped customers live in this audience. Consider reach "wide", or skipping.`,
     );
   }
   if (!audience.circles.length) warnings.push("Walkoff couldn't draw an audience for this team. Target a broader segment by hand.");
