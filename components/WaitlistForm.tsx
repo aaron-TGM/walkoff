@@ -1,7 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
+import { visitAttribution } from "@/lib/analytics";
+import { helpPath } from "@/lib/help/pages";
 import { LEAGUES } from "@/lib/leagues";
+import { PRICING } from "@/lib/pricing";
 import { PLATFORMS, ROLES } from "@/lib/waitlist";
 
 export function WaitlistForm() {
@@ -47,6 +51,7 @@ export function WaitlistForm() {
           leagues,
           teams: teams.trim(),
           fax,
+          attribution: visitAttribution(),
         }),
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string };
@@ -68,9 +73,15 @@ export function WaitlistForm() {
         <div className="form-success-script">You&apos;re in.</div>
         <div className="form-success-h">We&apos;ll be in touch within 24 hours.</div>
         <p className="form-success-p">
-          Next up: our export guide for pulling your counts from Shopify or
-          Klaviyo. Then we build your affinity map and line up your first
-          moments.
+          Next up: our{" "}
+          <Link href={helpPath("uploads", "export")}>export guide</Link> for
+          pulling your counts from Shopify or Klaviyo. Then we build your
+          affinity map and line up your first moments.
+        </p>
+        <p className="form-success-p">
+          While you wait, <Link href="/upload/demo">try the demo</Link> with
+          your own export (nothing is uploaded), or read{" "}
+          <Link href={helpPath("onboarding")}>what setup looks like</Link>.
         </p>
       </div>
     );
@@ -95,7 +106,7 @@ export function WaitlistForm() {
         </div>
         <div className="form-row">
           <label className="form-label" htmlFor="f-email">
-            Your email *
+            Work email *
           </label>
           <input
             id="f-email"
@@ -219,10 +230,11 @@ export function WaitlistForm() {
 
       {error ? <p className="form-error">{error}</p> : null}
       <button type="submit" className="form-submit" disabled={loading}>
-        <span>{loading ? "Submitting…" : "Claim Early Access →"}</span>
+        <span>{loading ? "Submitting…" : "Get early access →"}</span>
       </button>
       <p className="form-fine">
-        No credit card &middot; 60 days free &middot; We reply within 24 hours
+        No credit card &middot; {PRICING.trialDays} days free &middot; We reply
+        within 24 hours
       </p>
     </form>
   );

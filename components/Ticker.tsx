@@ -2,7 +2,7 @@ const ITEMS: { tag: string; headline: string; detail: string }[] = [
   {
     tag: "Final/OT",
     headline: "Eagles 27, Cowboys 24",
-    detail: "2,310 customers in Eagles territory · 4 products matched",
+    detail: "1,640 customers in Eagles territory · 4 products matched",
   },
   {
     tag: "Derby win",
@@ -51,16 +51,23 @@ function TickerGroup({ hidden = false }: { hidden?: boolean }) {
   );
 }
 
+// The pause control is CSS only: the checkbox stops the track and swaps the
+// label (.ticker-pause in globals.css).
 export function Ticker() {
   return (
     <div className="ticker" role="marquee" aria-label="Sample moment feed">
       <div className="ticker-label">Sample feed</div>
+      <input id="ticker-pause" type="checkbox" className="ticker-pause-input sr-only" aria-label="Pause the sample feed" />
       <div className="ticker-viewport">
         <div className="ticker-track">
           <TickerGroup />
           <TickerGroup hidden />
         </div>
       </div>
+      <label htmlFor="ticker-pause" className="ticker-pause" aria-hidden>
+        <span className="ticker-pause-off">Pause</span>
+        <span className="ticker-pause-on">Play</span>
+      </label>
     </div>
   );
 }

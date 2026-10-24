@@ -409,8 +409,8 @@ Never put emails, company names or free text in events. On the Hobby plan, skip 
 ### 10.3 Store the lead's source with each signup (works on any plan; this is the source of truth)
 - **Migration:** add `supabase/008_waitlist_attribution.sql`. Make it safe to re-run, like 002. Add nullable columns: `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`, `utm_term`, `referrer`, `landing_path`, `cta_placement`.
 - **Client:**
-  - On the first page load of a visit, save the first-touch UTMs, `document.referrer` and the landing path to `sessionStorage`.
-  - On each CTA click, save its placement.
+  - On the first page load of a visit, keep the first-touch UTMs, the referring host and the landing path in memory (`lib/analytics.ts`, shipped in PR 1). Nothing is stored on the visitor's device.
+  - On each CTA click, keep its placement (`data-cta`).
   - `WaitlistForm` sends all of these with the signup.
 - **API:**
   - Accept only those keys and clip them with the existing `str()`.
@@ -490,10 +490,9 @@ Each PR ships on its own. Every PR description must list which founder defaults 
   - [ ] FAQ answers agree with /onboarding and the help pages.
 
 **PR 4: Tighten.**
-- **Files:** `MarketingPage.tsx` (`#moments`, `#mcp`), `TriggerCategory.tsx`, `lib/triggers.ts`, `Ticker.tsx`, `lib/leagues.ts`, and the "fan map" wording pass.
+- **Files:** `MarketingPage.tsx` (`#moments`, `#mcp`), `TriggerCategory.tsx`, `lib/triggers.ts`, `lib/leagues.ts`, and the "fan map" wording pass. (The ticker's pause control shipped in PR 1.)
 - **Done when:**
   - [ ] The mobile page is shorter than today's 20,168px.
-  - [ ] The ticker pauses from both keyboard and pointer.
   - [ ] The example asks on the homepage come from `HELP_TOOLS`.
   - [ ] The trigger library's drift test still passes.
 

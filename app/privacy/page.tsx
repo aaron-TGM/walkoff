@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage eyebrow="Legal" title="Privacy Policy" updated="October 22, 2026">
+    <LegalPage eyebrow="Legal" title="Privacy Policy" updated="October 24, 2026">
       <p>
         Walkoff (walkoff.io) is a product of Tuff Ghost Media LLC, based in San
         Clemente, California (&ldquo;Walkoff,&rdquo; &ldquo;we&rdquo; or
@@ -22,7 +22,9 @@ export default function PrivacyPage() {
         <li>
           <strong>Early access requests.</strong> Your company, email address,
           website, role, email platform, and the leagues, teams or markets you
-          tell us about.
+          tell us about. We also keep how you found us: the campaign tags on
+          the link you followed, the site that sent you, the first page you
+          visited and the button you clicked.
         </li>
         <li>
           <strong>Data you give us to run the service.</strong> Aggregated
@@ -45,6 +47,13 @@ export default function PrivacyPage() {
           request information (IP address, browser type, pages requested) for
           security and reliability.
         </li>
+        <li>
+          <strong>Site analytics.</strong> We count visits to walkoff.io with
+          Vercel Web Analytics: the pages viewed, the site that sent you, and
+          your browser, device type and general location. It sets no cookies
+          and doesn&apos;t identify you, and private links, such as a
+          brand&apos;s upload link, are removed before anything is counted.
+        </li>
       </ul>
       <p>
         Walkoff is designed to work from counts, not customer lists. Please
@@ -57,6 +66,7 @@ export default function PrivacyPage() {
       <ul>
         <li>To provide, maintain and improve Walkoff.</li>
         <li>To respond to early access requests and support questions.</li>
+        <li>To learn which pages and campaigns bring people to Walkoff.</li>
         <li>To keep the service secure and prevent abuse.</li>
         <li>To meet legal obligations.</li>
         <li>
@@ -74,7 +84,8 @@ export default function PrivacyPage() {
       <ul>
         <li>
           <strong>Service providers</strong> that run parts of Walkoff for us
-          under confidentiality obligations: hosting (Vercel), database
+          under confidentiality obligations: hosting and site analytics
+          (Vercel), database
           (Supabase), email delivery (Resend) and AI processing (Anthropic),
           which we use to analyze product catalogs and counts.
         </li>

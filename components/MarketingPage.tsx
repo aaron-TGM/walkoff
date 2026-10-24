@@ -220,8 +220,8 @@ export function MarketingPage() {
                 it into Claude or any AI agent.
               </p>
               <div className="hero-actions">
-                <a href="#form" className="btn-primary">
-                  <span>Get Early Access, Free</span>
+                <a href="#form" className="btn-primary" data-cta="hero">
+                  <span>Get early access</span>
                 </a>
                 <a href="#how" className="btn-ghost">
                   <span>See how it works</span>
@@ -720,7 +720,7 @@ export function MarketingPage() {
               <ul className="form-perks">
                 <li>
                   <span className="form-perks-check">✓</span>
-                  Done for you, start to finish
+                  Setup done for you
                 </li>
                 <li>
                   <span className="form-perks-check">✓</span>
@@ -777,12 +777,13 @@ export function MarketingPage() {
             you send it. Your deliverability, unsubscribes and suppression
             rules stay exactly as they are.
           </FaqItem>
-          <FaqItem num="04" question="What's MCP, and do I need it?">
-            MCP (Model Context Protocol) is the open standard AI agents like
-            Claude use to call outside tools. You don&apos;t need it: during
-            early access we can run everything for you. If your team works in
-            Claude, add Walkoff as a connector at www.walkoff.io/mcp, next to
-            Klaviyo and Shopify, and ask it for a campaign.
+          <FaqItem num="04" question="What do I need to use it?">
+            Claude with your Klaviyo connector, a Shopify or Klaviyo export of
+            your customers or orders, and your product export. During early
+            access we set up your brand, build your affinity map and tag your
+            catalog. Your team works in Claude: ask what to send, review the
+            campaign, and Claude drafts it in your Klaviyo account.{" "}
+            <Link href={helpPath("onboarding", "what-you-need")}>What you need</Link>
           </FaqItem>
           <FaqItem num="05" question="How fast do moments show up?">
             Within about a minute of the final whistle, the moment is in your
@@ -794,18 +795,22 @@ export function MarketingPage() {
             League, with MLB from Opening Day 2027. Need a league that
             isn&apos;t listed? Ask. It&apos;s usually quick to add.
           </FaqItem>
-          <FaqItem num="07" question="How do you prove it worked?">
-            Today every moment you draft, send or skip is logged, so you can
-            see what went out and when. Coming next: a small random slice of
-            each audience won&apos;t get the message, so comparing the two
-            groups shows what the moment actually added, and each send gets
-            matched to your orders.
+          <FaqItem num="07" question="How do I see what it earned?">
+            Every Walkoff send is an ordinary Klaviyo campaign with UTM
+            tracking on, so Klaviyo, Shopify, Google Analytics and Triple Whale
+            all see it. Ask Claude how your sends did, and it reads each
+            one&apos;s recipients, clicks, orders and revenue from Klaviyo,
+            using your own attribution settings. Coming next: holdout groups,
+            so you see what each moment added, not just what it was credited
+            with.
           </FaqItem>
           <FaqItem num="08" question="Is my data safe?">
-            We work from counts, not customer lists, so there&apos;s no email
-            address to leak. We ask for the narrowest API access that works,
-            encrypt keys, and wall off each brand&apos;s data from every other
-            brand&apos;s.
+            Walkoff never sees a customer list. Your browser turns your exports
+            into counts by postal area, so there are no names, emails or
+            addresses to leak. Walkoff never asks for your Klaviyo or Shopify
+            keys: your own Klaviyo connector in Claude does the drafting. Each
+            brand&apos;s data is walled off from every other brand&apos;s.{" "}
+            <Link href={helpPath("data-and-safety")}>Data and safety</Link>
           </FaqItem>
           <FaqItem num="09" question="What does it cost?">
             ${PRICING.firstLeague} a month per brand, including one league.
@@ -835,8 +840,8 @@ export function MarketingPage() {
           </div>
           <h2 className="final-cta-h">Be first to the moment.</h2>
           <div className="final-cta-actions">
-            <a href="#form" className="btn-primary">
-              <span>Claim Early Access, Free</span>
+            <a href="#form" className="btn-primary" data-cta="final">
+              <span>Get early access</span>
             </a>
             <a href="mailto:hello@walkoff.io" className="btn-ghost">
               <span>Ask a question</span>
