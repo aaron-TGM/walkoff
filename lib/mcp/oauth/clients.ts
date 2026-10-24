@@ -1,10 +1,11 @@
 // The apps that can ask for access. Claude names itself with a client ID
 // metadata document (its client_id is an https URL to a JSON file listing
 // its redirect addresses); other apps register first (RFC 7591).
-import { lookup } from "node:dns/promises";
-import { isIP } from "node:net";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { hostVerdict } from "../../public-fetch";
 import { randomToken } from "./crypto";
+
+export { privateAddress } from "../../public-fetch";
 
 export interface OAuthClient {
   client_id: string;
@@ -74,34 +75,10 @@ export function isMetadataUrl(clientId: string): boolean {
   return host.includes(".") && !/\.(local|internal|localhost)$/.test(host);
 }
 
-/** Loopback, private, link-local, carrier-grade NAT, multicast and
- *  reserved addresses: nothing a public metadata document lives on. */
-export function privateAddress(ip: string): boolean {
-  if (isIP(ip) === 4) {
-    const [a, b] = ip.split(".").map(Number);
-    return (
-      a === 0 || a === 10 || a === 127 || a >= 224 ||
-      (a === 100 && b >= 64 && b <= 127) ||
-      (a === 169 && b === 254) ||
-      (a === 172 && b >= 16 && b <= 31) ||
-      (a === 192 && b === 168)
-    );
-  }
-  const v = ip.toLowerCase();
-  const mapped = v.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/);
-  if (mapped) return privateAddress(mapped[1]);
-  return v === "::" || v === "::1" || /^f[cd]/.test(v) || /^fe[89ab]/.test(v) || v.startsWith("ff");
-}
-
 /** True when every address the host resolves to is public. Checked before
  *  fetching, so a public name can't point Walkoff at an internal address. */
 async function resolvesPublic(host: string): Promise<boolean> {
-  try {
-    const addresses = await lookup(host, { all: true, verbatim: true });
-    return addresses.length > 0 && addresses.every((a) => !privateAddress(a.address));
-  } catch {
-    return false;
-  }
+  return (await hostVerdict(host)) === "public";
 }
 
 /** Checks a fetched metadata document (draft-ietf-oauth-client-id-metadata-document). */

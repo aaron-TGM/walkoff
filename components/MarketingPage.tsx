@@ -50,20 +50,20 @@ const MOMENT_PICKS = [
 
 const STEPS = [
   {
-    title: "Drop in your exports",
-    body: "Your Shopify or Klaviyo export, read right in your browser. Only counts by postal area reach us, plus your product list. Never a customer list.",
+    title: "Connect your store in Claude",
+    body: "Claude reads your products from your Shopify store, and customer counts by area from Shopify's analytics. No exports to download. Never a customer list.",
     visual: (
       <>
-        <span className="c">{"// what leaves your browser"}</span>
+        <span className="c">{"// what reaches Walkoff"}</span>
         <br />
-        <span className="k">area</span>,<span className="k">customers</span>,
-        <span className="k">orders</span>
+        <span className="k">country</span>,<span className="k">area</span>,
+        <span className="k">customers</span>
         <br />
-        <span className="v">191</span>,<span className="v">212</span>,
-        <span className="v">340</span>
+        <span className="v">US</span>,<span className="v">921</span>,
+        <span className="v">212</span>
         <br />
-        <span className="v">532</span>,<span className="v">96</span>,
-        <span className="v">121</span>
+        <span className="v">CA</span>,<span className="v">M5V</span>,
+        <span className="v">96</span>
       </>
     ),
   },
@@ -339,9 +339,10 @@ export function MarketingPage() {
             Four steps. <em>We set them up for you.</em>
           </h2>
           <p className="section-lead">
-            During early access we set up your brand, map your fans and tag
-            your catalog. Then your team works in Claude: it finds the moment,
-            builds the campaign and drafts it in Klaviyo for your go-ahead.{" "}
+            During early access we set up your brand and invite your team.
+            Then it all happens in Claude: it maps your fans from your Shopify
+            store, finds the moment, builds the campaign and drafts it in
+            Klaviyo for your go-ahead.{" "}
             <Link href={helpPath("onboarding")} className="section-lead-link">
               See every step
             </Link>
@@ -371,8 +372,8 @@ export function MarketingPage() {
             <em>something new about your customers.</em>
           </h2>
           <p className="section-lead section-lead-dark">
-            Drop in your exports and Walkoff shows which fan territories your
-            customers lean toward, using widely recognized fan territory maps
+            Connect your Shopify store in Claude and Walkoff shows which fan
+            territories your customers lean toward, using widely recognized fan territory maps
             for every league. Then it matches your products to each team, down
             to the colorway.
           </p>
@@ -764,12 +765,13 @@ export function MarketingPage() {
             and trademarks out of your messages unless you&apos;re licensed:
             the colors do the talking.
           </FaqItem>
-          <FaqItem num="02" question="What do I upload?">
-            Your Shopify order or customer export, or a Klaviyo profile
-            export, plus your product export. Your browser reads them and
-            sends us only counts per postal area and your product details,
-            including every colorway. No names, no emails, no street
-            addresses. Our export guides take a few minutes.
+          <FaqItem num="02" question="Do I have to upload anything?">
+            No. On Shopify, Claude sets your brand up with the Shopify
+            connector: Walkoff reads your products from your store, and
+            Claude reads customer counts by postal code from Shopify&apos;s
+            analytics. Walkoff keeps only the area and the count. No names,
+            no emails, no street addresses. Not on Shopify? A private upload
+            page reads your exports in your browser and sends only counts.
           </FaqItem>
           <FaqItem num="03" question={<>Does <BrandSpan /> send the messages?</>}>
             Your email platform does, from your own account. Walkoff builds
@@ -778,11 +780,11 @@ export function MarketingPage() {
             rules stay exactly as they are.
           </FaqItem>
           <FaqItem num="04" question="What do I need to use it?">
-            Claude with your Klaviyo connector, a Shopify or Klaviyo export of
-            your customers or orders, and your product export. During early
-            access we set up your brand, build your affinity map and tag your
-            catalog. Your team works in Claude: ask what to send, review the
-            campaign, and Claude drafts it in your Klaviyo account.{" "}
+            Claude with your Shopify and Klaviyo connectors. During early
+            access we set up your brand and invite your team. Ask Claude to set
+            Walkoff up from your store, and your affinity map is ready in
+            minutes. Then ask what to send, review the campaign, and Claude
+            drafts it in your Klaviyo account.{" "}
             <Link href={helpPath("onboarding", "what-you-need")}>What you need</Link>
           </FaqItem>
           <FaqItem num="05" question="How fast do moments show up?">
@@ -805,10 +807,11 @@ export function MarketingPage() {
             with.
           </FaqItem>
           <FaqItem num="08" question="Is my data safe?">
-            Walkoff never sees a customer list. Your browser turns your exports
-            into counts by postal area, so there are no names, emails or
+            Walkoff never sees a customer list. It keeps counts by postal
+            area, from Shopify&apos;s analytics through Claude or from your
+            exports in your browser, so there are no names, emails or
             addresses to leak. Walkoff never asks for your Klaviyo or Shopify
-            keys: your own Klaviyo connector in Claude does the drafting. Each
+            keys: your own connectors in Claude do the work. Each
             brand&apos;s data is walled off from every other brand&apos;s.{" "}
             <Link href={helpPath("data-and-safety")}>Data and safety</Link>
           </FaqItem>

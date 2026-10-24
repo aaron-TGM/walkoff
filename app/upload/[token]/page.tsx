@@ -10,15 +10,19 @@ import { getServiceSupabase } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Your affinity map · Walkoff",
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
+  const { token } = await params;
+  return {
+    title: token === "demo" ? "A sample fan map · Walkoff" : "Your affinity map · Walkoff",
+    robots: { index: false, follow: false },
+  };
+}
 
 export default async function UploadPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
 
-  // walkoff.io/upload/demo: a sample brand, and files never leave the browser.
+  // walkoff.io/upload/demo: a sample brand's map, no file needed. A file
+  // tried there is read in the browser and never leaves it.
   if (token === "demo") {
     const seed = demoData();
     const report = computeAffinity(seed.areas, { products: seed.products, catalog: seed.catalog });

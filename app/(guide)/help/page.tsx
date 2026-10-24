@@ -10,6 +10,7 @@ export const metadata = helpMetadata("help");
 const P = "help";
 
 const STARTERS = [
+  HELP_TOOLS.import_catalog.asks[0],
   HELP_TOOLS.trigger_queue.asks[0],
   HELP_TOOLS.get_affinity_map.asks[0],
   HELP_TOOLS.build_campaign.asks[1],
@@ -24,9 +25,10 @@ export default function HelpHome() {
       <HelpSection page={P} id="start">
         <p>
           Walkoff watches every game in its leagues and spots the moments your customers care
-          about: walk-offs, comebacks, rivalry wins and more. From your own customer data, it
+          about: walk-offs, comebacks, rivalry wins and more. From your own customer counts, it
           knows which fan territories your customers lean toward, and which of your products
-          are in each team&apos;s colors.
+          are in each team&apos;s colors. Claude sets it up from your Shopify store, with no
+          files.
         </p>
         <p>
           You use it in Claude. Ask what to send, and Claude builds a ready-to-draft Klaviyo

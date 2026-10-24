@@ -69,7 +69,8 @@ export interface TeamAudience {
   core: { areas: number; population: number };
   /** UK clubs: the core districts, for Klaviyo's zip filter. */
   outward_codes?: string[];
-  /** From the brand's uploaded customer counts, when there are any. */
+  /** From the brand's customer counts, when there are any. uploaded is
+   *  every customer mapped, from Shopify or an upload. */
   customers?: { in_circles: number; in_core_areas: number; uploaded: number };
   /** The segment for Klaviyo's create_segment, one condition per circle.
    *  Null when there are no circles. */

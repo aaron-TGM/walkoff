@@ -2,6 +2,7 @@
 // help.test.ts checks every one is still in its source file, so a reworded
 // message can't leave the help page quoting something nobody sees.
 import { TTL } from "../mcp/oauth/config";
+import { SHOPIFY } from "./shopify";
 
 export interface Trouble {
   id: string;
@@ -19,8 +20,10 @@ const UPLOAD = "components/upload/UploadClient.tsx";
 const TOOLS = "lib/mcp/tools.ts";
 const DATA = "lib/mcp/data.ts";
 const CAMPAIGN = "lib/mcp/campaign.ts";
+const STOREFRONT = "lib/affinity/storefront.ts";
+const COUNTS = "lib/affinity/shopify-counts.ts";
 
-export const TROUBLE: Record<"sign-in" | "uploads" | "in-claude", Trouble[]> = {
+export const TROUBLE: Record<"sign-in" | "setup" | "uploads" | "in-claude", Trouble[]> = {
   "sign-in": [
     {
       id: "no-code",
@@ -77,6 +80,76 @@ export const TROUBLE: Record<"sign-in" | "uploads" | "in-claude", Trouble[]> = {
       says: "We couldn't send the email just now. Try again in a minute.",
       source: HANDLERS,
       fix: "Wait a minute and ask for the code again.",
+    },
+  ],
+  setup: [
+    {
+      id: "no-store-address",
+      says: "Walkoff doesn't have …'s store address yet. Ask your Walkoff contact to add it.",
+      check: "store address yet. Ask your Walkoff contact to add it.",
+      source: TOOLS,
+      fix: "Walkoff reads your products from your store's address. Your Walkoff contact adds it in a minute. Then ask Claude again.",
+    },
+    {
+      id: "not-shopify",
+      says: "… doesn't have a Shopify product feed, so it may not be a Shopify store.",
+      check: "doesn't have a Shopify product feed, so it may not be a Shopify store.",
+      source: STOREFRONT,
+      fix: "Walkoff reads Shopify's public product feed, which some stores don't serve: a custom storefront (headless or Hydrogen), or a store on another platform. Upload a product export on your upload page instead.",
+    },
+    {
+      id: "password",
+      says: "… is password protected, so its products aren't public yet.",
+      check: "is password protected, so its products aren't public yet.",
+      source: STOREFRONT,
+      fix: "Walkoff reads only what your store shows shoppers. Ask again once the store is open, or upload a product export now.",
+    },
+    {
+      id: "turned-away",
+      says: "… turned Walkoff away (HTTP …).",
+      check: "turned Walkoff away (HTTP",
+      source: STOREFRONT,
+      fix: "Your store's bot protection blocked the read. Try again later, or upload a product export.",
+    },
+    {
+      id: "store-busy",
+      says: "… is busy right now. Try again in a few minutes.",
+      check: "is busy right now. Try again in a few minutes.",
+      source: STOREFRONT,
+      fix: "Your store asked Walkoff to slow down. Ask again in a few minutes. Anything already read is saved.",
+    },
+    {
+      id: "big-catalog",
+      says: "The store has more than … products. Walkoff read the first …",
+      check: "products. Walkoff read the first",
+      source: STOREFRONT,
+      fix: `One import reads up to ${SHOPIFY.maxProducts.toLocaleString("en-US")} products. For the rest, upload a product export on your upload page.`,
+    },
+    {
+      id: "emails-in-rows",
+      says: "Those rows include an email address. Walkoff takes counts only, never names, emails or addresses.",
+      source: COUNTS,
+      fix: "Claude passed more than counts. Ask it to run Walkoff's two Shopify queries again, exactly as written, and pass only their rows. Nothing was saved.",
+    },
+    {
+      id: "swapped",
+      says: "The rows look swapped. …",
+      check: "The rows look swapped.",
+      source: COUNTS,
+      fix: "Claude put the postal codes where the states go. Ask it to try again. Nothing was saved.",
+    },
+    {
+      id: "no-rows",
+      says: "Walkoff couldn't read any rows in …",
+      check: "Walkoff couldn't read any rows in",
+      source: COUNTS,
+      fix: "Ask Claude to run the two queries again and pass every row, one per line. If Shopify won't run them, check your Shopify account can see your store's reports.",
+    },
+    {
+      id: "no-areas",
+      says: "None of these postal codes are in an area Walkoff maps. It maps the US, Canada and the UK.",
+      source: COUNTS,
+      fix: "Walkoff maps customers in the US, Canada and the UK. If most of yours are elsewhere, it can't make your fan map yet.",
     },
   ],
   uploads: [
@@ -141,23 +214,30 @@ export const TROUBLE: Record<"sign-in" | "uploads" | "in-claude", Trouble[]> = {
     },
     {
       id: "no-map",
-      says: "… hasn't uploaded customers yet, so there's no map.",
-      check: "hasn't uploaded customers yet, so there's no map.",
+      says: "… has no fan map yet: it needs its customer counts.",
+      check: "has no fan map yet: it needs its customer counts.",
       source: TOOLS,
-      fix: "Upload customers or orders on your upload page. The link is in your welcome email.",
+      fix: "Ask Claude to set up Walkoff from your Shopify store. Not on Shopify? Upload customers or orders on your upload page. The link is in your welcome email.",
     },
     {
       id: "no-standouts",
-      says: "… has no standout fan territories yet (it needs a customer upload). Name a team instead.",
-      check: "has no standout fan territories yet (it needs a customer upload). Name a team instead.",
+      says: "… has no fan map yet, so it has no standout teams. Set it up first, or name a team.",
+      check: "has no fan map yet, so it has no standout teams. Set it up first, or name a team.",
       source: TOOLS,
-      fix: "Upload customers or orders, or name a team in your ask. If your map has no standouts, your customers are spread like the population, so name the teams you care about.",
+      fix: "Set your brand up first, or name a team in your ask.",
+    },
+    {
+      id: "no-team-stands-out",
+      says: "No team stands out on …'s fan map, so name a team instead.",
+      check: "fan map, so name a team instead.",
+      source: TOOLS,
+      fix: "Your customers are spread much like the population, so no territory stands out. Name the teams you care about.",
     },
     {
       id: "no-catalog",
-      says: "No catalog yet: upload a Shopify product export.",
+      says: "No catalog yet: import_catalog reads it from the store.",
       source: TOOLS,
-      fix: "Upload your product export in step 2 of your upload page.",
+      fix: "Ask Claude to update your catalog from your store. Not on Shopify? Upload your product export in step 2 of your upload page.",
     },
     {
       id: "no-colors",
@@ -173,8 +253,8 @@ export const TROUBLE: Record<"sign-in" | "uploads" | "in-claude", Trouble[]> = {
     },
     {
       id: "few-customers",
-      says: "Only about … of the brand's uploaded customers live in this audience.",
-      check: "of the brand's uploaded customers live in this audience.",
+      says: "Only about … of the brand's mapped customers live in this audience.",
+      check: "of the brand's mapped customers live in this audience.",
       source: CAMPAIGN,
       fix: 'Ask for reach "wide" to include shared markets, or skip the moment.',
     },

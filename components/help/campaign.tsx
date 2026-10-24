@@ -75,7 +75,7 @@ export function SegmentSummary({ audience }: { audience: TeamAudience }) {
         <>
           <dt>Your customers</dt>
           <dd>
-            {fmt(audience.customers.in_circles)} of the {fmt(audience.customers.uploaded)} customers uploaded live inside.
+            {fmt(audience.customers.in_circles)} of the {fmt(audience.customers.uploaded)} customers mapped live inside.
           </dd>
         </>
       ) : null}

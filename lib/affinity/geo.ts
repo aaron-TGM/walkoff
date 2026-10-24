@@ -112,7 +112,9 @@ export function toPostalArea(
   return null;
 }
 
-function normalizeCountry(raw?: string | null): Country | null {
+/** "USA", "Canada", "UK" and the like as the country Walkoff covers, or null
+ *  for one it doesn't. */
+export function normalizeCountry(raw?: string | null): Country | null {
   const c = raw?.trim().toUpperCase();
   if (!c) return null;
   if (["US", "USA", "UNITED STATES", "UNITED STATES OF AMERICA"].includes(c)) return "US";

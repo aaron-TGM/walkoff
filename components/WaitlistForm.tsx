@@ -73,14 +73,13 @@ export function WaitlistForm() {
         <div className="form-success-script">You&apos;re in.</div>
         <div className="form-success-h">We&apos;ll be in touch within 24 hours.</div>
         <p className="form-success-p">
-          Next up: our{" "}
-          <Link href={helpPath("uploads", "export")}>export guide</Link> for
-          pulling your counts from Shopify or Klaviyo. Then we build your
-          affinity map and line up your first moments.
+          Next up: we set up your brand. Then you connect Walkoff and Shopify
+          in Claude, and your fan map is ready in minutes. No exports.{" "}
+          <Link href={helpPath("shopify")}>How it works</Link>
         </p>
         <p className="form-success-p">
-          While you wait, <Link href="/upload/demo">try the demo</Link> with
-          your own export (nothing is uploaded), or read{" "}
+          While you wait, <Link href="/upload/demo">see a sample map</Link>{" "}
+          (no file needed), or read{" "}
           <Link href={helpPath("onboarding")}>what setup looks like</Link>.
         </p>
       </div>
