@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Callout } from "@/components/help/blocks";
 import { HelpPage, HelpSection } from "@/components/help/HelpPage";
 import { ExportGuides } from "@/components/upload/ExportGuides";
 import { DEMO_BRAND } from "@/lib/affinity/demo";
@@ -24,8 +25,14 @@ export default function UploadsPage() {
   return (
     <HelpPage slug={P}>
       <HelpSection page={P} id="what-leaves">
+        <Callout title="On Shopify?">
+          <p>
+            You don&apos;t need files. Claude sets your brand up from your Shopify store, with the
+            Shopify connector. <Link href={helpPath("shopify")}>Shopify in Claude</Link>
+          </p>
+        </Callout>
         <p>
-          Your browser reads each file on your computer. For customers and orders, it keeps only
+          This page is for stores not on Shopify. Your browser reads each file on your computer. For customers and orders, it keeps only
           counts by postal area, and that&apos;s all it sends:
         </p>
         <div className="help-table-wrap">
@@ -145,12 +152,12 @@ export default function UploadsPage() {
 
       <HelpSection page={P} id="demo">
         <p>
-          Want to see it before you upload anything? <Link href="/upload/demo">The demo</Link>{" "}
-          reads your own file in your browser and shows your map. Nothing is uploaded.
+          Want to see it first? <Link href="/upload/demo">The demo</Link> opens on a sample
+          brand&apos;s map, {DEMO_BRAND}, with no file needed. It can also read your own file in
+          your browser and show your map. Nothing is uploaded.
         </p>
         <p>
-          It opens with a sample brand, {DEMO_BRAND}, so there&apos;s something to look at. Its
-          map is on <Link href={helpPath("fan-map", "example")}>Your fan map</Link>.
+          The sample map is also on <Link href={helpPath("fan-map", "example")}>Your fan map</Link>.
         </p>
       </HelpSection>
     </HelpPage>

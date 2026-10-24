@@ -38,12 +38,21 @@ describe("welcomeEmail", () => {
     assert.match(text, /Questions\? Reply to this email\./);
   });
 
-  it("links their upload page and says what to upload", () => {
+  it("sets the brand up in Claude, and says what Walkoff keeps", () => {
     const { text } = welcomeEmail(jane);
-    assert.ok(text.includes(`\n${jane.uploadUrl}\n`), "the link sits on its own line so mail apps link all of it");
-    assert.match(text, /Shopify orders export \(best\) or a customers export/);
-    assert.match(text, /In step 2, add your products export\. The page shows how to export each one\./);
+    assert.match(text, /2\. Connect Shopify and Klaviyo in Claude\n\nBoth are in Claude's connectors, under Customize → Connectors\. Connect Shopify with an account that can see your store's reports\./);
+    assert.match(text, /3\. Set up Frost Buddy in Claude\n\nAsk Claude: "Set up Walkoff for Frost Buddy from our Shopify store\."/);
+    assert.match(text, /Walkoff keeps only the area\. No names, emails or street addresses reach Walkoff\./);
+    assert.doesNotMatch(text, /export|step 1|step 2/i, "no files to export");
+  });
+
+  it("gives the upload page only as the way in for stores not on Shopify", () => {
+    const { text } = welcomeEmail(jane);
+    assert.ok(text.includes(`Not on Shopify? Use your private upload page instead:\n${jane.uploadUrl}\n`), "the link sits on its own line so mail apps link all of it");
     assert.match(text, /This link is private to Frost Buddy/);
+    const order = ["1. Connect Walkoff in Claude", "2. Connect Shopify and Klaviyo", "3. Set up Frost Buddy", "Not on Shopify?", jane.guideUrl].map((s) => text.indexOf(s));
+    assert.deepEqual([...order].sort((a, b) => a - b), order, "connect, then set up, then the fallback");
+    assert.ok(order.every((i) => i >= 0));
   });
 
   it("gives the connector steps, for Team and Enterprise plans too, and a first question", () => {

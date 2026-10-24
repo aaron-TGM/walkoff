@@ -8,7 +8,20 @@ export interface SessionLine {
   note?: string;
 }
 
-export const SESSIONS: Record<"week" | "trigger", { title: string; lines: SessionLine[] }> = {
+export const SESSIONS: Record<"setup" | "week" | "trigger", { title: string; lines: SessionLine[] }> = {
+  setup: {
+    title: "claude · walkoff + shopify",
+    lines: [
+      { kind: "user", text: "Set up Walkoff from our Shopify store." },
+      { kind: "tool", text: "import_catalog" },
+      { kind: "out", text: "412 products read from the store · 1,180 colorways" },
+      { kind: "out", text: "Shopify analytics: customers by postal code, and by state" },
+      { kind: "tool", text: "import_customer_counts" },
+      { kind: "out", text: "18,240 customers mapped · 64% placed by their postal code" },
+      { kind: "tool", text: "get_affinity_map" },
+      { kind: "ok", text: "Your standouts: Chargers 2.4x, Padres 1.9x, Kings 1.6x" },
+    ],
+  },
   week: {
     title: "claude · walkoff + klaviyo",
     lines: [

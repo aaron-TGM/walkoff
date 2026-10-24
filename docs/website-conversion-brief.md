@@ -5,6 +5,16 @@
 **Basis:** www.walkoff.io and this repo at `bb959f8`, rendered at 1440×900 and 390×844 on Oct 24, 2026, merged with the ChatGPT brief of Oct 23, 2026. Where the two disagree, this file makes the call.
 **Baseline:** at `bb959f8`, `npm test` (221 pass), `npx tsc --noEmit`, `npm run lint` and `npm run build` are all clean. Keep them that way.
 
+> **Update, Oct 24, 2026: onboarding without files.** Brands on Shopify now set up in Claude. Walkoff reads the catalog from the store's public product feed (`import_catalog`), and Claude passes customer counts from Shopify's analytics (`import_customer_counts`). The upload page is the fallback for stores not on Shopify, and `/upload/demo` opens on the sample map, with no file needed. Where this brief asks for file-first copy, the new flow wins:
+>
+> - **7.4 `#how`:** the "You'll need" line is "Claude with your Shopify and Klaviyo connectors". Stores not on Shopify use a private upload page. Step 1 is now "Connect your store in Claude".
+> - **7.5 `#affinity`:** the demo CTA is "See a sample fan map" (no file needed), not "Try it with your own export".
+> - **7.11 `#form`:** the success state links `/help/shopify` and the sample map, not `/help/uploads#export`.
+> - **7.12 `#faq`:** items 3, 4 and 11 follow the homepage's new FAQ 04, 02 and 08. "What do we upload?" became "Do I have to upload anything?", answered no.
+> - **8, the demo loop:** "with your real files" becomes "from your Shopify store". A map from the visitor's own file can still prefill Teams.
+> - **12, PR plan (the lead auto-reply) and Appendix B (the day-2 nudge):** point to Shopify in Claude, not the export guide.
+> - `lib/site-copy.test.ts` now refuses "drop in your exports" anywhere, and "never leave your computer" outside the upload page.
+
 ---
 
 ## 1. The call, in ten lines

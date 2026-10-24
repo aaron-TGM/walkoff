@@ -2,7 +2,8 @@
 
 An always-on worker that watches every game in the V1 leagues, detects the
 moments fans care about, and saves them to Supabase. It also has Claude tag
-each brand's new products a minute or so after they're uploaded. It runs
+each brand's new products a minute or so after they're imported or
+uploaded. It runs
 separately from the website: Vercel functions time out, and this needs to
 keep polling all night.
 
@@ -14,17 +15,17 @@ ESPN scoreboards ─► normalize ─► moment rules ─► Supabase
 
 ## Catalog tagging
 
-When a brand uploads products, the upload page saves them with keyword
-tags. Every minute the engine looks for products and color names only the
+When a brand's products come in, from its store in Claude
+(`import_catalog`) or the upload page, they're saved with keyword tags. Every minute the engine looks for products and color names only the
 keyword rules have read, and runs Claude's pass on them (`tagger.ts`,
 `lib/affinity/catalog-tagging.ts`): the teams a product is made for, its
 colors, uses, seasons and interests, and what names like "Dune" look like.
 Then it refreshes the brand's fan map, so picks use Claude's tags.
 
-- One brand at a time, the newest upload first. Products are saved 200 at a
+- One brand at a time, the newest import or upload first. Products are saved 200 at a
   time, so a restart keeps what's done. A typical catalog takes a few
   minutes.
-- Claude's tags stick. A later upload keeps them, unless a product's title,
+- Claude's tags stick. A later import or upload keeps them, unless a product's title,
   type, category, tags or description changed: then it's tagged again.
 - Products Claude couldn't tag keep their keyword tags and get another try
   an hour later. If Claude rejects the API key or the model, tagging pauses

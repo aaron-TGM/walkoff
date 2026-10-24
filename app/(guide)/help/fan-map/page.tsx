@@ -1,9 +1,10 @@
+import Link from "next/link";
 import { Ask } from "@/components/help/blocks";
 import { HelpPage, HelpSection } from "@/components/help/HelpPage";
 import { AffinityReportView, Swatches } from "@/components/upload/AffinityReportView";
 import { PRODUCT, STANDOUT } from "@/lib/affinity/compute";
 import { DEMO_BRAND } from "@/lib/affinity/demo";
-import { helpMetadata } from "@/lib/help/pages";
+import { helpMetadata, helpPath } from "@/lib/help/pages";
 import { demoReport, SAMPLE_TEAM } from "@/lib/help/samples";
 
 export const metadata = helpMetadata("fan-map");
@@ -66,6 +67,11 @@ export default function FanMapPage() {
         <p>
           A product needs at least {PRODUCT.minOrders} orders in the territory and a lift of{" "}
           {PRODUCT.minLift}&times; to count. Each territory shows its top {PRODUCT.max}.
+        </p>
+        <p>
+          A map set up from Shopify in Claude shows where your customers are, not what they buy.
+          For this part, upload an orders export too.{" "}
+          <Link href={helpPath("uploads", "files")}>Which files</Link>
         </p>
       </HelpSection>
 

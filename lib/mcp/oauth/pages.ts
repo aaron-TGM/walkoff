@@ -120,7 +120,7 @@ export function consentPage(
   return page(
     "Allow access",
     `<h1>Allow ${esc(v.app)} to use Walkoff?</h1>
-<p>${esc(v.app)} will see moments, fan territories and product picks, build campaigns, and manage triggers and the send log for:</p>
+<p>${esc(v.app)} will see moments, fan territories and product picks, build campaigns, import your catalog and customer counts, and manage triggers and the send log for:</p>
 ${errorBox(opts.error)}
 <form method="post">
 ${hidden("request", v.requestId)}${hidden("step", "consent")}

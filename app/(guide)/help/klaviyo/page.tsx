@@ -274,7 +274,7 @@ export default function KlaviyoPage() {
               a: (
                 <p>
                   Klaviyo counts only profiles with a zip code and country, or a location it can
-                  place. Walkoff&apos;s numbers come from your uploads, so the two can differ.
+                  place. Walkoff&apos;s numbers come from your Shopify counts or uploads, so the two can differ.
                 </p>
               ),
             },

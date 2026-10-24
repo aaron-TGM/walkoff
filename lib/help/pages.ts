@@ -48,6 +48,22 @@ export const HELP_PAGES = [
     ],
   },
   {
+    slug: "shopify",
+    path: "/help/shopify",
+    nav: "Shopify in Claude",
+    title: "Shopify in Claude",
+    description: "Set your brand up from Shopify in Claude: products from your store, customer counts from Shopify's analytics, and no files.",
+    sections: [
+      { id: "connect", title: "Connecting Shopify" },
+      { id: "set-up", title: "Setting up" },
+      { id: "products", title: "Your products" },
+      { id: "customers", title: "Your customer counts" },
+      { id: "privacy", title: "What Walkoff sees" },
+      { id: "not-shopify", title: "Not on Shopify?" },
+      { id: "trouble", title: "When something's off" },
+    ],
+  },
+  {
     slug: "klaviyo",
     path: "/help/klaviyo",
     nav: "Klaviyo in Claude",
@@ -66,9 +82,9 @@ export const HELP_PAGES = [
   {
     slug: "uploads",
     path: "/help/uploads",
-    nav: "Your uploads",
-    title: "Your uploads",
-    description: "What to export, what leaves your browser, and how to update your data.",
+    nav: "Uploading files",
+    title: "Uploading files",
+    description: "For stores not on Shopify: what to export, what leaves your browser, and how to update your data.",
     sections: [
       { id: "what-leaves", title: "What leaves your browser" },
       { id: "files", title: "Which files" },
@@ -146,7 +162,7 @@ export const HELP_PAGES = [
       { id: "sessions", title: "Example sessions" },
       { id: "asks", title: "Things to ask" },
       { id: "reference", title: "Every tool" },
-      { id: "prompt", title: "The campaign prompt" },
+      { id: "prompt", title: "Ready-made prompts" },
     ],
   },
   {
@@ -169,9 +185,10 @@ export const HELP_PAGES = [
     path: "/help/troubleshooting",
     nav: "Troubleshooting",
     title: "Troubleshooting",
-    description: "Messages you might see in Claude, at sign-in or on the upload page, and what to do about each.",
+    description: "Messages you might see in Claude, at sign-in, while setting up or on the upload page, and what to do about each.",
     sections: [
       { id: "sign-in", title: "Signing in" },
+      { id: "setup", title: "Setting up from Shopify" },
       { id: "uploads", title: "Uploads" },
       { id: "in-claude", title: "In Claude" },
       { id: "contact", title: "Still stuck?" },

@@ -1,6 +1,8 @@
 // Turns a brand's export files into the counts Walkoff stores. Runs in the
 // brand's browser (app/upload), so names, emails and addresses never leave
-// their computer: only postal-area counts and product names do.
+// their computer: only postal-area counts and product names do. parseCatalog
+// also reads a Shopify store's public product feed on the server
+// (storefront.ts), so the feed and the export parse alike.
 import type { AreaCount, ProductCount } from "./compute";
 import { toPostalArea } from "./geo";
 
@@ -23,10 +25,24 @@ export const FORMAT_LABEL: Record<ImportFormat, string> = {
   catalog_csv: "Product spreadsheet",
 };
 
-/** Customers and orders files feed the affinity map; products files feed
- *  product matching. */
-export function formatKind(format: ImportFormat): "customers" | "catalog" {
-  return format === "shopify_products" || format === "catalog_csv" ? "catalog" : "customers";
+/** Data that reaches Walkoff without a file: the store's public product
+ *  feed, which Walkoff reads, and customer counts from Shopify's analytics,
+ *  which Claude reads with the brand's Shopify connector. */
+export type ConnectorSource = "shopify_store" | "shopify_analytics";
+
+/** Every way data reaches Walkoff, as brand_uploads.format records it. */
+export type DataSource = ImportFormat | ConnectorSource;
+
+export const SOURCE_LABEL: Record<DataSource, string> = {
+  ...FORMAT_LABEL,
+  shopify_store: "Shopify store feed, read by Walkoff",
+  shopify_analytics: "Shopify analytics, through Claude",
+};
+
+/** Customers and orders feed the affinity map; products feed product
+ *  matching. */
+export function formatKind(format: DataSource): "customers" | "catalog" {
+  return format === "shopify_products" || format === "catalog_csv" || format === "shopify_store" ? "catalog" : "customers";
 }
 
 function norm(h: string): string {
