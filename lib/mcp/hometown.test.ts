@@ -239,6 +239,7 @@ describe("hometown moments after launch", () => {
     const made = await call(client, "create_trigger", { name: "Near Dana Point", towns: ["Dana Point, CA"] });
     assert.ok(!made.isError, made.text);
     assert.deepEqual(made.json().trigger.towns, ["Dana Point, CA"]);
+    assert.deepEqual([made.json().trigger.moments, made.json().trigger.teams], [["any hometown moment"], ["any team"]]);
     const q = (await call(client, "trigger_queue")).json();
     const towns = hometownItems(q.queue).map((x) => x.town).sort();
     // Within 10 miles of Dana Point: Mission Viejo is 9.5 miles off, Lake

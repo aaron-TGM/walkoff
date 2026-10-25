@@ -206,12 +206,14 @@ function plainPick(p: PickProduct): Pick {
 }
 
 function triggerView(t: TriggerRow | TriggerRule, towns: Map<string, string> = new Map()) {
+  // A trigger with towns is for hometown moments, from any team.
+  const local = !!t.place_keys?.length;
   return {
     id: t.id,
     name: t.name,
-    moments: t.moment_types.length ? t.moment_types.map(typeName) : ["any moment"],
+    moments: t.moment_types.length ? t.moment_types.map(typeName) : [local ? "any hometown moment" : "any moment"],
     moment_types: t.moment_types,
-    teams: t.team_keys.length ? t.team_keys.map((k) => teamByKey(k)?.team.name ?? k) : ["the brand's standout teams"],
+    teams: t.team_keys.length ? t.team_keys.map((k) => teamByKey(k)?.team.name ?? k) : [local ? "any team" : "the brand's standout teams"],
     team_keys: t.team_keys,
     min_intensity: t.min_intensity,
     active: t.active,

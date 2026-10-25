@@ -228,7 +228,7 @@ export function registerAthleteOperatorTools(server: McpServer, ctx: ToolContext
           homes_before: before.map(homeView),
           homes_now: after.map(homeView),
           recent_moments: (await athleteMoments(db, a.id, since)).map((m) => ({ id: m.id, headline: m.headline, place_key: m.placeKey, detected_at: m.detectedAt })),
-          next: "New hometown moments use the home now. A moment already made for the old town stays in brands' queues; retract it if it's wrong.",
+          next: "New hometown moments use the home now, and titles from the last 72 hours get the new town's moment within a few minutes. A moment already made for the old town stays in brands' queues: retract_moment takes it back if it's wrong.",
         };
       }),
   );
