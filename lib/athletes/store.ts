@@ -278,3 +278,119 @@ export async function namingRights(
   }
   return out;
 }
+
+/** Athletes by Walkoff's id ("espn:football:3912547") or by full name,
+ *  however it's spelled ("sam darnold"). More than one shares some names. */
+export async function findAthletes(db: SupabaseClient, query: string, limit = 10): Promise<Athlete[]> {
+  const q = query.trim();
+  if (/^espn:[a-z-]+:\d+$/.test(q)) return loadAthletes(db, [q]);
+  const key = nameKey(q);
+  if (!key) return [];
+  const { data, error } = await db.from("athletes").select("id").eq("name_key", key).order("id").limit(limit);
+  if (error) {
+    if (isMissingSchema(error)) return [];
+    throw error;
+  }
+  return loadAthletes(db, ((data ?? []) as { id: string }[]).map((r) => r.id));
+}
+
+/** Athletes with a place, found and not ruled out, in any of these postal
+ *  areas. */
+export async function athletesInAreas(db: SupabaseClient, areas: { country: Country; area: string }[]): Promise<string[]> {
+  const ids = new Set<string>();
+  for (const country of new Set(areas.map((a) => a.country))) {
+    const codes = areas.filter((a) => a.country === country).map((a) => a.area);
+    const rows = await byIds<{ athlete_id: string }>(codes, (chunk) =>
+      db.from("athlete_places").select("athlete_id").eq("country", country).eq("resolution", "found").eq("active", true).in("area", chunk),
+    );
+    for (const r of rows) ids.add(r.athlete_id);
+  }
+  return [...ids].sort();
+}
+
+/** Takes away the hometown an operator set, so the sources decide again. */
+export async function clearOperatorHome(db: SupabaseClient, athleteId: string): Promise<void> {
+  const { error } = await db.from("athlete_places").delete().eq("athlete_id", athleteId).eq("kind", "hometown").eq("source", "operator");
+  if (error) throw error;
+}
+
+export interface RightsRecord extends AthleteRight {
+  revokedAt: string | null;
+}
+
+/** Every agreement on file for a brand and an athlete, revoked ones too. */
+export async function rightsOn(db: SupabaseClient, brandId: string, athleteId: string): Promise<RightsRecord[]> {
+  const { data, error } = await db
+    .from("brand_athlete_rights")
+    .select("id, starts_on, ends_on, evidence, recorded_by, revoked_at")
+    .eq("brand_id", brandId)
+    .eq("athlete_id", athleteId)
+    .order("starts_on");
+  if (error) throw error;
+  return ((data ?? []) as { id: string; starts_on: string; ends_on: string; evidence: string; recorded_by: string; revoked_at: string | null }[]).map((r) => ({
+    id: r.id,
+    brandId,
+    athleteId,
+    startsOn: r.starts_on,
+    endsOn: r.ends_on,
+    evidence: r.evidence,
+    recordedBy: r.recorded_by,
+    revokedAt: r.revoked_at,
+  }));
+}
+
+/** Records a written agreement that a brand may name an athlete. */
+export async function recordRights(
+  db: SupabaseClient,
+  r: { brandId: string; athleteId: string; startsOn: string; endsOn: string; evidence: string; recordedBy: string },
+): Promise<void> {
+  const { error } = await db.from("brand_athlete_rights").insert({
+    brand_id: r.brandId,
+    athlete_id: r.athleteId,
+    may_name: true,
+    starts_on: r.startsOn,
+    ends_on: r.endsOn,
+    evidence: r.evidence,
+    recorded_by: r.recordedBy,
+  });
+  if (error) throw error;
+}
+
+/** Revokes every agreement on file for a brand and an athlete. Returns how
+ *  many there were. */
+export async function revokeRights(db: SupabaseClient, brandId: string, athleteId: string, at = new Date().toISOString()): Promise<number> {
+  const { data, error } = await db
+    .from("brand_athlete_rights")
+    .update({ revoked_at: at })
+    .eq("brand_id", brandId)
+    .eq("athlete_id", athleteId)
+    .is("revoked_at", null)
+    .select("id");
+  if (error) throw error;
+  return (data as unknown[] | null)?.length ?? 0;
+}
+
+/** Moments about an athlete since a time, newest first. Empty before 009. */
+export async function athleteMoments(
+  db: SupabaseClient,
+  athleteId: string,
+  since: string,
+): Promise<{ id: string; type: string; headline: string; placeKey: string | null; detectedAt: string }[]> {
+  const { data, error } = await db
+    .from("moments")
+    .select("id, type, headline, place_key, detected_at")
+    .eq("athlete_id", athleteId)
+    .gte("detected_at", since)
+    .order("detected_at", { ascending: false });
+  if (error) {
+    if (isMissingSchema(error)) return [];
+    throw error;
+  }
+  return ((data ?? []) as { id: string; type: string; headline: string; place_key: string | null; detected_at: string }[]).map((m) => ({
+    id: m.id,
+    type: m.type,
+    headline: m.headline,
+    placeKey: m.place_key,
+    detectedAt: m.detected_at,
+  }));
+}

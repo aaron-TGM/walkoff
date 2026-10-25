@@ -1,8 +1,12 @@
 // Walkoff moment engine: polls live sports data, detects moments and saves
 // them to Supabase. It also has Claude tag each brand's new products
-// (tagger.ts). See engine/README.md.
+// (tagger.ts), and keeps rosters and where athletes are from
+// (athletes/sync.ts). See engine/README.md.
 import { claudeSend, colorTask, productTask } from "../lib/affinity/claude-tagger";
 import { LEAGUES } from "../lib/leagues";
+import { createAthleteFeed } from "./athletes/feed";
+import { AthleteSync } from "./athletes/sync";
+import { createWikidataClient } from "./athletes/wikidata";
 import { loadConfig } from "./config";
 import { createEspnClient } from "./espn/client";
 import { isHealthy, startHealthServer } from "./health";
@@ -31,19 +35,39 @@ async function main(): Promise<void> {
     return new LeaguePoller(league, rulesFor(id), { client, store, config });
   });
 
+  const service =
+    store.kind === "supabase" && !config.once && config.supabaseUrl && config.supabaseKey
+      ? serviceClient(config.supabaseUrl, config.supabaseKey)
+      : null;
+
   // Claude's pass over each brand's new products, when it can save them.
   const claude = { model: config.tagModel, effort: config.tagEffort };
   const tagger =
-    config.tagCatalogs && !config.once && store.kind === "supabase" && config.supabaseUrl && config.supabaseKey
-      ? new CatalogTagger(serviceClient(config.supabaseUrl, config.supabaseKey), {
+    config.tagCatalogs && service
+      ? new CatalogTagger(service, {
           send: { products: claudeSend(productTask(), claude), colors: claudeSend(colorTask(), claude) },
           model: config.tagModel,
         })
       : null;
-  if (store.kind === "supabase" && !config.once && !tagger) {
+  if (service && !tagger) {
     log("WARNING", "Catalog tagging is off (no ANTHROPIC_API_KEY, or TAG_CATALOGS=0): new products keep their rule-based tags.");
   }
-  log("INFO", "Moment engine starting", { leagues: config.leagues, store: store.kind, once: config.once, tagging: !!tagger });
+
+  // Rosters and where athletes are from, for hometown moments.
+  const athletes =
+    config.athletes && service
+      ? new AthleteSync(service, createAthleteFeed(), {
+          leagues: config.leagues,
+          wikidata: config.wikidata ? createWikidataClient() : null,
+        })
+      : null;
+  log("INFO", "Moment engine starting", {
+    leagues: config.leagues,
+    store: store.kind,
+    once: config.once,
+    tagging: !!tagger,
+    athletes: athletes ? (config.wikidata ? "with Wikidata" : "without Wikidata") : false,
+  });
 
   if (config.once) {
     await Promise.all(pollers.map((p) => p.tick()));
@@ -76,12 +100,22 @@ async function main(): Promise<void> {
   };
   if (tagger) tagTimer = setTimeout(() => void tagLoop(tagger), 15_000);
 
+  // So does the athlete sync, a little later.
+  let athleteTimer: NodeJS.Timeout | undefined;
+  const athleteLoop = async (a: AthleteSync): Promise<void> => {
+    if (stopping) return;
+    const delay = await a.tick();
+    if (!stopping) athleteTimer = setTimeout(() => void athleteLoop(a), delay);
+  };
+  if (athletes) athleteTimer = setTimeout(() => void athleteLoop(athletes), 30_000);
+
   const shutdown = (signal: string) => {
     if (stopping) return;
     stopping = true;
     log("INFO", `Shutting down on ${signal}`);
     for (const t of timers.values()) clearTimeout(t);
     clearTimeout(tagTimer);
+    clearTimeout(athleteTimer);
     server.close();
     setTimeout(() => process.exit(0), 2000).unref();
   };

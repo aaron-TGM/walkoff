@@ -1,0 +1,562 @@
+{
+ "team": {
+  "id": "25",
+  "abbreviation": "ANA",
+  "displayName": "Anaheim Ducks",
+  "location": "Anaheim",
+  "name": "Ducks"
+ },
+ "athletes": [
+  {
+   "position": "Centers",
+   "items": [
+    {
+     "id": "5149153",
+     "displayName": "Leo Carlsson",
+     "jersey": "91",
+     "position": {
+      "abbreviation": "C"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Karlstad",
+      "country": "SWE",
+      "displayText": "Karlstad, SWE"
+     }
+    },
+    {
+     "id": "5831",
+     "displayName": "Mikael Granlund",
+     "jersey": "64",
+     "position": {
+      "abbreviation": "C"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Oulu",
+      "country": "FIN",
+      "displayText": "Oulu, FIN"
+     }
+    },
+    {
+     "id": "5291946",
+     "displayName": "Roger McQueen",
+     "jersey": "95",
+     "position": {
+      "abbreviation": "C"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Saskatoon",
+      "state": "SK",
+      "country": "CAN",
+      "displayText": "Saskatoon, CAN"
+     }
+    },
+    {
+     "id": "4755696",
+     "displayName": "Nikita Nesterenko",
+     "jersey": "13",
+     "position": {
+      "abbreviation": "C"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Boston College"
+     },
+     "birthPlace": {
+      "city": "Brooklyn",
+      "state": "NY",
+      "country": "USA",
+      "displayText": "Brooklyn, NY"
+     }
+    },
+    {
+     "id": "4233668",
+     "displayName": "Ryan Poehling",
+     "jersey": "25",
+     "position": {
+      "abbreviation": "C"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "St. Cloud State"
+     },
+     "birthPlace": {
+      "city": "Lakeville",
+      "state": "MN",
+      "country": "USA",
+      "displayText": "Lakeville, MN"
+     }
+    },
+    {
+     "id": "4996085",
+     "displayName": "Tim Washe",
+     "jersey": "42",
+     "position": {
+      "abbreviation": "C"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Western Michigan"
+     },
+     "birthPlace": {
+      "city": "Clarkston",
+      "state": "MI",
+      "country": "USA",
+      "displayText": "Clarkston, MI"
+     }
+    }
+   ]
+  },
+  {
+   "position": "Left Wings",
+   "items": [
+    {
+     "id": "5080145",
+     "displayName": "Cutter Gauthier",
+     "jersey": "61",
+     "position": {
+      "abbreviation": "LW"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Boston College"
+     },
+     "birthPlace": {
+      "city": "Scottsdale",
+      "state": "AZ",
+      "country": "USA",
+      "displayText": "Scottsdale, AZ"
+     }
+    },
+    {
+     "id": "3648015",
+     "displayName": "A.J. Greer",
+     "jersey": "18",
+     "position": {
+      "abbreviation": "LW"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Boston University"
+     },
+     "birthPlace": {
+      "city": "Joliette",
+      "state": "QC",
+      "country": "CAN",
+      "displayText": "Joliette, CAN"
+     }
+    },
+    {
+     "id": "4968",
+     "displayName": "Alex Killorn",
+     "jersey": "17",
+     "position": {
+      "abbreviation": "LW"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Harvard"
+     },
+     "birthPlace": {
+      "city": "Halifax",
+      "state": "NS",
+      "country": "CAN",
+      "displayText": "Halifax, CAN"
+     }
+    },
+    {
+     "id": "4895214",
+     "displayName": "Jeff Malott",
+     "jersey": "39",
+     "position": {
+      "abbreviation": "LW"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Burlington",
+      "state": "ON",
+      "country": "CAN",
+      "displayText": "Burlington, CAN"
+     }
+    }
+   ]
+  },
+  {
+   "position": "Right Wings",
+   "items": [
+    {
+     "id": "4755684",
+     "displayName": "Judd Caulfield",
+     "jersey": "28",
+     "position": {
+      "abbreviation": "RW"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "North Dakota"
+     },
+     "birthPlace": {
+      "city": "Grand Forks",
+      "state": "ND",
+      "country": "USA",
+      "displayText": "Grand Forks, ND"
+     }
+    },
+    {
+     "id": "4697441",
+     "displayName": "Sam Colangelo",
+     "jersey": "12",
+     "position": {
+      "abbreviation": "RW"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Northeastern"
+     },
+     "birthPlace": {
+      "city": "Stoneham",
+      "state": "MA",
+      "country": "USA",
+      "displayText": "Stoneham, MA"
+     }
+    },
+    {
+     "id": "5361658",
+     "displayName": "Nikita Klepov",
+     "jersey": "40",
+     "position": {
+      "abbreviation": "RW"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Deerfield Beach",
+      "state": "FL",
+      "country": "USA",
+      "displayText": "Deerfield Beach, FL"
+     }
+    },
+    {
+     "id": "5216858",
+     "displayName": "Beckett Sennecke",
+     "jersey": "45",
+     "position": {
+      "abbreviation": "RW"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Toronto",
+      "state": "ON",
+      "country": "CAN",
+      "displayText": "Toronto, CAN"
+     }
+    },
+    {
+     "id": "3942905",
+     "displayName": "Troy Terry",
+     "jersey": "19",
+     "position": {
+      "abbreviation": "RW"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Denver"
+     },
+     "birthPlace": {
+      "city": "Denver",
+      "state": "CO",
+      "country": "USA",
+      "displayText": "Denver, CO"
+     }
+    },
+    {
+     "id": "3527554",
+     "displayName": "Frank Vatrano",
+     "jersey": "77",
+     "position": {
+      "abbreviation": "RW"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "UMass Lowell"
+     },
+     "birthPlace": {
+      "city": "Springfield",
+      "state": "MA",
+      "country": "USA",
+      "displayText": "Springfield, MA"
+     }
+    }
+   ]
+  },
+  {
+   "position": "Defense",
+   "items": [
+    {
+     "id": "4565270",
+     "displayName": "Drew Helleson",
+     "jersey": "14",
+     "position": {
+      "abbreviation": "D"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Boston College"
+     },
+     "birthPlace": {
+      "city": "Farmington",
+      "state": "MN",
+      "country": "USA",
+      "displayText": "Farmington, MN"
+     }
+    },
+    {
+     "id": "5103702",
+     "displayName": "Tyson Hinds",
+     "jersey": "55",
+     "position": {
+      "abbreviation": "D"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Gatineau",
+      "state": "QC",
+      "country": "CAN",
+      "displayText": "Gatineau, CAN"
+     }
+    },
+    {
+     "id": "3025608",
+     "displayName": "Nick Jensen",
+     "jersey": "4",
+     "position": {
+      "abbreviation": "D"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "St. Cloud State"
+     },
+     "birthPlace": {
+      "city": "Rogers",
+      "state": "MN",
+      "country": "USA",
+      "displayText": "Rogers, MN"
+     }
+    },
+    {
+     "id": "4565262",
+     "displayName": "Jackson LaCombe",
+     "jersey": "2",
+     "position": {
+      "abbreviation": "D"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Eden Prairie",
+      "state": "MN",
+      "country": "USA",
+      "displayText": "Eden Prairie, MN"
+     }
+    },
+    {
+     "id": "5080220",
+     "displayName": "Tristan Luneau",
+     "jersey": "67",
+     "position": {
+      "abbreviation": "D"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Trois Rivieres",
+      "state": "QC",
+      "country": "CAN",
+      "displayText": "Trois Rivieres, CAN"
+     }
+    },
+    {
+     "id": "5080154",
+     "displayName": "Pavel Mintyukov",
+     "jersey": "98",
+     "position": {
+      "abbreviation": "D"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Moscow",
+      "country": "RUS",
+      "displayText": "Moscow, RUS"
+     }
+    },
+    {
+     "id": "4319916",
+     "displayName": "Ian Mitchell",
+     "jersey": null,
+     "position": {
+      "abbreviation": "D"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Denver"
+     },
+     "birthPlace": {
+      "city": "St. Albert",
+      "state": "AB",
+      "country": "CAN",
+      "displayText": "St. Albert, CAN"
+     }
+    },
+    {
+     "id": "5173614",
+     "displayName": "Travis Mitchell",
+     "jersey": "34",
+     "position": {
+      "abbreviation": "D"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "South Lyon",
+      "state": "MI",
+      "country": "USA",
+      "displayText": "South Lyon, MI"
+     }
+    },
+    {
+     "id": "5188523",
+     "displayName": "Ian Moore",
+     "jersey": "3",
+     "position": {
+      "abbreviation": "D"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Salt Lake City",
+      "state": "UT",
+      "country": "USA",
+      "displayText": "Salt Lake City, UT"
+     }
+    },
+    {
+     "id": "5080210",
+     "displayName": "Noah Warren",
+     "jersey": "47",
+     "position": {
+      "abbreviation": "D"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Saint-Jean-sur-Richelieu",
+      "state": "QC",
+      "country": "CAN",
+      "displayText": "Saint-Jean-sur-Richelieu, CAN"
+     }
+    }
+   ]
+  },
+  {
+   "position": "Goalies",
+   "items": [
+    {
+     "id": "4588165",
+     "displayName": "Lukas Dostal",
+     "jersey": "1",
+     "position": {
+      "abbreviation": "G"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Brno",
+      "country": "CZE",
+      "displayText": "Brno, CZE"
+     }
+    },
+    {
+     "id": "3151137",
+     "displayName": "Ville Husso",
+     "jersey": "33",
+     "position": {
+      "abbreviation": "G"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Helsinki",
+      "country": "FIN",
+      "displayText": "Helsinki, FIN"
+     }
+    },
+    {
+     "id": "5452947",
+     "displayName": "Elijah Neuenschwander",
+     "jersey": "30",
+     "position": {
+      "abbreviation": "G"
+     },
+     "status": {
+      "type": "active"
+     },
+     "birthPlace": {
+      "city": "Biel",
+      "country": "SUI",
+      "displayText": "Biel, SUI"
+     }
+    }
+   ]
+  }
+ ]
+}

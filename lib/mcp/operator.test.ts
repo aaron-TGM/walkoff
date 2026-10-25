@@ -15,7 +15,16 @@ import { registerOperatorTools, type ToolContext } from "./tools";
 process.env.WALKOFF_OPERATOR_EMAILS = "op@walkoff.io, second@walkoff.io";
 delete process.env.RESEND_API_KEY;
 
-const OPERATOR_TOOLS = ["create_brand", "update_brand", "invite_member", "list_members", "remove_member", "onboarding_status"];
+const OPERATOR_TOOLS = [
+  "create_brand",
+  "update_brand",
+  "invite_member",
+  "list_members",
+  "remove_member",
+  "onboarding_status",
+  "set_athlete_home",
+  "record_athlete_rights",
+];
 const ORIGIN = "https://www.walkoff.io";
 const NOW = new Date("2026-10-23T12:00:00Z");
 
@@ -47,6 +56,8 @@ const SAMPLE_ARGS: Record<string, Record<string, unknown>> = {
   list_members: { brand: "Frost Buddy" },
   remove_member: { brand: "Frost Buddy", email: "bob@frostbuddy.com" },
   onboarding_status: {},
+  set_athlete_home: { athlete: "Sam Darnold", hometown: "San Clemente, CA", note: "His Wikipedia page" },
+  record_athlete_rights: { brand: "Frost Buddy", athlete: "Sam Darnold", starts_on: "2026-01-01", ends_on: "2026-12-31", evidence: "NIL agreement 2026-014" },
 };
 
 describe("operator tools", () => {
@@ -88,7 +99,7 @@ describe("operator tools", () => {
       assert.equal(hints(name).readOnlyHint, false, name);
       assert.equal(hints(name).destructiveHint, false, name);
     }
-    for (const name of ["update_brand", "remove_member"]) {
+    for (const name of ["update_brand", "remove_member", "set_athlete_home", "record_athlete_rights"]) {
       assert.equal(hints(name).readOnlyHint, false, name);
       assert.equal(hints(name).destructiveHint, true, name);
     }

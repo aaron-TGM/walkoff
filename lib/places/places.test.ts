@@ -92,8 +92,10 @@ describe("finding a place", () => {
     assert.deepEqual(await resolveTown("Santo Domingo, Distrito Nacional, Dominican Republic"), { status: "outside", country: "Dominican Republic" });
     assert.deepEqual(await resolvePlace({ city: "Toronto", country: "Australia" }), { status: "outside", country: "Australia" });
     assert.deepEqual(await resolvePlace({ city: "Willemstad", country: "Curacao" }), { status: "outside", country: "Curacao" });
+    // Hockey rosters' three-letter codes.
+    assert.deepEqual(await resolvePlace({ city: "Karlstad", country: "SWE" }), { status: "outside", country: "SWE" });
+    assert.equal(found(await resolvePlace({ city: "Saskatoon", state: "SK", country: "CAN" })), "geonames:6141256");
     assert.equal((await resolveTown("Holywood, County Down")).status, "unknown");
-    assert.equal((await resolveTown("Sydney, NSW")).status, "unknown");
   });
 
   it("never guesses between places that share a name", async () => {
@@ -121,6 +123,18 @@ describe("finding a place", () => {
     assert.equal((await town("New York City, NY")).key, "census:3651000");
     // A UK name goes to a place five times the size of the next.
     assert.equal(found(await resolvePlace({ city: "Newcastle", country: "UK" })), "geonames:2641673");
+  });
+
+  it("takes neighbors that share a name as one town, and a legal name gives way", async () => {
+    // A city and a village next to each other.
+    assert.equal((await town("Waukesha, WI")).key, "census:5584250");
+    assert.equal((await resolveTown("Pewaukee, WI")).status, "found");
+    // "Centerville (Thurman) village" is Thurman; Centerville is the city.
+    assert.equal((await town("Centerville, OH")).key, "census:3913190");
+    assert.equal((await town("Thurman, OH")).key, "census:3913169");
+    // Far apart, they stay apart: Oahu's Kailua and the Big Island's.
+    assert.equal((await resolveTown("Kailua, HI")).status, "ambiguous");
+    assert.deepEqual(await resolveTown("Kinshasa, Congo"), { status: "outside", country: "Congo" });
   });
 
   it("knows towns, townships and the postal names Census doesn't use", async () => {

@@ -40,7 +40,16 @@ function files(dir: string): string[] {
 const HELP_SOURCES = ["app/(guide)", "components/help", "lib/help"].flatMap(files);
 const pageFile = (path: string) => `app/(guide)${path}/page.tsx`;
 
-const OPERATOR_TOOLS = ["create_brand", "update_brand", "invite_member", "list_members", "remove_member", "onboarding_status"];
+const OPERATOR_TOOLS = [
+  "create_brand",
+  "update_brand",
+  "invite_member",
+  "list_members",
+  "remove_member",
+  "onboarding_status",
+  "set_athlete_home",
+  "record_athlete_rights",
+];
 
 async function memberClient() {
   const server = createWalkoffServer({

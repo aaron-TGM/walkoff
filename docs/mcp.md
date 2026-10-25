@@ -69,6 +69,8 @@ welcome. Later: "Where is each brand in onboarding?"
 | `invite_member` | Adds someone to a brand and emails them the welcome (`send_email: false` skips it). Safe to repeat: it resends the welcome. |
 | `list_members`, `remove_member` | Who can use a brand and whether each has connected. Removing someone ends their access in Claude on their next request; the brand's upload link keeps working until it's replaced. |
 | `onboarding_status` | One brand or all: store and license, members and whether each has connected (a live refresh token whose brands include this one), customer counts and where they came from (Shopify in Claude, or an upload) and when, customers mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step. |
+| `set_athlete_home` | Sets where an athlete is from when Walkoff has it wrong, over every source, or clears it (`clear: true`). Takes a town ("San Clemente, CA") or a postal code, and a required note on where you learned it. Shows the athlete's homes before and after. |
+| `record_athlete_rights` | Records an athlete's written agreement (an NIL or sponsor deal) that a brand may name them: `starts_on`, `ends_on` and `evidence` (where the agreement is) are required. `revoke: true` revokes what's on file. Without an agreement in date, copy never names an athlete. |
 
 The next step follows the onboarding order: store, invite, connecting
 Claude, customer counts (set up from Shopify in Claude, or uploaded), the
@@ -117,6 +119,7 @@ The script and the tools share `lib/brands.ts` and `lib/welcome.ts`.
 | `import_customer_counts` | Customer counts from Walkoff's two ShopifyQL queries, run by Claude with the Shopify connector, as text rows. Keeps only areas and counts, spreads the rest by population, replaces the brand's counts and redraws the map. |
 | `list_brands` | Brands this person can use, with store, license, customers mapped, catalog and standout teams, and `setup_needed` for what's missing. |
 | `get_affinity_map` | Standout fan territories (lift, customers, what they buy) and what to feature for each. |
+| `local_athletes` | Athletes from towns near the brand's customers, town by town: estimated customers in each town's circle and the lift, and each athlete's team, position, how Walkoff knows where they're from, and any naming rights on file. Names are for the marketer only. Empty until `supabase/009_athletes.sql` has run and the engine has synced rosters. |
 | `trigger_queue` | Moments to act on now: matching the brand's triggers (or, with none, big moments for its standout teams), not yet drafted, sent or skipped, with how long each keeps. The default takes ordinary wins in weekly sports (NFL, college football, Premier League) but not in sports with a game most days. |
 | `recent_moments` | What just happened for the brand's teams, or any team. |
 | `upcoming_games` | Games coming up for those teams, in the fans' time zone, with pre-game moments. |

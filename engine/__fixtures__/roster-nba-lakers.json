@@ -1,0 +1,345 @@
+{
+ "team": {
+  "id": "13",
+  "abbreviation": "LAL",
+  "displayName": "Los Angeles Lakers",
+  "location": "Los Angeles",
+  "name": "Lakers"
+ },
+ "athletes": [
+  {
+   "id": "5113969",
+   "displayName": "Cameron Carr",
+   "jersey": "43",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Baylor"
+   },
+   "birthPlace": {
+    "city": "Eden Prairie",
+    "state": "MN",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "3945274",
+   "displayName": "Luka Doncic",
+   "jersey": "77",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {
+    "city": "Ljubljana",
+    "country": "Slovenia"
+   }
+  },
+  {
+   "id": "4397014",
+   "displayName": "Quentin Grimes",
+   "jersey": "5",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Houston"
+   },
+   "birthPlace": {
+    "city": "The Woodlands",
+    "state": "TX",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "4868423",
+   "displayName": "Jaden Hardy",
+   "jersey": "7",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {
+    "city": "Henderson",
+    "state": "NV",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "4683774",
+   "displayName": "Bronny James",
+   "jersey": "9",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "USC"
+   },
+   "birthPlace": {
+    "city": "Akron",
+    "state": "OH",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "4433599",
+   "displayName": "Arthur Kaluma",
+   "jersey": "47",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Texas"
+   },
+   "birthPlace": {
+    "city": "Glendale",
+    "state": "AZ",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "4433136",
+   "displayName": "Walker Kessler",
+   "jersey": "14",
+   "position": {
+    "abbreviation": "C"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Auburn"
+   },
+   "birthPlace": {
+    "city": "Newnan",
+    "state": "GA",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "4592691",
+   "displayName": "Jake LaRavia",
+   "jersey": "12",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Wake Forest"
+   },
+   "birthPlace": {
+    "city": "Indianapolis",
+    "state": "IN",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "3155535",
+   "displayName": "Kevon Looney",
+   "jersey": "55",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "UCLA"
+   },
+   "birthPlace": {
+    "city": "Milwaukee",
+    "state": "WI",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "4278580",
+   "displayName": "Sandro Mamukelashvili",
+   "jersey": "54",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Seton Hall"
+   },
+   "birthPlace": {
+    "city": "Tbilisi",
+    "country": "Georgia"
+   }
+  },
+  {
+   "id": "4702972",
+   "displayName": "Chris Manon",
+   "jersey": "30",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Vanderbilt"
+   },
+   "birthPlace": {
+    "city": "New Milford",
+    "state": "NJ",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "5114350",
+   "displayName": "AK Okereke",
+   "jersey": "31",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Vanderbilt"
+   },
+   "birthPlace": {
+    "city": "Clovis",
+    "state": "CA",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "4066457",
+   "displayName": "Austin Reaves",
+   "jersey": "15",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Oklahoma"
+   },
+   "birthPlace": {
+    "city": "Newark",
+    "state": "AR",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "4277811",
+   "displayName": "Collin Sexton",
+   "jersey": "10",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Alabama"
+   },
+   "birthPlace": {
+    "city": "Marietta",
+    "state": "GA",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "5060631",
+   "displayName": "Adou Thiero",
+   "jersey": "1",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Arkansas"
+   },
+   "birthPlace": {
+    "city": "Pittsburgh",
+    "state": "PA",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "3907498",
+   "displayName": "Matisse Thybulle",
+   "jersey": "4",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Washington"
+   },
+   "birthPlace": {
+    "city": "Issaquah",
+    "state": "WA",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "4278077",
+   "displayName": "Jarred Vanderbilt",
+   "jersey": "2",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Kentucky"
+   },
+   "birthPlace": {
+    "city": "Houston",
+    "state": "TX",
+    "country": "USA"
+   }
+  },
+  {
+   "id": "4433137",
+   "displayName": "Ziaire Williams",
+   "jersey": "11",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "college": {
+    "name": "Stanford"
+   },
+   "birthPlace": {
+    "city": "Lancaster",
+    "state": "CA",
+    "country": "USA"
+   }
+  }
+ ]
+}

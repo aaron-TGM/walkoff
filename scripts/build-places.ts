@@ -214,6 +214,14 @@ async function unitedStates() {
     rows.push([`zip:${first}`, g.name, g.state, round(lat, 4), round(lng, 4), ref, round(area, 2), 0]);
     postal++;
   }
+  // A legal name in parentheses gives way to a place that goes by it:
+  // "Centerville (Thurman) village" is Thurman, and "Centerville, Ohio"
+  // means the city of Centerville.
+  const primary = new Set(rows.map((r) => `${r[2]}|${nameKey(r[1].split("|")[0])}`));
+  for (const r of rows) {
+    const [first, ...rest] = r[1].split("|");
+    r[1] = [first, ...rest.filter((n) => !primary.has(`${r[2]}|${nameKey(n)}`))].join("|");
+  }
   console.log(`US ${zips.length} ZIPs; ${places} Census places, ${cousubs.length} towns and townships, ${postal} postal names`);
   return { zips, rows: rows.sort((a, b) => a[0].localeCompare(b[0])) };
 }

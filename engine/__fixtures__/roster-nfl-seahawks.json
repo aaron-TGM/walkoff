@@ -1,0 +1,1616 @@
+{
+ "team": {
+  "id": "26",
+  "abbreviation": "SEA",
+  "displayName": "Seattle Seahawks",
+  "location": "Seattle",
+  "name": "Seahawks"
+ },
+ "athletes": [
+  {
+   "position": "offense",
+   "items": [
+    {
+     "id": "4576297",
+     "displayName": "AJ Barner",
+     "jersey": "88",
+     "position": {
+      "abbreviation": "TE"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Michigan"
+     },
+     "birthPlace": {
+      "city": "Aurora",
+      "state": "OH",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4426385",
+     "displayName": "Zach Charbonnet",
+     "jersey": "26",
+     "position": {
+      "abbreviation": "RB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "UCLA"
+     },
+     "birthPlace": {
+      "city": "Camarillo",
+      "state": "CA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "3929636",
+     "displayName": "Irv Charles",
+     "jersey": "85",
+     "position": {
+      "abbreviation": "WR"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "IU Pennsylvania"
+     },
+     "birthPlace": {
+      "city": "Sicklerville",
+      "state": "NJ",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4426376",
+     "displayName": "Charles Cross",
+     "jersey": "67",
+     "position": {
+      "abbreviation": "OT"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Mississippi State"
+     },
+     "birthPlace": {
+      "city": "Laurel",
+      "state": "MS",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "3912547",
+     "displayName": "Sam Darnold",
+     "jersey": "14",
+     "position": {
+      "abbreviation": "QB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "USC"
+     },
+     "birthPlace": {
+      "city": "Capistrano Beach",
+      "state": "CA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4600597",
+     "displayName": "Montorie Foster Jr.",
+     "jersey": "87",
+     "position": {
+      "abbreviation": "WR"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Michigan State"
+     },
+     "birthPlace": {
+      "city": "Cleveland",
+      "state": "OH",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4362135",
+     "displayName": "Christian Haynes",
+     "jersey": "64",
+     "position": {
+      "abbreviation": "G"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "UConn"
+     },
+     "birthPlace": {
+      "city": "Bowie",
+      "state": "MD",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "5151317",
+     "displayName": "Robert Henry Jr.",
+     "jersey": "34",
+     "position": {
+      "abbreviation": "RB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "UTSA"
+     },
+     "birthPlace": {
+      "city": "Lumberton",
+      "state": "MS",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4429835",
+     "displayName": "George Holani",
+     "jersey": "36",
+     "position": {
+      "abbreviation": "RB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Boise State"
+     },
+     "birthPlace": {
+      "city": "Bellflower",
+      "state": "CA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4597703",
+     "displayName": "Tory Horton",
+     "jersey": "15",
+     "position": {
+      "abbreviation": "WR"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Colorado State"
+     },
+     "birthPlace": {
+      "city": "Fresno",
+      "state": "CA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "3914630",
+     "displayName": "Josh Jones",
+     "jersey": "74",
+     "position": {
+      "abbreviation": "G"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Houston"
+     },
+     "birthPlace": {
+      "city": "Richmond",
+      "state": "TX",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4035693",
+     "displayName": "Velus Jones Jr.",
+     "jersey": "33",
+     "position": {
+      "abbreviation": "RB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Tennessee"
+     },
+     "birthPlace": {
+      "city": "Saraland",
+      "state": "AL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4569547",
+     "displayName": "Nick Kallerup",
+     "jersey": "89",
+     "position": {
+      "abbreviation": "TE"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Minnesota"
+     },
+     "birthPlace": {
+      "city": "Wayzata",
+      "state": "MN",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "2977187",
+     "displayName": "Cooper Kupp",
+     "jersey": "10",
+     "position": {
+      "abbreviation": "WR"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Eastern Washington"
+     },
+     "birthPlace": {
+      "city": "Yakima",
+      "state": "WA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "3924327",
+     "displayName": "Drew Lock",
+     "jersey": "2",
+     "position": {
+      "abbreviation": "QB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Missouri"
+     },
+     "birthPlace": {
+      "city": "Lee's Summit",
+      "state": "MO",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4245171",
+     "displayName": "Abraham Lucas",
+     "jersey": "72",
+     "position": {
+      "abbreviation": "OT"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Washington State"
+     },
+     "birthPlace": {
+      "city": "Everett",
+      "state": "WA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4432734",
+     "displayName": "Jalen Milroe",
+     "jersey": "6",
+     "position": {
+      "abbreviation": "QB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Alabama"
+     },
+     "birthPlace": {
+      "city": "Katy",
+      "state": "TX",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4370807",
+     "displayName": "Olu Oluwatimi",
+     "jersey": "55",
+     "position": {
+      "abbreviation": "C"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Michigan"
+     },
+     "birthPlace": {
+      "city": "Upper Marlboro",
+      "state": "MD",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4685512",
+     "displayName": "Jadarian Price",
+     "jersey": "8",
+     "position": {
+      "abbreviation": "RB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Notre Dame"
+     },
+     "birthPlace": {
+      "city": "Denison",
+      "state": "TX",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4243176",
+     "displayName": "Brady Russell",
+     "jersey": "38",
+     "position": {
+      "abbreviation": "FB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Colorado"
+     },
+     "birthPlace": {
+      "city": "Fort Collins",
+      "state": "CO",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "2975863",
+     "displayName": "Eric Saubert",
+     "jersey": "81",
+     "position": {
+      "abbreviation": "TE"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Drake"
+     },
+     "birthPlace": {
+      "city": "Hoffman Estates",
+      "state": "IL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4032473",
+     "displayName": "Rashid Shaheed",
+     "jersey": "22",
+     "position": {
+      "abbreviation": "WR"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Weber State"
+     },
+     "birthPlace": {
+      "city": "San Diego",
+      "state": "CA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4430878",
+     "displayName": "Jaxon Smith-Njigba",
+     "jersey": "11",
+     "position": {
+      "abbreviation": "WR"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Ohio State"
+     },
+     "birthPlace": {
+      "city": "Rockwall",
+      "state": "TX",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4592823",
+     "displayName": "Beau Stephens",
+     "jersey": "70",
+     "position": {
+      "abbreviation": "G"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Iowa"
+     },
+     "birthPlace": {
+      "city": "Blue Springs",
+      "state": "MO",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4383409",
+     "displayName": "Jalen Sundell",
+     "jersey": "61",
+     "position": {
+      "abbreviation": "C"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "North Dakota State"
+     },
+     "birthPlace": {
+      "city": "Maryville",
+      "state": "MO",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4887558",
+     "displayName": "Emanuel Wilson",
+     "jersey": "23",
+     "position": {
+      "abbreviation": "RB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Fort Valley State"
+     },
+     "birthPlace": {
+      "city": "Charlotte",
+      "state": "NC",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4693346",
+     "displayName": "Grey Zabel",
+     "jersey": "76",
+     "position": {
+      "abbreviation": "G"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "North Dakota State"
+     },
+     "birthPlace": {
+      "city": "Pierre",
+      "state": "SD",
+      "country": "USA"
+     }
+    }
+   ]
+  },
+  {
+   "position": "defense",
+   "items": [
+    {
+     "id": "4592837",
+     "displayName": "Terrion Arnold",
+     "jersey": null,
+     "position": {
+      "abbreviation": "CB"
+     },
+     "status": {
+      "type": "news"
+     },
+     "college": {
+      "name": "Alabama"
+     },
+     "birthPlace": {
+      "city": "Tallahassee",
+      "state": "FL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4689804",
+     "displayName": "Jimmy Ciarlo",
+     "jersey": "46",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Army"
+     },
+     "birthPlace": {
+      "city": "Ringwood",
+      "state": "NJ",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4040966",
+     "displayName": "Trevon Diggs",
+     "jersey": "16",
+     "position": {
+      "abbreviation": "CB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Alabama"
+     },
+     "birthPlace": {
+      "city": "Gaithersburg",
+      "state": "MD",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4869523",
+     "displayName": "Nick Emmanwori",
+     "jersey": "3",
+     "position": {
+      "abbreviation": "S"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "South Carolina"
+     },
+     "birthPlace": {
+      "city": "Irmo",
+      "state": "SC",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "2980100",
+     "displayName": "Dante Fowler Jr.",
+     "jersey": "56",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Florida"
+     },
+     "birthPlace": {
+      "city": "St. Petersburg",
+      "state": "FL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4567226",
+     "displayName": "Derick Hall",
+     "jersey": "58",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Auburn"
+     },
+     "birthPlace": {
+      "city": "Gulfport",
+      "state": "MS",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4431145",
+     "displayName": "Maxen Hook",
+     "jersey": "43",
+     "position": {
+      "abbreviation": "S"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Toledo"
+     },
+     "birthPlace": {
+      "city": "New Palestine",
+      "state": "IN",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4372020",
+     "displayName": "Josh Jobe",
+     "jersey": "29",
+     "position": {
+      "abbreviation": "CB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Alabama"
+     },
+     "birthPlace": {
+      "city": "Miami",
+      "state": "FL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4362851",
+     "displayName": "Ernest Jones IV",
+     "jersey": "13",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "South Carolina"
+     },
+     "birthPlace": {
+      "city": "Waycross",
+      "state": "GA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4686540",
+     "displayName": "Tyrice Knight",
+     "jersey": "48",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "UTEP"
+     },
+     "birthPlace": {
+      "city": "Lakeland",
+      "state": "FL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "16802",
+     "displayName": "DeMarcus Lawrence",
+     "jersey": "0",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Boise State"
+     },
+     "birthPlace": {
+      "city": "Aiken",
+      "state": "SC",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4046675",
+     "displayName": "Julian Love",
+     "jersey": "20",
+     "position": {
+      "abbreviation": "S"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Notre Dame"
+     },
+     "birthPlace": {
+      "city": "Westchester",
+      "state": "IL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4430838",
+     "displayName": "Rylie Mills",
+     "jersey": "98",
+     "position": {
+      "abbreviation": "DT"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Notre Dame"
+     },
+     "birthPlace": {
+      "city": "Lake Bluff",
+      "state": "IL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4572055",
+     "displayName": "Mike Morris",
+     "jersey": "94",
+     "position": {
+      "abbreviation": "DE"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Michigan"
+     },
+     "birthPlace": {
+      "city": "Belle Glade",
+      "state": "FL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4570040",
+     "displayName": "Byron Murphy II",
+     "jersey": "91",
+     "position": {
+      "abbreviation": "DT"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Texas"
+     },
+     "birthPlace": {
+      "city": "Desoto",
+      "state": "TX",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "3120358",
+     "displayName": "Uchenna Nwosu",
+     "jersey": "7",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "USC"
+     },
+     "birthPlace": {
+      "city": "Carson",
+      "state": "CA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4364623",
+     "displayName": "Patrick O'Connell",
+     "jersey": "52",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Montana"
+     },
+     "birthPlace": {
+      "city": "Kalispell",
+      "state": "MT",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4605491",
+     "displayName": "Connor O'Toole",
+     "jersey": "57",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Utah"
+     },
+     "birthPlace": {
+      "city": "Albuquerque",
+      "state": "NM",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4247808",
+     "displayName": "Ty Okada",
+     "jersey": "39",
+     "position": {
+      "abbreviation": "S"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Montana State"
+     },
+     "birthPlace": {
+      "city": "Woodbury",
+      "state": "MN",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4259651",
+     "displayName": "Brandon Pili",
+     "jersey": "95",
+     "position": {
+      "abbreviation": "DT"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "USC"
+     },
+     "birthPlace": {
+      "city": "Anchorage",
+      "state": "AK",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4567222",
+     "displayName": "Nehemiah Pritchett",
+     "jersey": "28",
+     "position": {
+      "abbreviation": "CB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Auburn"
+     },
+     "birthPlace": {
+      "city": "Jackson",
+      "state": "AL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "3115312",
+     "displayName": "Jarran Reed",
+     "jersey": "90",
+     "position": {
+      "abbreviation": "DT"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Alabama"
+     },
+     "birthPlace": {
+      "city": "Goldsboro",
+      "state": "NC",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "5082331",
+     "displayName": "Avery Smith",
+     "jersey": "27",
+     "position": {
+      "abbreviation": "CB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Toledo"
+     },
+     "birthPlace": {
+      "city": "East Point",
+      "state": "GA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4037521",
+     "displayName": "Chazz Surratt",
+     "jersey": "44",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "North Carolina"
+     },
+     "birthPlace": {
+      "city": "Denver",
+      "state": "NC",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4428659",
+     "displayName": "Drake Thomas",
+     "jersey": "32",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "NC State"
+     },
+     "birthPlace": {
+      "city": "Wake Forest",
+      "state": "NC",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4248455",
+     "displayName": "Rodney Thomas II",
+     "jersey": "24",
+     "position": {
+      "abbreviation": "S"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Yale"
+     },
+     "birthPlace": {
+      "city": "Pittsburgh",
+      "state": "PA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "2971622",
+     "displayName": "Leonard Williams",
+     "jersey": "99",
+     "position": {
+      "abbreviation": "DT"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "USC"
+     },
+     "birthPlace": {
+      "city": "Daytona Beach",
+      "state": "FL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4575431",
+     "displayName": "Devon Witherspoon",
+     "jersey": "21",
+     "position": {
+      "abbreviation": "CB"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Illinois"
+     },
+     "birthPlace": {
+      "city": "Pensacola",
+      "state": "FL",
+      "country": "USA"
+     }
+    }
+   ]
+  },
+  {
+   "position": "specialTeam",
+   "items": [
+    {
+     "id": "3929851",
+     "displayName": "Michael Dickson",
+     "jersey": "4",
+     "position": {
+      "abbreviation": "P"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Texas"
+     },
+     "birthPlace": {
+      "city": "Sydney",
+      "state": "NSW",
+      "country": "Australia"
+     }
+    },
+    {
+     "id": "2473037",
+     "displayName": "Jason Myers",
+     "jersey": "5",
+     "position": {
+      "abbreviation": "PK"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Marist"
+     },
+     "birthPlace": {
+      "city": "Chula Vista",
+      "state": "CA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4259606",
+     "displayName": "Chris Stoll",
+     "jersey": "41",
+     "position": {
+      "abbreviation": "LS"
+     },
+     "status": {
+      "type": "active"
+     },
+     "college": {
+      "name": "Penn State"
+     },
+     "birthPlace": {
+      "city": "Westerville",
+      "state": "OH",
+      "country": "USA"
+     }
+    }
+   ]
+  },
+  {
+   "position": "injuredReserveOrOut",
+   "items": [
+    {
+     "id": "4678006",
+     "displayName": "Elijah Arroyo",
+     "jersey": "18",
+     "position": {
+      "abbreviation": "TE"
+     },
+     "status": {
+      "type": "day-to-day"
+     },
+     "college": {
+      "name": "Miami"
+     },
+     "birthPlace": {
+      "city": "Frisco",
+      "state": "TX",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4360405",
+     "displayName": "Jake Bobo",
+     "jersey": "19",
+     "position": {
+      "abbreviation": "WR"
+     },
+     "status": {
+      "type": "day-to-day"
+     },
+     "college": {
+      "name": "UCLA"
+     },
+     "birthPlace": {
+      "city": "North Andover",
+      "state": "MA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4429211",
+     "displayName": "Anthony Bradford",
+     "jersey": "75",
+     "position": {
+      "abbreviation": "G"
+     },
+     "status": {
+      "type": "day-to-day"
+     },
+     "college": {
+      "name": "LSU"
+     },
+     "birthPlace": {
+      "city": "Muskegon",
+      "state": "MI",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4430262",
+     "displayName": "Bud Clark",
+     "jersey": "9",
+     "position": {
+      "abbreviation": "S"
+     },
+     "status": {
+      "type": "day-to-day"
+     },
+     "college": {
+      "name": "TCU"
+     },
+     "birthPlace": {
+      "city": "Alexandria",
+      "state": "LA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4684543",
+     "displayName": "Julian Neal",
+     "jersey": "1",
+     "position": {
+      "abbreviation": "CB"
+     },
+     "status": {
+      "type": "day-to-day"
+     },
+     "college": {
+      "name": "Arkansas"
+     },
+     "birthPlace": {
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4691688",
+     "displayName": "Robbie Ouzts",
+     "jersey": "40",
+     "position": {
+      "abbreviation": "FB"
+     },
+     "status": {
+      "type": "day-to-day"
+     },
+     "college": {
+      "name": "Alabama"
+     },
+     "birthPlace": {
+      "city": "Rock Hill",
+      "state": "SC",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4432525",
+     "displayName": "Mason Richman",
+     "jersey": "78",
+     "position": {
+      "abbreviation": "G"
+     },
+     "status": {
+      "type": "day-to-day"
+     },
+     "college": {
+      "name": "Iowa"
+     },
+     "birthPlace": {
+      "city": "Leawood",
+      "state": "KS",
+      "country": "USA"
+     }
+    }
+   ]
+  },
+  {
+   "position": "suspended",
+   "items": []
+  },
+  {
+   "position": "practiceSquad",
+   "items": [
+    {
+     "id": "4431152",
+     "displayName": "Jackson Acker",
+     "jersey": "40",
+     "position": {
+      "abbreviation": "FB"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Wisconsin"
+     },
+     "birthPlace": {
+      "city": "Madison",
+      "state": "WI",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4608386",
+     "displayName": "D'Anthony Bell",
+     "jersey": "23",
+     "position": {
+      "abbreviation": "S"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "West Florida"
+     },
+     "birthPlace": {
+      "city": "Covington",
+      "state": "GA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4570075",
+     "displayName": "Logan Brown",
+     "jersey": "73",
+     "position": {
+      "abbreviation": "OT"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Kansas"
+     },
+     "birthPlace": {
+      "city": "Grand Rapids",
+      "state": "MI",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "2094390",
+     "displayName": "Michael Dansby",
+     "jersey": "37",
+     "position": {
+      "abbreviation": "CB"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Arizona"
+     },
+     "birthPlace": {
+      "city": "Oakland",
+      "state": "CA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "3914151",
+     "displayName": "Josiah Deguara",
+     "jersey": null,
+     "position": {
+      "abbreviation": "TE"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Cincinnati"
+     },
+     "birthPlace": {
+      "city": "Folsom",
+      "state": "CA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4609203",
+     "displayName": "Deven Eastern",
+     "jersey": "97",
+     "position": {
+      "abbreviation": "DT"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Minnesota"
+     },
+     "birthPlace": {
+      "city": "Shakopee",
+      "state": "MN",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4427190",
+     "displayName": "AJ Finley",
+     "jersey": "30",
+     "position": {
+      "abbreviation": "S"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Ole Miss"
+     },
+     "birthPlace": {
+      "city": "Mobile",
+      "state": "AL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4693934",
+     "displayName": "Andre Fuller",
+     "jersey": "35",
+     "position": {
+      "abbreviation": "CB"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Toledo"
+     },
+     "birthPlace": {
+      "city": "Loxahatchee",
+      "state": "FL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "2576789",
+     "displayName": "Bobby Hart",
+     "jersey": "68",
+     "position": {
+      "abbreviation": "OT"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Florida State"
+     },
+     "birthPlace": {
+      "city": "Lauderhill",
+      "state": "FL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4685381",
+     "displayName": "Emmanuel Henderson Jr.",
+     "jersey": "84",
+     "position": {
+      "abbreviation": "WR"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Kansas"
+     },
+     "birthPlace": {
+      "city": "Hartford",
+      "state": "AL",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4244768",
+     "displayName": "Julian Hicks",
+     "jersey": "1",
+     "position": {
+      "abbreviation": "WR"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "UAlbany"
+     },
+     "birthPlace": {
+      "city": "Cleveland",
+      "state": "OH",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4603089",
+     "displayName": "Aidan Hubbard",
+     "jersey": "93",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Northwestern"
+     },
+     "birthPlace": {
+      "city": "Cleveland",
+      "state": "OH",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4430070",
+     "displayName": "Federico Maranges",
+     "jersey": "62",
+     "position": {
+      "abbreviation": "C"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Florida Atlantic"
+     },
+     "birthPlace": {
+      "city": "Dorado",
+      "country": "Puerto Rico"
+     }
+    },
+    {
+     "id": "4258198",
+     "displayName": "Josh Ross",
+     "jersey": "47",
+     "position": {
+      "abbreviation": "LB"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Michigan"
+     },
+     "birthPlace": {
+      "city": "Southfield",
+      "state": "MI",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "5081916",
+     "displayName": "Uso Seumalo",
+     "jersey": "92",
+     "position": {
+      "abbreviation": "DT"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Kansas State"
+     },
+     "birthPlace": {
+      "city": "Maunaloa",
+      "state": "HI",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4431390",
+     "displayName": "Gary Smith III",
+     "jersey": "77",
+     "position": {
+      "abbreviation": "DT"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "UCLA"
+     },
+     "birthPlace": {
+      "city": "Shelbyville",
+      "state": "TN",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4431479",
+     "displayName": "Ricky White III",
+     "jersey": "86",
+     "position": {
+      "abbreviation": "WR"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "UNLV"
+     },
+     "birthPlace": {
+      "city": "Marietta",
+      "state": "GA",
+      "country": "USA"
+     }
+    },
+    {
+     "id": "4428943",
+     "displayName": "Jacardia Wright",
+     "jersey": "31",
+     "position": {
+      "abbreviation": "RB"
+     },
+     "status": {
+      "type": "practice-squad"
+     },
+     "college": {
+      "name": "Missouri State"
+     },
+     "birthPlace": {
+      "city": "Decatur",
+      "state": "IL",
+      "country": "USA"
+     }
+    }
+   ]
+  }
+ ]
+}

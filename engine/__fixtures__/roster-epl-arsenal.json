@@ -1,0 +1,359 @@
+{
+ "team": {
+  "id": "359",
+  "abbreviation": "ARS",
+  "displayName": "Arsenal",
+  "location": "Arsenal",
+  "name": "Arsenal"
+ },
+ "athletes": [
+  {
+   "id": "169532",
+   "displayName": "Kepa Arrizabalaga",
+   "jersey": "13",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "196176",
+   "displayName": "David Raya",
+   "jersey": "1",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "265921",
+   "displayName": "Illan Meslier",
+   "jersey": "30",
+   "position": {
+    "abbreviation": "G"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "231859",
+   "displayName": "Ezri Konsa",
+   "jersey": "15",
+   "position": {
+    "abbreviation": "D"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "236322",
+   "displayName": "Gabriel Magalhães",
+   "jersey": "6",
+   "position": {
+    "abbreviation": "D"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "241077",
+   "displayName": "Ben White",
+   "jersey": "4",
+   "position": {
+    "abbreviation": "D"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "277385",
+   "displayName": "William Saliba",
+   "jersey": "2",
+   "position": {
+    "abbreviation": "D"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "282716",
+   "displayName": "Jurriën Timber",
+   "jersey": "12",
+   "position": {
+    "abbreviation": "D"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "292062",
+   "displayName": "Piero Hincapié",
+   "jersey": "5",
+   "position": {
+    "abbreviation": "D"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "298329",
+   "displayName": "Riccardo Calafiori",
+   "jersey": "33",
+   "position": {
+    "abbreviation": "D"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "328497",
+   "displayName": "Cristhian Mosquera",
+   "jersey": "3",
+   "position": {
+    "abbreviation": "D"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "352758",
+   "displayName": "Myles Lewis-Skelly",
+   "jersey": "49",
+   "position": {
+    "abbreviation": "D"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "400284",
+   "displayName": "Marli Salmon",
+   "jersey": "89",
+   "position": {
+    "abbreviation": "D"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "203669",
+   "displayName": "Martin Ødegaard",
+   "jersey": "8",
+   "position": {
+    "abbreviation": "M"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "209581",
+   "displayName": "Mikel Merino",
+   "jersey": "23",
+   "position": {
+    "abbreviation": "M"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "218522",
+   "displayName": "Bruno Guimarães",
+   "jersey": "39",
+   "position": {
+    "abbreviation": "M"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "238262",
+   "displayName": "Declan Rice",
+   "jersey": "41",
+   "position": {
+    "abbreviation": "M"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "251400",
+   "displayName": "Eberechi Eze",
+   "jersey": "10",
+   "position": {
+    "abbreviation": "M"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "287266",
+   "displayName": "Martín Zubimendi",
+   "jersey": "36",
+   "position": {
+    "abbreviation": "M"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "393424",
+   "displayName": "Theo Julienne",
+   "jersey": "45",
+   "position": {
+    "abbreviation": "M"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "399007",
+   "displayName": "Maalik Hashi",
+   "jersey": "74",
+   "position": {
+    "abbreviation": "M"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "399894",
+   "displayName": "Ife Ibrahim",
+   "jersey": "44",
+   "position": {
+    "abbreviation": "M"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "231182",
+   "displayName": "Kai Havertz",
+   "jersey": "29",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "258906",
+   "displayName": "Viktor Gyökeres",
+   "jersey": "14",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "280555",
+   "displayName": "Bukayo Saka",
+   "jersey": "7",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "293236",
+   "displayName": "Noni Madueke",
+   "jersey": "20",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "303793",
+   "displayName": "Christos Tzolis",
+   "jersey": "17",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "381341",
+   "displayName": "Ceadach O’Neill",
+   "jersey": "53",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  },
+  {
+   "id": "397263",
+   "displayName": "Max Dowman",
+   "jersey": "56",
+   "position": {
+    "abbreviation": "F"
+   },
+   "status": {
+    "type": "active"
+   },
+   "birthPlace": {}
+  }
+ ]
+}
