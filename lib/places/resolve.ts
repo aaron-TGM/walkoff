@@ -73,7 +73,11 @@ function countryNames(): Set<string> {
         if (name && name !== code) abroad.add(nameKey(name));
       }
     }
-    for (const old of ["Czech Republic", "Ivory Coast", "Holland", "Korea", "Burma", "Swaziland", "Macedonia", "Cape Verde", "Soviet Union", "USSR", "Yugoslavia", "West Germany"]) {
+    for (const old of [
+      "Czech Republic", "Ivory Coast", "Holland", "Korea", "Burma", "Swaziland", "Macedonia", "Cape Verde",
+      "Soviet Union", "USSR", "Yugoslavia", "West Germany", "Congo", "DR Congo", "Democratic Republic of Congo",
+      "Democratic Republic of the Congo", "Republic of Congo", "Republic of the Congo",
+    ]) {
       abroad.add(nameKey(old));
     }
   }
@@ -111,10 +115,14 @@ async function lookup(city: string, where?: Where): Promise<Place[]> {
   return [];
 }
 
+/** Places this close that share a name are one town for a circle: a city
+ *  and the village next door (Pewaukee, Wisconsin). */
+const SAME_TOWN_MILES = 10;
+
 /** The one place a name means, or why it can't say. A US name shared
  *  within a state goes to the one place with a government; across states
  *  it's ambiguous. A Canadian or UK one goes to a place five times the size
- *  of the next. */
+ *  of the next. Neighbors that share a name are one town, the biggest. */
 async function choose(places: Place[]): Promise<Resolved> {
   if (places.length === 0) return UNKNOWN;
   if (places.length === 1) return { status: "found", place: places[0] };
@@ -125,10 +133,14 @@ async function choose(places: Place[]): Promise<Resolved> {
   const country = places[0].country;
   if (places.some((p) => p.country !== country)) return ambiguous;
   const [first, second] = sorted.map((p) => weight.get(p)!);
-  if (country === "US") {
-    return new Set(places.map((p) => p.region)).size === 1 && first > second ? { status: "found", place: sorted[0] } : ambiguous;
+  const plain =
+    country === "US" ? new Set(places.map((p) => p.region)).size === 1 && first > second : first > 0 && first >= DOMINANT * second;
+  if (plain) return { status: "found", place: sorted[0] };
+  if (sorted.every((p) => miles(p, sorted[0]) <= SAME_TOWN_MILES)) {
+    const biggest = [...sorted].sort((a, b) => weight.get(b)! - weight.get(a)! || b.radius - a.radius || a.key.localeCompare(b.key));
+    return { status: "found", place: biggest[0] };
   }
-  return first > 0 && first >= DOMINANT * second ? { status: "found", place: sorted[0] } : ambiguous;
+  return ambiguous;
 }
 
 /** Where ESPN (or anyone) says someone is from. */
