@@ -1,7 +1,8 @@
 // Walkoff moment engine: polls live sports data, detects moments and saves
 // them to Supabase. It also has Claude tag each brand's new products
-// (tagger.ts), and keeps rosters and where athletes are from
-// (athletes/sync.ts). See engine/README.md.
+// (tagger.ts), keeps rosters and where athletes are from
+// (athletes/sync.ts), and makes a moment for each town a champion's
+// players are from (hometown.ts). See engine/README.md.
 import { claudeSend, colorTask, productTask } from "../lib/affinity/claude-tagger";
 import { LEAGUES } from "../lib/leagues";
 import { createAthleteFeed } from "./athletes/feed";
@@ -10,6 +11,7 @@ import { createWikidataClient } from "./athletes/wikidata";
 import { loadConfig } from "./config";
 import { createEspnClient } from "./espn/client";
 import { isHealthy, startHealthServer } from "./health";
+import { HometownJob } from "./hometown";
 import { errorMessage, log } from "./log";
 import { rulesFor } from "./moments/sports";
 import { LeaguePoller } from "./poller";
@@ -61,12 +63,15 @@ async function main(): Promise<void> {
           wikidata: config.wikidata ? createWikidataClient() : null,
         })
       : null;
+  // A moment for each town a champion's players are from.
+  const hometown = config.hometown && service ? new HometownJob(service, { rosters: athletes }) : null;
   log("INFO", "Moment engine starting", {
     leagues: config.leagues,
     store: store.kind,
     once: config.once,
     tagging: !!tagger,
     athletes: athletes ? (config.wikidata ? "with Wikidata" : "without Wikidata") : false,
+    hometown: !!hometown,
   });
 
   if (config.once) {
@@ -109,6 +114,15 @@ async function main(): Promise<void> {
   };
   if (athletes) athleteTimer = setTimeout(() => void athleteLoop(athletes), 30_000);
 
+  // And the hometown job, which reads the titles the polls saved.
+  let hometownTimer: NodeJS.Timeout | undefined;
+  const hometownLoop = async (h: HometownJob): Promise<void> => {
+    if (stopping) return;
+    const delay = await h.tick();
+    if (!stopping) hometownTimer = setTimeout(() => void hometownLoop(h), delay);
+  };
+  if (hometown) hometownTimer = setTimeout(() => void hometownLoop(hometown), 45_000);
+
   const shutdown = (signal: string) => {
     if (stopping) return;
     stopping = true;
@@ -116,6 +130,7 @@ async function main(): Promise<void> {
     for (const t of timers.values()) clearTimeout(t);
     clearTimeout(tagTimer);
     clearTimeout(athleteTimer);
+    clearTimeout(hometownTimer);
     server.close();
     setTimeout(() => process.exit(0), 2000).unref();
   };

@@ -1,0 +1,1743 @@
+{
+ "header": {
+  "competitions": [
+   {
+    "competitors": [
+     {
+      "id": "17",
+      "homeAway": "home",
+      "winner": false,
+      "score": "13",
+      "team": {
+       "id": "17",
+       "abbreviation": "NE"
+      }
+     },
+     {
+      "id": "26",
+      "homeAway": "away",
+      "winner": true,
+      "score": "29",
+      "team": {
+       "id": "26",
+       "abbreviation": "SEA"
+      }
+     }
+    ],
+    "status": {
+     "type": {
+      "state": "post",
+      "completed": true,
+      "detail": "Final"
+     }
+    }
+   }
+  ]
+ },
+ "boxscore": {
+  "players": [
+   {
+    "team": {
+     "id": "26",
+     "abbreviation": "SEA"
+    },
+    "statistics": [
+     {
+      "name": "passing",
+      "keys": [
+       "completions/passingAttempts",
+       "passingYards",
+       "yardsPerPassAttempt",
+       "passingTouchdowns",
+       "interceptions",
+       "sacks-sackYardsLost",
+       "adjQBR",
+       "QBRating"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "19/38",
+         "202",
+         "5.3",
+         "1",
+         "0",
+         "1-8",
+         "53.0",
+         "74.7"
+        ],
+        "athlete": {
+         "id": "3912547",
+         "displayName": "Sam Darnold"
+        }
+       }
+      ]
+     },
+     {
+      "name": "rushing",
+      "keys": [
+       "rushingAttempts",
+       "rushingYards",
+       "yardsPerRushAttempt",
+       "rushingTouchdowns",
+       "longRushing"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "27",
+         "135",
+         "5.0",
+         "0",
+         "30"
+        ],
+        "athlete": {
+         "id": "4567048",
+         "displayName": "Kenneth Walker III"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "6",
+         "3.0",
+         "0",
+         "5"
+        ],
+        "athlete": {
+         "id": "4429835",
+         "displayName": "George Holani"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "5",
+         "2.5",
+         "0",
+         "11"
+        ],
+        "athlete": {
+         "id": "3912547",
+         "displayName": "Sam Darnold"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "-5",
+         "-5.0",
+         "0",
+         "-5"
+        ],
+        "athlete": {
+         "id": "4032473",
+         "displayName": "Rashid Shaheed"
+        }
+       }
+      ]
+     },
+     {
+      "name": "receiving",
+      "keys": [
+       "receptions",
+       "receivingYards",
+       "yardsPerReception",
+       "receivingTouchdowns",
+       "longReception",
+       "receivingTargets"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "6",
+         "61",
+         "10.2",
+         "0",
+         "23",
+         "12"
+        ],
+        "athlete": {
+         "id": "2977187",
+         "displayName": "Cooper Kupp"
+        }
+       },
+       {
+        "stats": [
+         "4",
+         "54",
+         "13.5",
+         "1",
+         "16",
+         "4"
+        ],
+        "athlete": {
+         "id": "4576297",
+         "displayName": "AJ Barner"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "27",
+         "13.5",
+         "0",
+         "16",
+         "5"
+        ],
+        "athlete": {
+         "id": "4032473",
+         "displayName": "Rashid Shaheed"
+        }
+       },
+       {
+        "stats": [
+         "4",
+         "27",
+         "6.8",
+         "0",
+         "16",
+         "10"
+        ],
+        "athlete": {
+         "id": "4430878",
+         "displayName": "Jaxon Smith-Njigba"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "26",
+         "13.0",
+         "0",
+         "20",
+         "4"
+        ],
+        "athlete": {
+         "id": "4567048",
+         "displayName": "Kenneth Walker III"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "7",
+         "7.0",
+         "0",
+         "7",
+         "1"
+        ],
+        "athlete": {
+         "id": "4429835",
+         "displayName": "George Holani"
+        }
+       }
+      ]
+     },
+     {
+      "name": "fumbles",
+      "keys": [
+       "fumbles",
+       "fumblesLost",
+       "fumblesRecovered"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "0",
+         "0",
+         "1"
+        ],
+        "athlete": {
+         "id": "4570040",
+         "displayName": "Byron Murphy II"
+        }
+       }
+      ]
+     },
+     {
+      "name": "defensive",
+      "keys": [
+       "totalTackles",
+       "soloTackles",
+       "sacks",
+       "tacklesForLoss",
+       "passesDefended",
+       "QBHits",
+       "defensiveTouchdowns"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "11",
+         "10",
+         "0",
+         "1",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4362851",
+         "displayName": "Ernest Jones IV"
+        }
+       },
+       {
+        "stats": [
+         "7",
+         "6",
+         "0",
+         "1",
+         "1",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4372020",
+         "displayName": "Josh Jobe"
+        }
+       },
+       {
+        "stats": [
+         "6",
+         "3",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4428659",
+         "displayName": "Drake Thomas"
+        }
+       },
+       {
+        "stats": [
+         "5",
+         "4",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4869523",
+         "displayName": "Nick Emmanwori"
+        }
+       },
+       {
+        "stats": [
+         "4",
+         "4",
+         "1",
+         "1",
+         "1",
+         "3",
+         "0"
+        ],
+        "athlete": {
+         "id": "4575431",
+         "displayName": "Devon Witherspoon"
+        }
+       },
+       {
+        "stats": [
+         "4",
+         "4",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4245185",
+         "displayName": "Riq Woolen"
+        }
+       },
+       {
+        "stats": [
+         "4",
+         "3",
+         "0",
+         "0",
+         "1",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4239094",
+         "displayName": "Coby Bryant"
+        }
+       },
+       {
+        "stats": [
+         "3",
+         "2",
+         "0",
+         "0",
+         "1",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4046675",
+         "displayName": "Julian Love"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "2",
+         "2",
+         "2",
+         "0",
+         "2",
+         "0"
+        ],
+        "athlete": {
+         "id": "4567226",
+         "displayName": "Derick Hall"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "2",
+         "2",
+         "2",
+         "0",
+         "2",
+         "0"
+        ],
+        "athlete": {
+         "id": "4570040",
+         "displayName": "Byron Murphy II"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "1",
+         "0",
+         "0",
+         "1",
+         "1",
+         "0"
+        ],
+        "athlete": {
+         "id": "16802",
+         "displayName": "DeMarcus Lawrence"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "3115312",
+         "displayName": "Jarran Reed"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4243176",
+         "displayName": "Brady Russell"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "1",
+         "1",
+         "0",
+         "1",
+         "0"
+        ],
+        "athlete": {
+         "id": "4430838",
+         "displayName": "Rylie Mills"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "2473037",
+         "displayName": "Jason Myers"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "3929851",
+         "displayName": "Michael Dickson"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "1",
+         "0"
+        ],
+        "athlete": {
+         "id": "4240754",
+         "displayName": "Boye Mafe"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4401805",
+         "displayName": "Dareke Young"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4686540",
+         "displayName": "Tyrice Knight"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "2971622",
+         "displayName": "Leonard Williams"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4360405",
+         "displayName": "Jake Bobo"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4364623",
+         "displayName": "Patrick O'Connell"
+        }
+       },
+       {
+        "stats": [
+         "0",
+         "0",
+         "0",
+         "0",
+         "1",
+         "1",
+         "1"
+        ],
+        "athlete": {
+         "id": "3120358",
+         "displayName": "Uchenna Nwosu"
+        }
+       }
+      ]
+     },
+     {
+      "name": "interceptions",
+      "keys": [
+       "interceptions",
+       "interceptionYards",
+       "interceptionTouchdowns"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "1",
+         "45",
+         "1"
+        ],
+        "athlete": {
+         "id": "3120358",
+         "displayName": "Uchenna Nwosu"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "35",
+         "0"
+        ],
+        "athlete": {
+         "id": "4046675",
+         "displayName": "Julian Love"
+        }
+       }
+      ]
+     },
+     {
+      "name": "kickReturns",
+      "keys": [
+       "kickReturns",
+       "kickReturnYards",
+       "yardsPerKickReturn",
+       "longKickReturn",
+       "kickReturnTouchdowns"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "1",
+         "20",
+         "20.0",
+         "20",
+         "0"
+        ],
+        "athlete": {
+         "id": "4032473",
+         "displayName": "Rashid Shaheed"
+        }
+       }
+      ]
+     },
+     {
+      "name": "puntReturns",
+      "keys": [
+       "puntReturns",
+       "puntReturnYards",
+       "yardsPerPuntReturn",
+       "longPuntReturn",
+       "puntReturnTouchdowns"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "2",
+         "16",
+         "8.0",
+         "10",
+         "0"
+        ],
+        "athlete": {
+         "id": "4032473",
+         "displayName": "Rashid Shaheed"
+        }
+       }
+      ]
+     },
+     {
+      "name": "kicking",
+      "keys": [
+       "fieldGoalsMade/fieldGoalAttempts",
+       "fieldGoalPct",
+       "longFieldGoalMade",
+       "extraPointsMade/extraPointAttempts",
+       "totalKickingPoints"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "5/5",
+         "100.0",
+         "41",
+         "2/2",
+         "17"
+        ],
+        "athlete": {
+         "id": "2473037",
+         "displayName": "Jason Myers"
+        }
+       }
+      ]
+     },
+     {
+      "name": "punting",
+      "keys": [
+       "punts",
+       "puntYards",
+       "grossAvgPuntYards",
+       "touchbacks",
+       "puntsInside20",
+       "longPunt"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "7",
+         "335",
+         "47.9",
+         "0",
+         "3",
+         "55"
+        ],
+        "athlete": {
+         "id": "3929851",
+         "displayName": "Michael Dickson"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "17",
+     "abbreviation": "NE"
+    },
+    "statistics": [
+     {
+      "name": "passing",
+      "keys": [
+       "completions/passingAttempts",
+       "passingYards",
+       "yardsPerPassAttempt",
+       "passingTouchdowns",
+       "interceptions",
+       "sacks-sackYardsLost",
+       "adjQBR",
+       "QBRating"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "27/43",
+         "295",
+         "6.9",
+         "2",
+         "2",
+         "6-43",
+         "16.3",
+         "79.1"
+        ],
+        "athlete": {
+         "id": "4431452",
+         "displayName": "Drake Maye"
+        }
+       }
+      ]
+     },
+     {
+      "name": "rushing",
+      "keys": [
+       "rushingAttempts",
+       "rushingYards",
+       "yardsPerRushAttempt",
+       "rushingTouchdowns",
+       "longRushing"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "5",
+         "37",
+         "7.4",
+         "0",
+         "16"
+        ],
+        "athlete": {
+         "id": "4431452",
+         "displayName": "Drake Maye"
+        }
+       },
+       {
+        "stats": [
+         "7",
+         "23",
+         "3.3",
+         "0",
+         "6"
+        ],
+        "athlete": {
+         "id": "4569173",
+         "displayName": "Rhamondre Stevenson"
+        }
+       },
+       {
+        "stats": [
+         "6",
+         "19",
+         "3.2",
+         "0",
+         "9"
+        ],
+        "athlete": {
+         "id": "4432710",
+         "displayName": "TreVeyon Henderson"
+        }
+       }
+      ]
+     },
+     {
+      "name": "receiving",
+      "keys": [
+       "receptions",
+       "receivingYards",
+       "yardsPerReception",
+       "receivingTouchdowns",
+       "longReception",
+       "receivingTargets"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "4",
+         "78",
+         "19.5",
+         "1",
+         "35",
+         "8"
+        ],
+        "athlete": {
+         "id": "2991662",
+         "displayName": "Mack Hollins"
+        }
+       },
+       {
+        "stats": [
+         "5",
+         "45",
+         "9.0",
+         "0",
+         "11",
+         "7"
+        ],
+        "athlete": {
+         "id": "4427095",
+         "displayName": "DeMario Douglas"
+        }
+       },
+       {
+        "stats": [
+         "5",
+         "40",
+         "8.0",
+         "1",
+         "13",
+         "5"
+        ],
+        "athlete": {
+         "id": "4569173",
+         "displayName": "Rhamondre Stevenson"
+        }
+       },
+       {
+        "stats": [
+         "3",
+         "37",
+         "12.3",
+         "0",
+         "26",
+         "3"
+        ],
+        "athlete": {
+         "id": "2976212",
+         "displayName": "Stefon Diggs"
+        }
+       },
+       {
+        "stats": [
+         "3",
+         "31",
+         "10.3",
+         "0",
+         "16",
+         "5"
+        ],
+        "athlete": {
+         "id": "3046439",
+         "displayName": "Hunter Henry"
+        }
+       },
+       {
+        "stats": [
+         "3",
+         "26",
+         "8.7",
+         "0",
+         "24",
+         "3"
+        ],
+        "athlete": {
+         "id": "4432710",
+         "displayName": "TreVeyon Henderson"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "21",
+         "21.0",
+         "0",
+         "21",
+         "5"
+        ],
+        "athlete": {
+         "id": "4429022",
+         "displayName": "Kayshon Boutte"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "10",
+         "5.0",
+         "0",
+         "5",
+         "3"
+        ],
+        "athlete": {
+         "id": "3043275",
+         "displayName": "Austin Hooper"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "7",
+         "7.0",
+         "0",
+         "7",
+         "2"
+        ],
+        "athlete": {
+         "id": "4613202",
+         "displayName": "Kyle Williams"
+        }
+       }
+      ]
+     },
+     {
+      "name": "fumbles",
+      "keys": [
+       "fumbles",
+       "fumblesLost",
+       "fumblesRecovered"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "1",
+         "1",
+         "0"
+        ],
+        "athlete": {
+         "id": "4431452",
+         "displayName": "Drake Maye"
+        }
+       }
+      ]
+     },
+     {
+      "name": "defensive",
+      "keys": [
+       "totalTackles",
+       "soloTackles",
+       "sacks",
+       "tacklesForLoss",
+       "passesDefended",
+       "QBHits",
+       "defensiveTouchdowns"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "10",
+         "7",
+         "0",
+         "3",
+         "2",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4428930",
+         "displayName": "Craig Woodson"
+        }
+       },
+       {
+        "stats": [
+         "7",
+         "7",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4241720",
+         "displayName": "Marcus Jones"
+        }
+       },
+       {
+        "stats": [
+         "6",
+         "5",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "3916923",
+         "displayName": "Carlton Davis III"
+        }
+       },
+       {
+        "stats": [
+         "6",
+         "4",
+         "0",
+         "1",
+         "1",
+         "1",
+         "0"
+        ],
+        "athlete": {
+         "id": "3925350",
+         "displayName": "Anfernee Jennings"
+        }
+       },
+       {
+        "stats": [
+         "5",
+         "4",
+         "0",
+         "0",
+         "0",
+         "1",
+         "0"
+        ],
+        "athlete": {
+         "id": "3858276",
+         "displayName": "Jaylinn Hawkins"
+        }
+       },
+       {
+        "stats": [
+         "4",
+         "4",
+         "0",
+         "0",
+         "3",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4686772",
+         "displayName": "Christian Gonzalez"
+        }
+       },
+       {
+        "stats": [
+         "4",
+         "3",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4249739",
+         "displayName": "Jack Gibbens"
+        }
+       },
+       {
+        "stats": [
+         "4",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "3129446",
+         "displayName": "Robert Spillane"
+        }
+       },
+       {
+        "stats": [
+         "3",
+         "2",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4372030",
+         "displayName": "Christian Barmore"
+        }
+       },
+       {
+        "stats": [
+         "3",
+         "1",
+         "0",
+         "0",
+         "0",
+         "1",
+         "0"
+        ],
+        "athlete": {
+         "id": "4245273",
+         "displayName": "Christian Elliss"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "2",
+         "1",
+         "2",
+         "1",
+         "1",
+         "0"
+        ],
+        "athlete": {
+         "id": "4239699",
+         "displayName": "Milton Williams"
+        }
+       },
+       {
+        "stats": [
+         "2",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4428232",
+         "displayName": "Dell Pettus"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "1",
+         "0"
+        ],
+        "athlete": {
+         "id": "3122793",
+         "displayName": "Harold Landry III"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "1",
+         "0",
+         "1",
+         "0"
+        ],
+        "athlete": {
+         "id": "4242205",
+         "displayName": "K'Lavon Chaisson"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4361707",
+         "displayName": "Chad Muma"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4432710",
+         "displayName": "TreVeyon Henderson"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4688432",
+         "displayName": "Elijah Ponder"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "3124587",
+         "displayName": "Jahlani Tavai"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4240042",
+         "displayName": "Cory Durden"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4256074",
+         "displayName": "Khyiris Tonga"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0"
+        ],
+        "athlete": {
+         "id": "4431598",
+         "displayName": "Leonard Taylor III"
+        }
+       }
+      ]
+     },
+     {
+      "name": "interceptions",
+      "keys": [
+       "interceptions",
+       "interceptionYards",
+       "interceptionTouchdowns"
+      ],
+      "athletes": []
+     },
+     {
+      "name": "kickReturns",
+      "keys": [
+       "kickReturns",
+       "kickReturnYards",
+       "yardsPerKickReturn",
+       "longKickReturn",
+       "kickReturnTouchdowns"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "4",
+         "103",
+         "25.8",
+         "28",
+         "0"
+        ],
+        "athlete": {
+         "id": "3139602",
+         "displayName": "D'Ernest Johnson"
+        }
+       },
+       {
+        "stats": [
+         "1",
+         "38",
+         "38.0",
+         "38",
+         "0"
+        ],
+        "athlete": {
+         "id": "4432710",
+         "displayName": "TreVeyon Henderson"
+        }
+       }
+      ]
+     },
+     {
+      "name": "puntReturns",
+      "keys": [
+       "puntReturns",
+       "puntReturnYards",
+       "yardsPerPuntReturn",
+       "longPuntReturn",
+       "puntReturnTouchdowns"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "2",
+         "4",
+         "2.0",
+         "4",
+         "0"
+        ],
+        "athlete": {
+         "id": "4241720",
+         "displayName": "Marcus Jones"
+        }
+       }
+      ]
+     },
+     {
+      "name": "kicking",
+      "keys": [
+       "fieldGoalsMade/fieldGoalAttempts",
+       "fieldGoalPct",
+       "longFieldGoalMade",
+       "extraPointsMade/extraPointAttempts",
+       "totalKickingPoints"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "0/0",
+         "0.0",
+         "0",
+         "1/1",
+         "1"
+        ],
+        "athlete": {
+         "id": "4569923",
+         "displayName": "Andy Borregales"
+        }
+       }
+      ]
+     },
+     {
+      "name": "punting",
+      "keys": [
+       "punts",
+       "puntYards",
+       "grossAvgPuntYards",
+       "touchbacks",
+       "puntsInside20",
+       "longPunt"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "8",
+         "356",
+         "44.5",
+         "0",
+         "4",
+         "55"
+        ],
+        "athlete": {
+         "id": "4240545",
+         "displayName": "Bryce Baringer"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "leaders": [
+  {
+   "team": {
+    "id": "17",
+    "abbreviation": "NE"
+   },
+   "leaders": [
+    {
+     "name": "passingYards",
+     "displayName": "Passing Yards",
+     "leaders": [
+      {
+       "displayValue": "27/43, 295 YDS, 2 TD, 2 INT",
+       "athlete": {
+        "id": "4431452",
+        "displayName": "Drake Maye"
+       }
+      }
+     ]
+    },
+    {
+     "name": "rushingYards",
+     "displayName": "Rushing Yards",
+     "leaders": [
+      {
+       "displayValue": "5 CAR, 37 YDS",
+       "athlete": {
+        "id": "4431452",
+        "displayName": "Drake Maye"
+       }
+      }
+     ]
+    },
+    {
+     "name": "receivingYards",
+     "displayName": "Receiving Yards",
+     "leaders": [
+      {
+       "displayValue": "4 REC, 78 YDS, 1 TD",
+       "athlete": {
+        "id": "2991662",
+        "displayName": "Mack Hollins"
+       }
+      }
+     ]
+    },
+    {
+     "name": "sacks",
+     "displayName": "Sacks",
+     "leaders": [
+      {
+       "displayValue": "1",
+       "athlete": {
+        "id": "4239699",
+        "displayName": "Milton Williams"
+       }
+      }
+     ]
+    },
+    {
+     "name": "totalTackles",
+     "displayName": "Tackles",
+     "leaders": [
+      {
+       "displayValue": "10",
+       "athlete": {
+        "id": "4428930",
+        "displayName": "Craig Woodson"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "team": {
+    "id": "26",
+    "abbreviation": "SEA"
+   },
+   "leaders": [
+    {
+     "name": "passingYards",
+     "displayName": "Passing Yards",
+     "leaders": [
+      {
+       "displayValue": "19/38, 202 YDS, 1 TD",
+       "athlete": {
+        "id": "3912547",
+        "displayName": "Sam Darnold"
+       }
+      }
+     ]
+    },
+    {
+     "name": "rushingYards",
+     "displayName": "Rushing Yards",
+     "leaders": [
+      {
+       "displayValue": "27 CAR, 135 YDS",
+       "athlete": {
+        "id": "4567048",
+        "displayName": "Kenneth Walker III"
+       }
+      }
+     ]
+    },
+    {
+     "name": "receivingYards",
+     "displayName": "Receiving Yards",
+     "leaders": [
+      {
+       "displayValue": "6 REC, 61 YDS",
+       "athlete": {
+        "id": "2977187",
+        "displayName": "Cooper Kupp"
+       }
+      }
+     ]
+    },
+    {
+     "name": "sacks",
+     "displayName": "Sacks",
+     "leaders": [
+      {
+       "displayValue": "2",
+       "athlete": {
+        "id": "4567226",
+        "displayName": "Derick Hall"
+       }
+      }
+     ]
+    },
+    {
+     "name": "totalTackles",
+     "displayName": "Tackles",
+     "leaders": [
+      {
+       "displayValue": "11",
+       "athlete": {
+        "id": "4362851",
+        "displayName": "Ernest Jones IV"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "scoringPlays": [
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 718.0,
+    "displayValue": "11:58"
+   },
+   "team": {
+    "id": "26"
+   },
+   "homeScore": 0,
+   "awayScore": 3,
+   "text": "Jason Myers 33 Yd Field Goal"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 676.0,
+    "displayValue": "11:16"
+   },
+   "team": {
+    "id": "26"
+   },
+   "homeScore": 0,
+   "awayScore": 6,
+   "text": "Jason Myers 39 Yd Field Goal"
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 11.0,
+    "displayValue": "0:11"
+   },
+   "team": {
+    "id": "26"
+   },
+   "homeScore": 0,
+   "awayScore": 9,
+   "text": "Jason Myers 41 Yd Field Goal"
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "value": 552.0,
+    "displayValue": "9:12"
+   },
+   "team": {
+    "id": "26"
+   },
+   "homeScore": 0,
+   "awayScore": 12,
+   "text": "Jason Myers 41 Yd Field Goal "
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 804.0,
+    "displayValue": "13:24"
+   },
+   "team": {
+    "id": "26"
+   },
+   "homeScore": 0,
+   "awayScore": 19,
+   "text": "AJ Barner 16 Yd pass from Sam Darnold (Jason Myers Kick)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 747.0,
+    "displayValue": "12:27"
+   },
+   "team": {
+    "id": "17"
+   },
+   "homeScore": 7,
+   "awayScore": 19,
+   "text": "Mack Hollins 35 Yd pass from Drake Maye (Andy Borregales Kick)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 335.0,
+    "displayValue": "5:35"
+   },
+   "team": {
+    "id": "26"
+   },
+   "homeScore": 7,
+   "awayScore": 22,
+   "text": "Jason Myers 26 Yd Field Goal"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 267.0,
+    "displayValue": "4:27"
+   },
+   "team": {
+    "id": "26"
+   },
+   "homeScore": 7,
+   "awayScore": 29,
+   "text": "Uchenna Nwosu 45 Yd Interception Return (Jason Myers Kick)"
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 141.0,
+    "displayValue": "2:21"
+   },
+   "team": {
+    "id": "17"
+   },
+   "homeScore": 13,
+   "awayScore": 29,
+   "text": "Rhamondre Stevenson 7 Yd pass from Drake Maye (Two-Point Pass Conversion Failed)"
+  }
+ ]
+}

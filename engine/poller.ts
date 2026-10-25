@@ -2,8 +2,9 @@ import type { League } from "../lib/leagues";
 import type { EngineConfig } from "./config";
 import type { FeedClient } from "./espn/client";
 import { normalizeScoreboard, scoringEventsFromSummary } from "./espn/normalize";
-import type { EspnScoreboard } from "./espn/types";
+import type { EspnScoreboard, EspnSummary } from "./espn/types";
 import { errorMessage, log } from "./log";
+import { addHeroes } from "./moments/heroes";
 import { finalMoments, finalStatus, liveMoments, preMoments, track } from "./moments/rules";
 import type { LeagueRules } from "./moments/sports";
 import type { GameState, Moment, ScoringEvent, TeamRef, TrackedGame } from "./moments/types";
@@ -106,9 +107,9 @@ export class LeaguePoller {
         if (final === "stale") {
           t = { ...t, finalProcessed: true };
         } else if (final === "process") {
-          const { events, ok } = await this.scoringEvents(g);
+          const { events, summary, ok } = await this.finalDetails(g);
           if (ok || t.summaryAttempts >= 2) {
-            moments.push(...finalMoments(t, this.rules, events, now));
+            moments.push(...(await this.withHeroes(g, finalMoments(t, this.rules, events, now), summary)));
             t = { ...t, finalProcessed: true };
             finalized.push(g.id);
           } else {
@@ -211,20 +212,39 @@ export class LeaguePoller {
     );
   }
 
-  /** Play-by-play scoring for finals that need it. `ok` is false when the
-   *  fetch failed and is worth retrying. */
-  private async scoringEvents(g: GameState): Promise<{ events: ScoringEvent[] | null; ok: boolean }> {
-    if (g.sport !== "football" && g.sport !== "basketball") return { events: null, ok: true };
+  /** The summary for finals whose play-by-play scoring counts (football,
+   *  basketball). `ok` is false when the fetch failed and is worth retrying. */
+  private async finalDetails(
+    g: GameState,
+  ): Promise<{ events: ScoringEvent[] | null; summary: EspnSummary | null; ok: boolean }> {
+    if (g.sport !== "football" && g.sport !== "basketball") return { events: null, summary: null, ok: true };
     try {
       const summary = await this.deps.client.summary(this.league.feedPath, g.externalId);
-      return { events: scoringEventsFromSummary(g.sport, summary), ok: true };
+      return { events: scoringEventsFromSummary(g.sport, summary), summary, ok: true };
     } catch (e) {
       log("WARNING", `Play-by-play unavailable for ${g.shortName}`, {
         league: this.league.id,
         game: g.id,
         error: errorMessage(e),
       });
-      return { events: null, ok: false };
+      return { events: null, summary: null, ok: false };
+    }
+  }
+
+  /** Adds the champion's players to a title moment. Baseball and hockey
+   *  fetch the summary just for this, once: a title never waits on it. */
+  private async withHeroes(g: GameState, finals: Moment[], summary: EspnSummary | null): Promise<Moment[]> {
+    if (!finals.some((m) => m.type === "title_won")) return finals;
+    try {
+      summary ??= await this.deps.client.summary(this.league.feedPath, g.externalId);
+      return addHeroes(finals, g.sport, summary);
+    } catch (e) {
+      log("WARNING", `Box score unavailable for ${g.shortName}`, {
+        league: this.league.id,
+        game: g.id,
+        error: errorMessage(e),
+      });
+      return finals;
     }
   }
 

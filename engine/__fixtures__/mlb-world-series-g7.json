@@ -1,0 +1,387 @@
+{
+ "events": [
+  {
+   "id": "401809303",
+   "date": "2025-11-02T00:00Z",
+   "name": "Los Angeles Dodgers at Toronto Blue Jays",
+   "shortName": "LAD @ TOR",
+   "season": {
+    "year": 2025,
+    "type": 3,
+    "slug": "post-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 11,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final/11",
+     "shortDetail": "Final/11",
+     "altDetail": "F/11"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401809303",
+     "date": "2025-11-02T00:00Z",
+     "neutralSite": false,
+     "notes": [
+      {
+       "type": "event",
+       "headline": "World Series - Game 7"
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 11,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final/11",
+       "shortDetail": "Final/11",
+       "altDetail": "F/11"
+      },
+      "featuredAthletes": [
+       {
+        "name": "winningPitcher",
+        "displayName": "Winning Pitcher",
+        "shortDisplayName": "Win",
+        "abbreviation": "WP",
+        "playerId": 4872587,
+        "athlete": {
+         "id": "4872587",
+         "fullName": "Yoshinobu Yamamoto",
+         "displayName": "Yoshinobu Yamamoto",
+         "shortName": "Y. Yamamoto",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/mlb/player/_/id/4872587"
+          }
+         ],
+         "headshot": "https://a.espncdn.com/i/headshots/mlb/players/full/4872587.png",
+         "jersey": "18",
+         "position": "SP",
+         "team": {
+          "id": "19"
+         }
+        },
+        "team": {
+         "id": "19"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "0"
+         },
+         {
+          "name": "losses",
+          "abbreviation": "L",
+          "displayValue": "1"
+         },
+         {
+          "name": "wins",
+          "abbreviation": "W",
+          "displayValue": "5"
+         },
+         {
+          "name": "ERA",
+          "abbreviation": "ERA",
+          "displayValue": "1.45"
+         },
+         {
+          "name": "errors",
+          "abbreviation": "E",
+          "displayValue": "0"
+         }
+        ]
+       },
+       {
+        "name": "losingPitcher",
+        "displayName": "Losing Pitcher",
+        "shortDisplayName": "Loss",
+        "abbreviation": "LP",
+        "playerId": 40912,
+        "athlete": {
+         "id": "40912",
+         "fullName": "Shane Bieber",
+         "displayName": "Shane Bieber",
+         "shortName": "S. Bieber",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/mlb/player/_/id/40912"
+          }
+         ],
+         "headshot": "https://a.espncdn.com/i/headshots/mlb/players/full/40912.png",
+         "jersey": "57",
+         "position": "SP",
+         "team": {
+          "id": "14"
+         }
+        },
+        "team": {
+         "id": "14"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "0"
+         },
+         {
+          "name": "losses",
+          "abbreviation": "L",
+          "displayValue": "1"
+         },
+         {
+          "name": "wins",
+          "abbreviation": "W",
+          "displayValue": "2"
+         },
+         {
+          "name": "ERA",
+          "abbreviation": "ERA",
+          "displayValue": "3.86"
+         },
+         {
+          "name": "errors",
+          "abbreviation": "E",
+          "displayValue": "0"
+         }
+        ]
+       }
+      ]
+     },
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "LAD win series 4-3",
+      "completed": true,
+      "totalCompetitions": 7,
+      "competitors": [
+       {
+        "id": "14",
+        "uid": "s:1~l:10~t:14",
+        "wins": 3,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2025/teams/14?lang=en&region=us"
+       },
+       {
+        "id": "19",
+        "uid": "s:1~l:10~t:19",
+        "wins": 4,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2025/teams/19?lang=en&region=us"
+       }
+      ]
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 2
+        },
+        {
+         "value": 3.0,
+         "displayValue": "3",
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 5
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 9
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 10
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 11
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "94-68"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "54-27"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "40-41"
+        }
+       ],
+       "team": {
+        "id": "14",
+        "abbreviation": "TOR",
+        "displayName": "Toronto Blue Jays",
+        "shortDisplayName": "Blue Jays",
+        "name": "Blue Jays",
+        "location": "Toronto",
+        "color": "134a8e",
+        "alternateColor": "6cace5"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "5",
+       "linescores": [
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 3
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 5
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 7
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 8
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 9
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 10
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 11
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "93-69"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "52-29"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "41-40"
+        }
+       ],
+       "team": {
+        "id": "19",
+        "abbreviation": "LAD",
+        "displayName": "Los Angeles Dodgers",
+        "shortDisplayName": "Dodgers",
+        "name": "Dodgers",
+        "location": "Los Angeles",
+        "color": "005a9c",
+        "alternateColor": "ffffff"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

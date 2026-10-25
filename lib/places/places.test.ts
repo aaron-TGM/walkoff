@@ -177,10 +177,18 @@ describe("town circles", () => {
   });
 
   it("calls a big city one", async () => {
-    for (const name of ["Chicago, IL", "Brooklyn, NY", "Toronto, ON"]) {
+    for (const name of ["Chicago, IL", "Brooklyn, NY", "Toronto, ON", "San Francisco, CA"]) {
       const c = await townCircle(await town(name));
       assert.ok(c.bigCity && c.population > CIRCLE.bigCity, name);
     }
+  });
+
+  it("centers a city whose waters Census counts on its people", async () => {
+    // Census's point for San Francisco is out by the Farallon Islands, and
+    // the ZIP nearest it is Bolinas, across the Golden Gate.
+    const sf = await town("San Francisco, CA");
+    assert.match(sf.ref, /^941\d\d$/);
+    assert.equal((await town("Corpus Christi, TX")).ref, "78401");
   });
 
   it("gives a rural town the widest circle", async () => {

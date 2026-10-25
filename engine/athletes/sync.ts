@@ -146,6 +146,24 @@ export class AthleteSync {
     }
   }
 
+  /** Reads a team's roster now unless it's newer than maxAge, or the team
+   *  is waiting out failures. For a champion: the hometown job wants the
+   *  roster as it stood on the day. */
+  async refreshTeam(teamId: string, maxAge: number): Promise<"fresh" | "synced" | "failed" | "unknown"> {
+    const team = this.teams.find((t) => t.id === teamId);
+    if (!team) return "unknown";
+    const { data, error } = await this.db
+      .from("roster_syncs")
+      .select("team_id, synced_at, failures, updated_at")
+      .eq("team_id", teamId)
+      .maybeSingle();
+    if (error) throw error;
+    const row = (data as SyncRow | null) ?? undefined;
+    if (row?.synced_at && this.now() - Date.parse(row.synced_at) < maxAge) return "fresh";
+    if (row && row.failures > 0 && !this.due(row)) return "failed";
+    return (await this.syncTeam(team, row)) ? "synced" : "failed";
+  }
+
   // ── Rosters ──────────────────────────────────────────────────────
 
   private due(row: SyncRow | undefined): boolean {

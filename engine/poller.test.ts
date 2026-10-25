@@ -5,12 +5,14 @@ import { describe, it } from "node:test";
 import { LEAGUES } from "../lib/leagues";
 import { loadConfig } from "./config";
 import type { FeedClient } from "./espn/client";
-import type { EspnEvent, EspnScoreboard } from "./espn/types";
+import type { EspnEvent, EspnScoreboard, EspnSummary } from "./espn/types";
+import type { Heroes } from "./moments/heroes";
 import { rulesFor } from "./moments/sports";
 import { etDate, LeaguePoller } from "./poller";
 import { MemoryStore } from "./store/memory";
 
 const nfl = LEAGUES.find((l) => l.id === "nfl")!;
+const mlb = LEAGUES.find((l) => l.id === "mlb")!;
 const config = { ...loadConfig({ DRY_RUN: "1" }), lookaheadMs: Number.MAX_SAFE_INTEGER };
 
 function fixtureEvent(name: string, shortName: string): EspnEvent {
@@ -164,6 +166,73 @@ describe("LeaguePoller", () => {
     assert.equal(poller.status.consecutiveFailures, 2);
     assert.equal(store.heartbeats.get("nfl")?.ok, false);
     assert.equal(store.heartbeats.get("nfl")?.error, "feed down");
+  });
+});
+
+function fixture<T>(name: string): T {
+  return JSON.parse(readFileSync(new URL(`./__fixtures__/${name}.json`, import.meta.url), "utf8")) as T;
+}
+
+/** The same board every poll, and a summary (or a failure) for any game. */
+function titleClient(board: EspnScoreboard, summary: EspnSummary | Error): FeedClient & { summaries: number } {
+  const client = {
+    summaries: 0,
+    async scoreboard() {
+      return board;
+    },
+    async summary() {
+      client.summaries++;
+      if (summary instanceof Error) throw summary;
+      return summary;
+    },
+  };
+  return client;
+}
+
+describe("title heroes", () => {
+  it("Super Bowl LX: the title carries Seattle's players, from the one summary it reads", async () => {
+    const store = new MemoryStore();
+    const client = titleClient(fixture("nfl-super-bowl-lx"), fixture("nfl-summary-401772988"));
+    const poller = new LeaguePoller(nfl, rulesFor("nfl"), { client, store, config, now: () => new Date("2026-02-09T03:15:00Z") });
+    await poller.tick();
+
+    const title = [...store.moments.values()].find((m) => m.type === "title_won");
+    assert.equal(title?.team.abbreviation, "SEA");
+    assert.equal(title?.detail.round, "Super Bowl LX");
+    const heroes = title?.detail.heroes as Heroes;
+    assert.deepEqual(heroes.leaders.find((l) => l.id === "3912547")?.why, ["Passing Yards"]);
+    assert.ok(heroes.played.includes("4567048"));
+    assert.equal(client.summaries, 1);
+  });
+
+  it("World Series: baseball reads the summary for a title, and only then", async () => {
+    const store = new MemoryStore();
+    const client = titleClient(fixture("mlb-world-series-g7"), fixture("mlb-summary-401809303"));
+    const poller = new LeaguePoller(mlb, rulesFor("mlb"), { client, store, config, now: () => new Date("2025-11-02T04:45:00Z") });
+    await poller.tick();
+    const title = [...store.moments.values()].find((m) => m.type === "title_won");
+    assert.equal(title?.team.abbreviation, "LAD");
+    assert.ok((title?.detail.heroes as Heroes).leaders.some((l) => l.name === "Yoshinobu Yamamoto"));
+    assert.equal(client.summaries, 1);
+
+    const other = titleClient(fixture("mlb-nlds-walkoff"), fixture("mlb-summary-401809303"));
+    const otherStore = new MemoryStore();
+    const nlds = new LeaguePoller(mlb, rulesFor("mlb"), { client: other, store: otherStore, config, now: () => new Date("2026-10-04T23:30:00Z") });
+    await nlds.tick();
+    assert.ok([...otherStore.moments.values()].some((m) => m.type === "walkoff_win"), "the final was handled");
+    assert.equal(other.summaries, 0);
+  });
+
+  it("a title doesn't wait on a summary that fails", async () => {
+    const store = new MemoryStore();
+    const client = titleClient(fixture("mlb-world-series-g7"), new Error("summary down"));
+    const poller = new LeaguePoller(mlb, rulesFor("mlb"), { client, store, config, now: () => new Date("2025-11-02T04:45:00Z") });
+    await poller.tick();
+    const title = [...store.moments.values()].find((m) => m.type === "title_won");
+    assert.ok(title, "saved on the first poll");
+    assert.equal(title.detail.heroes, undefined);
+    assert.equal(client.summaries, 1);
+    assert.equal(store.heartbeats.get("mlb")?.ok, true);
   });
 });
 
