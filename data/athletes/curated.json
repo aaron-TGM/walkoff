@@ -1,0 +1,38 @@
+{
+  "about": "Hometowns kept by hand, for athletes whose feeds give a birthplace that isn't their hometown, or nothing at all. Each one says where it came from. These outrank every feed; only an operator's word outranks them. Academies are boarding schools whose town isn't anyone's hometown: a high school on this list counts for little.",
+  "hometowns": [
+    {
+      "athlete": "espn:football:3912547",
+      "name": "Sam Darnold",
+      "hometown": "San Clemente, CA",
+      "source": "https://en.wikipedia.org/wiki/Sam_Darnold",
+      "note": "Played at San Clemente High School. ESPN gives his birthplace, Capistrano Beach, 4 miles away."
+    }
+  ],
+  "academies": [
+    "IMG Academy",
+    "Montverde Academy",
+    "Oak Hill Academy",
+    "Findlay Prep",
+    "Brewster Academy",
+    "La Lumiere School",
+    "Sunrise Christian Academy",
+    "Prolific Prep",
+    "Wasatch Academy",
+    "Link Academy",
+    "Huntington Prep",
+    "AZ Compass Prep",
+    "Hillcrest Prep",
+    "Shattuck-St. Mary's",
+    "Culver Academies",
+    "National Team Development Program",
+    "Athol Murray College of Notre Dame",
+    "Saddlebrook Preparatory School",
+    "Evert Tennis Academy",
+    "Blair Academy",
+    "Kimball Union Academy",
+    "Cushing Academy",
+    "Northwood School",
+    "Avon Old Farms"
+  ]
+}

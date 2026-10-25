@@ -11,3 +11,11 @@ export function getServiceSupabase() {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }
+
+/** How PostgREST and Postgres say a table or column isn't there: a
+ *  migration hasn't run yet. */
+const MISSING_SCHEMA = new Set(["PGRST204", "PGRST205", "42703", "42P01"]);
+
+export function isMissingSchema(error: { code?: string } | null | undefined): boolean {
+  return !!error?.code && MISSING_SCHEMA.has(error.code);
+}

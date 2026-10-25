@@ -14,7 +14,8 @@
     "test": "tsx --test \"engine/**/*.test.ts\" \"lib/**/*.test.ts\"",
     "brand": "tsx scripts/brand.ts",
     "affinity:tag": "tsx scripts/tag-catalog.ts",
-    "affinity:geo": "tsx scripts/build-geo.ts && tsx scripts/build-teams.ts"
+    "affinity:geo": "tsx scripts/build-geo.ts && tsx scripts/build-teams.ts",
+    "affinity:places": "tsx scripts/build-places.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.1.0",
