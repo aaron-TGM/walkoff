@@ -12,4 +12,5 @@ export {
   type Local,
   type Town,
 } from "./derive";
+export { hometownLive } from "./flag";
 export { saveHometownMoments } from "./store";

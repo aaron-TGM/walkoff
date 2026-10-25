@@ -89,7 +89,7 @@ uses: cold_weather (hoodies, beanies, blankets), tailgate (koozies, drinkware, c
 
 seasons: when it sells best, only when the product makes that clear. Cold-weather gear is fall and winter, holiday items winter, swimwear summer. Leave it empty for year-round products.
 
-interests: scenes the product is made for beyond team sports: surf, skate, snow (skiing and snowboarding), fishing, hunting, western (ranch, rodeo, cowboy), golf, motorsports (moto, racing), outdoors (camping, hiking, climbing), cycling, running, fitness, music. Tag one when the product is designed for it or speaks to people who are into it, not for a passing word.`;
+interests: scenes the product is made for beyond team sports: surf, skate, snow (skiing and snowboarding), fishing, hunting, western (ranch, rodeo, cowboy), golf, tennis, motorsports (moto, racing), outdoors (camping, hiking, climbing), cycling, running, fitness, music. Tag one when the product is designed for it or speaks to people who are into it, not for a passing word.`;
 
 export function systemPrompt(): string {
   return `${INSTRUCTIONS}

@@ -279,11 +279,12 @@ export async function namingRights(
   return out;
 }
 
-/** Athletes by Walkoff's id ("espn:football:3912547") or by full name,
+/** Athletes by Walkoff's id ("espn:football:3912547", or for someone an
+ *  operator added, "walkoff:surfing:griffin-colapinto") or by full name,
  *  however it's spelled ("sam darnold"). More than one shares some names. */
 export async function findAthletes(db: SupabaseClient, query: string, limit = 10): Promise<Athlete[]> {
   const q = query.trim();
-  if (/^espn:[a-z-]+:\d+$/.test(q)) return loadAthletes(db, [q]);
+  if (/^espn:[a-z-]+:\d+$/.test(q) || /^walkoff:[a-z-]+:[a-z0-9-]+$/.test(q)) return loadAthletes(db, [q]);
   const key = nameKey(q);
   if (!key) return [];
   const { data, error } = await db.from("athletes").select("id").eq("name_key", key).order("id").limit(limit);

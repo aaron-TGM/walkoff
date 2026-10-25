@@ -54,7 +54,7 @@ const SOURCE_WORDS: Record<string, string> = {
   "birthplace:espn": "birthplace, from ESPN",
   "birthplace:wikidata": "birthplace, from Wikidata",
 };
-const sourceWords = (f: { kind: string; source: string }) => SOURCE_WORDS[`${f.kind}:${f.source}`] ?? `${f.kind.replace("_", " ")}, from ${f.source}`;
+export const sourceWords = (f: { kind: string; source: string }) => SOURCE_WORDS[`${f.kind}:${f.source}`] ?? `${f.kind.replace("_", " ")}, from ${f.source}`;
 
 const teamName = (a: Athlete) => (a.teamId ? (teamFromFeedId(a.teamId)?.team.name ?? a.teamId) : null);
 

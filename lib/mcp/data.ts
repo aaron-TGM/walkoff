@@ -2,7 +2,9 @@
 // within the brands the signed-in person may use.
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { TEAM_HOMES } from "../affinity/geo";
-import { TRIGGERS } from "../triggers";
+import { HOMETOWN_TYPES } from "../hometown/derive";
+import { isMissingSchema } from "../supabase";
+import { ALL_TRIGGERS } from "../triggers";
 import { operatorEmails } from "./oauth/config";
 import { teamFromFeedId } from "./teams";
 
@@ -67,6 +69,21 @@ export async function brandFor(db: SupabaseClient, p: Principal, ref?: string | 
 
 // ── Moments and games ──────────────────────────────────────────────
 
+// supabase/009_athletes.sql adds columns to moments and triggers. Until it
+// has run, naming one is an error, so each client checks once and
+// remembers when they're there.
+const after009 = new WeakMap<SupabaseClient, true>();
+
+/** Whether 009_athletes.sql has run: hometown moments, retracting, towns
+ *  on triggers. */
+export async function has009(db: SupabaseClient): Promise<boolean> {
+  if (after009.has(db)) return true;
+  const { error } = await db.from("moments").select("retracted_at").limit(1);
+  if (error && !isMissingSchema(error)) throw error;
+  if (!error) after009.set(db, true);
+  return !error;
+}
+
 export interface MomentRow {
   id: string;
   type: string;
@@ -80,42 +97,61 @@ export interface MomentRow {
   detail: Record<string, unknown>;
   occurred_at: string;
   detected_at: string;
+  /** From 009 on. Hometown moments: the town (a lib/places key) and its
+   *  most prominent athlete. */
+  athlete_id?: string | null;
+  place_key?: string | null;
+  /** Set when an operator took the moment back: it's in no queue. */
+  retracted_at?: string | null;
+  retracted_reason?: string | null;
 }
 
 const MOMENT_COLUMNS =
   "id, type, phase, league, game_id, team_id, opponent_team_id, headline, intensity, detail, occurred_at, detected_at";
+const MOMENT_COLUMNS_009 = `${MOMENT_COLUMNS}, athlete_id, place_key, retracted_at, retracted_reason`;
 
+export const momentColumns = async (db: SupabaseClient) => ((await has009(db)) ? MOMENT_COLUMNS_009 : MOMENT_COLUMNS);
+
+/** "(hometown_title,...)", for leaving hometown moments out. */
+const HOMETOWN_LIST = `(${HOMETOWN_TYPES.join(",")})`;
+
+/** Recent team moments, not retracted. Hometown moments come through
+ *  lib/mcp/local.ts instead, by town: a Seahawks brand doesn't get San
+ *  Clemente's moment because the Seahawks won. */
 export async function recentMoments(
   db: SupabaseClient,
   opts: { teamIds?: string[]; since: Date; types?: string[]; limit?: number },
 ): Promise<MomentRow[]> {
   if (opts.teamIds && !opts.teamIds.length) return [];
+  const later = await has009(db);
   let q = db
     .from("moments")
-    .select(MOMENT_COLUMNS)
+    .select(later ? MOMENT_COLUMNS_009 : MOMENT_COLUMNS)
     .gte("detected_at", opts.since.toISOString())
+    .not("type", "in", HOMETOWN_LIST)
     .order("detected_at", { ascending: false })
     .limit(opts.limit ?? 50);
+  if (later) q = q.is("retracted_at", null);
   if (opts.teamIds) q = q.in("team_id", opts.teamIds);
   if (opts.types?.length) q = q.in("type", opts.types);
   const { data, error } = await q;
   if (error) throw error;
-  return (data ?? []) as MomentRow[];
+  return (data ?? []) as unknown as MomentRow[];
 }
 
 export async function momentsByIds(db: SupabaseClient, ids: string[]): Promise<Map<string, MomentRow>> {
   const unique = [...new Set(ids.filter(isUuid))];
   if (!unique.length) return new Map();
-  const { data, error } = await db.from("moments").select(MOMENT_COLUMNS).in("id", unique);
+  const { data, error } = await db.from("moments").select(await momentColumns(db)).in("id", unique);
   if (error) throw error;
-  return new Map(((data ?? []) as MomentRow[]).map((m) => [m.id, m]));
+  return new Map(((data ?? []) as unknown as MomentRow[]).map((m) => [m.id, m]));
 }
 
 export async function momentById(db: SupabaseClient, id: string): Promise<MomentRow | null> {
   if (!isUuid(id)) return null;
-  const { data, error } = await db.from("moments").select(MOMENT_COLUMNS).eq("id", id).maybeSingle();
+  const { data, error } = await db.from("moments").select(await momentColumns(db)).eq("id", id).maybeSingle();
   if (error) throw error;
-  return (data as MomentRow | null) ?? null;
+  return (data as unknown as MomentRow | null) ?? null;
 }
 
 export interface GameRow {
@@ -177,7 +213,7 @@ export async function teamNames(db: SupabaseClient, ids: (string | null)[]): Pro
   return out;
 }
 
-const TYPE_NAME = new Map(TRIGGERS.map((t) => [t.id, t.name]));
+const TYPE_NAME = new Map(ALL_TRIGGERS.map((t) => [t.id, t.name]));
 export const typeName = (type: string) => TYPE_NAME.get(type) ?? type;
 
 /** A moment as the tools show it. Headlines name teams: they're for the
@@ -213,28 +249,45 @@ export interface TriggerRow {
   active: boolean;
   created_by: string | null;
   created_at: string;
+  /** From 009 on: towns for hometown moments (lib/places keys; empty: any
+   *  town near the brand's customers), and the customers a town needs. */
+  place_keys?: string[];
+  min_local_customers?: number | null;
 }
 
 const TRIGGER_COLUMNS = "id, name, moment_types, team_keys, min_intensity, active, created_by, created_at";
+const triggerColumns = async (db: SupabaseClient) =>
+  (await has009(db)) ? `${TRIGGER_COLUMNS}, place_keys, min_local_customers` : TRIGGER_COLUMNS;
 
 export async function listTriggers(db: SupabaseClient, brandId: string): Promise<TriggerRow[]> {
-  const { data, error } = await db.from("triggers").select(TRIGGER_COLUMNS).eq("brand_id", brandId).order("created_at");
+  const { data, error } = await db.from("triggers").select(await triggerColumns(db)).eq("brand_id", brandId).order("created_at");
   if (error) throw error;
-  return (data ?? []) as TriggerRow[];
+  return (data ?? []) as unknown as TriggerRow[];
 }
 
+/** Towns need 009_athletes.sql: callers check has009 before passing them. */
 export async function createTrigger(
   db: SupabaseClient,
   brandId: string,
-  t: { name: string; moment_types: string[]; team_keys: string[]; min_intensity: number; created_by: string },
+  t: {
+    name: string;
+    moment_types: string[];
+    team_keys: string[];
+    min_intensity: number;
+    created_by: string;
+    place_keys?: string[];
+    min_local_customers?: number | null;
+  },
 ): Promise<TriggerRow> {
+  const { place_keys, min_local_customers, ...rest } = t;
+  const towns = place_keys?.length || (min_local_customers !== undefined && min_local_customers !== null);
   const { data, error } = await db
     .from("triggers")
-    .insert({ brand_id: brandId, ...t })
-    .select(TRIGGER_COLUMNS)
+    .insert({ brand_id: brandId, ...rest, ...(towns ? { place_keys: place_keys ?? [], min_local_customers: min_local_customers ?? null } : {}) })
+    .select(await triggerColumns(db))
     .single();
   if (error) throw error;
-  return data as TriggerRow;
+  return data as unknown as TriggerRow;
 }
 
 /** Deletes one of the brand's triggers. False when it isn't the brand's. */

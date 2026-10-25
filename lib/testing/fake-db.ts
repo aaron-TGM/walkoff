@@ -179,9 +179,13 @@ class Query implements PromiseLike<Result> {
     return this;
   }
 
-  not(column: string, operator: string, value: string) {
+  not(column: string, operator: string, value: string | null) {
     this.uses(column);
-    if (operator !== "in") throw new Error(`fake db: not.${operator} isn't supported`);
+    if (operator === "is" && value === null) {
+      this.filters.push((r) => (r[column] ?? null) !== null);
+      return this;
+    }
+    if (operator !== "in" || value === null) throw new Error(`fake db: not.${operator} isn't supported`);
     const values = value.replace(/^\(|\)$/g, "").split(",");
     this.filters.push((r) => !values.includes(String(r[column])));
     return this;

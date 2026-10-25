@@ -25,7 +25,7 @@ export interface ProductTags {
 export const USES = ["cold_weather", "tailgate", "game_day", "home", "gift", "kids", "pets", "summer"] as const;
 export const SEASONS = ["spring", "summer", "fall", "winter"] as const;
 export const INTERESTS = [
-  "surf", "skate", "snow", "fishing", "hunting", "western", "golf", "motorsports",
+  "surf", "skate", "snow", "fishing", "hunting", "western", "golf", "tennis", "motorsports",
   "outdoors", "cycling", "running", "fitness", "music",
 ] as const;
 export const COLORS = [
@@ -92,6 +92,7 @@ const INTEREST_WORDS: Record<(typeof INTERESTS)[number], string[]> = {
   hunting: ["hunting", "hunter", "duck hunting", "deer hunting", "waterfowl"],
   western: ["western", "rodeo", "cowboy", "cowgirl", "ranch", "pearl snap", "bronc"],
   golf: ["golf", "golfer", "golfing", "putter"],
+  tennis: ["tennis", "tennis racket", "tennis racquet"],
   motorsports: ["motocross", "supercross", "moto", "dirt bike", "nascar", "formula 1", "racing"],
   outdoors: ["outdoors", "outdoor", "camping", "hiking", "backpacking", "climbing", "trail"],
   cycling: ["cycling", "bike", "bicycle", "bmx", "mtb", "mountain bike"],

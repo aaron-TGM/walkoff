@@ -294,10 +294,11 @@ export async function loadTaggedCatalog(db: SupabaseClient, brandId: string): Pr
       teams: { league: string; teamId: string }[] | null;
       colors: string[] | null;
       uses: string[] | null;
+      interests: string[] | null;
       colorways: CatalogItem["colorways"] | null;
       price: number | string | null;
     }>((from, to) =>
-      db.from("brand_products").select("handle, title, teams, colors, uses, colorways, price").eq("brand_id", brandId).range(from, to),
+      db.from("brand_products").select("handle, title, teams, colors, uses, interests, colorways, price").eq("brand_id", brandId).range(from, to),
     ),
     loadColorNames(db, brandId),
   ]);
@@ -307,6 +308,7 @@ export async function loadTaggedCatalog(db: SupabaseClient, brandId: string): Pr
     teams: p.teams ?? [],
     colors: p.colors ?? [],
     uses: p.uses ?? [],
+    interests: p.interests ?? [],
     price: p.price === null || p.price === undefined ? null : Number(p.price),
     colorways: (p.colorways ?? []).map((c) => ({
       ...c,
