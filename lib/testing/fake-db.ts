@@ -11,6 +11,11 @@ export type Tables = Record<string, Row[]>;
 
 /** Tables whose rows get a random uuid id when inserted without one. */
 const UUID_IDS = new Set(["brands", "brand_uploads", "affinity_reports", "triggers", "sends", "moments", "athlete_results", "brand_athlete_rights"]);
+/** Column defaults from the migrations that code reads back. */
+const DEFAULTS: Record<string, Record<string, () => unknown>> = {
+  moments: { detected_at: () => new Date().toISOString() },
+  triggers: { active: () => true },
+};
 
 type Filter = (row: Row) => boolean;
 
@@ -251,7 +256,8 @@ class Query implements PromiseLike<Result> {
           out.push(existing);
           continue;
         }
-        const row = { ...(UUID_IDS.has(this.table) ? { id: randomUUID() } : {}), created_at: new Date().toISOString(), ...p };
+        const defaults = Object.fromEntries(Object.entries(DEFAULTS[this.table] ?? {}).map(([c, value]) => [c, value()]));
+        const row = { ...(UUID_IDS.has(this.table) ? { id: randomUUID() } : {}), created_at: new Date().toISOString(), ...defaults, ...p };
         rows.push(row);
         out.push(row);
       }

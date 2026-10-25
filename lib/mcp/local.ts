@@ -91,10 +91,11 @@ const queueMoment = (m: MomentRow, fit: TownFit | null): QueueMoment => ({
 });
 
 /** The hometown moments that make a brand's queue: matched by a rule, still
- *  open, at most LOCAL.townsPerEvent towns per event (the most customers
- *  first). A town in the champion's core territory is left out when the
- *  brand's queue has the team's own title (titleGames), so nobody there
- *  gets two sends. also lists, per event, the towns that didn't fit. */
+ *  open, at most LOCAL.townsPerEvent towns per event (the towns of those
+ *  who did the most first, then the most customers). A town in the
+ *  champion's core territory is left out when the brand's queue has the
+ *  team's own title (titleGames), so nobody there gets two sends. also
+ *  lists, per event, the towns that didn't fit. */
 export function localQueue(
   rows: MomentRow[],
   fits: Map<string, TownFit>,
@@ -123,7 +124,7 @@ export function localQueue(
   const items: LocalItem[] = [];
   const also: { event: string; towns: string[] }[] = [];
   for (const group of byEvent.values()) {
-    group.sort((a, b) => b.fit.customers - a.fit.customers || b.row.intensity - a.row.intensity);
+    group.sort((a, b) => b.row.intensity - a.row.intensity || b.fit.customers - a.fit.customers);
     items.push(...group.slice(0, LOCAL.townsPerEvent));
     const rest = group.slice(LOCAL.townsPerEvent);
     if (rest.length) also.push({ event: detailOf(group[0].row).event?.name ?? group[0].row.headline, towns: rest.map((x) => detailOf(x.row).town?.label ?? x.fit.place.name) });
