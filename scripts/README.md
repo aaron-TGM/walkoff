@@ -100,5 +100,9 @@ jane@frostbuddy.com"), and ask there where each brand is
 ## Reference data
 
 ```bash
-npm run affinity:geo   # rebuilds data/geo/*.json (see data/geo/README.md)
+npm run affinity:geo      # rebuilds postal-areas.json and team-homes.json
+npm run affinity:places   # rebuilds zip5.json and places-*.json, the towns
+                          # behind hometown moments
 ```
+
+Both are described in data/geo/README.md.

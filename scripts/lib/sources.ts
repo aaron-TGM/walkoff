@@ -17,6 +17,8 @@ export const SOURCES = {
     "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv",
   geonamesCA: "https://download.geonames.org/export/zip/CA_full.csv.zip",
   geonamesGB: "https://download.geonames.org/export/zip/GB_full.csv.zip",
+  geonamesUS: "https://download.geonames.org/export/zip/US.zip",
+  geonamesCities: "https://download.geonames.org/export/dump/cities500.zip",
   onsPostcodeHeadcounts: "https://www.nomisweb.co.uk/output/census/2021/pcd_p001.csv",
 } as const;
 

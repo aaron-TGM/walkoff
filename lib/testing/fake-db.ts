@@ -10,19 +10,22 @@ export type Row = Record<string, unknown>;
 export type Tables = Record<string, Row[]>;
 
 /** Tables whose rows get a random uuid id when inserted without one. */
-const UUID_IDS = new Set(["brands", "brand_uploads", "affinity_reports", "triggers", "sends", "moments"]);
+const UUID_IDS = new Set(["brands", "brand_uploads", "affinity_reports", "triggers", "sends", "moments", "athlete_results", "brand_athlete_rights"]);
 
 type Filter = (row: Row) => boolean;
 
-let schema: Map<string, Set<string>> | null = null;
+type Schema = Map<string, Set<string>>;
+const schemas = new Map<string, Schema>();
 
-/** A table's columns from supabase/0*.sql, so a query naming one that
+/** Tables and their columns from supabase/0*.sql, up to the migration
+ *  numbered through (all of them by default), so a query naming one that
  *  doesn't exist fails here as it would in PostgREST. */
-function columnsOf(table: string): Set<string> | undefined {
+function schemaThrough(through = "999"): Schema {
+  let schema = schemas.get(through);
   if (!schema) {
     schema = new Map();
     const dir = new URL("../../supabase/", import.meta.url);
-    for (const file of readdirSync(dir).filter((f) => /^0\d+_.*\.sql$/.test(f)).sort()) {
+    for (const file of readdirSync(dir).filter((f) => /^0\d+_.*\.sql$/.test(f) && f.slice(0, 3) <= through).sort()) {
       const sql = readFileSync(new URL(file, dir), "utf8");
       for (const [, name, body] of sql.matchAll(/CREATE TABLE IF NOT EXISTS (\w+) \(([\s\S]*?)\n\);/g)) {
         const cols = schema.get(name) ?? new Set<string>();
@@ -36,8 +39,9 @@ function columnsOf(table: string): Set<string> | undefined {
         schema.set(name, (schema.get(name) ?? new Set<string>()).add(col));
       }
     }
+    schemas.set(through, schema);
   }
-  return schema.get(table);
+  return schema;
 }
 type Result = { data: unknown; error: { message: string; code?: string } | null; count?: number | null };
 
@@ -89,8 +93,9 @@ class Query implements PromiseLike<Result> {
   constructor(
     private readonly tables: Tables,
     private readonly table: string,
+    schema: Schema,
   ) {
-    this.known = columnsOf(table);
+    this.known = schema.get(table);
     if (!this.known) this.problem = `relation "public.${table}" does not exist`;
   }
 
@@ -219,7 +224,8 @@ class Query implements PromiseLike<Result> {
   }
 
   private run(): Result {
-    if (this.problem) return { data: null, error: { message: this.problem, code: "42703" } };
+    // Postgres's codes for a missing table and a missing column.
+    if (this.problem) return { data: null, error: { message: this.problem, code: this.known ? "42703" : "42P01" } };
     const rows = (this.tables[this.table] ??= []);
     let out: Row[];
     if (this.op === "select") {
@@ -262,10 +268,12 @@ class Query implements PromiseLike<Result> {
   }
 }
 
-export function fakeDb(tables: Tables = {}): SupabaseClient & { tables: Tables } {
+/** through: "008" is the database before 009 has run. */
+export function fakeDb(tables: Tables = {}, options: { through?: string } = {}): SupabaseClient & { tables: Tables } {
+  const schema = schemaThrough(options.through);
   const db = {
     tables,
-    from: (table: string) => new Query(tables, table),
+    from: (table: string) => new Query(tables, table, schema),
     rpc: async () => ({ data: null, error: null }),
   };
   return db as unknown as SupabaseClient & { tables: Tables };

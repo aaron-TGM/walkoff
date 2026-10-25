@@ -13,4 +13,12 @@ describe("fakeDb", () => {
     assert.equal((await db.from("brands").update({ licenced: true }).eq("id", "b1")).error?.message, "column brands.licenced does not exist");
     assert.equal((await db.from("affinity_reports").select("totals:reports->totals")).error?.message, "column affinity_reports.reports does not exist");
   });
+
+  it("can be the database before a migration has run", async () => {
+    const before = fakeDb({}, { through: "008" });
+    assert.equal((await before.from("athletes").select("id")).error?.code, "42P01");
+    assert.equal((await before.from("moments").select("id, place_key")).error?.code, "42703");
+    assert.equal((await before.from("moments").select("id, headline")).error, null);
+    assert.equal((await fakeDb().from("athletes").select("id")).error, null);
+  });
 });
