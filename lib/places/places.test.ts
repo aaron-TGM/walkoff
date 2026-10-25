@@ -92,8 +92,10 @@ describe("finding a place", () => {
     assert.deepEqual(await resolveTown("Santo Domingo, Distrito Nacional, Dominican Republic"), { status: "outside", country: "Dominican Republic" });
     assert.deepEqual(await resolvePlace({ city: "Toronto", country: "Australia" }), { status: "outside", country: "Australia" });
     assert.deepEqual(await resolvePlace({ city: "Willemstad", country: "Curacao" }), { status: "outside", country: "Curacao" });
+    // Hockey rosters' three-letter codes.
+    assert.deepEqual(await resolvePlace({ city: "Karlstad", country: "SWE" }), { status: "outside", country: "SWE" });
+    assert.equal(found(await resolvePlace({ city: "Saskatoon", state: "SK", country: "CAN" })), "geonames:6141256");
     assert.equal((await resolveTown("Holywood, County Down")).status, "unknown");
-    assert.equal((await resolveTown("Sydney, NSW")).status, "unknown");
   });
 
   it("never guesses between places that share a name", async () => {

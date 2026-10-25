@@ -53,6 +53,12 @@ export const HELP_TOOLS = {
       "Where your customers over-index on fan territories: how strongly, how many customers, what each territory buys more of, and the products to feature there.",
     asks: ["Where are our fans?", "Which teams do our customers follow?"],
   },
+  local_athletes: {
+    summary:
+      "Athletes Walkoff follows who are from towns near your customers, town by town: about how many of your customers live there, and for each athlete their team, position and how Walkoff knows where they're from. The names are for you. Campaigns celebrate the town and never name an athlete without the athlete's written OK.",
+    asks: ["Which athletes are from near our customers?", "Who's from the towns where our customers live?"],
+    options: { limit: "How many towns to show. Default 20." },
+  },
   recent_moments: {
     summary:
       "What just happened for your standout teams, or for any team you name: walk-offs, comebacks, rivalry wins and the rest, each with how long it's worth acting on and what you already did with it.",

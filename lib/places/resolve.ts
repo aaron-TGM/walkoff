@@ -89,7 +89,8 @@ function countryOf(raw: string): Where | "outside" | null {
   if (/^(pr|pri|puerto rico)$/i.test(plain)) return { country: "US", region: "PR" };
   const country = normalizeCountry(plain);
   if (country) return { country };
-  return countryNames().has(nameKey(plain)) ? "outside" : null;
+  // ESPN's hockey rosters use three-letter codes: "SWE", "FIN".
+  return /^[A-Z]{3}$/.test(plain) || countryNames().has(nameKey(plain)) ? "outside" : null;
 }
 
 /** Places with the name, in the country and region when they're known. A

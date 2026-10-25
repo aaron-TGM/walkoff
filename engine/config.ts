@@ -21,6 +21,12 @@ export interface EngineConfig {
   tagCatalogs: boolean;
   tagModel: string;
   tagEffort: Effort;
+  /** Rosters, where athletes are from and the curated hometowns
+   *  (engine/athletes). On unless ATHLETES is 0. */
+  athletes: boolean;
+  /** High schools and birthplaces from Wikidata, part of that. On unless
+   *  WIKIDATA is 0. */
+  wikidata: boolean;
 }
 
 function seconds(value: string | undefined, fallback: number): number {
@@ -62,5 +68,7 @@ export function loadConfig(
     tagCatalogs: !!env.ANTHROPIC_API_KEY && env.TAG_CATALOGS !== "0",
     tagModel: env.WALKOFF_TAG_MODEL || DEFAULT_MODEL,
     tagEffort,
+    athletes: env.ATHLETES !== "0",
+    wikidata: env.WIKIDATA !== "0",
   };
 }

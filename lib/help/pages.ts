@@ -178,6 +178,7 @@ export const HELP_PAGES = [
       { id: "sign-in", title: "Sign-in and tokens" },
       { id: "approval", title: "Approval first" },
       { id: "licenses", title: "Team names and licenses" },
+      { id: "athletes", title: "Athletes" },
     ],
   },
   {

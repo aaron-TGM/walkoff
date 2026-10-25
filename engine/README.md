@@ -3,9 +3,9 @@
 An always-on worker that watches every game in the V1 leagues, detects the
 moments fans care about, and saves them to Supabase. It also has Claude tag
 each brand's new products a minute or so after they're imported or
-uploaded. It runs
-separately from the website: Vercel functions time out, and this needs to
-keep polling all night.
+uploaded, and keeps every team's roster with where each athlete is from.
+It runs separately from the website: Vercel functions time out, and this
+needs to keep polling all night.
 
 ```
 ESPN scoreboards ─► normalize ─► moment rules ─► Supabase
@@ -33,6 +33,33 @@ Then it refreshes the brand's fan map, so picks use Claude's tags.
 - It's on when `ANTHROPIC_API_KEY` is set. Each run logs its token count and
   an estimated cost. `scripts/tag-catalog.ts` is still there for a dry run,
   redoing a catalog (`--all`) or trying a file.
+
+## Athletes and hometowns
+
+For hometown moments (still to come), the engine keeps who plays for each
+team and where they're from (`athletes/sync.ts`, `lib/athletes`,
+`lib/places`).
+
+- Every team Walkoff has a home for (644 across the V1 leagues) gets its
+  ESPN roster read once a day, two teams a minute. Players a team no longer
+  lists come off it. ESPN's birthplace for each player is matched to a town
+  when it's new or its text changed.
+- Wikidata adds high schools and birthplaces, with coordinates, for the
+  athletes it links to an ESPN id: one request of up to 200 a minute at
+  most, and each athlete again after 30 days. When Wikidata says it's busy,
+  the lookups wait 15 minutes, then longer each time, up to 4 hours.
+- The hometowns in `data/athletes/curated.json` are saved once their
+  athlete has been on a roster, and come back out when they leave the file.
+- Progress is saved per team (`roster_syncs`), so a restart picks up where
+  it stopped. A team whose roster fails waits an hour per failure in a row.
+  An empty roster from ESPN counts as a failure, so nobody comes off a team
+  by mistake.
+- Until `supabase/009_athletes.sql` has run, it waits an hour and checks
+  again.
+- Its heartbeat is the `athletes` row in `engine_heartbeats`, where `games`
+  is the number of teams whose roster is under a day old.
+- It's on whenever the engine saves to Supabase. `ATHLETES=0` turns it off,
+  and `WIKIDATA=0` turns off only the Wikidata lookups.
 
 ## What it detects
 
@@ -104,12 +131,16 @@ not saved.
 | `TAG_CATALOGS`              | `1`            | `0` turns catalog tagging off |
 | `WALKOFF_TAG_MODEL`         | `DEFAULT_MODEL`| In `lib/affinity/claude-tagger.ts` |
 | `WALKOFF_TAG_EFFORT`        | `medium`       | `low` to `max` |
+| `ATHLETES`                  | `1`            | `0` turns the athlete sync off |
+| `WIKIDATA`                  | `1`            | `0` turns its Wikidata lookups off |
 
 ## Set up Supabase
 
 Run `supabase/003_moment_engine.sql` in the Supabase SQL editor (after
 `002_early_access.sql`). It creates `teams`, `games`, `moments` and
-`engine_heartbeats`, with row level security on and no public access.
+`engine_heartbeats`, with row level security on and no public access. For
+the athlete sync, also run `supabase/009_athletes.sql`; until then the sync
+waits and the rest of the engine runs as before.
 
 ## Deploy to Google Cloud Run
 

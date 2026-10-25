@@ -41,6 +41,7 @@ import { helpUrl } from "../help/pages";
 import type { Lookup } from "../public-fetch";
 import { TRIGGERS } from "../triggers";
 import { sendWelcome } from "../welcome";
+import { registerAthleteOperatorTools, registerAthleteTools } from "./athlete-tools";
 import { teamAudience } from "./audience";
 import { buildCampaign, KLAVIYO_TOOLS, type CampaignMoment } from "./campaign";
 import {
@@ -847,6 +848,8 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
       }),
   );
 
+  registerAthleteTools(server, ctx, run);
+
   if (isOperator(principal)) registerOperatorTools(server, ctx);
 }
 
@@ -1088,4 +1091,6 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
         return { brands: out, ...(out.length ? {} : { note: "No brands yet. create_brand sets one up." }) };
       }),
   );
+
+  registerAthleteOperatorTools(server, ctx, (fn) => operatorOnly(ctx, fn));
 }

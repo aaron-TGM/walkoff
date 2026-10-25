@@ -7,7 +7,7 @@ export interface FeedClient {
   summary(feedPath: string, eventId: string): Promise<EspnSummary>;
 }
 
-class HttpError extends Error {
+export class HttpError extends Error {
   constructor(
     readonly status: number,
     url: string,
@@ -16,7 +16,7 @@ class HttpError extends Error {
   }
 }
 
-async function getJson<T>(url: string, timeoutMs: number, fetchImpl: typeof fetch): Promise<T> {
+export async function getJson<T>(url: string, timeoutMs: number, fetchImpl: typeof fetch): Promise<T> {
   let lastError: unknown;
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
