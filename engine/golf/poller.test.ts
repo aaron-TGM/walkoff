@@ -16,14 +16,17 @@ const RORY = "espn:golf:3470";
 const BIOS: Record<string, GolfBio> = {
   "3470": { city: "Holywood", state: "", country: "Northern Ireland" },
   "4425906": { city: "Scarborough", state: "New York", country: "USA" },
+  "11056": { city: "Loomis", state: "California", country: "USA" },
 };
 
 function feedOf(board: unknown, opts: { failBio?: string; failBoard?: boolean } = {}) {
   const bios: string[] = [];
+  /** The leaderboard the feed gives now: a test can swap it between polls. */
+  const live = { board };
   const feed: GolfFeed = {
     async leaderboard() {
       if (opts.failBoard) throw new Error("feed down");
-      return board as never;
+      return live.board as never;
     },
     async bio(id) {
       bios.push(id);
@@ -31,15 +34,15 @@ function feedOf(board: unknown, opts: { failBio?: string; failBoard?: boolean } 
       return BIOS[id] ?? null;
     },
   };
-  return { feed, bios };
+  return { feed, bios, live };
 }
 
 function poller(board: unknown, opts: { hometown?: boolean; now: string; through?: string; failBio?: string; failBoard?: boolean }) {
   const db = fakeDb({}, { through: opts.through });
-  const { feed, bios } = feedOf(board, opts);
+  const { feed, bios, live } = feedOf(board, opts);
   const clock = { now: Date.parse(opts.now) };
   const p = new GolfPoller(PGA, db, feed, { hometown: opts.hometown ?? true, now: () => clock.now });
-  return { db, p, bios, clock };
+  return { db, p, bios, clock, live };
 }
 
 const moments = (db: { tables: Record<string, Row[]> }) => (db.tables.moments ?? []).filter((m) => String(m.type).startsWith("hometown_"));
@@ -86,12 +89,19 @@ describe("GolfPoller", () => {
     assert.equal((m.detail as HometownDetail).startsAt, "2026-04-12T18:25Z");
   });
 
-  it("records nothing while the final round is suspended, but keeps the field", async () => {
-    const { db, p } = poller(fixture("golf-pga-bermuda-suspended"), { now: "2026-10-26T04:00:00Z" });
+  it("records nothing while the final round is suspended, then Monday's playoff win", async () => {
+    const { db, p, clock, live } = poller(fixture("golf-pga-bermuda-suspended"), { now: "2026-10-26T04:00:00Z" });
     assert.equal(await p.tick(), GOLF_POLL.live, "polls fast while it's under way");
     assert.equal(db.tables.athletes.length, 10);
     assert.equal(db.tables.athlete_results?.length ?? 0, 0);
     assert.equal(db.tables.engine_heartbeats[0].live_games, 1);
+
+    live.board = fixture("golf-pga-bermuda-final");
+    clock.now = Date.parse("2026-10-26T15:30:00Z");
+    assert.equal(await p.tick(), GOLF_POLL.idle);
+    const [result] = db.tables.athlete_results;
+    assert.deepEqual([result.athlete_id, result.kind, result.intensity, result.event_key], ["espn:golf:11056", "win", 0.85, "golf:butterfield-bermuda-championship:2026-10-26"]);
+    assert.deepEqual(moments(db).map((m) => m.headline), ["Hometown win: Austin Smotherman won the Butterfield Bermuda Championship · Loomis, CA"]);
   });
 
   it("without HOMETOWN, results but no moments", async () => {

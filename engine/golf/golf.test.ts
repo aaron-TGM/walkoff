@@ -32,6 +32,19 @@ describe("normalizeLeaderboard", () => {
     assert.deepEqual(e.players.filter((p) => p.position === 1).map((p) => p.name), ["Austin Smotherman", "Séamus Power"]);
   });
 
+  it("reads the same event final after Monday's playoff", () => {
+    const [e] = normalizeLeaderboard("pga", fixture("golf-pga-bermuda-final"));
+    // Shortened to 54 holes, so the playoff shows as a fourth period.
+    assert.deepEqual([e.state, e.statusName, e.period, e.rounds], ["final", "STATUS_FINAL", 4, 3]);
+    assert.deepEqual(
+      e.players.filter((p) => p.playoff).map((p) => [p.name, p.position, p.tied]),
+      [
+        ["Austin Smotherman", 1, false],
+        ["Séamus Power", 2, false],
+      ],
+    );
+  });
+
   it("reads canceled events as off", () => {
     assert.deepEqual(normalizeLeaderboard("liv", fixture("golf-liv-canceled")).map((e) => e.state), ["off", "off"]);
   });
@@ -98,6 +111,14 @@ describe("golfOutcome", () => {
   it("no winner while the final round is suspended, even with the leaders done", () => {
     const [e] = normalizeLeaderboard("pga", fixture("golf-pga-bermuda-suspended"));
     assert.equal(golfOutcome(e, PGA, at("2026-10-26T04:00:00Z")), null);
+  });
+
+  it("Bermuda 2026: Smotherman wins in a playoff once the event is final", () => {
+    const [e] = normalizeLeaderboard("pga", fixture("golf-pga-bermuda-final"));
+    const o = golfOutcome(e, PGA, at("2026-10-26T15:30:00Z"));
+    assert.deepEqual([o?.kind, o?.players.map((p) => p.name), o?.intensity], ["win", ["Austin Smotherman"], 0.85]);
+    const [suspended] = normalizeLeaderboard("pga", fixture("golf-pga-bermuda-suspended"));
+    assert.equal(o?.eventKey, golfEventKey(suspended), "the same event as during the suspension");
   });
 
   it("LPGA: a win counts for a tour event", () => {
