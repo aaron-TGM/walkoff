@@ -3,11 +3,12 @@ import { randomUUID } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import { athleteId, athletePlace, CURATED_HOMES, curatedPlace, savePlaces } from "../lib/athletes";
-import type { HometownDetail } from "../lib/hometown";
+import { hometownLive, type HometownDetail } from "../lib/hometown";
 import { resolveTown } from "../lib/places";
 import { fakeDb, type Row } from "../lib/testing/fake-db";
 import { parseRoster, type AthleteFeed } from "./athletes/feed";
 import { AthleteSync } from "./athletes/sync";
+import { loadConfig } from "./config";
 import { normalizeScoreboard, scoringEventsFromSummary } from "./espn/normalize";
 import type { EspnSummary } from "./espn/types";
 import { HOMETOWN, HometownJob } from "./hometown";
@@ -237,5 +238,16 @@ describe("HometownJob, playoff game-winners", () => {
     assert.equal(reads.length, 0);
     assert.equal(db.tables.athlete_results?.length ?? 0, 0);
     assert.equal(winners(db).length, 0);
+  });
+});
+
+describe("the switches", () => {
+  it("make hometown moments unless HOMETOWN or WALKOFF_HOMETOWN is 0", () => {
+    assert.equal(loadConfig({}).hometown, true);
+    assert.equal(loadConfig({ HOMETOWN: "1" }).hometown, true);
+    assert.equal(loadConfig({ HOMETOWN: "0" }).hometown, false);
+    assert.equal(hometownLive({}), true);
+    assert.equal(hometownLive({ WALKOFF_HOMETOWN: "1" }), true);
+    assert.equal(hometownLive({ WALKOFF_HOMETOWN: "0" }), false);
   });
 });

@@ -1,3 +1,5 @@
+import { hometownLive } from "./hometown/flag";
+
 export type TriggerCategory = "before" | "during" | "after" | "season";
 
 export interface Trigger {
@@ -156,8 +158,9 @@ export const TRIGGERS: Trigger[] = [
 ];
 
 /** Hometown moments (lib/hometown): when someone from a town near a brand's
- *  customers wins, the town gets its own moment. Kept out of TRIGGERS, which
- *  the site lists, until they launch (lib/hometown/flag.ts). */
+ *  customers wins, the town gets its own moment. Kept apart from TRIGGERS,
+ *  the types the engine's game rules emit (engine/moments/types.ts): these
+ *  come from athletes' results. The site lists both (ALL_TRIGGERS). */
 export const HOMETOWN_TRIGGERS: Trigger[] = [
   {
     name: "Hometown Champion",
@@ -191,3 +194,7 @@ export const HOMETOWN_TRIGGERS: Trigger[] = [
 
 /** Every moment type, hometown ones included. */
 export const ALL_TRIGGERS: Trigger[] = [...TRIGGERS, ...HOMETOWN_TRIGGERS];
+
+/** The moment types brands get, and the site lists: the hometown ones too
+ *  while they're on (lib/hometown/flag.ts). */
+export const brandTriggers = (hometown = hometownLive()): Trigger[] => (hometown ? ALL_TRIGGERS : TRIGGERS);

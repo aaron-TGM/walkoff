@@ -16,6 +16,7 @@ import {
   curatedPlace,
   has010,
   loadAthletes,
+  optedOut,
   placesOf,
   saveAthletes,
   savePlaces,
@@ -348,8 +349,10 @@ export class AthleteSync {
     if (error) throw error;
     const key = (m: Mover) => `big_signing:${m.id}:${m.team_id}`;
     const fresh = ((data ?? []) as Mover[]).filter((m) => !this.judged.has(key(m)));
+    // Nobody who asked Walkoff to stop using them (011_athlete_opt_outs.sql).
+    const out = await optedOut(this.db, fresh.map((m) => m.id));
     const rows = [];
-    for (const m of fresh) {
+    for (const m of fresh.filter((m) => !out.has(m.id))) {
       const rank = await fameRank(this.db, m);
       if (rank < FAME.top) rows.push({ m, rank });
     }

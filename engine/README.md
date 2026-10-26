@@ -90,9 +90,8 @@ When a star joins a team, by trade, signing or transfer, the team's fans get
 When a team wins a title, every town its players are from gets a moment of
 its own (`hometown.ts`, `lib/hometown`), and so does the town of whoever
 decided a playoff game at the very end. A brand with customers near the
-town can celebrate it, without naming the player. Off unless `HOMETOWN=1`:
-hometown campaigns wait for counsel to sign off on their copy rules
-(docs/hometown.md).
+town can celebrate it, without naming the player (docs/hometown.md).
+`HOMETOWN=0` turns it off.
 
 - The poller puts the champion's players on the title moment
   (`detail.heroes`, `moments/heroes.ts`): its leaders in the deciding game
@@ -138,9 +137,8 @@ are where these sports reach brands (`lib/tours.ts`). One poller per tour
 or series, all on the same loop (`circuits/poller.ts`): each sport reads
 its own feed and decides who won (`golf/`, `tennis/`, `racing/`). The
 pollers save the field as athletes, read five bios a poll for where they
-were born, and record each winner as a result. With `HOMETOWN=1` the
-winners' towns get `hometown_win`, and contenders' towns
-`hometown_contender`. Heartbeats are one row each: `golf:pga`, `tennis:atp`,
+were born, and record each winner as a result. The winners' towns get
+`hometown_win`, and contenders' towns `hometown_contender`. Heartbeats are one row each: `golf:pga`, `tennis:atp`,
 `racing:nascar`. The feeds are undocumented, so each change in an event's
 status is logged.
 
@@ -173,8 +171,8 @@ One poller per tour: the PGA Tour, LPGA, DP World Tour and LIV.
   undocumented, and if it reads differently between rounds, no contender
   moment is made.
 - Results are keyed by the event's name and last day, so an event two
-  tours share counts once. With `HOMETOWN=1` the towns get `hometown_win`
-  and `hometown_contender` moments, the same way as titles.
+  tours share counts once. The towns get `hometown_win` and
+  `hometown_contender` moments, the same way as titles.
 - Heartbeats are the `golf:pga`, `golf:lpga`, `golf:eur` and `golf:liv`
   rows. `GOLF=0` turns golf off.
 
@@ -298,7 +296,7 @@ not saved.
 | `WALKOFF_TAG_EFFORT`        | `medium`       | `low` to `max` |
 | `ATHLETES`                  | `1`            | `0` turns the athlete sync off |
 | `WIKIDATA`                  | `1`            | `0` turns its Wikidata lookups off |
-| `HOMETOWN`                  | `0`            | `1` turns hometown moments on |
+| `HOMETOWN`                  | `1`            | `0` turns hometown moments off |
 | `SIGNINGS`                  | `1`            | `0` turns big signings off |
 | `GOLF`                      | `1`            | `0` turns the golf pollers off |
 | `TENNIS`                    | `1`            | `0` turns the tennis pollers off |
@@ -312,7 +310,9 @@ Run `supabase/003_moment_engine.sql` in the Supabase SQL editor (after
 the athlete sync, also run `supabase/009_athletes.sql`; until then the sync
 waits and the rest of the engine runs as before. Then
 `supabase/010_player_moments.sql` for big signings and playoff
-game-winners; until it has run, the engine makes neither.
+game-winners; until it has run, the engine makes neither. Then
+`supabase/011_athlete_opt_outs.sql`, so athletes who ask Walkoff to stop
+using them are left out (docs/hometown.md).
 
 ## Deploy to Google Cloud Run
 

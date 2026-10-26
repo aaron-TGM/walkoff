@@ -110,6 +110,12 @@ export default function DataAndSafetyPage() {
           position, school or photo. The one exception is an athlete who agreed in writing that your
           brand may name them, with the agreement on file with Walkoff.
         </p>
+        <p>
+          Athletes can ask what Walkoff keeps about them, correct where they&apos;re from, or ask
+          Walkoff to stop using them, at <a href="mailto:hello@walkoff.io">hello@walkoff.io</a>.
+          When one does, Walkoff takes back the moments about them that are still in your queue.{" "}
+          <Link href="/privacy#athletes">Privacy Policy</Link>
+        </p>
       </HelpSection>
     </HelpPage>
   );

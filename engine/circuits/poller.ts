@@ -3,8 +3,8 @@
 // under way, every 10 otherwise. The field is saved as athletes, and a few
 // bios each poll tell where they were born. A winner, or whoever is in
 // contention for the last day, is recorded as a result, with their bios
-// read right away; with HOMETOWN=1 the towns they're from get their moments
-// (lib/hometown). Each sport adapts its feed to this (golf/, tennis/,
+// read right away, and the towns they're from get their moments
+// (lib/hometown), unless HOMETOWN is 0. Each sport adapts its feed to this (golf/, tennis/,
 // racing/). It keeps no state that matters: after a restart a repeat adds
 // nothing. See engine/README.md.
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -80,7 +80,7 @@ export interface Circuit<E extends CircuitEvent = CircuitEvent> {
 }
 
 export interface CircuitPollerOptions {
-  /** Make hometown moments (HOMETOWN=1), not just results. */
+  /** Make hometown moments, not just results (HOMETOWN=0 turns them off). */
   hometown: boolean;
   now?: () => number;
   /** lib/places, unless a test swaps it. */

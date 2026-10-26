@@ -1,5 +1,6 @@
-import { LEAGUES, type League } from "@/lib/leagues";
-import { getServiceSupabase } from "@/lib/supabase";
+import { LEAGUES, type League } from "./leagues";
+import { getServiceSupabase } from "./supabase";
+import { TOURS } from "./tours";
 
 export type CheckState =
   | "operational"
@@ -20,7 +21,8 @@ export interface StatusReport {
   leagues: CheckResult[];
   platform: CheckResult[];
   integrations: CheckResult[];
-  /** One row per league from the moment engine, or null before it runs. */
+  /** One row per league and tour from the moment engine, and one for
+   *  hometown moments, or null before it runs. */
   engine: CheckResult[] | null;
 }
 
@@ -146,31 +148,82 @@ export interface HeartbeatRow {
   last_ok_at: string | null;
   last_error: string | null;
   live_games: number;
+  /** Games in the feed; for the roster sync, teams read in the last day. */
+  games?: number | null;
   consecutive_failures: number;
 }
 
-/** One status row per league from the engine's heartbeats. The engine polls
- *  at least every 5 minutes, so 15 minutes without a good poll is down. */
+const MINUTE = 60_000;
+
+/** A heartbeat's state: down after this long without a good poll. */
+function beatState(r: HeartbeatRow, downAfter: number, now: number): { state: CheckState; sinceOk: number } {
+  const sinceOk = r.last_ok_at ? now - Date.parse(r.last_ok_at) : Infinity;
+  const state: CheckState = sinceOk > downAfter ? "down" : r.consecutive_failures > 0 ? "degraded" : "operational";
+  return { state, sinceOk };
+}
+
+/** Raw errors can name internal URLs and tables; they stay in the logs. */
+const lastGood = (r: HeartbeatRow, sinceOk: number) =>
+  `Last good poll ${r.last_ok_at ? ago(sinceOk) : "never"}${r.last_error ? " · retrying" : ""}`;
+
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+
+/** One status row per league and tour from the engine's heartbeats, and
+ *  one for hometown moments. Leagues are polled at least every 5 minutes,
+ *  so 15 without a good poll is down; tours every 10, so 30. */
 export function engineChecks(
   rows: HeartbeatRow[],
   momentsToday: Map<string, number>,
   now: number,
 ): CheckResult[] {
   const byLeague = new Map(rows.map((r) => [r.league, r]));
-  return LEAGUES.filter((l) => byLeague.has(l.id)).map((l) => {
+  const leagues = LEAGUES.filter((l) => byLeague.has(l.id)).map((l): CheckResult => {
     const r = byLeague.get(l.id)!;
-    const sinceOk = r.last_ok_at ? now - Date.parse(r.last_ok_at) : Infinity;
+    const { state, sinceOk } = beatState(r, 15 * MINUTE, now);
     const moments = momentsToday.get(l.id) ?? 0;
-    const state: CheckState =
-      sinceOk > 15 * 60_000 ? "down" : r.consecutive_failures > 0 ? "degraded" : "operational";
     const lastPoll = r.last_poll_at ?? r.last_ok_at;
     const detail =
       state === "operational" && lastPoll
-        ? `Polled ${ago(now - Date.parse(lastPoll))} · ${r.live_games} live · ${moments} ${moments === 1 ? "moment" : "moments"} today`
-        : // Raw errors can name internal URLs and tables; they stay in the logs.
-          `Last good poll ${r.last_ok_at ? ago(sinceOk) : "never"}${r.last_error ? " · retrying" : ""}`;
+        ? `Polled ${ago(now - Date.parse(lastPoll))} · ${r.live_games} live · ${plural(moments, "moment", "moments")} today`
+        : lastGood(r, sinceOk);
     return { id: `engine-${l.id}`, name: `${l.name} moments`, state, detail };
   });
+  const tours = TOURS.filter((t) => byLeague.has(`${t.sport}:${t.id}`)).map((t): CheckResult => {
+    const r = byLeague.get(`${t.sport}:${t.id}`)!;
+    const { state, sinceOk } = beatState(r, 30 * MINUTE, now);
+    const lastPoll = r.last_poll_at ?? r.last_ok_at;
+    const detail =
+      state === "operational" && lastPoll
+        ? `Polled ${ago(now - Date.parse(lastPoll))} · ${r.live_games ? `${plural(r.live_games, "event", "events")} under way` : "nothing under way"}`
+        : lastGood(r, sinceOk);
+    return { id: `engine-${t.sport}-${t.id}`, name: `${t.name} winners`, state, detail };
+  });
+  // Rosters and where athletes are from: a few teams a minute while there's
+  // work, every 15 minutes otherwise.
+  const towns: CheckResult[] = [];
+  const athletes = byLeague.get("athletes");
+  if (athletes) {
+    const { state, sinceOk } = beatState(athletes, 45 * MINUTE, now);
+    towns.push({
+      id: "engine-athletes",
+      name: "Rosters and hometowns",
+      state,
+      detail: state === "operational" ? `Checked ${ago(sinceOk)} · ${plural(athletes.games ?? 0, "team", "teams")} read in the last day` : lastGood(athletes, sinceOk),
+    });
+  }
+  // Hometown moments come from the athletes' results, every 5 minutes.
+  const hometown = byLeague.get("hometown");
+  if (hometown) {
+    const { state, sinceOk } = beatState(hometown, 15 * MINUTE, now);
+    const moments = momentsToday.get("hometown") ?? 0;
+    towns.push({
+      id: "engine-hometown",
+      name: "Hometown moments",
+      state,
+      detail: state === "operational" ? `Checked ${ago(sinceOk)} · ${plural(moments, "town", "towns")} today` : lastGood(hometown, sinceOk),
+    });
+  }
+  return [...leagues, ...tours, ...towns];
 }
 
 async function checkEngine(): Promise<CheckResult[] | null> {
@@ -186,14 +239,16 @@ async function checkEngine(): Promise<CheckResult[] | null> {
     const [beats, today] = await Promise.all([
       supabase
         .from("engine_heartbeats")
-        .select("league, last_poll_at, last_ok_at, last_error, live_games, consecutive_failures"),
-      supabase.from("moments").select("league").gte("detected_at", startOfDay.toISOString()),
+        .select("league, last_poll_at, last_ok_at, last_error, live_games, games, consecutive_failures"),
+      supabase.from("moments").select("league, type").gte("detected_at", startOfDay.toISOString()),
     ]);
     // No table yet, or the engine has never run.
     if (beats.error || !beats.data?.length) return null;
     const momentsToday = new Map<string, number>();
-    for (const m of today.data ?? []) {
-      momentsToday.set(m.league, (momentsToday.get(m.league) ?? 0) + 1);
+    for (const m of (today.data ?? []) as { league: string; type: string }[]) {
+      // Hometown moments count once, as hometown, not under their league.
+      const key = m.type.startsWith("hometown_") ? "hometown" : m.league;
+      momentsToday.set(key, (momentsToday.get(key) ?? 0) + 1);
     }
     return engineChecks(beats.data as HeartbeatRow[], momentsToday, Date.now());
   } catch {

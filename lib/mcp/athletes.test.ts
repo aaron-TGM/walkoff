@@ -237,3 +237,65 @@ describe("record_athlete_rights", () => {
     await client.close();
   });
 });
+
+describe("exclude_athlete", () => {
+  it("deletes where an athlete is from, never saves it again, and can be taken back", async () => {
+    const db = await world();
+    db.tables.moments = [
+      { id: "m1", type: "hometown_title", headline: "Hometown champion: Sam Darnold · San Clemente, CA", athlete_id: DARNOLD, place_key: "census:0665084", detected_at: "2026-10-24T03:00:00Z" },
+    ];
+    const op = await connect(operator, db);
+    const r = await call(op, "exclude_athlete", { athlete: "Sam Darnold", note: "His agent, by email to hello@walkoff.io" });
+    assert.ok(!r.isError, r.text);
+    const out = r.json();
+    assert.deepEqual([out.excluded, out.since, out.places_deleted], [true, "2026-10-25", 3]);
+    assert.deepEqual(out.recent_moments.map((m: { id: string }) => m.id), ["m1"]);
+    assert.match(out.next, /retract_moment/);
+    const row = db.tables.athletes.find((a) => a.id === DARNOLD)!;
+    assert.deepEqual([row.opted_out_at, row.opted_out_note], [NOW.toISOString(), "His agent, by email to hello@walkoff.io"]);
+    assert.equal(db.tables.athlete_places.filter((p) => p.athlete_id === DARNOLD).length, 0);
+
+    // Nothing saves a place for him again: not a source, not an operator.
+    await savePlaces(db, [athletePlace(DARNOLD, "birthplace", "espn", "Capistrano Beach, CA, USA", await resolveTown("Capistrano Beach, CA"))]);
+    assert.equal(db.tables.athlete_places.filter((p) => p.athlete_id === DARNOLD).length, 0);
+    for (const [tool, args] of [
+      ["set_athlete_home", { athlete: DARNOLD, hometown: "Dana Point, CA", note: "x" }],
+      ["create_moment", { athlete: DARNOLD, event: "Charity golf day", date: "2026-10-20", note: "x" }],
+    ] as const) {
+      const refused = await call(op, tool, args);
+      assert.ok(refused.isError, tool);
+      assert.match(refused.text, /Sam Darnold asked Walkoff to stop using them, on 2026-10-25/);
+    }
+    assert.equal(db.tables.athlete_places.filter((p) => p.athlete_id === DARNOLD).length, 0);
+
+    // Members no longer see him near their customers.
+    const brand = await connect(member, db);
+    const towns = (await call(brand, "local_athletes")).json().towns;
+    assert.ok(!JSON.stringify(towns).includes("Darnold"));
+    await brand.close();
+
+    const again = (await call(op, "exclude_athlete", { athlete: DARNOLD, note: "Asked again" })).json();
+    assert.deepEqual([again.excluded, again.note], [true, "They were excluded already."]);
+    assert.equal(db.tables.athletes.find((a) => a.id === DARNOLD)!.opted_out_note, "His agent, by email to hello@walkoff.io");
+
+    const undo = (await call(op, "exclude_athlete", { athlete: DARNOLD, note: "His agent says go ahead", undo: true })).json();
+    assert.equal(undo.excluded, false);
+    assert.match(undo.next, /learns where they're from again/);
+    assert.equal(db.tables.athletes.find((a) => a.id === DARNOLD)!.opted_out_at, null);
+    await savePlaces(db, [athletePlace(DARNOLD, "birthplace", "espn", "Capistrano Beach, CA, USA", await resolveTown("Capistrano Beach, CA"))]);
+    assert.equal(db.tables.athlete_places.filter((p) => p.athlete_id === DARNOLD).length, 1);
+    await op.close();
+  });
+
+  it("says so before 011_athlete_opt_outs.sql has run, and everything else still works", async () => {
+    const db = await world({ through: "010" });
+    await savePlaces(db, [athletePlace(DARNOLD, "hometown", "curated", "San Clemente, CA", await resolveTown("San Clemente, CA"))]);
+    assert.equal(db.tables.athlete_places.length, 1, "places save as before");
+    const op = await connect(operator, db);
+    const r = await call(op, "exclude_athlete", { athlete: DARNOLD, note: "x" });
+    assert.ok(r.isError);
+    assert.match(r.text, /011_athlete_opt_outs\.sql/);
+    assert.ok(!(await call(op, "set_athlete_home", { athlete: DARNOLD, hometown: "Dana Point, CA", note: "x" })).isError);
+    await op.close();
+  });
+});

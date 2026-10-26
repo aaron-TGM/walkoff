@@ -8,6 +8,7 @@ import { z } from "zod";
 import { athletePlace, athletesReady, findAthletes, loadAthletes, saveAthletes, savePlaces, saveResults, type Athlete, type AthleteResult } from "../athletes";
 import { makeHometownMoments } from "../hometown";
 import { placeLabel, resolveTown } from "../places";
+import { notOptedOut } from "./athlete-tools";
 import { brandsFor, has009, momentById, ToolError } from "./data";
 import { teamFromFeedId } from "./teams";
 import type { ToolContext } from "./tools";
@@ -71,6 +72,7 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
         } else if (found.length === 1) {
           if (args.hometown) throw new ToolError(`Walkoff knows ${found[0].displayName} already. To change where they're from, use set_athlete_home first.`);
           a = found[0];
+          await notOptedOut(ctx, a);
         } else {
           if (!args.sport || !args.hometown) {
             throw new ToolError(`Walkoff has no athlete called ${args.athlete}. To add them, give their sport and hometown too.`);
