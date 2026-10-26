@@ -1,0 +1,2876 @@
+{
+ "header": {
+  "id": "401859966"
+ },
+ "plays": [
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "11:42"
+   },
+   "scoringPlay": true,
+   "homeScore": 0,
+   "awayScore": 1,
+   "text": "De'Aaron Fox makes free throw 1 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "11:42"
+   },
+   "scoringPlay": true,
+   "homeScore": 0,
+   "awayScore": 2,
+   "text": "De'Aaron Fox makes free throw 2 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "11:21"
+   },
+   "scoringPlay": true,
+   "homeScore": 2,
+   "awayScore": 2,
+   "text": "Karl-Anthony Towns makes 6-foot driving floating jump shot (Josh Hart assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3136195"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3062679"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "11:09"
+   },
+   "scoringPlay": true,
+   "homeScore": 2,
+   "awayScore": 5,
+   "text": "Devin Vassell makes 26-foot three point jumper (Stephon Castle assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "10:42"
+   },
+   "scoringPlay": true,
+   "homeScore": 2,
+   "awayScore": 7,
+   "text": "Victor Wembanyama makes 5-foot turnaround jump shot",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "9:34"
+   },
+   "scoringPlay": true,
+   "homeScore": 2,
+   "awayScore": 10,
+   "text": "Devin Vassell makes 23-foot three point jumper (Victor Wembanyama assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    },
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "9:17"
+   },
+   "scoringPlay": true,
+   "homeScore": 2,
+   "awayScore": 12,
+   "text": "Julian Champagnie makes running dunk",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4592479"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "8:52"
+   },
+   "scoringPlay": true,
+   "homeScore": 5,
+   "awayScore": 12,
+   "text": "OG Anunoby makes 23-foot three point jumper (Jalen Brunson assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "8:33"
+   },
+   "scoringPlay": true,
+   "homeScore": 5,
+   "awayScore": 14,
+   "text": "Victor Wembanyama makes 2-foot two point shot",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "8:26"
+   },
+   "scoringPlay": true,
+   "homeScore": 6,
+   "awayScore": 14,
+   "text": "OG Anunoby makes free throw 1 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "8:26"
+   },
+   "scoringPlay": true,
+   "homeScore": 7,
+   "awayScore": 14,
+   "text": "OG Anunoby makes free throw 2 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "8:02"
+   },
+   "scoringPlay": true,
+   "homeScore": 9,
+   "awayScore": 14,
+   "text": "Josh Hart makes running layup (Jalen Brunson assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3062679"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "8:02"
+   },
+   "scoringPlay": true,
+   "homeScore": 10,
+   "awayScore": 14,
+   "text": "Josh Hart makes free throw 1 of 1",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3062679"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "7:37"
+   },
+   "scoringPlay": true,
+   "homeScore": 10,
+   "awayScore": 16,
+   "text": "Stephon Castle makes 13-foot fade away jump shot (Julian Champagnie assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4592479"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "6:59"
+   },
+   "scoringPlay": true,
+   "homeScore": 10,
+   "awayScore": 19,
+   "text": "Stephon Castle makes 26-foot three point jumper (Devin Vassell assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "6:21"
+   },
+   "scoringPlay": true,
+   "homeScore": 10,
+   "awayScore": 22,
+   "text": "Devin Vassell makes 25-foot running jump shot (Dylan Harper assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    },
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "6:05"
+   },
+   "scoringPlay": true,
+   "homeScore": 11,
+   "awayScore": 22,
+   "text": "Jalen Brunson makes free throw 1 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "6:05"
+   },
+   "scoringPlay": true,
+   "homeScore": 12,
+   "awayScore": 22,
+   "text": "Jalen Brunson makes free throw 2 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "5:51"
+   },
+   "scoringPlay": true,
+   "homeScore": 12,
+   "awayScore": 25,
+   "text": "Victor Wembanyama makes 25-foot three point jumper (Dylan Harper assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    },
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "5:27"
+   },
+   "scoringPlay": true,
+   "homeScore": 14,
+   "awayScore": 25,
+   "text": "Mikal Bridges makes 20-foot step back jumpshot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3147657"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "4:53"
+   },
+   "scoringPlay": true,
+   "homeScore": 14,
+   "awayScore": 27,
+   "text": "Keldon Johnson makes running layup (De'Aaron Fox assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4395723"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "4:40"
+   },
+   "scoringPlay": true,
+   "homeScore": 17,
+   "awayScore": 27,
+   "text": "Mikal Bridges makes 23-foot three point jumper (Jalen Brunson assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3147657"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "4:15"
+   },
+   "scoringPlay": true,
+   "homeScore": 17,
+   "awayScore": 30,
+   "text": "De'Aaron Fox makes 25-foot three pointer (Devin Vassell assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "3:17"
+   },
+   "scoringPlay": true,
+   "homeScore": 17,
+   "awayScore": 32,
+   "text": "Victor Wembanyama makes tip in dunk",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "2:53"
+   },
+   "scoringPlay": true,
+   "homeScore": 18,
+   "awayScore": 32,
+   "text": "OG Anunoby makes free throw 1 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "2:53"
+   },
+   "scoringPlay": true,
+   "homeScore": 19,
+   "awayScore": 32,
+   "text": "OG Anunoby makes free throw 2 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "2:29"
+   },
+   "scoringPlay": true,
+   "homeScore": 19,
+   "awayScore": 34,
+   "text": "Dylan Harper makes 16-foot pullup jump shot",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "2:15"
+   },
+   "scoringPlay": true,
+   "homeScore": 20,
+   "awayScore": 34,
+   "text": "Karl-Anthony Towns makes technical free throw",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3136195"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "1:50"
+   },
+   "scoringPlay": true,
+   "homeScore": 20,
+   "awayScore": 35,
+   "text": "Devin Vassell makes technical free throw",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "45.9"
+   },
+   "scoringPlay": true,
+   "homeScore": 20,
+   "awayScore": 37,
+   "text": "Victor Wembanyama makes 4-foot two point shot",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "41.7"
+   },
+   "scoringPlay": true,
+   "homeScore": 20,
+   "awayScore": 38,
+   "text": "Victor Wembanyama makes free throw flagrant 1 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "41.7"
+   },
+   "scoringPlay": true,
+   "homeScore": 20,
+   "awayScore": 39,
+   "text": "Victor Wembanyama makes free throw flagrant 2 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "27.7"
+   },
+   "scoringPlay": true,
+   "homeScore": 20,
+   "awayScore": 41,
+   "text": "Devin Vassell makes 15-foot jumper (Stephon Castle assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "19.7"
+   },
+   "scoringPlay": true,
+   "homeScore": 21,
+   "awayScore": 41,
+   "text": "Jalen Brunson makes free throw 1 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "19.7"
+   },
+   "scoringPlay": true,
+   "homeScore": 22,
+   "awayScore": 41,
+   "text": "Jalen Brunson makes free throw 2 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "11:36"
+   },
+   "scoringPlay": true,
+   "homeScore": 25,
+   "awayScore": 41,
+   "text": "OG Anunoby makes 23-foot three point jumper (Landry Shamet assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3914044"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "11:21"
+   },
+   "scoringPlay": true,
+   "homeScore": 25,
+   "awayScore": 44,
+   "text": "De'Aaron Fox makes 23-foot three point jumper (Julian Champagnie assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4592479"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "10:45"
+   },
+   "scoringPlay": true,
+   "homeScore": 25,
+   "awayScore": 47,
+   "text": "De'Aaron Fox makes 23-foot three point step back jumpshot",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "10:45"
+   },
+   "scoringPlay": true,
+   "homeScore": 25,
+   "awayScore": 48,
+   "text": "Victor Wembanyama makes free throw 1 of 1",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "10:25"
+   },
+   "scoringPlay": true,
+   "homeScore": 27,
+   "awayScore": 48,
+   "text": "Karl-Anthony Towns makes two point shot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3136195"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "10:25"
+   },
+   "scoringPlay": true,
+   "homeScore": 28,
+   "awayScore": 48,
+   "text": "Karl-Anthony Towns makes free throw 1 of 1",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3136195"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "9:58"
+   },
+   "scoringPlay": true,
+   "homeScore": 30,
+   "awayScore": 48,
+   "text": "Jalen Brunson makes running layup",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "9:42"
+   },
+   "scoringPlay": true,
+   "homeScore": 30,
+   "awayScore": 51,
+   "text": "Dylan Harper makes 23-foot three point jumper (De'Aaron Fox assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "9:16"
+   },
+   "scoringPlay": true,
+   "homeScore": 30,
+   "awayScore": 54,
+   "text": "Carter Bryant makes 22-foot three point jumper (Dylan Harper assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5061568"
+     }
+    },
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "8:56"
+   },
+   "scoringPlay": true,
+   "homeScore": 32,
+   "awayScore": 54,
+   "text": "Jalen Brunson makes 12-foot driving floating jump shot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "8:43"
+   },
+   "scoringPlay": true,
+   "homeScore": 32,
+   "awayScore": 57,
+   "text": "Julian Champagnie makes 25-foot three point jumper (De'Aaron Fox assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4592479"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "7:59"
+   },
+   "scoringPlay": true,
+   "homeScore": 34,
+   "awayScore": 57,
+   "text": "Jordan Clarkson makes running layup (Josh Hart assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "2528426"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3062679"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "7:53"
+   },
+   "scoringPlay": true,
+   "homeScore": 34,
+   "awayScore": 59,
+   "text": "Carter Bryant makes 1-foot alley oop dunk (Stephon Castle assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5061568"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "6:35"
+   },
+   "scoringPlay": true,
+   "homeScore": 36,
+   "awayScore": 59,
+   "text": "Jalen Brunson makes two point shot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "6:11"
+   },
+   "scoringPlay": true,
+   "homeScore": 38,
+   "awayScore": 59,
+   "text": "Jalen Brunson makes two point shot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "5:46"
+   },
+   "scoringPlay": true,
+   "homeScore": 38,
+   "awayScore": 62,
+   "text": "Devin Vassell makes 22-foot three point jumper (Keldon Johnson assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4395723"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "5:09"
+   },
+   "scoringPlay": true,
+   "homeScore": 39,
+   "awayScore": 62,
+   "text": "OG Anunoby makes free throw 1 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "5:09"
+   },
+   "scoringPlay": true,
+   "homeScore": 40,
+   "awayScore": 62,
+   "text": "OG Anunoby makes free throw 2 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "4:59"
+   },
+   "scoringPlay": true,
+   "homeScore": 40,
+   "awayScore": 64,
+   "text": "De'Aaron Fox makes 8-foot turnaround jump shot",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "4:19"
+   },
+   "scoringPlay": true,
+   "homeScore": 40,
+   "awayScore": 66,
+   "text": "Dylan Harper makes driving layup",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "4:06"
+   },
+   "scoringPlay": true,
+   "homeScore": 42,
+   "awayScore": 66,
+   "text": "OG Anunoby makes 15-foot turnaround jump shot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "3:47"
+   },
+   "scoringPlay": true,
+   "homeScore": 42,
+   "awayScore": 69,
+   "text": "Dylan Harper makes 25-foot three point jumper (De'Aaron Fox assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "3:06"
+   },
+   "scoringPlay": true,
+   "homeScore": 42,
+   "awayScore": 71,
+   "text": "Dylan Harper makes running layup",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "2:51"
+   },
+   "scoringPlay": true,
+   "homeScore": 43,
+   "awayScore": 71,
+   "text": "Jalen Brunson makes free throw 1 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "2:21"
+   },
+   "scoringPlay": true,
+   "homeScore": 46,
+   "awayScore": 71,
+   "text": "Jalen Brunson makes 24-foot three point jumper (Josh Hart assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3062679"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "1:45"
+   },
+   "scoringPlay": true,
+   "homeScore": 47,
+   "awayScore": 71,
+   "text": "Jalen Brunson makes free throw 2 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "1:25"
+   },
+   "scoringPlay": true,
+   "homeScore": 47,
+   "awayScore": 73,
+   "text": "Victor Wembanyama makes 1-foot layup (De'Aaron Fox assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "1:16"
+   },
+   "scoringPlay": true,
+   "homeScore": 49,
+   "awayScore": 73,
+   "text": "Jalen Brunson makes 7-foot pullup jump shot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "57.8"
+   },
+   "scoringPlay": true,
+   "homeScore": 49,
+   "awayScore": 76,
+   "text": "Dylan Harper makes 22-foot three point jumper (De'Aaron Fox assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "11:04"
+   },
+   "scoringPlay": true,
+   "homeScore": 52,
+   "awayScore": 76,
+   "text": "OG Anunoby makes 25-foot three point jumper (Josh Hart assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3062679"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "10:37"
+   },
+   "scoringPlay": true,
+   "homeScore": 52,
+   "awayScore": 79,
+   "text": "Victor Wembanyama makes 22-foot running jump shot (Stephon Castle assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "9:40"
+   },
+   "scoringPlay": true,
+   "homeScore": 52,
+   "awayScore": 81,
+   "text": "De'Aaron Fox makes 16-foot pullup jump shot (Devin Vassell assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "9:27"
+   },
+   "scoringPlay": true,
+   "homeScore": 53,
+   "awayScore": 81,
+   "text": "Karl-Anthony Towns makes free throw flagrant 1 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3136195"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "9:27"
+   },
+   "scoringPlay": true,
+   "homeScore": 54,
+   "awayScore": 81,
+   "text": "Karl-Anthony Towns makes free throw flagrant 2 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3136195"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "8:46"
+   },
+   "scoringPlay": true,
+   "homeScore": 56,
+   "awayScore": 81,
+   "text": "OG Anunoby makes dunk (Josh Hart assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3062679"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "8:23"
+   },
+   "scoringPlay": true,
+   "homeScore": 59,
+   "awayScore": 81,
+   "text": "Jalen Brunson makes 25-foot three pointer (Mikal Bridges assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3147657"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "6:50"
+   },
+   "scoringPlay": true,
+   "homeScore": 62,
+   "awayScore": 81,
+   "text": "OG Anunoby makes 23-foot three point jumper (Karl-Anthony Towns assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3136195"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "5:31"
+   },
+   "scoringPlay": true,
+   "homeScore": 65,
+   "awayScore": 81,
+   "text": "Josh Hart makes 25-foot three point jumper (Jalen Brunson assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3062679"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "4:35"
+   },
+   "scoringPlay": true,
+   "homeScore": 65,
+   "awayScore": 82,
+   "text": "Stephon Castle makes free throw 1 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "4:35"
+   },
+   "scoringPlay": true,
+   "homeScore": 65,
+   "awayScore": 83,
+   "text": "Stephon Castle makes free throw 2 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "4:10"
+   },
+   "scoringPlay": true,
+   "homeScore": 65,
+   "awayScore": 84,
+   "text": "Dylan Harper makes free throw 1 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "4:10"
+   },
+   "scoringPlay": true,
+   "homeScore": 65,
+   "awayScore": 85,
+   "text": "Dylan Harper makes free throw 2 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "3:52"
+   },
+   "scoringPlay": true,
+   "homeScore": 67,
+   "awayScore": 85,
+   "text": "Jalen Brunson makes 21-foot driving floating jump shot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "3:52"
+   },
+   "scoringPlay": true,
+   "homeScore": 68,
+   "awayScore": 85,
+   "text": "Jalen Brunson makes free throw 1 of 1",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "3:36"
+   },
+   "scoringPlay": true,
+   "homeScore": 68,
+   "awayScore": 87,
+   "text": "Dylan Harper makes 10-foot turnaround jump shot (Julian Champagnie assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4592479"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "3:13"
+   },
+   "scoringPlay": true,
+   "homeScore": 70,
+   "awayScore": 87,
+   "text": "Jalen Brunson makes 18-foot step back jumpshot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "2:43"
+   },
+   "scoringPlay": true,
+   "homeScore": 72,
+   "awayScore": 87,
+   "text": "Mitchell Robinson makes alley oop dunk (Jalen Brunson assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4351852"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "1:46"
+   },
+   "scoringPlay": true,
+   "homeScore": 72,
+   "awayScore": 90,
+   "text": "Devin Vassell makes 24-foot three point jumper (Stephon Castle assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "53.2"
+   },
+   "scoringPlay": true,
+   "homeScore": 75,
+   "awayScore": 90,
+   "text": "OG Anunoby makes 25-foot three point step back jumpshot (Mitchell Robinson assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4351852"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "11:10"
+   },
+   "scoringPlay": true,
+   "homeScore": 75,
+   "awayScore": 92,
+   "text": "Dylan Harper makes driving layup",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5037871"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "10:37"
+   },
+   "scoringPlay": true,
+   "homeScore": 75,
+   "awayScore": 93,
+   "text": "Victor Wembanyama makes free throw 1 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "9:33"
+   },
+   "scoringPlay": true,
+   "homeScore": 75,
+   "awayScore": 95,
+   "text": "Victor Wembanyama makes two point shot",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "9:16"
+   },
+   "scoringPlay": true,
+   "homeScore": 78,
+   "awayScore": 95,
+   "text": "Jose Alvarado makes 22-foot three point jumper (Mikal Bridges assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4277869"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3147657"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "8:44"
+   },
+   "scoringPlay": true,
+   "homeScore": 80,
+   "awayScore": 95,
+   "text": "Mikal Bridges makes running layup (Josh Hart assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3147657"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3062679"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "7:28"
+   },
+   "scoringPlay": true,
+   "homeScore": 83,
+   "awayScore": 95,
+   "text": "Karl-Anthony Towns makes 24-foot three point step back jumpshot (Jose Alvarado assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3136195"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4277869"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "7:14"
+   },
+   "scoringPlay": true,
+   "homeScore": 83,
+   "awayScore": 96,
+   "text": "Stephon Castle makes free throw 1 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "7:14"
+   },
+   "scoringPlay": true,
+   "homeScore": 83,
+   "awayScore": 97,
+   "text": "Stephon Castle makes free throw 2 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "7:03"
+   },
+   "scoringPlay": true,
+   "homeScore": 86,
+   "awayScore": 97,
+   "text": "OG Anunoby makes 23-foot three point jumper (Jalen Brunson assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "6:35"
+   },
+   "scoringPlay": true,
+   "homeScore": 88,
+   "awayScore": 97,
+   "text": "Karl-Anthony Towns makes driving layup (OG Anunoby assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3136195"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "6:24"
+   },
+   "scoringPlay": true,
+   "homeScore": 88,
+   "awayScore": 98,
+   "text": "Stephon Castle makes free throw 1 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "6:24"
+   },
+   "scoringPlay": true,
+   "homeScore": 88,
+   "awayScore": 99,
+   "text": "Stephon Castle makes free throw 2 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "6:09"
+   },
+   "scoringPlay": true,
+   "homeScore": 89,
+   "awayScore": 99,
+   "text": "Jalen Brunson makes free throw 1 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "6:09"
+   },
+   "scoringPlay": true,
+   "homeScore": 90,
+   "awayScore": 99,
+   "text": "Jalen Brunson makes free throw 2 of 2",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "5:20"
+   },
+   "scoringPlay": true,
+   "homeScore": 92,
+   "awayScore": 99,
+   "text": "Jalen Brunson makes 1-foot two point shot (Karl-Anthony Towns assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3136195"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "4:34"
+   },
+   "scoringPlay": true,
+   "homeScore": 95,
+   "awayScore": 99,
+   "text": "OG Anunoby makes 23-foot three point jumper (Jose Alvarado assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4277869"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "4:11"
+   },
+   "scoringPlay": true,
+   "homeScore": 95,
+   "awayScore": 102,
+   "text": "De'Aaron Fox makes 25-foot three point jumper (Devin Vassell assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4395630"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "3:49"
+   },
+   "scoringPlay": true,
+   "homeScore": 97,
+   "awayScore": 102,
+   "text": "Jose Alvarado makes 1-foot two point shot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4277869"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "3:31"
+   },
+   "scoringPlay": true,
+   "homeScore": 97,
+   "awayScore": 104,
+   "text": "Victor Wembanyama makes 17-foot jumper (De'Aaron Fox assists)",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "5104157"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4066259"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "3:07"
+   },
+   "scoringPlay": true,
+   "homeScore": 100,
+   "awayScore": 104,
+   "text": "Jose Alvarado makes 25-foot three point jumper (Jalen Brunson assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4277869"
+     }
+    },
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "2:21"
+   },
+   "scoringPlay": true,
+   "homeScore": 103,
+   "awayScore": 104,
+   "text": "Jalen Brunson makes 26-foot three pointer (Jose Alvarado assists)",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    },
+    {
+     "athlete": {
+      "id": "4277869"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "1:22"
+   },
+   "scoringPlay": true,
+   "homeScore": 105,
+   "awayScore": 104,
+   "text": "Jalen Brunson makes 5-foot driving floating jump shot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934672"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "30.3"
+   },
+   "scoringPlay": true,
+   "homeScore": 105,
+   "awayScore": 105,
+   "text": "Stephon Castle makes free throw 1 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "30.3"
+   },
+   "scoringPlay": true,
+   "homeScore": 105,
+   "awayScore": 106,
+   "text": "Stephon Castle makes free throw 2 of 2",
+   "team": {
+    "id": "24"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "4845367"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "2.1"
+   },
+   "scoringPlay": true,
+   "homeScore": 107,
+   "awayScore": 106,
+   "text": "OG Anunoby makes tip shot",
+   "team": {
+    "id": "18"
+   },
+   "participants": [
+    {
+     "athlete": {
+      "id": "3934719"
+     }
+    }
+   ]
+  }
+ ],
+ "boxscore": {
+  "players": [
+   {
+    "team": {
+     "id": "24"
+    },
+    "statistics": [
+     {
+      "athletes": [
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "4592479",
+         "displayName": "Julian Champagnie"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "5104157",
+         "displayName": "Victor Wembanyama"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "4066259",
+         "displayName": "De'Aaron Fox"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "4395630",
+         "displayName": "Devin Vassell"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "4845367",
+         "displayName": "Stephon Castle"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "4395723",
+         "displayName": "Keldon Johnson"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "5061568",
+         "displayName": "Carter Bryant"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "3064560",
+         "displayName": "Luke Kornet"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "5037871",
+         "displayName": "Dylan Harper"
+        }
+       },
+       {
+        "didNotPlay": true,
+        "athlete": {
+         "id": "6578",
+         "displayName": "Harrison Barnes"
+        }
+       },
+       {
+        "didNotPlay": true,
+        "athlete": {
+         "id": "2489663",
+         "displayName": "Kelly Olynyk"
+        }
+       },
+       {
+        "didNotPlay": true,
+        "athlete": {
+         "id": "4066317",
+         "displayName": "Lindy Waters III"
+        }
+       },
+       {
+        "didNotPlay": true,
+        "athlete": {
+         "id": "6427",
+         "displayName": "Bismack Biyombo"
+        }
+       },
+       {
+        "didNotPlay": true,
+        "athlete": {
+         "id": "2488653",
+         "displayName": "Mason Plumlee"
+        }
+       },
+       {
+        "didNotPlay": true,
+        "athlete": {
+         "id": "3134916",
+         "displayName": "Jordan McLaughlin"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "18"
+    },
+    "statistics": [
+     {
+      "athletes": [
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "3934719",
+         "displayName": "OG Anunoby"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "3136195",
+         "displayName": "Karl-Anthony Towns"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "3062679",
+         "displayName": "Josh Hart"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "3147657",
+         "displayName": "Mikal Bridges"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "3934672",
+         "displayName": "Jalen Brunson"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "4610139",
+         "displayName": "Jeremy Sochan"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "4351852",
+         "displayName": "Mitchell Robinson"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "4871141",
+         "displayName": "Ariel Hukporti"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "2528426",
+         "displayName": "Jordan Clarkson"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "3914044",
+         "displayName": "Landry Shamet"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "4277869",
+         "displayName": "Jose Alvarado"
+        }
+       },
+       {
+        "didNotPlay": false,
+        "athlete": {
+         "id": "4431823",
+         "displayName": "Miles McBride"
+        }
+       },
+       {
+        "didNotPlay": true,
+        "athlete": {
+         "id": "5211983",
+         "displayName": "Pacome Dadiet"
+        }
+       },
+       {
+        "didNotPlay": true,
+        "athlete": {
+         "id": "5289900",
+         "displayName": "Mohamed Diawara"
+        }
+       },
+       {
+        "didNotPlay": true,
+        "athlete": {
+         "id": "4433225",
+         "displayName": "Tyler Kolek"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

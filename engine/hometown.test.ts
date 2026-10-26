@@ -11,6 +11,7 @@ import { AthleteSync } from "./athletes/sync";
 import { normalizeScoreboard, scoringEventsFromSummary } from "./espn/normalize";
 import type { EspnSummary } from "./espn/types";
 import { HOMETOWN, HometownJob } from "./hometown";
+import { addDeciders } from "./moments/deciders";
 import { addHeroes } from "./moments/heroes";
 import { finalMoments, track } from "./moments/rules";
 import { rulesFor } from "./moments/sports";
@@ -151,5 +152,90 @@ describe("HometownJob", () => {
     assert.equal(await job.tick(), HOMETOWN.noTables);
     assert.equal(reads.length, 0);
     assert.equal(db.tables.moments.length, 1);
+  });
+});
+
+const DUCKS = parseRoster(fixture("roster-nhl-ducks"));
+const POEHLING = athleteId("hockey", "4233668");
+const OT_AT = "2026-04-27T04:35:00.000Z";
+
+/** The Ducks' overtime winner in Game 4 of the 2026 first round, as the
+ *  poller saves it: the walk-off, with who decided it. */
+function overtimeWinner(): Row {
+  const g = normalizeScoreboard("nhl", fixture("nhl-playoff-ot"))[0];
+  const rules = rulesFor("nhl");
+  const now = new Date(OT_AT);
+  const finals = addDeciders(finalMoments(track(null, g, now), rules, null, now), g, fixture("nhl-summary-401869772") as EspnSummary, rules.regulationPeriods);
+  const m = finals.find((x) => x.type === "walkoff_win");
+  assert.ok(m?.detail.decider);
+  return { id: randomUUID(), ...momentRow(m), detected_at: OT_AT };
+}
+
+/** That night: the walk-off saved, and the Ducks' roster to read. */
+function overtime(options: { through?: string } = {}) {
+  const clock = { now: Date.parse(OT_AT) + 10 * 60_000 };
+  const db = fakeDb(
+    {
+      teams: [
+        { id: "espn:nhl:25", league: "nhl", external_id: "25", display_name: "Anaheim Ducks" },
+        { id: "espn:nhl:6", league: "nhl", external_id: "6", display_name: "Edmonton Oilers" },
+      ],
+      moments: [overtimeWinner()],
+    },
+    { through: options.through },
+  );
+  const reads: string[] = [];
+  const feed: AthleteFeed = {
+    async roster(feedPath, teamId) {
+      reads.push(`${feedPath}/${teamId}`);
+      return DUCKS;
+    },
+  };
+  const rosters = new AthleteSync(db, feed, { leagues: ["nhl"], wikidata: null, now: () => clock.now });
+  return { clock, db, reads, job: new HometownJob(db, { rosters, now: () => clock.now }) };
+}
+
+const winners = (db: { tables: Record<string, Row[]> }) => (db.tables.moments ?? []).filter((m) => m.type === "hometown_game_winner");
+
+describe("HometownJob, playoff game-winners", () => {
+  it("the Ducks' overtime winner: a moment for Lakeville, MN, where Ryan Poehling was born", async () => {
+    const { db, job, reads } = overtime();
+    await job.tick();
+    // Poehling wasn't on file, so the Ducks' roster was read first.
+    assert.deepEqual(reads, ["hockey/nhl/25"]);
+    assert.equal(db.tables.athlete_results.length, 1, "only who decided it");
+    const [r] = db.tables.athlete_results;
+    assert.deepEqual(
+      [r.athlete_id, r.kind, r.role, r.intensity, r.event_key, r.event_name],
+      [POEHLING, "game_winner", "leader", HOMETOWN.gameWinner, "espn:nhl:401869772", "West 1st Round, Game 4"],
+    );
+    const [m] = winners(db);
+    assert.equal(m.headline, "Hometown game-winner: Ryan Poehling (C) won it for the Anaheim Ducks in the West 1st Round, Game 4 · Lakeville, MN");
+    assert.deepEqual([m.phase, m.athlete_id, m.team_id, m.intensity], ["after", POEHLING, "espn:nhl:25", HOMETOWN.gameWinner]);
+    const detail = m.detail as HometownDetail;
+    assert.equal(detail.event.kind, "game_winner");
+    assert.match(detail.event.play ?? "", /^Ryan Poehling Goal \(3\) Wrist Shot/);
+    assert.equal(detail.athletes[0].from[0].raw, "Lakeville, MN, USA");
+
+    await job.tick();
+    assert.equal(db.tables.athlete_results.length, 1);
+    assert.equal(winners(db).length, 1, "a repeat adds nothing");
+    assert.equal(reads.length, 1);
+  });
+
+  it("a regular-season walk-off carries no decider, so it makes nothing", async () => {
+    const { db, job, reads } = overtime();
+    delete (db.tables.moments[0].detail as Record<string, unknown>).decider;
+    await job.tick();
+    assert.equal(db.tables.athlete_results?.length ?? 0, 0);
+    assert.equal(reads.length, 0);
+  });
+
+  it("waits for 010_player_moments.sql", async () => {
+    const { db, job, reads } = overtime({ through: "009" });
+    assert.equal(await job.tick(), HOMETOWN.every);
+    assert.equal(reads.length, 0);
+    assert.equal(db.tables.athlete_results?.length ?? 0, 0);
+    assert.equal(winners(db).length, 0);
   });
 });

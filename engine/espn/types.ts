@@ -92,7 +92,8 @@ export interface EspnSummary {
     team?: { id?: string };
     text?: string;
   }[];
-  /** Basketball: full play-by-play; scoring plays carry the running total. */
+  /** Basketball, baseball and hockey: full play-by-play; scoring plays carry
+   *  the running total. */
   plays?: {
     period?: { number?: number };
     clock?: { displayValue?: string };
@@ -101,6 +102,10 @@ export interface EspnSummary {
     awayScore?: number;
     team?: { id?: string } | null;
     text?: string;
+    /** Who was in the play: the shooter first in basketball; in baseball
+     *  each has a type ("batter", "pitcher"), in hockey too ("scorer",
+     *  "assister"). Football's plays name no one. */
+    participants?: { athlete?: { id?: string; displayName?: string }; type?: string }[];
   }[];
   /** Each side's box score: everyone with a line, in groups (passing,
    *  batting, forwards). Basketball lists the bench too, as didNotPlay. */

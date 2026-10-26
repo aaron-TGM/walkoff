@@ -21,6 +21,7 @@ export {
   clearOperatorHome,
   eventResults,
   findAthletes,
+  has010,
   loadAthletes,
   namingRights,
   placesOf,

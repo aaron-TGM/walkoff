@@ -1,15 +1,19 @@
-// Hometown moments for team titles. When the poller saves a title, this
+// Hometown moments for team sports. When the poller saves a title, this
 // job records the champion's players as athlete results (who led, who
 // played, who was on the roster) and makes a moment for each town they're
-// from (lib/hometown). Every tick it looks again at the last 72 hours'
-// titles, so a hometown fixed or found since then gets its town's moment.
+// from (lib/hometown). A playoff walk-off or buzzer-beater does the same for
+// whoever decided it (engine/moments/deciders.ts), once
+// 010_player_moments.sql has run. Every tick it looks again at the last 72
+// hours, so a hometown fixed or found since then gets its town's moment.
 // It reads only what's saved, so a poll never waits on it. Off unless
 // HOMETOWN is 1: hometown campaigns wait on counsel. See engine/README.md.
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { athletesReady, resultsFor, saveResults, teamRoster, type AthleteResult, type ResultRole } from "../lib/athletes";
+import { athleteId, athletesReady, has010, loadAthletes, resultsFor, saveResults, teamRoster, type AthleteResult, type ResultRole } from "../lib/athletes";
 import { makeHometownMoments, ROLE_INTENSITY } from "../lib/hometown";
+import { LEAGUES } from "../lib/leagues";
 import type { AthleteSync } from "./athletes/sync";
 import { errorMessage, log } from "./log";
+import type { Decider } from "./moments/deciders";
 import type { Heroes } from "./moments/heroes";
 
 const MINUTE = 60_000;
@@ -24,25 +28,48 @@ export const HOMETOWN = {
   window: 72 * HOUR,
   /** A champion's roster older than this is read again first. */
   rosterAge: 36 * HOUR,
+  /** A game-winner the roster doesn't have yet: the team's roster is read
+   *  again unless it's newer than this. */
+  deciderRosterAge: HOUR,
+  /** A playoff game won at the very end, and one in a final round. */
+  gameWinner: 0.9,
+  gameWinnerFinal: 0.95,
 };
 
-/** A title moment, as the poller saved it. */
-interface TitleRow {
+/** Final rounds, from the game's note: "World Series - Game 3". */
+const FINAL_ROUND = /world series|nba finals|stanley cup final|national championship/i;
+
+/** A title, walk-off or buzzer-beater, as the poller saved it. */
+interface TeamMomentRow {
   id: string;
+  type: string;
   league: string;
   game_id: string | null;
   team_id: string | null;
   opponent_team_id: string | null;
   headline: string;
-  detail: { round?: unknown; heroes?: unknown } | null;
+  detail: { round?: unknown; heroes?: unknown; decider?: unknown; gameHeadline?: unknown } | null;
   occurred_at: string;
 }
 
 /** The heroes the poller put on a title, if they look right. */
-function heroesOf(t: TitleRow): Heroes | null {
+function heroesOf(t: TeamMomentRow): Heroes | null {
   const h = t.detail?.heroes as Partial<Heroes> | undefined;
   return h && Array.isArray(h.leaders) && Array.isArray(h.played) ? (h as Heroes) : null;
 }
+
+/** Who decided a playoff game, as the poller put it on the walk-off. */
+function deciderOf(m: TeamMomentRow): Decider | null {
+  const d = m.detail?.decider as Partial<Decider> | undefined;
+  return d && typeof d.play === "string" && Array.isArray(d.athletes) && d.athletes.length ? (d as Decider) : null;
+}
+
+/** "NLDS - Game 2" reads "NLDS, Game 2". */
+const roundOf = (m: TeamMomentRow) =>
+  typeof m.detail?.gameHeadline === "string" && m.detail.gameHeadline.trim() ? m.detail.gameHeadline.trim().split(/\s+-\s+/).join(", ") : "a playoff game";
+
+/** "football", from a league id: how athlete ids are keyed. */
+const sportOf = (league: string) => LEAGUES.find((l) => l.id === league)?.feedPath.split("/")[0] ?? null;
 
 export interface HometownJobOptions {
   /** To read a champion's roster again first. Null with ATHLETES=0: the
@@ -55,9 +82,10 @@ export class HometownJob {
   private readonly now: () => number;
   private failures = 0;
   private waiting = false;
-  /** Titles whose champion has no roster on file, so they aren't asked about
-   *  again every tick. */
+  /** Titles whose champion has no roster on file, and game-winners who
+   *  aren't on theirs, so they aren't asked about again every tick. */
   private readonly noRoster = new Set<string>();
+  private waiting010 = false;
 
   constructor(
     private readonly db: SupabaseClient,
@@ -76,12 +104,23 @@ export class HometownJob {
         return HOMETOWN.noTables;
       }
       this.waiting = false;
-      const titles = await this.recentTitles();
-      const recorded = await resultsFor(this.db, titles.map((t) => t.id));
+      const recent = await this.recentMoments();
+      const titles = recent.filter((m) => m.type === "title_won");
+      let finishes = recent.filter((m) => m.type !== "title_won" && deciderOf(m));
+      if (finishes.length && !(await has010(this.db))) {
+        if (!this.waiting010) log("WARNING", "Playoff game-winners are waiting for supabase/010_player_moments.sql to run");
+        this.waiting010 = true;
+        finishes = [];
+      } else if (finishes.length) this.waiting010 = false;
+      const recorded = await resultsFor(this.db, [...titles, ...finishes].map((t) => t.id));
       let made = 0;
       for (const t of titles) {
         const results = recorded.get(t.id) ?? (this.noRoster.has(t.id) ? [] : await this.record(t));
         if (results.length) made += await this.towns(t, results);
+      }
+      for (const f of finishes) {
+        const results = recorded.get(f.id) ?? (this.noRoster.has(f.id) ? [] : await this.recordDecider(f));
+        if (results.length) made += await this.towns(f, results);
       }
       this.failures = 0;
       await this.heartbeat(started, made, null);
@@ -94,21 +133,23 @@ export class HometownJob {
     }
   }
 
-  private async recentTitles(): Promise<TitleRow[]> {
+  /** Titles, walk-offs and buzzer-beaters from the window. Only playoff
+   *  ones carry a decider. */
+  private async recentMoments(): Promise<TeamMomentRow[]> {
     const since = new Date(this.now() - HOMETOWN.window).toISOString();
     const { data, error } = await this.db
       .from("moments")
-      .select("id, league, game_id, team_id, opponent_team_id, headline, detail, occurred_at")
-      .eq("type", "title_won")
+      .select("id, type, league, game_id, team_id, opponent_team_id, headline, detail, occurred_at")
+      .in("type", ["title_won", "walkoff_win", "buzzer_beater"])
       .is("retracted_at", null)
       .gte("detected_at", since)
       .order("detected_at");
     if (error) throw error;
-    return (data ?? []) as TitleRow[];
+    return (data ?? []) as TeamMomentRow[];
   }
 
   /** The champion's players, from its roster now, each with their part. */
-  private async record(t: TitleRow): Promise<AthleteResult[]> {
+  private async record(t: TeamMomentRow): Promise<AthleteResult[]> {
     if (!t.team_id || !t.game_id) return [];
     if (this.options.rosters) {
       const r = await this.options.rosters.refreshTeam(t.team_id, HOMETOWN.rosterAge);
@@ -155,9 +196,46 @@ export class HometownJob {
     return results;
   }
 
-  /** A moment for each town the champion's players are from. Towns that
-   *  have theirs already keep it. */
-  private async towns(t: TitleRow, results: AthleteResult[]): Promise<number> {
+  /** Who decided a playoff game, as athletes Walkoff knows: the team's
+   *  roster is read again first when one of them isn't on file. */
+  private async recordDecider(m: TeamMomentRow): Promise<AthleteResult[]> {
+    const decider = deciderOf(m);
+    const sport = sportOf(m.league);
+    if (!decider || !sport || !m.game_id) return [];
+    const ids = decider.athletes.map((a) => athleteId(sport, a.id));
+    let known = await loadAthletes(this.db, ids);
+    if (known.length < ids.length && this.options.rosters && m.team_id) {
+      const r = await this.options.rosters.refreshTeam(m.team_id, HOMETOWN.deciderRosterAge);
+      if (r === "synced") known = await loadAthletes(this.db, ids);
+    }
+    if (!known.length) {
+      this.noRoster.add(m.id);
+      log("WARNING", "A playoff game-winner isn't on file", { moment: m.headline, athletes: decider.athletes.map((a) => a.name) });
+      return [];
+    }
+    const round = roundOf(m);
+    const results = known.map(
+      (a): AthleteResult => ({
+        athleteId: a.id,
+        eventKey: m.game_id!,
+        eventName: round,
+        kind: "game_winner",
+        role: "leader",
+        teamId: m.team_id,
+        momentId: m.id,
+        intensity: FINAL_ROUND.test(round) ? HOMETOWN.gameWinnerFinal : HOMETOWN.gameWinner,
+        occurredAt: m.occurred_at,
+        createdBy: "engine",
+      }),
+    );
+    await saveResults(this.db, results);
+    log("INFO", "Recorded a playoff game-winner", { moment: m.headline, athletes: known.map((a) => a.displayName) });
+    return results;
+  }
+
+  /** A moment for each town the players are from. Towns that have theirs
+   *  already keep it. */
+  private async towns(t: TeamMomentRow, results: AthleteResult[]): Promise<number> {
     // What each leader led, by athlete id ("espn:football:3912547" from the
     // feed's "3912547").
     const why = new Map((heroesOf(t)?.leaders ?? []).map((l) => [l.id, l.why]));
@@ -172,19 +250,20 @@ export class HometownJob {
       {
         key: first.eventKey,
         name: first.eventName,
-        kind: "title",
+        kind: first.kind,
         league: t.league,
         gameId: t.game_id,
         teamId: t.team_id,
         teamName: await this.teamName(t.team_id),
         opponentTeamId: t.opponent_team_id,
         occurredAt: t.occurred_at,
+        ...(first.kind === "game_winner" ? { play: deciderOf(t)?.play ?? null } : {}),
       },
       results,
       led,
     );
     if (saved.length) {
-      log("INFO", "Hometown moments", { title: t.headline, towns: saved.length, of: moments.length, examples: saved.slice(0, 3).map((m) => m.headline) });
+      log("INFO", "Hometown moments", { from: t.headline, towns: saved.length, of: moments.length, examples: saved.slice(0, 3).map((m) => m.headline) });
     }
     return saved.length;
   }

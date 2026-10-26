@@ -212,7 +212,7 @@ describe("hometown moments after launch", () => {
     const sq = (await call(sound, "trigger_queue")).json();
     assert.ok(sq.queue.some((x: Item) => x.type === "title_won"), "the team's title");
     assert.deepEqual(hometownItems(sq.queue), []);
-    assert.match(sq.left_out, /^1 hometown moment in the champion's own territory/);
+    assert.match(sq.left_out, /^1 hometown moment in the team's own territory/);
     await sound.close();
   });
 
@@ -475,6 +475,79 @@ describe("golf's hometown moments", () => {
     assert.deepEqual(c.products.map((p: { title: string }) => p.title), ["Holywood Harbour Tee", "Links Polo"], "the town's own, then golf");
     assert.match(c.products[0].price, /^£/);
     assertNeverNamesAthlete(seen(c), { name: "Rory McIlroy" });
+    await client.close();
+  });
+});
+
+describe("playoff game-winners' hometown moments", () => {
+  const NORTH = "7d1c2f9e-5555-4c8a-9a51-0d6c3b0e8f10";
+  const POEHLING = athleteId("hockey", "4233668");
+  const DUCKS = "espn:nhl:25";
+  const GAME_OT = "espn:nhl:401869772";
+  const AT = new Date(NOW.getTime() - 2 * 3_600_000).toISOString();
+  const PLAY = "Ryan Poehling Goal (3) Wrist Shot, assists: Mason McTavish (1)";
+  const northMember = principal("ann@northshoresupply.com", [NORTH]);
+
+  /** Ryan Poehling's overtime winner for the Ducks, and a brand with
+   *  customers around Lakeville, Minnesota, where he was born. */
+  async function lakes() {
+    const db = fakeDb({
+      brands: [{ id: NORTH, name: "North Shore Supply", store_url: "https://northshoresupply.com", licensed: false, upload_token: "n".repeat(24) }],
+      brand_area_counts: [{ brand_id: NORTH, country: "US", area: "550", customers: 2000, orders: 0, revenue: 0 }],
+      brand_products: [
+        { brand_id: NORTH, handle: "lakeville-tee", title: "Lakeville Lakes Tee", teams: [], colors: [], uses: [], interests: [], colorways: [{ name: "Navy", skus: [], image: "" }], price: 32 },
+        { brand_id: NORTH, handle: "rink-hoodie", title: "Rink Hoodie", teams: [], colors: [], uses: [], interests: [], colorways: [{ name: "Orange", skus: [], image: "" }], price: 64 },
+        { brand_id: NORTH, handle: "canoe-cap", title: "Canoe Cap", teams: [], colors: [], uses: [], interests: [], colorways: [{ name: "Forest", skus: [], image: "" }], price: 28 },
+      ],
+      teams: [
+        { id: DUCKS, league: "nhl", external_id: "25", display_name: "Anaheim Ducks" },
+        { id: "espn:nhl:6", league: "nhl", external_id: "6", display_name: "Edmonton Oilers" },
+      ],
+      athletes: [{ id: POEHLING, sport: "hockey", league: "nhl", external_id: "4233668", display_name: "Ryan Poehling", name_key: "ryanpoehling", team_id: DUCKS, position: "C", jersey: "25", roster_status: "active", college: null }],
+    });
+    await recomputeReport(db, { id: NORTH, name: "North Shore Supply" });
+    await savePlaces(db, [athletePlace(POEHLING, "birthplace", "espn", "Lakeville, MN, USA", await resolveTown("Lakeville, MN"))]);
+    const homes = momentHomes(await placesOf(db, [POEHLING]), ACADEMIES);
+    const place = (await placeByKey(homes[0].placeKey))!;
+    const towns = new Map<string, Town>([[place.key, { place, label: placeLabel(place), circle: await townCircle(place) }]]);
+    const athlete: Athlete = { id: POEHLING, sport: "hockey", league: "nhl", externalId: "4233668", displayName: "Ryan Poehling", teamId: DUCKS, position: "C", jersey: "25", rosterStatus: "active", college: null };
+    const result: AthleteResult = { athleteId: POEHLING, eventKey: GAME_OT, eventName: "West 1st Round, Game 4", kind: "game_winner", role: "leader", teamId: DUCKS, momentId: null, intensity: 0.9, occurredAt: AT, createdBy: "engine" };
+    const event = { key: GAME_OT, name: "West 1st Round, Game 4", kind: "game_winner" as const, league: "nhl", gameId: GAME_OT, teamId: DUCKS, teamName: "Anaheim Ducks", opponentTeamId: "espn:nhl:6", occurredAt: AT, play: PLAY };
+    await saveHometownMoments(db, deriveHometownMoments(event, [{ athlete, result, homes }], towns));
+    for (const m of db.tables.moments) m.detected_at ??= AT;
+    return db;
+  }
+
+  it("Lakeville gets the Ducks' overtime winner, in their colors, without a word about him", async () => {
+    process.env.WALKOFF_HOMETOWN = "1";
+    const client = await connect(northMember, await lakes());
+    const q = (await call(client, "trigger_queue")).json();
+    const [item] = hometownItems(q.queue) as (Item & { play?: string; window: { note: string }; headline: string })[];
+    assert.equal(item.type, "hometown_game_winner");
+    assert.equal(item.headline, "Hometown game-winner: Ryan Poehling (C) won it for the Anaheim Ducks in the West 1st Round, Game 4 · Lakeville, MN");
+    assert.equal(item.town, "Lakeville, MN");
+    assert.equal(item.play, PLAY);
+    assert.equal(item.athletes![0].part, "made the deciding play");
+    assert.equal(item.window.note, "About 28 hours left to act.");
+
+    const r = await call(client, "build_campaign", { moment_id: item.id });
+    assert.ok(!r.isError, r.text);
+    const c = r.json();
+    assert.match(c.campaign_name, /^Walkoff · Lakeville, MN · Hometown Game-Winner · /);
+    assert.deepEqual(c.audience.circles.map((x: { postal_code: string; radius_miles: number }) => [x.postal_code, x.radius_miles]), [["55044", 8]]);
+    assert.equal(c.subject_lines[0], "Lakeville, what a finish.");
+    assert.deepEqual(c.products.map((p: { title: string }) => p.title), ["Lakeville Lakes Tee", "Rink Hoodie"], "the town's own, then the team's colors");
+    assertNeverNamesAthlete(seen(c), { name: "Ryan Poehling", jersey: "25", position: "C" });
+    assertNeverNames(seen(c), teamByKey("nhl:25")!);
+    await client.close();
+  });
+
+  it("stays out of members' queues and tools before launch", async () => {
+    const client = await connect(northMember, await lakes());
+    const q = (await call(client, "trigger_queue")).json();
+    assert.deepEqual(hometownItems(q.queue), []);
+    const tools = await client.listTools();
+    assert.ok(!JSON.stringify(tools).includes("hometown_game_winner"));
     await client.close();
   });
 });

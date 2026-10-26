@@ -7,7 +7,7 @@
 import type { Athlete, AthleteResult, Home, ResultKind, ResultRole } from "../athletes";
 import type { Place, TownCircle } from "../places";
 
-export const HOMETOWN_TYPES = ["hometown_title", "hometown_win", "hometown_contender"] as const;
+export const HOMETOWN_TYPES = ["hometown_title", "hometown_win", "hometown_contender", "hometown_game_winner"] as const;
 export type HometownType = (typeof HOMETOWN_TYPES)[number];
 
 export const isHometownType = (type: string): type is HometownType => (HOMETOWN_TYPES as readonly string[]).includes(type);
@@ -16,6 +16,7 @@ const TYPE_FOR: Record<ResultKind, HometownType> = {
   title: "hometown_title",
   win: "hometown_win",
   lead: "hometown_contender",
+  game_winner: "hometown_game_winner",
 };
 
 /** What each part in a team's title counts for. */
@@ -29,7 +30,8 @@ export const ROLE_INTENSITY: Record<ResultRole, number> = {
 /** What an athlete did, for the marketer: the order of prominence. */
 const ROLE_RANK: Record<ResultRole, number> = { leader: 0, played: 1, roster: 2, reserve: 3 };
 
-/** The event behind the results: a title game, a tournament. */
+/** The event behind the results: a title game, a tournament, a playoff
+ *  game won at the very end. */
 export interface HometownEvent {
   /** "espn:nfl:401772988". */
   key: string;
@@ -46,6 +48,8 @@ export interface HometownEvent {
   occurredAt: string;
   /** Contenders: when the final round starts, which ends their window. */
   startsAt?: string | null;
+  /** Game-winners: the deciding play, as the feed tells it. */
+  play?: string | null;
 }
 
 /** An athlete with a result in the event, and their homes. */
@@ -71,7 +75,7 @@ export interface Town {
 export interface HometownMoment {
   dedupeKey: string;
   type: HometownType;
-  phase: "season" | "before";
+  phase: "season" | "before" | "after";
   league: string;
   gameId: string | null;
   teamId: string | null;
@@ -97,7 +101,7 @@ export interface HometownDetail {
     population: number;
     big_city: boolean;
   };
-  event: { key: string; name: string; kind: ResultKind };
+  event: { key: string; name: string; kind: ResultKind; play?: string };
   team: { id: string; name: string } | null;
   /** Contenders: the final round's first tee time. */
   startsAt?: string;
@@ -142,6 +146,10 @@ function headline(event: HometownEvent, people: Athlete[], town: string): string
     return `Hometown ${people.length === 1 ? "champion" : "champions"}: ${names} won ${what}${team} · ${town}`;
   }
   if (event.kind === "win") return `Hometown win: ${names} won ${what} · ${town}`;
+  if (event.kind === "game_winner") {
+    const team = event.teamName ? ` for the ${event.teamName}` : "";
+    return `Hometown ${people.length === 1 ? "game-winner" : "game-winners"}: ${names} won it${team} in ${what} · ${town}`;
+  }
   return `Hometown contender: ${names} ${people.length === 1 ? "leads" : "lead"} ${what} going into the final round · ${town}`;
 }
 
@@ -164,7 +172,7 @@ export function deriveHometownMoments(event: HometownEvent, locals: Local[], tow
     out.push({
       dedupeKey: `${type}:${event.key}:${key}`,
       type,
-      phase: event.kind === "lead" ? "before" : "season",
+      phase: event.kind === "lead" ? "before" : event.kind === "game_winner" ? "after" : "season",
       league: event.league,
       gameId: event.gameId,
       teamId: event.teamId,
@@ -185,7 +193,7 @@ export function deriveHometownMoments(event: HometownEvent, locals: Local[], tow
           population: town.circle.population,
           big_city: town.circle.bigCity,
         },
-        event: { key: event.key, name: event.name, kind: event.kind },
+        event: { key: event.key, name: event.name, kind: event.kind, ...(event.play ? { play: event.play } : {}) },
         team: event.teamId && event.teamName ? { id: event.teamId, name: event.teamName } : null,
         ...(event.startsAt ? { startsAt: event.startsAt } : {}),
         athletes: ranked.map(({ local: { athlete: a, result: r, led }, home: h }) => ({

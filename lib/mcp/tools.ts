@@ -788,14 +788,14 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           })
           .filter((x) => x.rule);
         // Hometown moments, by town: the brand's customers there, at most a
-        // few towns an event, and none inside the champion's territory when
-        // the team's own title is in this queue.
+        // few towns an event, and none inside the winner's territory when
+        // the team's own moment for the game is in this queue.
         const towns = townRows.length
           ? localQueue(townRows, await townFits(townRows, await loadAreaCounts(db, b.id)), {
               rules,
               standouts,
               towns: await ruleTowns(rules),
-              titleGames: new Set(teamMatches.filter((x) => x.r.type === "title_won" && x.r.game_id).map((x) => x.r.game_id!)),
+              teamGames: new Set(teamMatches.filter((x) => x.r.game_id && x.r.team_id).map((x) => `${x.r.game_id}|${x.r.team_id}`)),
               now,
             })
           : { items: [], also: [], inTeamTerritory: 0 };
@@ -817,7 +817,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           })),
           ...(towns.also.length ? { also_from_these_events: towns.also } : {}),
           ...(towns.inTeamTerritory
-            ? { left_out: `${towns.inTeamTerritory} hometown ${towns.inTeamTerritory === 1 ? "moment" : "moments"} in the champion's own territory, where the team's title already reaches.` }
+            ? { left_out: `${towns.inTeamTerritory} hometown ${towns.inTeamTerritory === 1 ? "moment" : "moments"} in the team's own territory, where its own moment already reaches.` }
             : {}),
           handled_in_window: acted.size,
           next: queue.length ? "build_campaign with a moment_id, or log_send with status skipped to clear one." : "Nothing to act on right now.",

@@ -106,6 +106,7 @@ const KIND: Record<string, Kind> = {
   hometown_title: "season",
   hometown_win: "season",
   hometown_contender: "pregame",
+  hometown_game_winner: "win",
 };
 
 export const momentKind = (type: string): Kind => KIND[type] ?? "win";

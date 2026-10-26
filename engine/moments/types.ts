@@ -117,6 +117,9 @@ export interface ScoringEvent {
   awayScore: number;
   teamExternalId: string | null;
   text: string;
+  /** Feed ids of who scored, the scorer first, when the feed says
+   *  (basketball). */
+  athleteIds?: string[];
 }
 
 /** What the engine remembers about a game between polls. */

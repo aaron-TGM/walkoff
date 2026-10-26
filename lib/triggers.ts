@@ -181,6 +181,13 @@ export const HOMETOWN_TRIGGERS: Trigger[] = [
       "Someone from the town leads going into the final round. The town is watching.",
     category: "before",
   },
+  {
+    name: "Hometown Game-Winner",
+    id: "hometown_game_winner",
+    description:
+      "Someone from the town won a playoff game at the very end: a walk-off, a buzzer-beater, an overtime winner.",
+    category: "after",
+  },
 ];
 
 /** Every moment type, hometown ones included. */
