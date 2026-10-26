@@ -258,6 +258,14 @@ function copyFor(type: string, c: Ctx): Copy {
       return season("The best kind of ending.", `${c.Colors}, all the way.`, Who ? `${Who}, enjoy every minute.` : "Enjoy every minute of this.", "Once in a while, it all comes together.");
     case "great_escape":
       return season("Staying up.", `Relief looks good in ${c.color}.`, "Survived. Barely. Beautifully.", "Relief, at last.");
+    case "big_signing":
+      return {
+        angle: "A star just joined the team: fans have a new reason to wear the colors. Never name the player.",
+        subjects: [Who ? `Big news, ${c.who!.text}.` : "Big news.", `New reasons to wear ${c.color}.`, `${c.Colors} just got better.`],
+        preview: winPreview,
+        headline: "Big news.",
+        body: `The team just got better, and so did the reasons to wear ${c.color}. A few things in ${wearing(c.who, "this week")}.`,
+      };
     default:
       return season(`A good day to wear ${c.color}.`, `${c.Colors} kind of ${c.day}.`, Who ? `Big news, ${c.who!.text}.` : "Big news.", "Big news.");
   }

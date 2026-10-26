@@ -30,6 +30,8 @@ const PHASE: Record<MomentType, Phase> = {
   heartbreak_loss: "after",
   playoff_advance: "season",
   title_won: "season",
+  // From the roster sync (engine/athletes/signings.ts), not a game.
+  big_signing: "season",
 };
 
 const TITLE_SERIES = /world series|nba finals|stanley cup final/i;

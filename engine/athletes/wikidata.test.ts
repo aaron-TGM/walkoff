@@ -17,6 +17,7 @@ describe("Wikidata lookups", () => {
         item: "Q27049069",
         school: { name: "San Clemente High School", lat: 33.4406, lng: -117.6159, country: "US" },
         birthplace: { name: "Capistrano Beach", lat: 33.463611111, lng: -117.678333333, country: "US" },
+        sitelinks: 15,
       },
     );
   });
@@ -37,12 +38,14 @@ describe("Wikidata lookups", () => {
     const [a] = parseLookup({ results: { bindings: [row("Q2", "Point(-81.1 32.1)"), row("Q3", "Point(-84.3 33.8)")] } });
     assert.equal(a.school?.name, "Q3");
     assert.equal(a.birthplace?.country, "CA");
+    assert.equal(a.sitelinks, null, "no count of pages in the answer");
   });
 
   it("asks for only digit ids, and says when Wikidata is busy", async () => {
     const q = lookupQuery("P3686", ["3912547", '1" } . ?x ?y ?z . { "', "4576297"]);
     assert.match(q, /VALUES \?espn \{ "3912547" "4576297" \}/);
     assert.match(q, /wdt:P3686 \?espn/);
+    assert.match(q, /wikibase:sitelinks \?sitelinks/);
     assert.throws(() => lookupQuery("P1; DROP", ["1"]));
 
     const bodies: string[] = [];

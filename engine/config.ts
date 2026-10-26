@@ -31,6 +31,10 @@ export interface EngineConfig {
    *  (engine/hometown.ts). Off unless HOMETOWN is 1, until counsel signs
    *  off on hometown campaigns. */
   hometown: boolean;
+  /** Big signings: a star's move to a team makes a moment for its fans
+   *  (engine/athletes/signings.ts), once 010_player_moments.sql has run.
+   *  On unless SIGNINGS is 0. Needs ATHLETES and WIKIDATA. */
+  signings: boolean;
   /** Golf leaderboards, golfers and their wins (engine/golf). On unless
    *  GOLF is 0; their towns' moments need HOMETOWN too. */
   golf: boolean;
@@ -78,6 +82,7 @@ export function loadConfig(
     athletes: env.ATHLETES !== "0",
     wikidata: env.WIKIDATA !== "0",
     hometown: env.HOMETOWN === "1",
+    signings: env.SIGNINGS !== "0",
     golf: env.GOLF !== "0",
   };
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Ask } from "@/components/help/blocks";
 import { HelpPage, HelpSection } from "@/components/help/HelpPage";
 import { FinishTable, LeagueTable, MomentTables } from "@/components/help/moments";
+import { SIGNING_TOP } from "@/lib/help/moments";
 import { helpMetadata, helpPath } from "@/lib/help/pages";
 import { DEFAULT_RULE, WINDOW_HOURS } from "@/lib/mcp/queue";
 import { TRIGGERS } from "@/lib/triggers";
@@ -25,6 +26,13 @@ export default function MomentsPage() {
         <h3>Big finishes, by sport</h3>
         <p>A last-second finish means something different in each sport:</p>
         <FinishTable />
+        <h3>Big signings</h3>
+        <p>
+          Walkoff reads every team&apos;s roster each day. When a star joins a new team, by trade,
+          signing or transfer, that team&apos;s fans get a Big Signing. A star is one of their
+          league&apos;s {SIGNING_TOP} best-known players: Walkoff counts the Wikipedias with a page
+          about them. Copy never names the player.
+        </p>
         <p>
           Moment headlines name the teams, for your eyes. Campaign copy follows your{" "}
           <Link href={helpPath("campaigns", "copy-rules")}>copy rules</Link>.

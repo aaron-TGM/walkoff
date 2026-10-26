@@ -24,6 +24,7 @@ export const EMITTED_TYPES = [
   "heartbreak_loss",
   "playoff_advance",
   "title_won",
+  "big_signing",
 ] as const;
 export type MomentType = (typeof EMITTED_TYPES)[number];
 

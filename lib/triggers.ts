@@ -137,7 +137,6 @@ export const TRIGGERS: Trigger[] = [
     description:
       "Star trade or transfer lands in your market. New jersey, new reason to buy.",
     category: "season",
-    coming: true,
   },
   {
     name: "Great Escape",

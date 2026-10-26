@@ -1,7 +1,9 @@
 // Wikidata (free to use, CC0) links ESPN's athlete ids to high schools and
 // birthplaces, with coordinates: it's how Walkoff learns that Sam Darnold
-// went to San Clemente High School. Its query service limits callers hard,
-// so the sync asks for one batch at a time and backs off when told to.
+// went to San Clemente High School. It also says how well known an athlete
+// is: how many Wikimedia sites have a page about them. Its query service
+// limits callers hard, so the sync asks for one batch at a time and backs
+// off when told to.
 import type { Country } from "../../lib/affinity/geo";
 
 const ENDPOINT = "https://query.wikidata.org/sparql";
@@ -35,6 +37,8 @@ export interface WikidataAthlete {
   item: string;
   school: WikidataPlace | null;
   birthplace: WikidataPlace | null;
+  /** Wikimedia sites with a page about them, Wikipedias mostly. */
+  sitelinks: number | null;
 }
 
 /** Wikidata asked Walkoff to slow down (HTTP 429 or 503). */
@@ -48,14 +52,15 @@ export class WikidataBusy extends Error {
   }
 }
 
-/** Each athlete's item, any secondary school (high schools included) with
- *  its coordinates, and the birthplace. */
+/** Each athlete's item and its count of pages, any secondary school (high
+ *  schools included) with its coordinates, and the birthplace. */
 export function lookupQuery(property: string, ids: string[]): string {
   if (!/^P\d+$/.test(property)) throw new Error(`Not a Wikidata property: ${property}`);
   const values = ids.filter((id) => /^\d+$/.test(id)).map((id) => `"${id}"`).join(" ");
-  return `SELECT ?espn ?item ?school ?schoolLabel ?schoolCoord ?schoolCountry ?birth ?birthLabel ?birthCoord ?birthCountry WHERE {
+  return `SELECT ?espn ?item ?sitelinks ?school ?schoolLabel ?schoolCoord ?schoolCountry ?birth ?birthLabel ?birthCoord ?birthCountry WHERE {
   VALUES ?espn { ${values} }
   ?item wdt:${property} ?espn .
+  OPTIONAL { ?item wikibase:sitelinks ?sitelinks . }
   OPTIONAL {
     ?item wdt:P69 ?school .
     ?school wdt:P31/wdt:P279* wd:Q159334 .
@@ -111,7 +116,8 @@ export function parseLookup(json: unknown): WikidataAthlete[] {
     const away = (s: WikidataPlace) =>
       birthplace?.lat != null && birthplace.lng != null ? (s.lat! - birthplace.lat) ** 2 + (s.lng! - birthplace.lng) ** 2 : 0;
     const school = schools.reduce<WikidataPlace | null>((best, s) => (!best || away(s) < away(best) ? s : best), null);
-    out.push({ externalId, item: qid(sorted[0].item?.value), school, birthplace });
+    const pages = Number(sorted[0].sitelinks?.value);
+    out.push({ externalId, item: qid(sorted[0].item?.value), school, birthplace, sitelinks: sorted[0].sitelinks && Number.isInteger(pages) ? pages : null });
   }
   return out.sort((a, b) => a.externalId.localeCompare(b.externalId));
 }

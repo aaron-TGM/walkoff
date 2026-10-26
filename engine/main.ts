@@ -65,9 +65,11 @@ async function main(): Promise<void> {
       ? new AthleteSync(service, createAthleteFeed(), {
           leagues: config.leagues,
           wikidata: config.wikidata ? createWikidataClient() : null,
+          signings: config.signings,
         })
       : null;
-  // A moment for each town a champion's players are from.
+  // A moment for each town a champion's players, or a playoff game's
+  // decider, are from.
   const hometown = config.hometown && service ? new HometownJob(service, { rosters: athletes }) : null;
   // Golf's tours: their winners, and with HOMETOWN their towns' moments.
   const golfFeed = createGolfFeed();

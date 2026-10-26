@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 
 import { hexForColorName } from "../affinity/colors";
 import { pickForTeam, type PickProduct } from "../affinity/pick";
-import { assertNeverNames } from "../testing/names";
+import { assertNeverNames, assertNeverNamesAthlete } from "../testing/names";
 import { teamAudience } from "./audience";
 import { buildCampaign, colorWords, type CampaignMoment } from "./campaign";
 import { teamByKey, type TeamRef } from "./teams";
@@ -85,6 +85,15 @@ describe("buildCampaign", () => {
     const c = campaign(CHARGERS, "comeback_win", { licensed: true });
     assert.equal(c.subject_lines[0], "Chargers win. Azure and sunflower kind of Sunday.");
     assert.equal(c.subject_lines[2], "Chargers fans don't quit.");
+  });
+
+  it("a big signing is big news in the colors, with no word about the player", () => {
+    const c = campaign(CHARGERS, "big_signing", { phase: "season", reach: "wide" });
+    assert.deepEqual(c.subject_lines, ["Big news, LA.", "New reasons to wear blue.", "Azure and sunflower just got better."]);
+    assert.equal(c.headline, "Big news.");
+    assert.match(c.angle, /Never name the player/);
+    assertNeverNames(seen(c), CHARGERS);
+    assertNeverNamesAthlete(seen(c), { name: "Justin Herbert", jersey: "10", position: "QB" });
   });
 
   it("a loss is consoled, not celebrated", () => {
