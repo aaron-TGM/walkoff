@@ -97,6 +97,20 @@ jane@frostbuddy.com"), and ask there where each brand is
    a code emailed to their address, docs/mcp.md), they can ask for their
    first campaign.
 
+## Outreach to brands
+
+Find stores in a Store Leads export, score their catalogs against their
+home teams, and pitch the good ones with a sample built from their own
+products. The whole flow is in `docs/outreach.md`.
+
+```bash
+npm run prospects -- import storeleads.csv --dry-run
+npm run prospects -- score --limit 200
+npm run prospects -- contacts apollo.csv --source apollo
+npm run prospects -- pitch frostbuddy.com
+npm run prospects -- mark <pitch link> sent
+```
+
 ## Reference data
 
 ```bash

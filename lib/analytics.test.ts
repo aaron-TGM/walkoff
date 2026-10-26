@@ -16,6 +16,13 @@ describe("analytics", () => {
     assert.equal(redact(page("https://www.walkoff.io/upload/demo"))?.url, "https://www.walkoff.io/upload/demo");
   });
 
+  it("never sends a pitch's token, here or with an early access request", () => {
+    assert.equal(redact(page("https://www.walkoff.io/p/Xq2v9LmB0aT7kP3sW8yZcD1e?preview=1"))?.url, "https://www.walkoff.io/p/[token]");
+    assert.equal(firstTouch("https://www.walkoff.io/p/Xq2v9LmB0aT7kP3sW8yZcD1e", "").landing_path, "/p/[token]");
+    assert.equal(privatePath("/p/demo"), "/p/demo");
+    assert.equal(privatePath("/pricing"), "/pricing");
+  });
+
   it("drops sign-in pages", () => {
     assert.equal(redact(page("https://www.walkoff.io/oauth/authorize?client_id=x&state=y")), null);
     assert.equal(redact(page("not a url")), null);

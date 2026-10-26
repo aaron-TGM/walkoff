@@ -2094,6 +2094,17 @@ select.form-input {
 .upload-invited {
   @apply mt-10 text-[0.95rem] text-inkMuted;
 }
+
+/* Pitch page (app/p): the email beside what it is, then early access */
+.pitch-grid {
+  @apply mb-16 grid gap-8 layout:grid-cols-[minmax(0,640px)_minmax(0,1fr)] layout:items-start layout:gap-12;
+}
+.pitch-steps {
+  @apply mb-20 grid gap-6 layout:grid-cols-3;
+}
+.pitch-fine {
+  @apply mt-12 max-w-[62ch] text-[0.85rem] leading-[1.6] text-inkMuted;
+}
 .report-summary {
   @apply mb-5 text-[0.95rem] text-inkMuted;
 }
