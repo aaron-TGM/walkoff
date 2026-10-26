@@ -1,9 +1,10 @@
 // The moments page's tables, straight from the lists the engine and the
 // queue use. Static, so every row is in the page's HTML.
 import { FINISHES, LEAGUE_FACTS } from "@/lib/help/moments";
+import { hometownLive } from "@/lib/hometown/flag";
 import { momentKind } from "@/lib/mcp/campaign";
-import { DEFAULT_RULE, WINDOW_HOURS } from "@/lib/mcp/queue";
-import { TRIGGER_CATEGORIES, TRIGGERS } from "@/lib/triggers";
+import { defaultRule, WINDOW_HOURS } from "@/lib/mcp/queue";
+import { brandTriggers, TRIGGER_CATEGORIES } from "@/lib/triggers";
 
 const WINDOW: Record<ReturnType<typeof momentKind>, string> = {
   win: `About ${WINDOW_HOURS.result} hours`,
@@ -13,7 +14,15 @@ const WINDOW: Record<ReturnType<typeof momentKind>, string> = {
   pregame: "Until kickoff",
 };
 
+/** Where a moment's window isn't its kind's. */
+const WINDOW_OF: Record<string, string> = {
+  hometown_contender: "Until the final round, or the final, starts",
+};
+
 export function MomentTables() {
+  const hometown = hometownLive();
+  const triggers = brandTriggers(hometown);
+  const rule = defaultRule(hometown);
   return TRIGGER_CATEGORIES.map((c) => (
     <div key={c.id}>
       <h3>{c.label}</h3>
@@ -28,8 +37,8 @@ export function MomentTables() {
             </tr>
           </thead>
           <tbody>
-            {TRIGGERS.filter((t) => t.category === c.id).map((t) => {
-              const inDefault = DEFAULT_RULE.moment_types.includes(t.id);
+            {triggers.filter((t) => t.category === c.id).map((t) => {
+              const inDefault = rule.moment_types.includes(t.id);
               return (
                 <tr key={t.id} id={`moment-${t.id}`}>
                   <td>
@@ -42,7 +51,7 @@ export function MomentTables() {
                     ) : null}
                   </td>
                   <td>{t.description}</td>
-                  <td data-label="Worth acting on">{t.coming ? "Not detected yet" : WINDOW[momentKind(t.id)]}</td>
+                  <td data-label="Worth acting on">{t.coming ? "Not detected yet" : (WINDOW_OF[t.id] ?? WINDOW[momentKind(t.id)])}</td>
                   <td data-label="In the default rule">{inDefault ? (t.coming ? "Yes, once live" : "Yes") : "No"}</td>
                 </tr>
               );

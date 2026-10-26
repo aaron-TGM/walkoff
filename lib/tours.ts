@@ -1,13 +1,14 @@
 // The circuits Walkoff follows where athletes compete for themselves, for
-// hometown moments: golf tours, tennis tours and racing series. A town
-// celebrates when someone from there wins. Kept apart from lib/leagues.ts,
-// which is for teams: tours have no territories, rosters, pricing or status
-// probes.
+// hometown moments: golf tours, tennis tours, racing series and surfing's
+// Championship Tour. A town celebrates when someone from there wins. Kept
+// apart from lib/leagues.ts, which is for teams: tours have no territories,
+// rosters, pricing or status probes.
 
-export type TourSport = "golf" | "tennis" | "racing";
+export type TourSport = "golf" | "tennis" | "racing" | "surfing";
 
 export interface Tour {
-  /** "pga", "atp", "nascar": golf's feed slug, and Walkoff's id elsewhere. */
+  /** "pga", "atp", "nascar", "wsl": golf's feed slug, and Walkoff's id
+   *  elsewhere. */
   id: string;
   name: string;
   sport: TourSport;
@@ -25,6 +26,7 @@ export const TOURS: Tour[] = [
   { id: "nascar", name: "NASCAR Cup Series", sport: "racing", winIntensity: 0.8 },
   { id: "f1", name: "Formula 1", sport: "racing", winIntensity: 0.85 },
   { id: "indycar", name: "IndyCar", sport: "racing", winIntensity: 0.75 },
+  { id: "wsl", name: "WSL Championship Tour", sport: "surfing", winIntensity: 0.85 },
 ];
 
 export const tourById = (id: string) => TOURS.find((t) => t.id === id);

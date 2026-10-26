@@ -12,7 +12,7 @@ import { placeByKey, placeLabel, resolveTown, townCircle } from "../places";
 import { fakeDb, type Row } from "../testing/fake-db";
 import { assertNeverNames, assertNeverNamesAthlete } from "../testing/names";
 import type { Principal } from "./data";
-import { createWalkoffServer } from "./server";
+import { createWalkoffServer, HOMETOWN_INSTRUCTIONS } from "./server";
 import { teamByKey } from "./teams";
 import type { ToolContext } from "./tools";
 
@@ -163,8 +163,9 @@ const idOf = (db: { tables: Record<string, Row[]> }, placeKey: string) => db.tab
 type Item = { id: string; type: string; town?: string; customers_estimate?: number; athletes?: { name: string; part: string }[]; copy_rule?: string };
 const hometownItems = (queue: Item[]) => queue.filter((x) => x.type.startsWith("hometown_"));
 
-describe("hometown moments before launch", () => {
-  it("stay out of members' tools", async () => {
+describe("hometown moments switched off (WALKOFF_HOMETOWN=0)", () => {
+  it("stay out of members' tools and instructions", async () => {
+    process.env.WALKOFF_HOMETOWN = "0";
     const db = await world();
     const client = await connect(frostMember, db);
     const q = await call(client, "trigger_queue");
@@ -178,10 +179,12 @@ describe("hometown moments before launch", () => {
     assert.ok(!tools.get("create_trigger")!.includes("towns"));
     assert.ok(!tools.get("build_campaign")!.includes("town"));
     assert.ok(!JSON.stringify((await client.listTools()).tools).includes("hometown_"), "no hometown types in the schemas");
+    assert.ok(!client.getInstructions()!.includes(HOMETOWN_INSTRUCTIONS));
     await client.close();
   });
 
-  it("are in operators' queues, to test", async () => {
+  it("are still in operators' queues, to test", async () => {
+    process.env.WALKOFF_HOMETOWN = "0";
     const db = await world();
     const client = await connect(operator, db);
     const q = await call(client, "trigger_queue", { brand: "Frost Buddy" });
@@ -191,19 +194,20 @@ describe("hometown moments before launch", () => {
     assert.ok(sc.customers_estimate! >= 50, `${sc.customers_estimate}`);
     assert.deepEqual(sc.athletes![0], { name: "Sam Darnold", id: DARNOLD, position: "QB", part: "led the team (Passing Yards)", how_walkoff_knows: ["Walkoff's own research"], sure: 0.95 });
     assert.match(sc.copy_rule!, /never names or describes an athlete/);
+    assert.ok(client.getInstructions()!.includes(HOMETOWN_INSTRUCTIONS));
     await client.close();
   });
 });
 
-describe("hometown moments after launch", () => {
+describe("hometown moments, on unless switched off", () => {
   it("reach brands with customers near the town, and not through the team", async () => {
-    process.env.WALKOFF_HOMETOWN = "1";
     const db = await world();
     const frost = await connect(frostMember, db);
     const fq = (await call(frost, "trigger_queue")).json();
     const towns = hometownItems(fq.queue).map((x) => x.town);
     assert.ok(towns.includes("San Clemente, CA"), towns.join("; "));
     assert.ok(!towns.includes("Everett, WA"), "Frost Buddy has no customers there");
+    assert.ok(frost.getInstructions()!.includes(HOMETOWN_INSTRUCTIONS), "Claude knows the town-only rule");
     await frost.close();
 
     // Sound Supply's standout team is Seattle: it gets the title, not San
@@ -217,7 +221,6 @@ describe("hometown moments after launch", () => {
   });
 
   it("shows five towns an event, whoever did the most first, and names the rest", async () => {
-    process.env.WALKOFF_HOMETOWN = "1";
     const client = await connect(frostMember, await world());
     const q = (await call(client, "trigger_queue")).json();
     const items = hometownItems(q.queue);
@@ -233,7 +236,6 @@ describe("hometown moments after launch", () => {
   });
 
   it("follows a trigger for towns, and a trigger for towns takes no team moments", async () => {
-    process.env.WALKOFF_HOMETOWN = "1";
     const db = await world();
     const client = await connect(frostMember, db);
     const made = await call(client, "create_trigger", { name: "Near Dana Point", towns: ["Dana Point, CA"] });
@@ -259,7 +261,6 @@ describe("hometown moments after launch", () => {
   });
 
   it("recent_moments shows towns, even for a brand with no standout team", async () => {
-    process.env.WALKOFF_HOMETOWN = "1";
     const db = await world();
     db.tables.affinity_reports = db.tables.affinity_reports.filter((r) => r.brand_id !== FROST);
     const client = await connect(frostMember, db);
@@ -519,7 +520,6 @@ describe("playoff game-winners' hometown moments", () => {
   }
 
   it("Lakeville gets the Ducks' overtime winner, in their colors, without a word about him", async () => {
-    process.env.WALKOFF_HOMETOWN = "1";
     const client = await connect(northMember, await lakes());
     const q = (await call(client, "trigger_queue")).json();
     const [item] = hometownItems(q.queue) as (Item & { play?: string; window: { note: string }; headline: string })[];
@@ -544,7 +544,8 @@ describe("playoff game-winners' hometown moments", () => {
     await client.close();
   });
 
-  it("stays out of members' queues and tools before launch", async () => {
+  it("stays out of members' queues and tools when switched off", async () => {
+    process.env.WALKOFF_HOMETOWN = "0";
     const client = await connect(northMember, await lakes());
     const q = (await call(client, "trigger_queue")).json();
     assert.deepEqual(hometownItems(q.queue), []);

@@ -4,6 +4,7 @@
 import { computeAffinity } from "../affinity/compute";
 import { DEMO_BRAND, demoData } from "../affinity/demo";
 import { pickForTeam } from "../affinity/pick";
+import { hometownRules } from "../hometown/copy";
 import { teamAudience, type Reach } from "../mcp/audience";
 import { buildCampaign, copyRules } from "../mcp/campaign";
 import { teamByKey } from "../mcp/teams";
@@ -66,11 +67,13 @@ export function sampleEmailHtml(): string {
     .replace("{% unsubscribe %}", '<a href="#" style="color:#8a8a8a;">Unsubscribe</a>');
 }
 
-/** The copy rules for the three kinds of brand and team. */
+/** The copy rules for the three kinds of brand and team, and for a
+ *  hometown campaign. */
 export const sampleCopyRules = () => ({
   pro: copyRules(SAMPLE_BRAND, SAMPLE_TEAM),
   college: copyRules(SAMPLE_BRAND, SAMPLE_COLLEGE),
   licensed: copyRules({ ...SAMPLE_BRAND, licensed: true }, SAMPLE_TEAM),
+  hometown: hometownRules({ brand: SAMPLE_BRAND.name, licensed: false, mayName: null }),
 });
 
 const LA = "America/Los_Angeles";

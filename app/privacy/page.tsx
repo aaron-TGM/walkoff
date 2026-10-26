@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage eyebrow="Legal" title="Privacy Policy" updated="October 24, 2026">
+    <LegalPage eyebrow="Legal" title="Privacy Policy" updated="October 26, 2026">
       <p>
         Walkoff (walkoff.io) is a product of Tuff Ghost Media LLC, based in San
         Clemente, California (&ldquo;Walkoff,&rdquo; &ldquo;we&rdquo; or
@@ -46,6 +46,12 @@ export default function PrivacyPage() {
           <strong>Technical data.</strong> Our hosting provider logs standard
           request information (IP address, browser type, pages requested) for
           security and reliability.
+        </li>
+        <li>
+          <strong>Public information about athletes.</strong> Facts about the
+          athletes in the leagues and on the tours Walkoff follows, such as
+          where they&apos;re from. See{" "}
+          <a href="#athletes">Information about athletes</a>.
         </li>
         <li>
           <strong>Site analytics.</strong> We count visits to walkoff.io with
@@ -94,6 +100,11 @@ export default function PrivacyPage() {
           creating segments or sending campaigns in your Klaviyo account.
         </li>
         <li>
+          <strong>Brands using Walkoff</strong>, who see the names, teams and
+          towns of the athletes behind their moments. Those are for their own
+          eyes, not for their campaigns.
+        </li>
+        <li>
           <strong>Authorities</strong>, when the law requires it.
         </li>
         <li>
@@ -107,6 +118,66 @@ export default function PrivacyPage() {
         We keep early access information until you ask us to delete it. We keep
         brand data for as long as your account is active and delete it within
         30 days after you cancel, unless the law requires us to keep it longer.
+      </p>
+
+      <h2 id="athletes">Information about athletes</h2>
+      <p>
+        Walkoff follows the athletes in the leagues and on the tours it covers.
+        When one of them wins, brands with customers in and around their
+        hometown can celebrate the town. For each athlete we keep:
+      </p>
+      <ul>
+        <li>
+          <strong>Roster facts.</strong> Name, the ids ESPN and Wikidata use
+          for them or their Wikipedia article, sport, team or tour, position,
+          jersey number, college, and the team they last played for.
+        </li>
+        <li>
+          <strong>Where they&apos;re from.</strong> Their birthplace, high
+          school and hometown, the town each one points to, and where we
+          learned it.
+        </li>
+        <li>
+          <strong>Results.</strong> What they won or played a part in, such as
+          a title, a tournament or a playoff game.
+        </li>
+        <li>
+          <strong>How well known they are.</strong> How many Wikipedia and
+          other Wikimedia sites have a page about them.
+        </li>
+        <li>
+          <strong>Written agreements.</strong> When an athlete agrees in
+          writing that a brand may name them, the agreement&apos;s dates and
+          where it&apos;s kept.
+        </li>
+      </ul>
+      <p>
+        It comes from public sources: ESPN, Wikipedia, Wikidata, the results
+        and profiles that leagues and tours publish, and our own research of
+        public reporting. We don&apos;t keep birth dates, ages, photos or contact
+        details.
+      </p>
+      <p>
+        We use it to find hometown moments and big signings, and to show
+        marketers which
+        athletes are from near their customers and why a moment is in their
+        queue. Campaigns celebrate the town and never name or describe an
+        athlete, unless the athlete agreed in writing that the brand may. Where
+        the GDPR applies, we rely on our legitimate interest in celebrating
+        local sports success.
+      </p>
+      <p>
+        We keep it for as long as Walkoff follows the athlete&apos;s league or
+        tour. Results stay as the record behind the moments they made.
+      </p>
+      <p>
+        If you&apos;re an athlete, or you represent one, email{" "}
+        <a href="mailto:hello@walkoff.io">hello@walkoff.io</a> to see what we
+        keep about you, to correct where you&apos;re from, or to have us stop
+        using you. When you ask us to stop, we delete where you&apos;re from,
+        never keep it again, stop making hometown moments and big signings
+        about you, and take back the ones still in brands&apos; queues. We keep
+        your roster facts, so we know you when a roster lists you again.
       </p>
 
       <h2 id="security">Security</h2>
@@ -146,7 +217,10 @@ export default function PrivacyPage() {
       <h2>Children</h2>
       <p>
         Walkoff is a business service and isn&apos;t meant for anyone under 16.
-        We don&apos;t knowingly collect information from children.
+        We don&apos;t knowingly collect information from children. The
+        athletes Walkoff follows play in college and professional leagues and
+        on professional tours. If we learn one is under 16, we stop using
+        them.
       </p>
 
       <h2>Changes</h2>

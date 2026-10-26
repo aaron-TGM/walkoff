@@ -4,9 +4,10 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { SHOPIFY_TOOLS, SHOPIFYQL } from "../affinity/shopify-counts";
 import { helpUrl } from "../help/pages";
+import { hometownLive } from "../hometown/flag";
 import { KLAVIYO_TOOLS } from "./campaign";
 import { isOperator } from "./data";
-import { registerTools, type ToolContext } from "./tools";
+import { hometownOn, registerTools, type ToolContext } from "./tools";
 
 export const SERVER_INFO = { name: "walkoff", title: "Walkoff", version: "1.0.0" };
 
@@ -32,18 +33,19 @@ Copy rules: most brands aren't licensed to use team marks. For them, campaign co
 
 Athletes: local_athletes shows the marketer which athletes are from towns near their customers. Those names are for the marketer only. Campaign copy never names or describes an athlete (no name, number, position, school or photo) unless the brand has the athlete's written OK on file.`;
 
+/** Hometown moments, for everyone while they're on (lib/hometown/flag.ts). */
+export const HOMETOWN_INSTRUCTIONS = `Hometown moments: when an athlete from a town near the brand's customers wins a title, a tournament or a race, or wins a playoff game at the very end, the town gets its own moment. trigger_queue lists them with the rest, with about how many of the brand's customers live there. build_campaign makes the town's campaign: one circle around the town, and copy that celebrates the town. It never names or describes the athlete, and never names the team, league or event, unless the brand has the athlete's written OK on file. Keep that rule if you rewrite the copy.`;
+
 /** What every connection starts with: the instructions, and where the
  *  marketer's help is. */
-export const memberInstructions = (origin: string) =>
-  `${INSTRUCTIONS}\n\nWhen the marketer asks how something works or hits a problem, Walkoff's help center has the answer, ready to link: ${helpUrl(origin, "help")}. Connecting: ${helpUrl(origin, "connect")}. Setting up from Shopify: ${helpUrl(origin, "shopify")}. Uploading files instead: ${helpUrl(origin, "uploads")}. Connecting Klaviyo, and saving a team's segment: ${helpUrl(origin, "klaviyo")}. Tracking and results: ${helpUrl(origin, "klaviyo", "tracking")}. Messages and fixes: ${helpUrl(origin, "troubleshooting")}.`;
+export const memberInstructions = (origin: string, hometown = hometownLive()) =>
+  `${INSTRUCTIONS}${hometown ? `\n\n${HOMETOWN_INSTRUCTIONS}` : ""}\n\nWhen the marketer asks how something works or hits a problem, Walkoff's help center has the answer, ready to link: ${helpUrl(origin, "help")}. Connecting: ${helpUrl(origin, "connect")}. Setting up from Shopify: ${helpUrl(origin, "shopify")}. Uploading files instead: ${helpUrl(origin, "uploads")}. Connecting Klaviyo, and saving a team's segment: ${helpUrl(origin, "klaviyo")}. Tracking and results: ${helpUrl(origin, "klaviyo", "tracking")}. Messages and fixes: ${helpUrl(origin, "troubleshooting")}.`;
 
 /** Added for Walkoff operators, who also set brands up. */
-export const OPERATOR_INSTRUCTIONS = `This person is a Walkoff operator, so they can also set brands up. To onboard a brand: create_brand with its name, store and whether it's licensed to name its teams (most aren't), then invite_member for each marketer. Its welcome email tells them how to connect Walkoff and Shopify in Claude and set the brand up there, with the brand's upload link for stores not on Shopify. Once a brand's store is set, you can run import_catalog for it yourself. onboarding_status shows where each brand is and the next step. update_brand, list_members and remove_member handle changes; the tools that change a brand need its exact name or id. Upload links are secret: only invite_member sends them, to the people invited. After removing someone, update_brand with new_upload_link replaces the brand's link, and invite_member sends the new one to the people who should keep it. When Walkoff has an athlete's hometown wrong, set_athlete_home fixes it, with a note on where you learned it. record_athlete_rights records an athlete's written agreement that a brand may name them, with its dates and where the agreement is, or revokes it.
-
-Hometown moments are on for operators before they launch to brands: when someone from a town near a brand's customers wins, the town gets its own moment. trigger_queue and recent_moments show them, and build_campaign makes the town's campaign: one circle around the town, and copy that celebrates the town and never names or describes the athlete, the team, the league or the event, unless the brand has the athlete's written OK on file. create_moment records a win Walkoff doesn't follow itself (a surfing win, a medal) and makes the towns' moments right away. retract_moment takes a wrong one back out of every queue.`;
+export const OPERATOR_INSTRUCTIONS = `This person is a Walkoff operator, so they can also set brands up. To onboard a brand: create_brand with its name, store and whether it's licensed to name its teams (most aren't), then invite_member for each marketer. Its welcome email tells them how to connect Walkoff and Shopify in Claude and set the brand up there, with the brand's upload link for stores not on Shopify. Once a brand's store is set, you can run import_catalog for it yourself. onboarding_status shows where each brand is and the next step. update_brand, list_members and remove_member handle changes; the tools that change a brand need its exact name or id. Upload links are secret: only invite_member sends them, to the people invited. After removing someone, update_brand with new_upload_link replaces the brand's link, and invite_member sends the new one to the people who should keep it. When Walkoff has an athlete's hometown wrong, set_athlete_home fixes it, with a note on where you learned it. record_athlete_rights records an athlete's written agreement that a brand may name them, with its dates and where the agreement is, or revokes it. create_moment records a win Walkoff doesn't follow itself (a medal, a marathon) and makes the towns' hometown moments right away. retract_moment takes a wrong moment back out of every queue. When an athlete, or someone for them, asks Walkoff to stop using them, exclude_athlete does it, with a note on who asked: then retract the moments it lists.`;
 
 export function createWalkoffServer(ctx: ToolContext): McpServer {
-  const member = memberInstructions(ctx.origin);
+  const member = memberInstructions(ctx.origin, hometownOn(ctx.principal));
   const instructions = isOperator(ctx.principal) ? `${member}\n\n${OPERATOR_INSTRUCTIONS}` : member;
   const server = new McpServer(SERVER_INFO, { instructions });
   registerTools(server, ctx);

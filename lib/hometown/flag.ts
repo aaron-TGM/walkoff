@@ -1,5 +1,5 @@
-// Hometown moments reach brands once they launch: WALKOFF_HOMETOWN=1, after
-// counsel signs off on the copy rules. Walkoff operators get them before
-// that, to test.
+// Hometown moments reach brands: counsel signed off on the copy rules
+// (October 2026). WALKOFF_HOMETOWN=0 turns them off for brands; Walkoff
+// operators still get them, to test.
 
-export const hometownLive = (env: Record<string, string | undefined> = process.env) => env.WALKOFF_HOMETOWN === "1";
+export const hometownLive = (env: Record<string, string | undefined> = process.env) => env.WALKOFF_HOMETOWN !== "0";

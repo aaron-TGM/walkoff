@@ -5,8 +5,8 @@
 // whoever decided it (engine/moments/deciders.ts), once
 // 010_player_moments.sql has run. Every tick it looks again at the last 72
 // hours, so a hometown fixed or found since then gets its town's moment.
-// It reads only what's saved, so a poll never waits on it. Off unless
-// HOMETOWN is 1: hometown campaigns wait on counsel. See engine/README.md.
+// It reads only what's saved, so a poll never waits on it. HOMETOWN=0 turns
+// it off. See engine/README.md.
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { athleteId, athletesReady, has010, loadAthletes, resultsFor, saveResults, teamRoster, type AthleteResult, type ResultRole } from "../lib/athletes";
 import { makeHometownMoments, ROLE_INTENSITY } from "../lib/hometown";

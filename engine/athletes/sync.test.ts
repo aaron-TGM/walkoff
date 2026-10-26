@@ -308,6 +308,16 @@ describe("moves and big signings", () => {
     }
   });
 
+  it("makes no moment about a player who asked Walkoff to stop using them, nor saves where he's from", async () => {
+    const { clock, db } = world();
+    darnoldBefore(db, { opted_out_at: "2026-10-01T00:00:00Z" });
+    await new AthleteSync(db, feedOf(() => SEAHAWKS).feed, { leagues: ["nfl"], wikidata: null, now: () => clock.now }).tick();
+    assert.equal(db.tables.athletes.find((a) => a.id === DARNOLD)!.previous_team_id, MIN, "the move is noted");
+    assert.deepEqual(signings(db), []);
+    assert.equal((db.tables.athlete_places ?? []).filter((p) => p.athlete_id === DARNOLD).length, 0, "no birthplace");
+    assert.ok((db.tables.athlete_places ?? []).length > 50, "everyone else's is saved");
+  });
+
   it("makes no moment with SIGNINGS=0", async () => {
     const { clock, db } = world();
     darnoldBefore(db, {});

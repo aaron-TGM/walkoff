@@ -26,6 +26,7 @@ const OPERATOR_TOOLS = [
   "record_athlete_rights",
   "create_moment",
   "retract_moment",
+  "exclude_athlete",
 ];
 const ORIGIN = "https://www.walkoff.io";
 const NOW = new Date("2026-10-23T12:00:00Z");
@@ -62,6 +63,7 @@ const SAMPLE_ARGS: Record<string, Record<string, unknown>> = {
   record_athlete_rights: { brand: "Frost Buddy", athlete: "Sam Darnold", starts_on: "2026-01-01", ends_on: "2026-12-31", evidence: "NIL agreement 2026-014" },
   create_moment: { athlete: "Griffin Colapinto", event: "WSL Finals", date: "2026-09-10", note: "worldsurfleague.com", sport: "surfing", hometown: "San Clemente, CA" },
   retract_moment: { moment_id: "8c1f2d3e-0000-4000-8000-000000000001", reason: "Wrong town" },
+  exclude_athlete: { athlete: "Sam Darnold", note: "His agent, by email" },
 };
 
 describe("operator tools", () => {
@@ -103,7 +105,7 @@ describe("operator tools", () => {
       assert.equal(hints(name).readOnlyHint, false, name);
       assert.equal(hints(name).destructiveHint, false, name);
     }
-    for (const name of ["update_brand", "remove_member", "set_athlete_home", "record_athlete_rights", "retract_moment"]) {
+    for (const name of ["update_brand", "remove_member", "set_athlete_home", "record_athlete_rights", "retract_moment", "exclude_athlete"]) {
       assert.equal(hints(name).readOnlyHint, false, name);
       assert.equal(hints(name).destructiveHint, true, name);
     }

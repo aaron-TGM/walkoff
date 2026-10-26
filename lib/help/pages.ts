@@ -116,6 +116,7 @@ export const HELP_PAGES = [
     description: "The moments Walkoff watches for, how long each is worth acting on, and how triggers fill your queue.",
     sections: [
       { id: "types", title: "Moment types" },
+      { id: "hometown", title: "Hometown moments" },
       { id: "leagues", title: "Leagues" },
       { id: "queue", title: "Your queue" },
       { id: "default-rule", title: "The default rule" },
