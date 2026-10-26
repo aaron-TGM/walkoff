@@ -10,11 +10,17 @@ export type Row = Record<string, unknown>;
 export type Tables = Record<string, Row[]>;
 
 /** Tables whose rows get a random uuid id when inserted without one. */
-const UUID_IDS = new Set(["brands", "brand_uploads", "affinity_reports", "triggers", "sends", "moments", "athlete_results", "brand_athlete_rights"]);
+const UUID_IDS = new Set([
+  "brands", "brand_uploads", "affinity_reports", "triggers", "sends", "moments", "athlete_results", "brand_athlete_rights",
+  "prospects", "prospect_contacts", "outreach",
+]);
 /** Column defaults from the migrations that code reads back. */
 const DEFAULTS: Record<string, Record<string, () => unknown>> = {
   moments: { detected_at: () => new Date().toISOString() },
   triggers: { active: () => true },
+  prospects: { status: () => "new", home_teams: () => [], categories: () => [], apps: () => [], source: () => "storeleads" },
+  prospect_contacts: { source: () => "csv" },
+  outreach: { status: () => "drafted", views: () => 0 },
 };
 
 type Filter = (row: Row) => boolean;

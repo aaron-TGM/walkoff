@@ -5,10 +5,12 @@
 // memory until the form is sent, so each signup records where it came from.
 import type { Attribution } from "./waitlist";
 
-/** A brand's upload link works like a password: /upload/<token>. The public
- *  demo keeps its address. */
+/** A brand's upload link works like a password: /upload/<token>. So does a
+ *  prospect's pitch: /p/<token>. The public demos keep their addresses. */
 export function privatePath(pathname: string): string {
-  return pathname.replace(/^\/upload\/(?!demo(?:\/|$))[^/]+/, "/upload/[token]");
+  return pathname
+    .replace(/^\/upload\/(?!demo(?:\/|$))[^/]+/, "/upload/[token]")
+    .replace(/^\/p\/(?!demo(?:\/|$))[^/]+/, "/p/[token]");
 }
 
 /** Query parameters worth counting: campaign tags and ref. */

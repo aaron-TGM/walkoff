@@ -6,12 +6,15 @@ import { visitAttribution } from "@/lib/analytics";
 import { helpPath } from "@/lib/help/pages";
 import { LEAGUES } from "@/lib/leagues";
 import { PRICING } from "@/lib/pricing";
-import { PLATFORMS, ROLES } from "@/lib/waitlist";
+import { PLATFORMS, ROLES, type Attribution } from "@/lib/waitlist";
 
-export function WaitlistForm() {
-  const [company, setCompany] = useState("");
+/** defaults fill in what Walkoff already knows (a pitch page knows the
+ *  brand). source says where the request came from, over the visit's own
+ *  campaign tags. */
+export function WaitlistForm({ defaults, source }: { defaults?: { company?: string; website?: string }; source?: Attribution } = {}) {
+  const [company, setCompany] = useState(defaults?.company ?? "");
   const [email, setEmail] = useState("");
-  const [website, setWebsite] = useState("");
+  const [website, setWebsite] = useState(defaults?.website ?? "");
   const [role, setRole] = useState("");
   const [platform, setPlatform] = useState("");
   const [leagues, setLeagues] = useState<string[]>([]);
@@ -51,7 +54,7 @@ export function WaitlistForm() {
           leagues,
           teams: teams.trim(),
           fax,
-          attribution: visitAttribution(),
+          attribution: { ...visitAttribution(), ...source },
         }),
       });
       const data = (await res.json().catch(() => ({}))) as { error?: string };
