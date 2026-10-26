@@ -56,15 +56,40 @@ they're from (`athletes/sync.ts`, `lib/athletes`, `lib/places`).
   by mistake.
 - Until `supabase/009_athletes.sql` has run, it waits an hour and checks
   again.
+- Once `supabase/010_player_moments.sql` has run, it also keeps who moved:
+  a player Walkoff knew on another team who shows up on this one has
+  joined it (`joined_at`, and `previous_team_id` for the team they left;
+  a team that clears a player keeps itself there). Someone new to Walkoff,
+  or back on the team they left, hasn't moved. Wikidata also says how many
+  Wikimedia sites have a page about each player (`sitelinks`); players it
+  found before 010 ran are asked again first.
 - Its heartbeat is the `athletes` row in `engine_heartbeats`, where `games`
   is the number of teams whose roster is under a day old.
 - It's on whenever the engine saves to Supabase. `ATHLETES=0` turns it off,
   and `WIKIDATA=0` turns off only the Wikidata lookups.
 
+## Big signings
+
+When a star joins a team, by trade, signing or transfer, the team's fans get
+`big_signing` (`athletes/signings.ts`), from the roster sync above.
+
+- A star has pages on at least 15 Wikimedia sites and is one of their
+  league's 50 best known: fame is next to the rest of the league, since an
+  average Premier League player has more pages than the NFL's best known.
+  Checked live: the Lakers' best known is Luka Doncic with 58 pages, the
+  Seahawks' Sam Darnold with 15, and Arsenal's median player has 49.
+- 0.85 for the league's 10 best known, 0.75 for the rest. The moment is the
+  new team's, for 3 days after the sync saw the move, once per player and
+  team. The headline names the player and the team they left, for the
+  marketer; copy never names the player.
+- Waits for `supabase/010_player_moments.sql`. `SIGNINGS=0` turns it off,
+  and it needs `ATHLETES` and `WIKIDATA` on.
+
 ## Hometown moments
 
 When a team wins a title, every town its players are from gets a moment of
-its own (`hometown.ts`, `lib/hometown`). A brand with customers near the
+its own (`hometown.ts`, `lib/hometown`), and so does the town of whoever
+decided a playoff game at the very end. A brand with customers near the
 town can celebrate it, without naming the player. Off unless `HOMETOWN=1`:
 hometown campaigns wait for counsel to sign off on their copy rules
 (docs/hometown.md).
@@ -89,6 +114,19 @@ hometown campaigns wait for counsel to sign off on their copy rules
   curated file set the home.
 - Super Bowl LX's roster makes about 75 towns. Brands see only those near
   their customers, a few an event (docs/hometown.md).
+- A playoff walk-off or buzzer-beater carries who decided it
+  (`detail.decider`, `moments/deciders.ts`): the batter of the walk-off,
+  the scorer of the overtime goal, the shooter of the buzzer-beater, and in
+  football the players the scoring play names (the receiver, then the
+  passer), found in the box score. A walk-off on an error, wild pitch,
+  passed ball or balk has none. Baseball and hockey read the summary for
+  it, once. In a title game the decider is one of the champion's leaders
+  instead, so their town gets the title once.
+- The job records a decider as `game_winner` (0.9, or 0.95 in the World
+  Series, NBA Finals or Stanley Cup Final), reading the team's roster again
+  first if they aren't on file, and makes `hometown_game_winner` for their
+  town. A year of playoffs in the six leagues had 38. Game-winners wait for
+  `supabase/010_player_moments.sql`.
 - Until `supabase/009_athletes.sql` has run, it waits an hour and checks
   again. Its heartbeat is the `hometown` row in `engine_heartbeats`, where
   `games` is the moments the last tick made.
@@ -148,6 +186,7 @@ World Tour and LIV.
 | After  | `heartbreak_loss` | Loser lost on a walk-off or late winner, blew a big lead, or lost by one score |
 | Season | `playoff_advance` | Won a playoff series or single-elimination playoff game |
 | Season | `title_won`       | World Series, NBA Finals, Stanley Cup, Super Bowl or national championship |
+| Season | `big_signing`     | One of a league's 50 best-known players joined the team (from the roster sync, not a game) |
 
 Thresholds per league live in `moments/sports.ts`. Every moment has an
 `intensity` from 0 to 1 (postseason adds 0.1), so brands can choose how big a
@@ -204,6 +243,7 @@ not saved.
 | `ATHLETES`                  | `1`            | `0` turns the athlete sync off |
 | `WIKIDATA`                  | `1`            | `0` turns its Wikidata lookups off |
 | `HOMETOWN`                  | `0`            | `1` turns hometown moments on |
+| `SIGNINGS`                  | `1`            | `0` turns big signings off |
 | `GOLF`                      | `1`            | `0` turns the golf pollers off |
 
 ## Set up Supabase
@@ -212,7 +252,9 @@ Run `supabase/003_moment_engine.sql` in the Supabase SQL editor (after
 `002_early_access.sql`). It creates `teams`, `games`, `moments` and
 `engine_heartbeats`, with row level security on and no public access. For
 the athlete sync, also run `supabase/009_athletes.sql`; until then the sync
-waits and the rest of the engine runs as before.
+waits and the rest of the engine runs as before. Then
+`supabase/010_player_moments.sql` for big signings and playoff
+game-winners; until it has run, the engine makes neither.
 
 ## Deploy to Google Cloud Run
 
@@ -276,11 +318,10 @@ Logs are JSON lines with `severity`, so Cloud Logging filters work, e.g.
 
 ## Not yet
 
-- `playoff_clinch` (needs standings), `player_milestone`, `big_signing` and
+- `playoff_clinch` (needs standings), `player_milestone` and
   `great_escape` are in the site's trigger library but not detected yet.
-- Hometown moments for tennis, racing and surfing, and for a player's
-  walk-off or buzzer beater. Until then an operator can record a win with
-  `create_moment` (docs/hometown.md).
+- Hometown moments for tennis, racing and surfing. Until then an operator
+  can record a win with `create_moment` (docs/hometown.md).
 - Hockey late winners need hockey play-by-play.
 - Brands act on moments through the MCP server (docs/mcp.md): it matches
   each moment to the brand's fan territories and products and drafts the

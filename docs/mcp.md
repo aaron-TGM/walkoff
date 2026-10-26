@@ -134,7 +134,8 @@ The script and the tools share `lib/brands.ts` and `lib/welcome.ts`.
 Operators also get the onboarding tools above.
 
 **Hometown moments** (docs/hometown.md): when someone from a town near a
-brand's customers wins, the town gets its own moment. They reach brands'
+brand's customers wins a title or a tournament, or decides a playoff game
+at the very end, the town gets its own moment. They reach brands'
 tools once `WALKOFF_HOMETOWN=1`, after counsel signs off on the copy rules;
 operators get them now, to test. Then `trigger_queue` and `recent_moments`
 (`scope`: teams, towns or both) list the towns near the brand's customers,
