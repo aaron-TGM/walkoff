@@ -38,8 +38,11 @@ import {
   type OnboardingStatus,
 } from "../brands";
 import { helpUrl } from "../help/pages";
+import { isHometownType, type HometownType } from "../hometown/derive";
+import { hometownLive } from "../hometown/flag";
+import { placeByKey, placeLabel, resolveTown, type Place } from "../places";
 import type { Lookup } from "../public-fetch";
-import { TRIGGERS } from "../triggers";
+import { ALL_TRIGGERS, TRIGGERS } from "../triggers";
 import { sendWelcome } from "../welcome";
 import { registerAthleteOperatorTools, registerAthleteTools } from "./athlete-tools";
 import { teamAudience } from "./audience";
@@ -50,6 +53,7 @@ import {
   createTrigger,
   deleteTrigger,
   gamesById,
+  has009,
   isOperator,
   latestByMoment,
   listTriggers,
@@ -68,8 +72,11 @@ import {
   type Principal,
   type TriggerRow,
 } from "./data";
+import { campaignForTown } from "./hometown-campaign";
+import { registerHometownOperatorTools } from "./hometown-tools";
+import { hometownMoments, hometownView, localQueue, ruleTowns, townFits, type TownFit } from "./local";
 import { resourceOf } from "./oauth/config";
-import { DEFAULT_RULE, matchingRule, momentWindow, type TriggerRule } from "./queue";
+import { DEFAULT_RULE, defaultRule, LOCAL, localEnough, matchingRule, momentWindow, type TriggerRule } from "./queue";
 import { feedIdOf, resolveTeam, teamByKey, teamFromFeedId, type TeamRef } from "./teams";
 import { formatLocal, teamTimeZone } from "./timing";
 
@@ -88,7 +95,12 @@ export interface ToolContext {
 
 const HOUR = 3_600_000;
 const MOMENT_TYPES = TRIGGERS.map((t) => t.id) as [string, ...string[]];
-const PHASE_OF = new Map(TRIGGERS.map((t) => [t.id, t.category]));
+const ALL_MOMENT_TYPES = ALL_TRIGGERS.map((t) => t.id) as [string, ...string[]];
+const PHASE_OF = new Map(ALL_TRIGGERS.map((t) => [t.id, t.category]));
+
+/** Hometown moments: for everyone once they launch, and for operators
+ *  before that, to test (lib/hometown/flag.ts). */
+const hometownOn = (p: Principal) => hometownLive() || isOperator(p);
 
 // ── Shared arguments ───────────────────────────────────────────────
 
@@ -102,6 +114,28 @@ const reachArg = z
   .enum(["core", "wide"])
   .optional()
   .describe('"core" (default): areas where most fans follow the team. "wide": also shared markets where a big minority do.');
+
+const SCOPE_ARG = z
+  .enum(["teams", "towns", "both"])
+  .optional()
+  .describe('"teams": the brand\'s standout teams, or the one named. "towns": hometown moments near the brand\'s customers. Default: both, or teams when a team is named.');
+const TOWN_TRIGGER_ARGS = {
+  towns: z
+    .array(z.string().max(100))
+    .max(20)
+    .optional()
+    .describe('Towns for hometown moments, like "San Clemente, CA" or a postal code. The trigger is then only for hometown moments in or near them.'),
+  min_local_customers: z
+    .number()
+    .int()
+    .min(0)
+    .optional()
+    .describe(`Hometown moments: how many of the brand's customers a town needs, estimated. Default: ${LOCAL.minCustomers}, or ${LOCAL.minWithLift} that are ${LOCAL.minLift} times the town's share of people.`),
+};
+const TOWN_CAMPAIGN_ARGS = {
+  town: z.string().max(100).optional().describe('For a hometown sample, with a hometown moment_type: the town, like "San Clemente, CA".'),
+  radius_miles: z.number().min(1).max(50).optional().describe("Hometown moments: the town's circle, in miles, instead of Walkoff's."),
+};
 
 // ── Helpers ────────────────────────────────────────────────────────
 
@@ -171,17 +205,40 @@ function plainPick(p: PickProduct): Pick {
   return { handle: p.handle, title: p.title, colorway: null, hex: first?.hex ?? [], skus: [], image: first?.image ?? "", why: "Your pick", score: 0, price: p.price ?? null };
 }
 
-function triggerView(t: TriggerRow | TriggerRule) {
+function triggerView(t: TriggerRow | TriggerRule, towns: Map<string, string> = new Map()) {
+  // A trigger with towns is for hometown moments, from any team.
+  const local = !!t.place_keys?.length;
   return {
     id: t.id,
     name: t.name,
-    moments: t.moment_types.length ? t.moment_types.map(typeName) : ["any moment"],
+    moments: t.moment_types.length ? t.moment_types.map(typeName) : [local ? "any hometown moment" : "any moment"],
     moment_types: t.moment_types,
-    teams: t.team_keys.length ? t.team_keys.map((k) => teamByKey(k)?.team.name ?? k) : ["the brand's standout teams"],
+    teams: t.team_keys.length ? t.team_keys.map((k) => teamByKey(k)?.team.name ?? k) : [local ? "any team" : "the brand's standout teams"],
     team_keys: t.team_keys,
     min_intensity: t.min_intensity,
     active: t.active,
+    ...(t.place_keys?.length ? { towns: t.place_keys.map((k) => towns.get(k) ?? k), place_keys: t.place_keys } : {}),
+    ...(t.min_local_customers !== null && t.min_local_customers !== undefined ? { min_local_customers: t.min_local_customers } : {}),
   };
+}
+
+/** "San Clemente, CA" for each town the rules name. */
+async function townLabels(rules: (TriggerRow | TriggerRule)[]): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  for (const key of new Set(rules.flatMap((r) => r.place_keys ?? []))) {
+    const p = await placeByKey(key);
+    if (p) out.set(key, placeLabel(p));
+  }
+  return out;
+}
+
+/** A town someone typed, as a lib/places key, or why it isn't one. */
+async function townKey(text: string): Promise<string> {
+  const r = await resolveTown(text);
+  if (r.status === "found") return r.place.key;
+  if (r.status === "ambiguous") throw new ToolError(`${text} could be ${r.candidates.map(placeLabel).join("; ")}. Add the state or province, or give a postal code.`);
+  if (r.status === "outside") throw new ToolError(`${text} is outside the US, Canada and the UK, where Walkoff works.`);
+  throw new ToolError(`Walkoff can't find ${text}. Try "Town, ST" (like "San Clemente, CA") or a postal code.`);
 }
 
 async function momentContext(ctx: ToolContext, rows: MomentRow[]) {
@@ -203,6 +260,13 @@ function gameStartOf(m: MomentRow, games: Map<string, { starts_at: string }>): D
 
 export function registerTools(server: McpServer, ctx: ToolContext): void {
   const { db, principal } = ctx;
+  const hometown = hometownOn(principal);
+  const momentTypes = z.enum(hometown ? ALL_MOMENT_TYPES : MOMENT_TYPES);
+  // Arguments for hometown moments, there only once they're on. The casts
+  // keep the handlers' types the same either way.
+  const scopeArgs = (hometown ? { scope: SCOPE_ARG } : {}) as { scope: typeof SCOPE_ARG };
+  const townTriggerArgs = (hometown ? TOWN_TRIGGER_ARGS : {}) as typeof TOWN_TRIGGER_ARGS;
+  const townCampaignArgs = (hometown ? TOWN_CAMPAIGN_ARGS : {}) as typeof TOWN_CAMPAIGN_ARGS;
 
   server.registerTool(
     "list_brands",
@@ -416,34 +480,60 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         team: teamArg.optional(),
         league: leagueArg,
         hours: z.number().int().min(1).max(336).optional().describe("How far back to look. Default 48."),
-        types: z.array(z.enum(MOMENT_TYPES)).optional().describe("Only these moment types."),
+        types: z.array(momentTypes).optional().describe("Only these moment types."),
+        ...scopeArgs,
       },
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
     (args) =>
       run(async () => {
-        const { brand, teams } = await teamsFor(ctx, args);
+        const scope = hometown ? (args.scope ?? (args.team ? "teams" : "both")) : "teams";
         const now = ctx.now();
-        const rows = await recentMoments(db, {
-          teamIds: teams.map(feedIdOf),
-          since: new Date(now.getTime() - (args.hours ?? 48) * HOUR),
-          types: args.types,
-          limit: 100,
+        const since = new Date(now.getTime() - (args.hours ?? 48) * HOUR);
+        let brand: BrandRow | null = null;
+        let teams: TeamRef[] = [];
+        let teamNote: string | null = null;
+        if (scope !== "towns") {
+          try {
+            ({ brand, teams } = await teamsFor(ctx, args));
+          } catch (err) {
+            // A brand with no standout teams can still have towns.
+            if (scope === "teams" || !(err instanceof ToolError)) throw err;
+            teamNote = err.message;
+          }
+        }
+        if (scope !== "teams" && !brand) brand = await brandFor(db, principal, args.brand);
+        const rows = teams.length ? await recentMoments(db, { teamIds: teams.map(feedIdOf), since, types: args.types, limit: 100 }) : [];
+        const townRows = scope !== "teams" && brand ? await hometownMoments(db, { since, types: args.types }) : [];
+        const fits = townRows.length ? await townFits(townRows, await loadAreaCounts(db, brand!.id)) : new Map<string, TownFit>();
+        const near = townRows.filter((r) => {
+          const fit = r.place_key ? fits.get(r.place_key) : undefined;
+          return fit && localEnough(fit, {});
         });
         const { names, games } = await momentContext(ctx, rows);
-        const acted = brand ? latestByMoment(await sendsFor(db, brand.id, { momentIds: rows.map((r) => r.id) })) : new Map();
+        const ids = [...rows, ...near].map((r) => r.id);
+        const acted = brand ? latestByMoment(await sendsFor(db, brand.id, { momentIds: ids })) : new Map();
+        const windowOf = (r: MomentRow, gameStart: Date | null) =>
+          momentWindow({ type: r.type, intensity: r.intensity, occurredAt: new Date(r.occurred_at), gameStart, teamKey: null }, now);
         return {
           brand: brand?.name ?? null,
           teams: teams.map((t) => t.team.name),
-          moments: rows.map((r) => {
-            const gameStart = gameStartOf(r, games);
-            return {
-              ...momentView(r, names, r.game_id ? games.get(r.game_id) : undefined),
-              window: momentWindow({ type: r.type, intensity: r.intensity, occurredAt: new Date(r.occurred_at), gameStart, teamKey: null }, now),
-              brand_status: acted.get(r.id)?.status ?? null,
-            };
-          }),
-          ...(rows.length ? {} : { note: "Nothing in this window. The engine watches every game in Walkoff's leagues, every minute or so." }),
+          moments: rows.map((r) => ({
+            ...momentView(r, names, r.game_id ? games.get(r.game_id) : undefined),
+            window: windowOf(r, gameStartOf(r, games)),
+            brand_status: acted.get(r.id)?.status ?? null,
+          })),
+          ...(scope !== "teams"
+            ? {
+                hometown_moments: near.map((r) => ({
+                  ...hometownView(r, fits.get(r.place_key!)),
+                  window: windowOf(r, gameStartOf(r, games)),
+                  brand_status: acted.get(r.id)?.status ?? null,
+                })),
+              }
+            : {}),
+          ...(teamNote ? { teams_note: teamNote } : {}),
+          ...(rows.length || near.length ? {} : { note: "Nothing in this window. The engine watches every game in Walkoff's leagues, every minute or so." }),
         };
       }),
   );
@@ -560,13 +650,14 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         brand: brandArg,
         moment_id: z.string().optional().describe("From trigger_queue or recent_moments."),
         team: teamArg.optional().describe("With moment_type, builds a sample before there's a real moment."),
-        moment_type: z.enum(MOMENT_TYPES).optional(),
+        moment_type: momentTypes.optional(),
         league: leagueArg,
         offer: z.string().max(140).optional().describe('An offer to feature, like "15% off with code BOLT15 through Monday".'),
         products: z.array(z.string()).max(6).optional().describe("Product handles or titles to feature instead of Walkoff's picks."),
         reach: reachArg,
         store_url: z.string().url().optional().describe("The store's address, when Walkoff doesn't have it."),
         currency: z.string().length(3).optional().describe("For prices, like USD or GBP. Default from the team's country."),
+        ...townCampaignArgs,
       },
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -576,9 +667,26 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         const now = ctx.now();
         const [report, catalog, areas] = await Promise.all([latestReport(db, b.id), loadTaggedCatalog(db, b.id), loadAreaCounts(db, b.id)]);
         let moment: CampaignMoment;
-        if (args.moment_id) {
-          const row = await momentById(db, args.moment_id);
-          if (!row) throw new ToolError("No moment with that id. Get ids from trigger_queue or recent_moments.");
+        const row = args.moment_id ? await momentById(db, args.moment_id) : null;
+        if (args.moment_id && (!row || (isHometownType(row.type) && !hometown))) {
+          throw new ToolError("No moment with that id. Get ids from trigger_queue or recent_moments.");
+        }
+        if (row?.retracted_at) {
+          throw new ToolError(`Walkoff took that moment back${row.retracted_reason ? `: ${row.retracted_reason}` : ""}. It's in no queue, so don't send it.`);
+        }
+        // Hometown moments: the town's own campaign.
+        if (row ? isHometownType(row.type) : hometown && !!args.moment_type && isHometownType(args.moment_type)) {
+          let sample: { type: HometownType; place: Place; team: TeamRef | null } | undefined;
+          if (!row) {
+            if (!args.town) throw new ToolError('A hometown sample needs a town, like town: "San Clemente, CA".');
+            const place = await placeByKey(await townKey(args.town));
+            if (!place) throw new ToolError(`Walkoff can't find ${args.town}.`);
+            sample = { type: args.moment_type as HometownType, place, team: args.team ? team(args.team, args.league, standoutTeams(report)) : null };
+          }
+          const { moment: m, campaign } = await campaignForTown({ db, brand: b, moment: row, sample, catalog, counts: areas, args, now });
+          return { brand: b.name, licensed: b.licensed, moment: m, ...campaign };
+        }
+        if (row) {
           const t = teamFromFeedId(row.team_id);
           if (!t) throw new ToolError("Walkoff has no fan territory for that team, so it can't build an audience.");
           const games = await gamesById(db, row.game_id ? [row.game_id] : []);
@@ -657,35 +765,60 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
       run(async () => {
         const b = await brandFor(db, principal, args.brand);
         const now = ctx.now();
+        const since = new Date(now.getTime() - (args.hours ?? 72) * HOUR);
         const [report, triggers] = await Promise.all([latestReport(db, b.id), listTriggers(db, b.id)]);
         const standouts = standoutTeams(report).map((t) => t.key);
         const active = triggers.filter((t) => t.active);
-        const rules: TriggerRule[] = active.length ? active : [DEFAULT_RULE];
+        const rules: TriggerRule[] = active.length ? active : [defaultRule(hometown)];
         const keys = new Set([...standouts, ...rules.flatMap((r) => r.team_keys)]);
         const teamIds = [...keys].map((k) => teamByKey(k)).filter((t): t is TeamRef => !!t).map(feedIdOf);
-        const rows = await recentMoments(db, { teamIds, since: new Date(now.getTime() - (args.hours ?? 72) * HOUR), limit: 300 });
-        const [{ names, games }, sends] = await Promise.all([momentContext(ctx, rows), sendsFor(db, b.id, { momentIds: rows.map((r) => r.id) })]);
+        const [rows, townRows] = await Promise.all([
+          recentMoments(db, { teamIds, since, limit: 300 }),
+          hometown ? hometownMoments(db, { since }) : Promise.resolve([] as MomentRow[]),
+        ]);
+        const [{ names, games }, sends] = await Promise.all([
+          momentContext(ctx, rows),
+          sendsFor(db, b.id, { momentIds: [...rows, ...townRows].map((r) => r.id) }),
+        ]);
         const acted = latestByMoment(sends);
-        const rank = { closing: 0, open: 1, closed: 2 } as const;
-        const queue = rows
-          .filter((r) => !acted.has(r.id))
+        const teamMatches = rows
           .map((r) => {
             const qm = { type: r.type, intensity: r.intensity, occurredAt: new Date(r.occurred_at), gameStart: gameStartOf(r, games), teamKey: teamFromFeedId(r.team_id)?.key ?? null };
-            return { r, rule: matchingRule(qm, rules, standouts), window: momentWindow(qm, now) };
+            return { r, rule: matchingRule(qm, rules, standouts), window: momentWindow(qm, now), view: () => momentView(r, names, r.game_id ? games.get(r.game_id) : undefined) };
           })
-          .filter((x) => x.rule && x.window.status !== "closed")
+          .filter((x) => x.rule);
+        // Hometown moments, by town: the brand's customers there, at most a
+        // few towns an event, and none inside the champion's territory when
+        // the team's own title is in this queue.
+        const towns = townRows.length
+          ? localQueue(townRows, await townFits(townRows, await loadAreaCounts(db, b.id)), {
+              rules,
+              standouts,
+              towns: await ruleTowns(rules),
+              titleGames: new Set(teamMatches.filter((x) => x.r.type === "title_won" && x.r.game_id).map((x) => x.r.game_id!)),
+              now,
+            })
+          : { items: [], also: [], inTeamTerritory: 0 };
+        const rank = { closing: 0, open: 1, closed: 2 } as const;
+        const queue = [...teamMatches, ...towns.items.map((x) => ({ r: x.row, rule: x.rule, window: x.window, view: () => hometownView(x.row, x.fit) }))]
+          .filter((x) => !acted.has(x.r.id) && x.window.status !== "closed")
           .sort((a, b) => rank[a.window.status] - rank[b.window.status] || b.r.intensity - a.r.intensity || b.r.occurred_at.localeCompare(a.r.occurred_at))
           .slice(0, 25);
+        const labels = await townLabels(rules);
         return {
           brand: b.name,
-          rules: rules.map(triggerView),
+          rules: rules.map((r) => triggerView(r, labels)),
           ...(active.length ? {} : { note: "No triggers set, so this uses Walkoff's default. create_trigger makes your own." }),
           queue: queue.map((x) => ({
-            ...momentView(x.r, names, x.r.game_id ? games.get(x.r.game_id) : undefined),
+            ...x.view(),
             matched: x.rule!.name,
             trigger_id: x.rule!.id === DEFAULT_RULE.id ? null : x.rule!.id,
             window: x.window,
           })),
+          ...(towns.also.length ? { also_from_these_events: towns.also } : {}),
+          ...(towns.inTeamTerritory
+            ? { left_out: `${towns.inTeamTerritory} hometown ${towns.inTeamTerritory === 1 ? "moment" : "moments"} in the champion's own territory, where the team's title already reaches.` }
+            : {}),
           handled_in_window: acted.size,
           next: queue.length ? "build_campaign with a moment_id, or log_send with status skipped to clear one." : "Nothing to act on right now.",
         };
@@ -701,10 +834,11 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
       inputSchema: {
         brand: brandArg,
         name: z.string().min(1).max(80).describe('What to call it, like "Big wins in our top markets".'),
-        moment_types: z.array(z.enum(MOMENT_TYPES)).optional().describe("Moment types to act on. Empty: any."),
+        moment_types: z.array(momentTypes).optional().describe("Moment types to act on. Empty: any."),
         teams: z.array(z.string()).max(30).optional().describe("Teams by name or key. Empty: the brand's standout teams."),
         league: leagueArg,
         min_intensity: z.number().min(0).max(1).optional().describe("Skip moments below this intensity (0 to 1). Walk-offs are about 0.9, close losses 0.5."),
+        ...townTriggerArgs,
       },
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     },
@@ -713,14 +847,22 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         const b = await brandFor(db, principal, args.brand);
         const standouts = standoutTeams(await latestReport(db, b.id));
         const keys = [...new Set((args.teams ?? []).map((q) => team(q, args.league, standouts).key))];
+        const local = hometown && (args.towns?.length || args.min_local_customers !== undefined);
+        if (local && !(await has009(db))) throw new ToolError("Triggers for towns need Walkoff's athlete data, which isn't set up yet. Ask your Walkoff contact.");
+        const placeKeys = local ? [...new Set(await Promise.all((args.towns ?? []).map(townKey)))] : [];
         const row = await createTrigger(db, b.id, {
           name: args.name.trim(),
           moment_types: args.moment_types ?? [],
           team_keys: keys,
           min_intensity: args.min_intensity ?? 0,
           created_by: principal.email,
+          ...(local ? { place_keys: placeKeys, min_local_customers: args.min_local_customers ?? null } : {}),
         });
-        return { brand: b.name, trigger: triggerView(row), next: "trigger_queue now includes moments that match." };
+        return {
+          brand: b.name,
+          trigger: triggerView(row, await townLabels([row])),
+          next: placeKeys.length ? "trigger_queue now includes hometown moments in and near those towns." : "trigger_queue now includes moments that match.",
+        };
       }),
   );
 
@@ -736,10 +878,11 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
       run(async () => {
         const b = await brandFor(db, principal, args.brand);
         const triggers = await listTriggers(db, b.id);
+        const labels = await townLabels(triggers);
         return {
           brand: b.name,
-          triggers: triggers.map((t) => ({ ...triggerView(t), created_by: t.created_by, created_at: t.created_at })),
-          ...(triggers.length ? {} : { default_rule: triggerView(DEFAULT_RULE) }),
+          triggers: triggers.map((t) => ({ ...triggerView(t, labels), created_by: t.created_by, created_at: t.created_at })),
+          ...(triggers.length ? {} : { default_rule: triggerView(defaultRule(hometown)) }),
         };
       }),
   );
@@ -1093,4 +1236,5 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
   );
 
   registerAthleteOperatorTools(server, ctx, (fn) => operatorOnly(ctx, fn));
+  registerHometownOperatorTools(server, ctx, (fn) => operatorOnly(ctx, fn));
 }

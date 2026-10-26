@@ -1,0 +1,169 @@
+{
+ "events": [
+  {
+   "id": "401772988",
+   "date": "2026-02-08T23:30Z",
+   "name": "Seattle Seahawks at New England Patriots",
+   "shortName": "SEA VS NE",
+   "season": {
+    "year": 2025,
+    "type": 3,
+    "slug": "post-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401772988",
+     "date": "2026-02-08T23:30Z",
+     "neutralSite": true,
+     "notes": [
+      {
+       "type": "event",
+       "headline": "Super Bowl LX"
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": false,
+       "score": "13",
+       "linescores": [
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 3
+        },
+        {
+         "value": 13.0,
+         "displayValue": "13",
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Any",
+         "type": "total",
+         "summary": "14-3"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "6-3"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "8-0"
+        }
+       ],
+       "team": {
+        "id": "17",
+        "abbreviation": "NE",
+        "displayName": "New England Patriots",
+        "shortDisplayName": "Patriots",
+        "name": "Patriots",
+        "location": "New England",
+        "color": "002a5c",
+        "alternateColor": "c60c30"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": true,
+       "score": "29",
+       "linescores": [
+        {
+         "value": 3.0,
+         "displayValue": "3",
+         "period": 1
+        },
+        {
+         "value": 6.0,
+         "displayValue": "6",
+         "period": 2
+        },
+        {
+         "value": 3.0,
+         "displayValue": "3",
+         "period": 3
+        },
+        {
+         "value": 17.0,
+         "displayValue": "17",
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Any",
+         "type": "total",
+         "summary": "14-3"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "6-2"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "8-1"
+        }
+       ],
+       "team": {
+        "id": "26",
+        "abbreviation": "SEA",
+        "displayName": "Seattle Seahawks",
+        "shortDisplayName": "Seahawks",
+        "name": "Seahawks",
+        "location": "Seattle",
+        "color": "002a5c",
+        "alternateColor": "69be28"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

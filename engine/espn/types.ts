@@ -102,4 +102,44 @@ export interface EspnSummary {
     team?: { id?: string } | null;
     text?: string;
   }[];
+  /** Each side's box score: everyone with a line, in groups (passing,
+   *  batting, forwards). Basketball lists the bench too, as didNotPlay. */
+  boxscore?: {
+    players?: {
+      team?: { id?: string };
+      statistics?: {
+        name?: string;
+        /** Baseball names its groups here: "batting", "pitching". */
+        type?: string;
+        keys?: string[];
+        athletes?: {
+          athlete?: { id?: string; displayName?: string };
+          stats?: string[];
+          didNotPlay?: boolean;
+        }[];
+      }[];
+    }[];
+  };
+  /** Each side's leaders in the game, by category. Not in baseball. */
+  leaders?: {
+    team?: { id?: string };
+    leaders?: {
+      name?: string;
+      displayName?: string;
+      leaders?: { displayValue?: string; athlete?: { id?: string; displayName?: string } }[];
+    }[];
+  }[];
+  header?: {
+    competitions?: {
+      status?: {
+        /** Baseball's winning pitcher, hockey's winning goalie and three stars. */
+        featuredAthletes?: {
+          name?: string;
+          displayName?: string;
+          athlete?: { id?: string; displayName?: string };
+          team?: { id?: string };
+        }[];
+      };
+    }[];
+  };
 }

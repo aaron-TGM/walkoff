@@ -1,0 +1,867 @@
+{
+ "header": {
+  "competitions": [
+   {
+    "competitors": [
+     {
+      "id": "14",
+      "homeAway": "home",
+      "winner": false,
+      "score": "4",
+      "team": {
+       "id": "14",
+       "abbreviation": "TOR"
+      }
+     },
+     {
+      "id": "19",
+      "homeAway": "away",
+      "winner": true,
+      "score": "5",
+      "team": {
+       "id": "19",
+       "abbreviation": "LAD"
+      }
+     }
+    ],
+    "status": {
+     "type": {
+      "state": "post",
+      "completed": true,
+      "detail": "Final/11"
+     },
+     "featuredAthletes": [
+      {
+       "name": "winningPitcher",
+       "displayName": "Winning Pitcher",
+       "athlete": {
+        "id": "4872587",
+        "displayName": "Yoshinobu Yamamoto"
+       },
+       "team": {
+        "id": "19"
+       }
+      },
+      {
+       "name": "losingPitcher",
+       "displayName": "Losing Pitcher",
+       "athlete": {
+        "id": "40912",
+        "displayName": "Shane Bieber"
+       },
+       "team": {
+        "id": "14"
+       }
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "boxscore": {
+  "players": [
+   {
+    "team": {
+     "id": "19",
+     "abbreviation": "LAD"
+    },
+    "statistics": [
+     {
+      "type": "batting",
+      "keys": [
+       "hits-atBats",
+       "atBats",
+       "runs",
+       "hits",
+       "RBIs",
+       "homeRuns",
+       "walks",
+       "strikeouts",
+       "pitches",
+       "avg",
+       "onBasePct",
+       "slugAvg"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "2-5",
+         "5",
+         "0",
+         "2",
+         "0",
+         "0",
+         "1",
+         "0",
+         "15",
+         ".265",
+         ".405",
+         ".691"
+        ],
+        "athlete": {
+         "id": "39832",
+         "displayName": "Shohei Ohtani"
+        }
+       },
+       {
+        "stats": [
+         "2-6",
+         "6",
+         "2",
+         "2",
+         "1",
+         "1",
+         "0",
+         "1",
+         "19",
+         ".276",
+         ".364",
+         ".414"
+        ],
+        "athlete": {
+         "id": "38309",
+         "displayName": "Will Smith"
+        }
+       },
+       {
+        "stats": [
+         "1-6",
+         "6",
+         "0",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "21",
+         ".221",
+         ".338",
+         ".382"
+        ],
+        "athlete": {
+         "id": "30193",
+         "displayName": "Freddie Freeman"
+        }
+       },
+       {
+        "stats": [
+         "0-3",
+         "3",
+         "1",
+         "0",
+         "0",
+         "0",
+         "2",
+         "0",
+         "20",
+         ".229",
+         ".333",
+         ".314"
+        ],
+        "athlete": {
+         "id": "33039",
+         "displayName": "Mookie Betts"
+        }
+       },
+       {
+        "stats": [
+         "3-4",
+         "4",
+         "1",
+         "3",
+         "1",
+         "1",
+         "1",
+         "1",
+         "22",
+         ".214",
+         ".353",
+         ".411"
+        ],
+        "athlete": {
+         "id": "33303",
+         "displayName": "Max Muncy"
+        }
+       },
+       {
+        "stats": [
+         "0-3",
+         "3",
+         "0",
+         "0",
+         "1",
+         "0",
+         "1",
+         "0",
+         "18",
+         ".257",
+         ".303",
+         ".486"
+        ],
+        "athlete": {
+         "id": "33377",
+         "displayName": "Teoscar Hernandez"
+        }
+       },
+       {
+        "stats": [
+         "0-0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         ".000",
+         ".000",
+         ".000"
+        ],
+        "athlete": {
+         "id": "41531",
+         "displayName": "Justin Dean"
+        }
+       },
+       {
+        "stats": [
+         "0-3",
+         "3",
+         "0",
+         "0",
+         "1",
+         "0",
+         "0",
+         "0",
+         "13",
+         ".222",
+         ".254",
+         ".365"
+        ],
+        "athlete": {
+         "id": "39907",
+         "displayName": "Tommy Edman"
+        }
+       },
+       {
+        "stats": [
+         "0-1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "4",
+         ".078",
+         ".113",
+         ".098"
+        ],
+        "athlete": {
+         "id": "42468",
+         "displayName": "Andy Pages"
+        }
+       },
+       {
+        "stats": [
+         "1-5",
+         "5",
+         "0",
+         "1",
+         "0",
+         "0",
+         "0",
+         "2",
+         "18",
+         ".250",
+         ".290",
+         ".359"
+        ],
+        "athlete": {
+         "id": "31358",
+         "displayName": "Enrique Hernandez"
+        }
+       },
+       {
+        "stats": [
+         "2-5",
+         "5",
+         "1",
+         "2",
+         "1",
+         "1",
+         "0",
+         "1",
+         "22",
+         ".278",
+         ".316",
+         ".444"
+        ],
+        "athlete": {
+         "id": "30791",
+         "displayName": "Miguel Rojas"
+        }
+       },
+       {
+        "stats": [
+         "0-0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         ".000",
+         ".000",
+         ".000"
+        ],
+        "athlete": {
+         "id": "5134614",
+         "displayName": "Hyeseong Kim"
+        }
+       }
+      ]
+     },
+     {
+      "type": "pitching",
+      "keys": [
+       "fullInnings.partInnings",
+       "hits",
+       "runs",
+       "earnedRuns",
+       "walks",
+       "strikeouts",
+       "homeRuns",
+       "pitches-strikes",
+       "ERA",
+       "pitches"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "2.1",
+         "5",
+         "3",
+         "3",
+         "2",
+         "3",
+         "1",
+         "51-31",
+         "4.43",
+         "51"
+        ],
+        "athlete": {
+         "id": "39832",
+         "displayName": "Shohei Ohtani"
+        }
+       },
+       {
+        "stats": [
+         "1.1",
+         "2",
+         "0",
+         "0",
+         "0",
+         "2",
+         "0",
+         "21-15",
+         "0.00",
+         "21"
+        ],
+        "athlete": {
+         "id": "4417203",
+         "displayName": "Justin Wrobleski"
+        }
+       },
+       {
+        "stats": [
+         "2.1",
+         "3",
+         "1",
+         "1",
+         "0",
+         "2",
+         "0",
+         "38-23",
+         "1.69",
+         "38"
+        ],
+        "athlete": {
+         "id": "33190",
+         "displayName": "Tyler Glasnow"
+        }
+       },
+       {
+        "stats": [
+         "1.0",
+         "2",
+         "0",
+         "0",
+         "0",
+         "2",
+         "0",
+         "20-14",
+         "8.59",
+         "20"
+        ],
+        "athlete": {
+         "id": "4417806",
+         "displayName": "Emmet Sheehan"
+        }
+       },
+       {
+        "stats": [
+         "1.1",
+         "1",
+         "0",
+         "0",
+         "1",
+         "2",
+         "0",
+         "28-16",
+         "3.18",
+         "28"
+        ],
+        "athlete": {
+         "id": "33748",
+         "displayName": "Blake Snell"
+        }
+       },
+       {
+        "stats": [
+         "2.2",
+         "1",
+         "0",
+         "0",
+         "1",
+         "1",
+         "0",
+         "34-21",
+         "1.45",
+         "34"
+        ],
+        "athlete": {
+         "id": "4872587",
+         "displayName": "Yoshinobu Yamamoto"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "14",
+     "abbreviation": "TOR"
+    },
+    "statistics": [
+     {
+      "type": "batting",
+      "keys": [
+       "hits-atBats",
+       "atBats",
+       "runs",
+       "hits",
+       "RBIs",
+       "homeRuns",
+       "walks",
+       "strikeouts",
+       "pitches",
+       "avg",
+       "onBasePct",
+       "slugAvg"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "3-6",
+         "6",
+         "1",
+         "3",
+         "0",
+         "0",
+         "0",
+         "3",
+         "26",
+         ".284",
+         ".347",
+         ".552"
+        ],
+        "athlete": {
+         "id": "32078",
+         "displayName": "George Springer"
+        }
+       },
+       {
+        "stats": [
+         "0-3",
+         "3",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "2",
+         "14",
+         ".274",
+         ".328",
+         ".339"
+        ],
+        "athlete": {
+         "id": "35682",
+         "displayName": "Nathan Lukes"
+        }
+       },
+       {
+        "stats": [
+         "0-1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "1",
+         "5",
+         ".200",
+         ".333",
+         ".400"
+        ],
+        "athlete": {
+         "id": "4997181",
+         "displayName": "Davis Schneider"
+        }
+       },
+       {
+        "stats": [
+         "0-1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "3",
+         ".111",
+         ".158",
+         ".111"
+        ],
+        "athlete": {
+         "id": "39105",
+         "displayName": "Myles Straw"
+        }
+       },
+       {
+        "stats": [
+         "1-5",
+         "5",
+         "1",
+         "1",
+         "0",
+         "0",
+         "1",
+         "1",
+         "24",
+         ".397",
+         ".494",
+         ".795"
+        ],
+        "athlete": {
+         "id": "35002",
+         "displayName": "Vladimir Guerrero Jr."
+        }
+       },
+       {
+        "stats": [
+         "2-4",
+         "4",
+         "1",
+         "2",
+         "3",
+         "1",
+         "1",
+         "1",
+         "17",
+         ".348",
+         ".444",
+         ".478"
+        ],
+        "athlete": {
+         "id": "38904",
+         "displayName": "Bo Bichette"
+        }
+       },
+       {
+        "stats": [
+         "0-0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "1",
+         ".162",
+         ".184",
+         ".216"
+        ],
+        "athlete": {
+         "id": "33572",
+         "displayName": "Isiah Kiner-Falefa"
+        }
+       },
+       {
+        "stats": [
+         "2-4",
+         "4",
+         "0",
+         "2",
+         "0",
+         "0",
+         "2",
+         "1",
+         "32",
+         ".367",
+         ".441",
+         ".583"
+        ],
+        "athlete": {
+         "id": "4997589",
+         "displayName": "Addison Barger"
+        }
+       },
+       {
+        "stats": [
+         "2-5",
+         "5",
+         "0",
+         "2",
+         "0",
+         "0",
+         "0",
+         "0",
+         "13",
+         ".254",
+         ".349",
+         ".493"
+        ],
+        "athlete": {
+         "id": "42081",
+         "displayName": "Alejandro Kirk"
+        }
+       },
+       {
+        "stats": [
+         "0-5",
+         "5",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "2",
+         "21",
+         ".227",
+         ".284",
+         ".427"
+        ],
+        "athlete": {
+         "id": "40963",
+         "displayName": "Daulton Varsho"
+        }
+       },
+       {
+        "stats": [
+         "3-5",
+         "5",
+         "1",
+         "3",
+         "0",
+         "0",
+         "0",
+         "0",
+         "14",
+         ".411",
+         ".416",
+         ".562"
+        ],
+        "athlete": {
+         "id": "41287",
+         "displayName": "Ernie Clement"
+        }
+       },
+       {
+        "stats": [
+         "1-4",
+         "4",
+         "0",
+         "1",
+         "1",
+         "0",
+         "0",
+         "1",
+         "22",
+         ".215",
+         ".288",
+         ".338"
+        ],
+        "athlete": {
+         "id": "37729",
+         "displayName": "Andres Gimenez"
+        }
+       }
+      ]
+     },
+     {
+      "type": "pitching",
+      "keys": [
+       "fullInnings.partInnings",
+       "hits",
+       "runs",
+       "earnedRuns",
+       "walks",
+       "strikeouts",
+       "homeRuns",
+       "pitches-strikes",
+       "ERA",
+       "pitches"
+      ],
+      "athletes": [
+       {
+        "stats": [
+         "4.1",
+         "4",
+         "1",
+         "1",
+         "1",
+         "3",
+         "0",
+         "54-34",
+         "3.77",
+         "54"
+        ],
+        "athlete": {
+         "id": "28976",
+         "displayName": "Max Scherzer"
+        }
+       },
+       {
+        "stats": [
+         "0.2",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "9-7",
+         "3.94",
+         "9"
+        ],
+        "athlete": {
+         "id": "4917888",
+         "displayName": "Louis Varland"
+        }
+       },
+       {
+        "stats": [
+         "1.0",
+         "2",
+         "1",
+         "1",
+         "1",
+         "0",
+         "0",
+         "26-16",
+         "1.04",
+         "26"
+        ],
+        "athlete": {
+         "id": "33148",
+         "displayName": "Chris Bassitt"
+        }
+       },
+       {
+        "stats": [
+         "1.2",
+         "1",
+         "1",
+         "1",
+         "1",
+         "0",
+         "1",
+         "21-13",
+         "3.58",
+         "21"
+        ],
+        "athlete": {
+         "id": "4949041",
+         "displayName": "Trey Yesavage"
+        }
+       },
+       {
+        "stats": [
+         "1.1",
+         "1",
+         "1",
+         "1",
+         "0",
+         "2",
+         "1",
+         "22-13",
+         "1.46",
+         "22"
+        ],
+        "athlete": {
+         "id": "33841",
+         "displayName": "Jeff Hoffman"
+        }
+       },
+       {
+        "stats": [
+         "1.0",
+         "1",
+         "0",
+         "0",
+         "2",
+         "0",
+         "0",
+         "27-13",
+         "3.18",
+         "27"
+        ],
+        "athlete": {
+         "id": "37793",
+         "displayName": "Seranthony Dominguez"
+        }
+       },
+       {
+        "stats": [
+         "1.0",
+         "1",
+         "1",
+         "1",
+         "0",
+         "0",
+         "1",
+         "13-8",
+         "3.86",
+         "13"
+        ],
+        "athlete": {
+         "id": "40912",
+         "displayName": "Shane Bieber"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

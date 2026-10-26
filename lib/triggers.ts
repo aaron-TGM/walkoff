@@ -155,3 +155,34 @@ export const TRIGGERS: Trigger[] = [
     category: "season",
   },
 ];
+
+/** Hometown moments (lib/hometown): when someone from a town near a brand's
+ *  customers wins, the town gets its own moment. Kept out of TRIGGERS, which
+ *  the site lists, until they launch (lib/hometown/flag.ts). */
+export const HOMETOWN_TRIGGERS: Trigger[] = [
+  {
+    name: "Hometown Champion",
+    id: "hometown_title",
+    description:
+      "A player from a town near your customers just won a title. The whole town is celebrating: celebrate the town, never the player.",
+    category: "season",
+  },
+  {
+    name: "Hometown Win",
+    id: "hometown_win",
+    description:
+      "Someone from the town won a tournament or a race. Golf, tennis, racing and surfing.",
+    category: "season",
+  },
+  {
+    name: "Hometown Contender",
+    id: "hometown_contender",
+    description:
+      "Someone from the town leads going into the final round. The town is watching.",
+    category: "before",
+    coming: true,
+  },
+];
+
+/** Every moment type, hometown ones included. */
+export const ALL_TRIGGERS: Trigger[] = [...TRIGGERS, ...HOMETOWN_TRIGGERS];

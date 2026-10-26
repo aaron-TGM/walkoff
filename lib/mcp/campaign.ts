@@ -103,6 +103,9 @@ const KIND: Record<string, Kind> = {
   great_escape: "season",
   player_milestone: "season",
   big_signing: "season",
+  hometown_title: "season",
+  hometown_win: "season",
+  hometown_contender: "pregame",
 };
 
 export const momentKind = (type: string): Kind => KIND[type] ?? "win";
@@ -356,7 +359,7 @@ ${e.cta.url ? `<tr><td align="center" class="wo-pad" style="padding:12px 40px 40
 
 // ── Putting it together ────────────────────────────────────────────
 
-function money(price: number | null | undefined, currency: string): string | null {
+export function money(price: number | null | undefined, currency: string): string | null {
   if (price === null || price === undefined || !Number.isFinite(price)) return null;
   try {
     return new Intl.NumberFormat("en-US", { style: "currency", currency, minimumFractionDigits: Number.isInteger(price) ? 0 : 2 }).format(price);

@@ -3,7 +3,8 @@
 An always-on worker that watches every game in the V1 leagues, detects the
 moments fans care about, and saves them to Supabase. It also has Claude tag
 each brand's new products a minute or so after they're imported or
-uploaded, and keeps every team's roster with where each athlete is from.
+uploaded, keeps every team's roster with where each athlete is from, and
+can make a moment for each town a champion's players are from.
 It runs separately from the website: Vercel functions time out, and this
 needs to keep polling all night.
 
@@ -36,9 +37,8 @@ Then it refreshes the brand's fan map, so picks use Claude's tags.
 
 ## Athletes and hometowns
 
-For hometown moments (still to come), the engine keeps who plays for each
-team and where they're from (`athletes/sync.ts`, `lib/athletes`,
-`lib/places`).
+For hometown moments, the engine keeps who plays for each team and where
+they're from (`athletes/sync.ts`, `lib/athletes`, `lib/places`).
 
 - Every team Walkoff has a home for (644 across the V1 leagues) gets its
   ESPN roster read once a day, two teams a minute. Players a team no longer
@@ -60,6 +60,38 @@ team and where they're from (`athletes/sync.ts`, `lib/athletes`,
   is the number of teams whose roster is under a day old.
 - It's on whenever the engine saves to Supabase. `ATHLETES=0` turns it off,
   and `WIKIDATA=0` turns off only the Wikidata lookups.
+
+## Hometown moments
+
+When a team wins a title, every town its players are from gets a moment of
+its own (`hometown.ts`, `lib/hometown`). A brand with customers near the
+town can celebrate it, without naming the player. Off unless `HOMETOWN=1`:
+hometown campaigns wait for counsel to sign off on their copy rules
+(docs/hometown.md).
+
+- The poller puts the champion's players on the title moment
+  (`detail.heroes`, `moments/heroes.ts`): its leaders in the deciding game
+  (ESPN's game leaders, a hockey game's three stars and winning goalie,
+  baseball's winning pitcher and home runs) and everyone with a line in the
+  box score. Football and basketball read the game summary anyway; for a
+  baseball or hockey title it's one more read. A summary that fails never
+  holds the title up.
+- Every 5 minutes the job looks at the last 72 hours' titles. The first
+  time it sees one, it reads the champion's roster again if it's more than
+  36 hours old, then records each player's part as an athlete result:
+  leader (0.95), played (0.85), roster (0.75) or reserve (0.70).
+- Then one moment per town the players are from, from their homes sure
+  enough for a moment (`momentHomes`): `hometown_title`, keyed by the game
+  and the town, with the town's most prominent player as its athlete and
+  everyone from there in `detail.athletes`. A town keeps the moment it got
+  first; a home fixed later just adds the new town's. A big city (over
+  750,000 people in the circle) gets one only when an operator or the
+  curated file set the home.
+- Super Bowl LX's roster makes about 75 towns. Brands see only those near
+  their customers, a few an event (docs/hometown.md).
+- Until `supabase/009_athletes.sql` has run, it waits an hour and checks
+  again. Its heartbeat is the `hometown` row in `engine_heartbeats`, where
+  `games` is the moments the last tick made.
 
 ## What it detects
 
@@ -96,7 +128,9 @@ team.
   date in US Eastern time (plus yesterday until 6am, and the next two days
   every 30 minutes for previews).
 - For football and basketball finals it also reads the play-by-play, to tell
-  a walk-off or buzzer beater from an early lead that held.
+  a walk-off or buzzer beater from an early lead that held. A title's box
+  score comes from the same summary (one more read for baseball and
+  hockey).
 - On restart it reloads the last 36 hours of games from Supabase, so it
   neither misses a final it was watching nor repeats moments it already
   saved. Finals it has never seen and that ended long ago are skipped as
@@ -133,6 +167,7 @@ not saved.
 | `WALKOFF_TAG_EFFORT`        | `medium`       | `low` to `max` |
 | `ATHLETES`                  | `1`            | `0` turns the athlete sync off |
 | `WIKIDATA`                  | `1`            | `0` turns its Wikidata lookups off |
+| `HOMETOWN`                  | `0`            | `1` turns hometown moments on |
 
 ## Set up Supabase
 
@@ -206,6 +241,9 @@ Logs are JSON lines with `severity`, so Cloud Logging filters work, e.g.
 
 - `playoff_clinch` (needs standings), `player_milestone`, `big_signing` and
   `great_escape` are in the site's trigger library but not detected yet.
+- Hometown moments for golf, tennis, racing and surfing, and for a
+  player's walk-off or buzzer beater. Until then an operator can record a
+  win with `create_moment` (docs/hometown.md).
 - Hockey late winners need hockey play-by-play.
 - Brands act on moments through the MCP server (docs/mcp.md): it matches
   each moment to the brand's fan territories and products and drafts the

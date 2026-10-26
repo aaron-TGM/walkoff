@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { DEFAULT_RULE, matchingRule, momentWindow, type TriggerRule } from "./queue";
+import { DEFAULT_RULE, defaultRule, LOCAL, localEnough, matchingRule, momentWindow, type TriggerRule } from "./queue";
 
 const NOW = new Date("2026-10-19T00:00:00Z");
 const hoursAgo = (h: number) => new Date(NOW.getTime() - h * 3_600_000);
@@ -37,6 +37,42 @@ describe("matchingRule", () => {
   });
 });
 
+describe("matchingRule for hometown moments", () => {
+  // San Clemente, and a town rule for Dana Point, 5 miles up the coast.
+  const local = { placeKey: "census:0665084", lat: 33.4502, lng: -117.6108, customers: 80, lift: 12 };
+  const town = (over: Partial<Parameters<typeof matchingRule>[0]> = {}) => moment({ type: "hometown_title", intensity: 0.95, teamKey: "nfl:26", local, ...over });
+  const towns = new Map([["census:0617946", { lat: 33.4672, lng: -117.6981 }], ["census:0644000", { lat: 34.0194, lng: -118.4108 }]]);
+
+  it("needs the town near the brand's customers, not one of its teams", () => {
+    const rule = defaultRule(true);
+    assert.equal(matchingRule(town(), [rule], [])?.id, "default", "no standout teams needed");
+    assert.equal(matchingRule(town({ local: null }), [rule], ["nfl:26"]), null, "no customers there");
+    assert.equal(matchingRule(town({ local: { ...local, customers: 20, lift: 1.2 } }), [rule], []), null);
+    assert.equal(matchingRule(town({ local: { ...local, customers: 20, lift: 3 } }), [rule], [])?.id, "default", "fewer, but bunched there");
+    assert.equal(matchingRule(town(), [DEFAULT_RULE], []), null, "not in the default until they're on");
+  });
+
+  it("takes a rule's teams, towns within 10 miles, and its own customer bar", () => {
+    const base: TriggerRule = { id: "t", name: "Towns", moment_types: [], team_keys: [], min_intensity: 0, active: true };
+    assert.equal(matchingRule(town(), [{ ...base, team_keys: ["nfl:26"] }], [])?.id, "t");
+    assert.equal(matchingRule(town(), [{ ...base, team_keys: ["nfl:17"] }], []), null);
+    assert.equal(matchingRule(town(), [{ ...base, place_keys: ["census:0617946"] }], [], towns)?.id, "t", "Dana Point is 5 miles away");
+    assert.equal(matchingRule(town(), [{ ...base, place_keys: ["census:0644000"] }], [], towns), null, "Los Angeles is 60");
+    assert.equal(matchingRule(town(), [{ ...base, min_local_customers: 100 }], []), null);
+    assert.equal(matchingRule(town(), [{ ...base, min_local_customers: 75 }], [])?.id, "t");
+    // A rule for towns isn't for team moments.
+    assert.equal(matchingRule(moment(), [{ ...base, place_keys: ["census:0617946"] }], ["nfl:24"], towns), null);
+  });
+
+  it("sets the bar at 50 customers, or 15 at 2.5 times the town's share", () => {
+    assert.deepEqual([LOCAL.minCustomers, LOCAL.minWithLift, LOCAL.minLift], [50, 15, 2.5]);
+    assert.equal(localEnough({ customers: 50, lift: 1 }, {}), true);
+    assert.equal(localEnough({ customers: 49, lift: 2.4 }, {}), false);
+    assert.equal(localEnough({ customers: 15, lift: 2.5 }, {}), true);
+    assert.equal(localEnough({ customers: 15, lift: null }, {}), false);
+  });
+});
+
 describe("momentWindow", () => {
   it("gives a result about a day", () => {
     assert.equal(momentWindow(moment({ occurredAt: hoursAgo(2) }), NOW).status, "open");
@@ -54,5 +90,7 @@ describe("momentWindow", () => {
 
   it("season moments last three days", () => {
     assert.equal(momentWindow(moment({ type: "playoff_clinch", occurredAt: hoursAgo(48) }), NOW).status, "open");
+    assert.equal(momentWindow(moment({ type: "hometown_title", occurredAt: hoursAgo(48) }), NOW).status, "open");
+    assert.equal(momentWindow(moment({ type: "hometown_title", occurredAt: hoursAgo(73) }), NOW).status, "closed");
   });
 });

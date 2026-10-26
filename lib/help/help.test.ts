@@ -49,6 +49,8 @@ const OPERATOR_TOOLS = [
   "onboarding_status",
   "set_athlete_home",
   "record_athlete_rights",
+  "create_moment",
+  "retract_moment",
 ];
 
 async function memberClient() {

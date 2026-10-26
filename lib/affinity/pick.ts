@@ -19,6 +19,8 @@ export interface PickProduct {
    *  colorways. */
   colors?: string[];
   uses?: string[];
+  /** Scenes it's made for beyond team sports: surf, golf, tennis. */
+  interests?: string[];
   price?: number | null;
 }
 
@@ -140,4 +142,35 @@ export function pickForTeam(
     usedProducts.add(m.product);
   }
   return [...made, ...picks].slice(0, limit);
+}
+
+/** A product as a pick in its first colorway, for reasons other than color. */
+export function plain(product: PickProduct, why: string, score = 0): Pick {
+  const first = product.colorways?.[0];
+  return {
+    handle: product.handle,
+    title: product.title,
+    colorway: null,
+    hex: first?.hex ?? [],
+    skus: first?.skus ?? [],
+    image: first?.image ?? "",
+    why,
+    score,
+    price: product.price ?? null,
+  };
+}
+
+const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/** Products named for a town ("San Clemente Pier Tee"), for its hometown
+ *  moments. */
+export function pickForTown(products: PickProduct[], town: string, limit = 3): Pick[] {
+  const named = new RegExp(`\\b${escapeRegExp(town)}\\b`, "i");
+  return products.filter((p) => named.test(p.title)).slice(0, limit).map((p) => plain(p, `Named for ${town}`, 3));
+}
+
+/** Products made for a scene (golf, surf, tennis, motorsports), for an
+ *  individual athlete's win. */
+export function pickForInterest(products: PickProduct[], interest: string, limit = 3): Pick[] {
+  return products.filter((p) => p.interests?.includes(interest)).slice(0, limit).map((p) => plain(p, `Made for ${interest}`, 1));
 }

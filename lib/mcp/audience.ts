@@ -22,9 +22,9 @@ const RADII: Record<"pro" | "soccer", number[]> = {
 /** Klaviyo takes up to 500 zip codes in one condition. */
 export const KLAVIYO_ZIP_LIMIT = 500;
 
-const COUNTRY_NAME: Record<Country, string> = { US: "United States", CA: "Canada", GB: "United Kingdom" };
+export const COUNTRY_NAME: Record<Country, string> = { US: "United States", CA: "Canada", GB: "United Kingdom" };
 /** Klaviyo's segment API names countries by three-letter ISO code. */
-const KLAVIYO_COUNTRY: Record<Country, string> = { US: "USA", CA: "CAN", GB: "GBR" };
+export const KLAVIYO_COUNTRY: Record<Country, string> = { US: "USA", CA: "CAN", GB: "GBR" };
 
 /** A segment as Klaviyo's create_segment takes it (its Segments API:
  *  condition groups are ANDed, the conditions in a group ORed). */
@@ -169,7 +169,7 @@ export function territoryCircles(
   };
 }
 
-function klaviyoSegment(name: string, circles: Circle[]): KlaviyoSegment {
+export function klaviyoSegment(name: string, circles: Circle[]): KlaviyoSegment {
   const conditions = circles.map((c) => ({
     type: "profile-postal-code-distance" as const,
     country_code: KLAVIYO_COUNTRY[c.country],

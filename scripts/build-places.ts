@@ -13,6 +13,7 @@
 // one JSON string, which loads faster than arrays. See data/geo/README.md.
 // Run: npx tsx scripts/build-places.ts
 import { mkdirSync, writeFileSync } from "node:fs";
+import { haversineKm } from "../lib/affinity/geo";
 import { nameKey } from "../lib/places/names";
 import { cached, columns, eachRow, SOURCES, STATE_FIPS } from "./lib/sources";
 import { usZctas } from "./lib/zcta";
@@ -144,7 +145,30 @@ async function unitedStates() {
     .sort((a, b) => a.code.localeCompare(b.code));
   const populated = new Map(zips.map((z) => [z.code, z]));
   const grid = new Grid(zips);
-  const nearestZip = (lat: number, lng: number) => grid.nearest(lat, lng)!.code;
+  const zipAt = (lat: number, lng: number) => grid.nearest(lat, lng) as (typeof zips)[number];
+  const nearestZip = (lat: number, lng: number) => zipAt(lat, lng).code;
+
+  // GeoNames' point for each town, by state and name: the biggest when a
+  // name repeats.
+  const geonames = new Map<string, { lat: number; lng: number; population: number }>();
+  eachRow(await cached(SOURCES.geonamesCities), "\t", (cells) => {
+    if (cells[8] !== "US" || cells[6] !== "P") return;
+    const k = `${cells[10]}|${nameKey(cells[1])}`;
+    const population = Number(cells[14]) || 0;
+    if ((geonames.get(k)?.population ?? -1) < population) geonames.set(k, { lat: Number(cells[4]), lng: Number(cells[5]), population });
+  });
+  /** Census puts a few places with wide waters out on the water: San
+   *  Francisco's point is by the Farallon Islands, 30 miles from its people.
+   *  For those, GeoNames' point, when the ZIP nearest it carries the
+   *  place's name and the ZIP nearest Census's doesn't. */
+  const onLand = (names: string[], state: string, lat: number, lng: number) => {
+    const keys = new Set(names.map(nameKey));
+    if (keys.has(nameKey(zipAt(lat, lng).name))) return null;
+    const g = names.map((n) => geonames.get(`${state}|${nameKey(n)}`)).find((x) => x !== undefined);
+    if (!g || haversineKm({ lat, lng }, g) / 1.609344 > 40 || !keys.has(nameKey(zipAt(g.lat, g.lng).name))) return null;
+    return g;
+  };
+  let moved = 0;
 
   const rows: UsRow[] = [];
   /** Name keys already used in each state. */
@@ -163,8 +187,15 @@ async function unitedStates() {
     const state = cells[col("USPS")];
     if (!states.has(state)) return;
     const names = placeNames(cells[col("NAME")], cells[col("LSAD")]);
-    const lat = Number(cells[col("INTPTLAT")]);
-    const lng = Number(cells[col("INTPTLONG")]);
+    let lat = Number(cells[col("INTPTLAT")]);
+    let lng = Number(cells[col("INTPTLONG")]);
+    if (Number(cells[col("AWATER_SQMI")]) > Number(cells[col("ALAND_SQMI")])) {
+      const land = onLand(names, state, lat, lng);
+      if (land) {
+        ({ lat, lng } = land);
+        moved++;
+      }
+    }
     const rank = placeRank(cells[col("LSAD")], cells[col("FUNCSTAT")]);
     rows.push([`census:${cells[col("GEOID")]}`, names.join("|"), state, round(lat, 4), round(lng, 4), nearestZip(lat, lng), round(Number(cells[col("ALAND_SQMI")]), 2), rank]);
     use(state, names);
@@ -222,7 +253,7 @@ async function unitedStates() {
     const [first, ...rest] = r[1].split("|");
     r[1] = [first, ...rest.filter((n) => !primary.has(`${r[2]}|${nameKey(n)}`))].join("|");
   }
-  console.log(`US ${zips.length} ZIPs; ${places} Census places, ${cousubs.length} towns and townships, ${postal} postal names`);
+  console.log(`US ${zips.length} ZIPs; ${places} Census places (${moved} moved onto land), ${cousubs.length} towns and townships, ${postal} postal names`);
   return { zips, rows: rows.sort((a, b) => a[0].localeCompare(b[0])) };
 }
 

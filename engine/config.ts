@@ -27,6 +27,10 @@ export interface EngineConfig {
   /** High schools and birthplaces from Wikidata, part of that. On unless
    *  WIKIDATA is 0. */
   wikidata: boolean;
+  /** A moment for each town a champion's players are from
+   *  (engine/hometown.ts). Off unless HOMETOWN is 1, until counsel signs
+   *  off on hometown campaigns. */
+  hometown: boolean;
 }
 
 function seconds(value: string | undefined, fallback: number): number {
@@ -70,5 +74,6 @@ export function loadConfig(
     tagEffort,
     athletes: env.ATHLETES !== "0",
     wikidata: env.WIKIDATA !== "0",
+    hometown: env.HOMETOWN === "1",
   };
 }

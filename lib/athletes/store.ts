@@ -279,11 +279,12 @@ export async function namingRights(
   return out;
 }
 
-/** Athletes by Walkoff's id ("espn:football:3912547") or by full name,
+/** Athletes by Walkoff's id ("espn:football:3912547", or for someone an
+ *  operator added, "walkoff:surfing:griffin-colapinto") or by full name,
  *  however it's spelled ("sam darnold"). More than one shares some names. */
 export async function findAthletes(db: SupabaseClient, query: string, limit = 10): Promise<Athlete[]> {
   const q = query.trim();
-  if (/^espn:[a-z-]+:\d+$/.test(q)) return loadAthletes(db, [q]);
+  if (/^espn:[a-z-]+:\d+$/.test(q) || /^walkoff:[a-z-]+:[a-z0-9-]+$/.test(q)) return loadAthletes(db, [q]);
   const key = nameKey(q);
   if (!key) return [];
   const { data, error } = await db.from("athletes").select("id").eq("name_key", key).order("id").limit(limit);
@@ -393,4 +394,60 @@ export async function athleteMoments(
     placeKey: m.place_key,
     detectedAt: m.detected_at,
   }));
+}
+
+/** Everyone on a team's roster now, reserves too. */
+export async function teamRoster(db: SupabaseClient, teamId: string): Promise<Athlete[]> {
+  const { data, error } = await db.from("athletes").select("id").eq("team_id", teamId).order("id");
+  if (error) {
+    if (isMissingSchema(error)) return [];
+    throw error;
+  }
+  return loadAthletes(db, ((data ?? []) as { id: string }[]).map((r) => r.id));
+}
+
+type ResultRow = {
+  athlete_id: string;
+  event_key: string;
+  event_name: string;
+  kind: ResultKind;
+  role: ResultRole;
+  team_id: string | null;
+  moment_id: string | null;
+  intensity: number;
+  occurred_at: string;
+  created_by: string;
+};
+
+const toResult = (r: ResultRow): AthleteResult => ({
+  athleteId: r.athlete_id,
+  eventKey: r.event_key,
+  eventName: r.event_name,
+  kind: r.kind,
+  role: r.role,
+  teamId: r.team_id,
+  momentId: r.moment_id,
+  intensity: Number(r.intensity),
+  occurredAt: r.occurred_at,
+  createdBy: r.created_by,
+});
+
+const RESULT_COLUMNS = "athlete_id, event_key, event_name, kind, role, team_id, moment_id, intensity, occurred_at, created_by";
+
+/** The results recorded from each of these team moments (a title). */
+export async function resultsFor(db: SupabaseClient, momentIds: string[]): Promise<Map<string, AthleteResult[]>> {
+  const rows = await byIds<ResultRow>(momentIds, (chunk) => db.from("athlete_results").select(RESULT_COLUMNS).in("moment_id", chunk));
+  const out = new Map<string, AthleteResult[]>();
+  for (const r of rows) out.set(r.moment_id!, [...(out.get(r.moment_id!) ?? []), toResult(r)]);
+  return out;
+}
+
+/** The results recorded for an event: "espn:nfl:401772988". */
+export async function eventResults(db: SupabaseClient, eventKey: string): Promise<AthleteResult[]> {
+  const { data, error } = await db.from("athlete_results").select(RESULT_COLUMNS).eq("event_key", eventKey);
+  if (error) {
+    if (isMissingSchema(error)) return [];
+    throw error;
+  }
+  return ((data ?? []) as ResultRow[]).map(toResult);
 }

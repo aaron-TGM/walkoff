@@ -58,6 +58,13 @@ name people use, then any others, split by `|`.
 | places-ca.json | 3,305 | GeoNames places of 500 people or more |
 | places-gb.json | 5,919 | GeoNames places of 500 people or more, nation as the region |
 
+A Census place's center is its internal point, except for the few with
+more water than land whose point lands out on the water: San Francisco's
+is by the Farallon Islands, 30 miles from its people. Those take GeoNames'
+point for the town when the ZIP nearest it carries the town's name and the
+ZIP nearest Census's doesn't (10 places, San Francisco and Corpus Christi
+among them).
+
 US rows carry the land area in square miles (for a postal name, its ZIPs'
 land) and a `rank`: 1 for a place with its own government, a city-county or
 a zona urbana, which wins a name it shares with an unincorporated community
