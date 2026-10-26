@@ -177,7 +177,7 @@ export const HOMETOWN_TRIGGERS: Trigger[] = [
     name: "Hometown Contender",
     id: "hometown_contender",
     description:
-      "Someone from the town leads going into the final round. The town is watching.",
+      "Someone from the town leads going into the final round, or plays in a final. The town is watching.",
     category: "before",
   },
   {

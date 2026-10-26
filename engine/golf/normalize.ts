@@ -53,6 +53,9 @@ export function normalizeLeaderboard(tour: string, board: EspnGolfLeaderboard): 
           .map((l) => ({ period: l.period!, strokes: typeof l.value === "number" && l.value > 0 ? l.value : null, teeTime: l.teeTime ?? null })),
       });
     }
+    const statusName = status?.name ?? ev.status?.type?.name ?? "";
+    const roundComplete = status?.completed === true || status?.name === "STATUS_PLAY_COMPLETE";
+    const period = comp?.status?.period ?? null;
     out.push({
       id: `espn:golf:${ev.id}`,
       tour,
@@ -61,9 +64,10 @@ export function normalizeLeaderboard(tour: string, board: EspnGolfLeaderboard): 
       startDate: ev.date ?? ev.endDate,
       endDate: ev.endDate,
       state: stateOf(ev.status?.type?.name, status, ev.status?.type?.completed === true),
-      statusName: status?.name ?? ev.status?.type?.name ?? "",
-      roundComplete: status?.completed === true || status?.name === "STATUS_PLAY_COMPLETE",
-      period: comp?.status?.period ?? null,
+      statusName,
+      statusLine: `${statusName} ${period ?? "-"}${roundComplete ? " complete" : ""}`,
+      roundComplete,
+      period,
       rounds: ev.tournament?.numberOfRounds ?? (tour === "liv" ? 3 : 4),
       majorFlag: typeof ev.tournament?.major === "boolean" ? ev.tournament.major : null,
       players,

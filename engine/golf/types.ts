@@ -1,5 +1,7 @@
 // Golf in the engine's own shapes. normalize.ts converts ESPN's leaderboard
-// into these, so the rules never touch raw feed JSON.
+// into these, so the rules never touch raw feed JSON. A golfer's id is the
+// same on every tour.
+import type { CircuitEvent, CircuitState, Entrant } from "../circuits/poller";
 
 export interface GolfRound {
   period: number;
@@ -8,10 +10,7 @@ export interface GolfRound {
   teeTime: string | null;
 }
 
-export interface GolfPlayer {
-  /** The feed's athlete id, the same on every tour: "3470". */
-  externalId: string;
-  name: string;
+export interface GolfPlayer extends Entrant {
   /** Place on the leaderboard: 1 for the leader or a tie for it. Null when
    *  the feed gives none (missed cut, withdrew). */
   position: number | null;
@@ -26,19 +25,13 @@ export interface GolfPlayer {
   rounds: GolfRound[];
 }
 
-/** pre: not started. in: under way, between rounds or suspended. final:
- *  done, and only then is there a winner. off: canceled or postponed. */
-export type GolfState = "pre" | "in" | "final" | "off";
+export type GolfState = CircuitState;
 
-export interface GolfEvent {
-  /** "espn:golf:401811941". */
-  id: string;
+export interface GolfEvent extends CircuitEvent {
   tour: string;
   externalId: string;
-  name: string;
   startDate: string;
   endDate: string;
-  state: GolfState;
   /** The feed's status name for the event as a whole: "STATUS_FINAL",
    *  "STATUS_PLAY_COMPLETE", "STATUS_SUSPENDED". */
   statusName: string;

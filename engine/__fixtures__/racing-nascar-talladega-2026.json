@@ -1,0 +1,128 @@
+{
+ "events": [
+  {
+   "id": "202610250041",
+   "name": "NASCAR Cup Series at Talladega",
+   "date": "2026-10-25T18:00Z",
+   "status": {
+    "period": 189,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "202610250041",
+     "date": "2026-10-25T18:00Z",
+     "type": null,
+     "status": {
+      "period": 189,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "id": "4539",
+       "order": 1,
+       "winner": true,
+       "athlete": {
+        "displayName": "Kyle Larson",
+        "fullName": "Kyle Larson"
+       }
+      },
+      {
+       "id": "4721",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "William Byron",
+        "fullName": "William Byron"
+       }
+      },
+      {
+       "id": "4351",
+       "order": 3,
+       "winner": false,
+       "athlete": {
+        "displayName": "Ricky Stenhouse Jr.",
+        "fullName": "Ricky Stenhouse Jr."
+       }
+      },
+      {
+       "id": "4495",
+       "order": 4,
+       "winner": false,
+       "athlete": {
+        "displayName": "Ross Chastain",
+        "fullName": "Ross Chastain"
+       }
+      },
+      {
+       "id": "4634",
+       "order": 5,
+       "winner": false,
+       "athlete": {
+        "displayName": "Cole Custer",
+        "fullName": "Cole Custer"
+       }
+      },
+      {
+       "id": "5610",
+       "order": 6,
+       "winner": false,
+       "athlete": {
+        "displayName": "Carson Hocevar",
+        "fullName": "Carson Hocevar"
+       }
+      },
+      {
+       "id": "4782",
+       "order": 7,
+       "winner": false,
+       "athlete": {
+        "displayName": "Todd Gilliland",
+        "fullName": "Todd Gilliland"
+       }
+      },
+      {
+       "id": "747",
+       "order": 8,
+       "winner": false,
+       "athlete": {
+        "displayName": "Denny Hamlin",
+        "fullName": "Denny Hamlin"
+       }
+      },
+      {
+       "id": "4555",
+       "order": 9,
+       "winner": false,
+       "athlete": {
+        "displayName": "Alex Bowman",
+        "fullName": "Alex Bowman"
+       }
+      },
+      {
+       "id": "4729",
+       "order": 10,
+       "winner": false,
+       "athlete": {
+        "displayName": "Michael McDowell",
+        "fullName": "Michael McDowell"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

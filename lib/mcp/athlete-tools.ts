@@ -60,7 +60,7 @@ export const sourceWords = (f: { kind: string; source: string }) => SOURCE_WORDS
 const teamName = (a: Athlete) => (a.teamId ? (teamFromFeedId(a.teamId)?.team.name ?? a.teamId) : null);
 
 /** A golfer's tour stands in for a team. */
-const teamOrTour = (a: Athlete) => (a.sport === "golf" ? (tourById(a.league ?? "")?.name ?? "golf") : (teamName(a) ?? "not on a roster now"));
+const teamOrTour = (a: Athlete) => tourById(a.league ?? "")?.name ?? teamName(a) ?? (a.sport === "golf" ? "golf" : "not on a roster now");
 
 function athleteView(a: Athlete) {
   return {

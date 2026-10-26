@@ -1,15 +1,16 @@
 // Walkoff moment engine: polls live sports data, detects moments and saves
 // them to Supabase. It also has Claude tag each brand's new products
 // (tagger.ts), keeps rosters and where athletes are from
-// (athletes/sync.ts), follows golf's tours (golf/poller.ts), and makes a
-// moment for each town a champion's players are from (hometown.ts). See
-// engine/README.md.
+// (athletes/sync.ts), follows golf's and tennis's tours and racing's series
+// (golf/, tennis/, racing/), and makes a moment for each town a champion's
+// players are from (hometown.ts). See engine/README.md.
 import { claudeSend, colorTask, productTask } from "../lib/affinity/claude-tagger";
 import { LEAGUES } from "../lib/leagues";
-import { TOURS } from "../lib/tours";
+import { toursOf } from "../lib/tours";
 import { createAthleteFeed } from "./athletes/feed";
 import { AthleteSync } from "./athletes/sync";
 import { createWikidataClient } from "./athletes/wikidata";
+import type { CircuitPoller } from "./circuits/poller";
 import { loadConfig } from "./config";
 import { createEspnClient } from "./espn/client";
 import { createGolfFeed } from "./golf/feed";
@@ -19,10 +20,14 @@ import { HometownJob } from "./hometown";
 import { errorMessage, log } from "./log";
 import { rulesFor } from "./moments/sports";
 import { LeaguePoller } from "./poller";
+import { createRacingFeed } from "./racing/feed";
+import { RacingPoller } from "./racing/poller";
 import { MemoryStore } from "./store/memory";
 import { createSupabaseStore, serviceClient } from "./store/supabase";
 import type { Store } from "./store/types";
 import { CatalogTagger } from "./tagger";
+import { createTennisFeed } from "./tennis/feed";
+import { TennisPoller } from "./tennis/poller";
 
 async function main(): Promise<void> {
   const config = loadConfig();
@@ -71,9 +76,18 @@ async function main(): Promise<void> {
   // A moment for each town a champion's players, or a playoff game's
   // decider, are from.
   const hometown = config.hometown && service ? new HometownJob(service, { rosters: athletes }) : null;
-  // Golf's tours: their winners, and with HOMETOWN their towns' moments.
-  const golfFeed = createGolfFeed();
-  const golfers = config.golf && service ? TOURS.map((t) => new GolfPoller(t, service, golfFeed, { hometown: config.hometown })) : [];
+  // Golf's and tennis's tours and racing's series: their winners, and with
+  // HOMETOWN their towns' moments.
+  const circuits: CircuitPoller[] = [];
+  if (service) {
+    const options = { hometown: config.hometown };
+    const golfFeed = createGolfFeed();
+    const tennisFeed = createTennisFeed();
+    const racingFeed = createRacingFeed();
+    if (config.golf) circuits.push(...toursOf("golf").map((t) => new GolfPoller(t, service, golfFeed, options)));
+    if (config.tennis) circuits.push(...toursOf("tennis").map((t) => new TennisPoller(t, service, tennisFeed, options)));
+    if (config.racing) circuits.push(...toursOf("racing").map((t) => new RacingPoller(t, service, racingFeed, options)));
+  }
   log("INFO", "Moment engine starting", {
     leagues: config.leagues,
     store: store.kind,
@@ -81,7 +95,7 @@ async function main(): Promise<void> {
     tagging: !!tagger,
     athletes: athletes ? (config.wikidata ? "with Wikidata" : "without Wikidata") : false,
     hometown: !!hometown,
-    golf: golfers.map((g) => g.tour.id),
+    tours: circuits.map((c) => c.tour.id),
   });
 
   if (config.once) {
@@ -133,14 +147,14 @@ async function main(): Promise<void> {
   };
   if (hometown) hometownTimer = setTimeout(() => void hometownLoop(hometown), 45_000);
 
-  // And golf, a tour at a time.
-  const golfTimers = new Map<GolfPoller, NodeJS.Timeout>();
-  const golfLoop = async (g: GolfPoller): Promise<void> => {
+  // And the tours and series, one at a time.
+  const circuitTimers = new Map<CircuitPoller, NodeJS.Timeout>();
+  const circuitLoop = async (c: CircuitPoller): Promise<void> => {
     if (stopping) return;
-    const delay = await g.tick();
-    if (!stopping) golfTimers.set(g, setTimeout(() => void golfLoop(g), delay));
+    const delay = await c.tick();
+    if (!stopping) circuitTimers.set(c, setTimeout(() => void circuitLoop(c), delay));
   };
-  golfers.forEach((g, i) => golfTimers.set(g, setTimeout(() => void golfLoop(g), 60_000 + i * 5_000)));
+  circuits.forEach((c, i) => circuitTimers.set(c, setTimeout(() => void circuitLoop(c), 60_000 + i * 5_000)));
 
   const shutdown = (signal: string) => {
     if (stopping) return;
@@ -150,7 +164,7 @@ async function main(): Promise<void> {
     clearTimeout(tagTimer);
     clearTimeout(athleteTimer);
     clearTimeout(hometownTimer);
-    for (const t of golfTimers.values()) clearTimeout(t);
+    for (const t of circuitTimers.values()) clearTimeout(t);
     server.close();
     setTimeout(() => process.exit(0), 2000).unref();
   };

@@ -39,7 +39,7 @@ export function hometownCopy(c: HometownCopyInput): HometownCopy {
   const picked = c.colors ? "We picked a few things in the colors everyone there is wearing." : "We picked a few things to celebrate in.";
   if (c.type === "hometown_contender") {
     return {
-      angle: "The town is watching: someone from here leads going into the final round. The town's name carries it.",
+      angle: "The town is watching: someone from here is playing for the win. The town's name carries it.",
       subjects: [`All eyes on ${town} ${c.when}.`, `${town}, big day ${c.when}.`, `${town} is watching.`],
       preview: c.product ? `What to wear while you watch: ${c.product}, and more.` : "What to wear while you watch.",
       headline: `All eyes on ${town}.`,
