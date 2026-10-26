@@ -13,4 +13,5 @@ export {
   type Town,
 } from "./derive";
 export { hometownLive } from "./flag";
+export { makeHometownMoments } from "./make";
 export { saveHometownMoments } from "./store";

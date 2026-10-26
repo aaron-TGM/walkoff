@@ -1,0 +1,610 @@
+{
+  "head" : {
+    "vars" : [ "title", "item", "birth", "birthLabel", "birthCoord", "birthCountry" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q435974"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q828526"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(153.383333333 -28.333333333)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q408"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Stephanie Gilmore"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Murwillumbah"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2938849"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q18094"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-157.857222222 21.304722222)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q30"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Carissa Moore"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Honolulu"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q3093867"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q587013"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-45.4051 -23.804)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q155"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gabriel Medina"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "São Sebastião"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q6479468"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q159288"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-119.714166666 34.425833333)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q30"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Lakey Peterson"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Santa Barbara"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q16228136"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q5192876"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(150.7538889 -34.934722222)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q408"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tyler Wright (surfer)"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Culburra Beach"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q18921726"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q220"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(12.482777777 41.893055555)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q38"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Leonardo Fioravanti (surfer)"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Rome"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q19955824"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q282133"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-35.007777777 -6.368888888)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q155"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Ítalo Ferreira"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Baía Formosa"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q20727758"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q983491"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-46.7896229 -24.1833421)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q155"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Miguel Pupo"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Itanhaém"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q27757444"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q5917"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-117.999722222 33.692777777)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q30"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Kanoa Igarashi"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Huntington Beach"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q28497897"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q36074"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(143.0 -20.0)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q408"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Ethan Ewing"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Queensland"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q60199814"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q4361"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-49.271944444 -25.429722222)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q155"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Yago Dora"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Curitiba"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q61789289"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q675070"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-117.620277777 33.437777777)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q30"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Griffin Colapinto"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "San Clemente"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q67319154"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q33935"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(34.78 32.08)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q801"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Anat Lelior"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tel Aviv"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q124714566"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q488924"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-117.325833333 33.211666666)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q30"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Caitlin Simmers"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Oceanside"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q124806129"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q605113"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(151.3413889 -33.423333333)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q408"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Molly Picklum"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gosford"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q129724592"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q890296"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-98.731483 29.794445)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q30"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Erin Brooks"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Boerne"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q133259949"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q2733536"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(151.152222222 -34.051111111)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q408"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Connor O'Leary"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Cronulla"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q135104261"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q18094"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-157.857222222 21.304722222)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q30"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Luana Silva"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Honolulu"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q140315619"
+      },
+      "birth" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q134674"
+      },
+      "birthCoord" : {
+        "datatype" : "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "type" : "literal",
+        "value" : "Point(-1.476388888 43.4925)"
+      },
+      "birthCountry" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q142"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Tya Zebrowski"
+      },
+      "birthLabel" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Bayonne"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q27450426"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Isabella Nichols"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q125556200"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Gabriela Bryan"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q132173184"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Cole Houshmand"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q132244592"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Seth Moniz"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q133079378"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Sawyer Lindblad"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q133266776"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Morgan Cibilic"
+      }
+    }, {
+      "item" : {
+        "type" : "uri",
+        "value" : "http://www.wikidata.org/entity/Q139563900"
+      },
+      "title" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "George Pittar"
+      }
+    } ]
+  }
+}

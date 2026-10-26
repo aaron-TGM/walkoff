@@ -71,8 +71,9 @@ welcome. Later: "Where is each brand in onboarding?"
 | `onboarding_status` | One brand or all: store and license, members and whether each has connected (a live refresh token whose brands include this one), customer counts and where they came from (Shopify in Claude, or an upload) and when, customers mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step. |
 | `set_athlete_home` | Sets where an athlete is from when Walkoff has it wrong, over every source, or clears it (`clear: true`). Takes a town ("San Clemente, CA") or a postal code, and a required note on where you learned it. Shows the athlete's homes before and after. |
 | `record_athlete_rights` | Records an athlete's written agreement (an NIL or sponsor deal) that a brand may name them: `starts_on`, `ends_on` and `evidence` (where the agreement is) are required. `revoke: true` revokes what's on file. Without an agreement in date, copy never names an athlete. |
-| `create_moment` | Records a win Walkoff doesn't follow itself (a surfing win, a medal) and makes the moment for each town the athlete is from right away. An athlete Walkoff knows, or someone new with their `sport` and `hometown`; a `note` on where you learned it is required. Running it again adds nothing. |
+| `create_moment` | Records a win Walkoff doesn't follow itself (a medal, a big-wave contest) and makes the moment for each town the athlete is from right away. An athlete Walkoff knows, or someone new with their `sport` and `hometown`; a `note` on where you learned it is required. Running it again adds nothing. |
 | `retract_moment` | Takes a wrong moment back, with a reason: it leaves every queue and `build_campaign` refuses it. Lists the brands that already drafted or sent it. |
+| `exclude_athlete` | For an athlete who asks Walkoff to stop using them (the privacy policy's promise): deletes where they're from, never saves it again, and makes no hometown moment or big signing about them. A `note` on who asked is required; lists their moments from the last week, to retract. `undo: true` takes it back. Needs `supabase/011_athlete_opt_outs.sql`. |
 
 The next step follows the onboarding order: store, invite, connecting
 Claude, customer counts (set up from Shopify in Claude, or uploaded), the
@@ -134,15 +135,15 @@ The script and the tools share `lib/brands.ts` and `lib/welcome.ts`.
 Operators also get the onboarding tools above.
 
 **Hometown moments** (docs/hometown.md): when someone from a town near a
-brand's customers wins, the town gets its own moment. They reach brands'
-tools once `WALKOFF_HOMETOWN=1`, after counsel signs off on the copy rules;
-operators get them now, to test. Then `trigger_queue` and `recent_moments`
-(`scope`: teams, towns or both) list the towns near the brand's customers,
-with the customers estimated in each town's circle; `create_trigger` takes
-`towns` and `min_local_customers`; and `build_campaign` makes the town's
-campaign (`town` for a sample, `radius_miles` to change the circle). Before
-then members' tools don't mention them, and team queries never include
-them.
+brand's customers wins a title or a tournament, or decides a playoff game
+at the very end, the town gets its own moment. `trigger_queue` and
+`recent_moments` (`scope`: teams, towns or both) list the towns near the
+brand's customers, with the customers estimated in each town's circle;
+`create_trigger` takes `towns` and `min_local_customers`; and
+`build_campaign` makes the town's campaign (`town` for a sample,
+`radius_miles` to change the circle). Team queries never include them.
+`WALKOFF_HOMETOWN=0` takes them out of members' tools, which then don't
+mention them; operators keep them, to test.
 
 There are two prompts: `set_up_brand` ("Set up from Shopify") runs the
 setup below, and `moment_campaign` runs the whole campaign loop. The server

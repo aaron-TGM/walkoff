@@ -24,7 +24,8 @@ export interface Athlete {
   college: string | null;
 }
 
-export type ResultKind = "title" | "win" | "lead";
+/** game_winner: decided a playoff game at the very end (010_player_moments.sql). */
+export type ResultKind = "title" | "win" | "lead" | "game_winner";
 /** leader: led the team in the title game, or won alone. */
 export type ResultRole = "leader" | "played" | "roster" | "reserve";
 
@@ -59,6 +60,19 @@ export function athleteId(sport: string, externalId: string): string {
   return `espn:${sport}:${externalId}`;
 }
 
+/** A name as a slug: "Ítalo Ferreira" is "italo-ferreira". */
+export const slugOf = (s: string) =>
+  s
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+/** An athlete ESPN doesn't know, by sport and name: surfers, and anyone an
+ *  operator adds with create_moment. "walkoff:surfing:griffin-colapinto". */
+export const walkoffAthleteId = (sport: string, name: string) => `walkoff:${sport}:${slugOf(name)}`;
+
 /** Ids per request, to keep the URLs short. */
 const CHUNK = 100;
 
@@ -79,6 +93,14 @@ async function byIds<T>(ids: string[], read: (chunk: string[]) => PromiseLike<{ 
 /** Whether 009_athletes.sql has run. */
 export async function athletesReady(db: SupabaseClient): Promise<boolean> {
   const { error } = await db.from("athletes").select("id").limit(1);
+  if (error && !isMissingSchema(error)) throw error;
+  return !error;
+}
+
+/** Whether 010_player_moments.sql has run: playoff game-winners, and moves
+ *  between teams. */
+export async function has010(db: SupabaseClient): Promise<boolean> {
+  const { error } = await db.from("athletes").select("joined_at").limit(1);
   if (error && !isMissingSchema(error)) throw error;
   return !error;
 }
@@ -138,8 +160,12 @@ export async function loadAthletes(db: SupabaseClient, ids: string[]): Promise<A
 }
 
 /** Saves each source's word on where athletes are from, replacing what the
- *  same source said before. updatedBy is "engine" or the operator's email. */
-export async function savePlaces(db: SupabaseClient, places: AthletePlace[], updatedBy = "engine"): Promise<void> {
+ *  same source said before. updatedBy is "engine" or the operator's email.
+ *  Never for an athlete who asked Walkoff to stop using them. */
+export async function savePlaces(db: SupabaseClient, all: AthletePlace[], updatedBy = "engine"): Promise<void> {
+  if (!all.length) return;
+  const out = await optedOut(db, [...new Set(all.map((p) => p.athleteId))]);
+  const places = all.filter((p) => !out.has(p.athleteId));
   const now = new Date().toISOString();
   for (let i = 0; i < places.length; i += 500) {
     const rows = places.slice(i, i + 500).map((p) => ({
@@ -279,8 +305,8 @@ export async function namingRights(
   return out;
 }
 
-/** Athletes by Walkoff's id ("espn:football:3912547", or for someone an
- *  operator added, "walkoff:surfing:griffin-colapinto") or by full name,
+/** Athletes by Walkoff's id ("espn:football:3912547", or for someone ESPN
+ *  doesn't know, "walkoff:surfing:griffin-colapinto") or by full name,
  *  however it's spelled ("sam darnold"). More than one shares some names. */
 export async function findAthletes(db: SupabaseClient, query: string, limit = 10): Promise<Athlete[]> {
   const q = query.trim();
@@ -312,6 +338,44 @@ export async function athletesInAreas(db: SupabaseClient, areas: { country: Coun
 /** Takes away the hometown an operator set, so the sources decide again. */
 export async function clearOperatorHome(db: SupabaseClient, athleteId: string): Promise<void> {
   const { error } = await db.from("athlete_places").delete().eq("athlete_id", athleteId).eq("kind", "hometown").eq("source", "operator");
+  if (error) throw error;
+}
+
+/** Whether 011_athlete_opt_outs.sql has run: athletes can ask Walkoff to
+ *  stop using them. */
+export async function has011(db: SupabaseClient): Promise<boolean> {
+  const { error } = await db.from("athletes").select("opted_out_at").limit(1);
+  if (error && !isMissingSchema(error)) throw error;
+  return !error;
+}
+
+/** Those of these athletes who asked Walkoff to stop using them, and when.
+ *  None before 011 has run. */
+export async function optedOut(db: SupabaseClient, athleteIds: string[]): Promise<Map<string, string>> {
+  const rows = await byIds<{ id: string; opted_out_at: string }>(athleteIds, (chunk) =>
+    db.from("athletes").select("id, opted_out_at").not("opted_out_at", "is", null).in("id", chunk),
+  );
+  return new Map(rows.map((r) => [r.id, r.opted_out_at]));
+}
+
+/** An athlete asked Walkoff to stop using them: where they're from is
+ *  deleted, and savePlaces never saves it again. Returns how many places
+ *  were deleted. Needs 011. */
+export async function optOut(db: SupabaseClient, athleteId: string, note: string, at: string): Promise<number> {
+  const { error } = await db.from("athletes").update({ opted_out_at: at, opted_out_note: note, updated_at: at }).eq("id", athleteId);
+  if (error) throw error;
+  const { data, error: e } = await db.from("athlete_places").delete().eq("athlete_id", athleteId).select("kind");
+  if (e) throw e;
+  return (data as unknown[] | null)?.length ?? 0;
+}
+
+/** The athlete asked to be used again. Their bio and Wikidata are read
+ *  again, and their roster's birthplace saved at the next sync. */
+export async function optIn(db: SupabaseClient, athleteId: string, at: string): Promise<void> {
+  const { error } = await db
+    .from("athletes")
+    .update({ opted_out_at: null, opted_out_note: null, bio_checked_at: null, wikidata_checked_at: null, updated_at: at })
+    .eq("id", athleteId);
   if (error) throw error;
 }
 

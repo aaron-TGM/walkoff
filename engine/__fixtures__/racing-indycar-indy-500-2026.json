@@ -1,0 +1,128 @@
+{
+ "events": [
+  {
+   "id": "202605240106",
+   "name": "Indianapolis 500",
+   "date": "2026-05-24T16:00Z",
+   "status": {
+    "period": 200,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "202605240106",
+     "date": "2026-05-24T16:00Z",
+     "type": null,
+     "status": {
+      "period": 200,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "id": "5590",
+       "order": 1,
+       "winner": true,
+       "athlete": {
+        "displayName": "Felix Rosenqvist",
+        "fullName": "Felix Rosenqvist"
+       }
+      },
+      {
+       "id": "5706",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "David Malukas",
+        "fullName": "David Malukas"
+       }
+      },
+      {
+       "id": "5648",
+       "order": 3,
+       "winner": false,
+       "athlete": {
+        "displayName": "Scott McLaughlin",
+        "fullName": "Scott McLaughlin"
+       }
+      },
+      {
+       "id": "5581",
+       "order": 4,
+       "winner": false,
+       "athlete": {
+        "displayName": "Pato O'Ward",
+        "fullName": "Pato O'Ward"
+       }
+      },
+      {
+       "id": "5753",
+       "order": 5,
+       "winner": false,
+       "athlete": {
+        "displayName": "Marcus Armstrong",
+        "fullName": "Marcus Armstrong"
+       }
+      },
+      {
+       "id": "5634",
+       "order": 6,
+       "winner": false,
+       "athlete": {
+        "displayName": "Rinus VeeKay",
+        "fullName": "Rinus VeeKay"
+       }
+      },
+      {
+       "id": "5632",
+       "order": 7,
+       "winner": false,
+       "athlete": {
+        "displayName": "Álex Palou",
+        "fullName": "Álex Palou"
+       }
+      },
+      {
+       "id": "5553",
+       "order": 8,
+       "winner": false,
+       "athlete": {
+        "displayName": "Santino Ferrucci",
+        "fullName": "Santino Ferrucci"
+       }
+      },
+      {
+       "id": "4374",
+       "order": 9,
+       "winner": false,
+       "athlete": {
+        "displayName": "Romain Grosjean",
+        "fullName": "Romain Grosjean"
+       }
+      },
+      {
+       "id": "432",
+       "order": 10,
+       "winner": false,
+       "athlete": {
+        "displayName": "Takuma Sato",
+        "fullName": "Takuma Sato"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

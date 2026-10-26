@@ -101,14 +101,20 @@ export default function DataAndSafetyPage() {
       <HelpSection page={P} id="athletes">
         <p>
           Walkoff keeps public facts about the athletes it follows: their team, position and where
-          they&apos;re from, from ESPN, Wikidata and our own research. No birth dates, ages or
-          photos.
+          they&apos;re from, from ESPN, Wikipedia, Wikidata and our own research. No birth dates,
+          ages or photos.
         </p>
         <p>
           When you ask Claude which athletes are from near your customers, you see their names.
           Those are for you. Campaign copy never names or describes an athlete: no name, number,
           position, school or photo. The one exception is an athlete who agreed in writing that your
           brand may name them, with the agreement on file with Walkoff.
+        </p>
+        <p>
+          Athletes can ask what Walkoff keeps about them, correct where they&apos;re from, or ask
+          Walkoff to stop using them, at <a href="mailto:hello@walkoff.io">hello@walkoff.io</a>.
+          When one does, Walkoff takes back the moments about them that are still in your queue.{" "}
+          <Link href="/privacy#athletes">Privacy Policy</Link>
         </p>
       </HelpSection>
     </HelpPage>

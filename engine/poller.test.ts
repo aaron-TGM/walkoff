@@ -6,6 +6,7 @@ import { LEAGUES } from "../lib/leagues";
 import { loadConfig } from "./config";
 import type { FeedClient } from "./espn/client";
 import type { EspnEvent, EspnScoreboard, EspnSummary } from "./espn/types";
+import type { Decider } from "./moments/deciders";
 import type { Heroes } from "./moments/heroes";
 import { rulesFor } from "./moments/sports";
 import { etDate, LeaguePoller } from "./poller";
@@ -214,13 +215,6 @@ describe("title heroes", () => {
     assert.equal(title?.team.abbreviation, "LAD");
     assert.ok((title?.detail.heroes as Heroes).leaders.some((l) => l.name === "Yoshinobu Yamamoto"));
     assert.equal(client.summaries, 1);
-
-    const other = titleClient(fixture("mlb-nlds-walkoff"), fixture("mlb-summary-401809303"));
-    const otherStore = new MemoryStore();
-    const nlds = new LeaguePoller(mlb, rulesFor("mlb"), { client: other, store: otherStore, config, now: () => new Date("2026-10-04T23:30:00Z") });
-    await nlds.tick();
-    assert.ok([...otherStore.moments.values()].some((m) => m.type === "walkoff_win"), "the final was handled");
-    assert.equal(other.summaries, 0);
   });
 
   it("a title doesn't wait on a summary that fails", async () => {
@@ -233,6 +227,45 @@ describe("title heroes", () => {
     assert.equal(title.detail.heroes, undefined);
     assert.equal(client.summaries, 1);
     assert.equal(store.heartbeats.get("mlb")?.ok, true);
+  });
+});
+
+/** The NLDS walk-off board, as a regular-season game. */
+function regularSeason(board: EspnScoreboard): EspnScoreboard {
+  const b = structuredClone(board);
+  b.events![0].season = { ...b.events![0].season, type: 2 };
+  return b;
+}
+
+describe("playoff deciders", () => {
+  const nlds = () => new Date("2026-10-04T23:30:00Z");
+
+  it("NLDS Game 2: the walk-off carries who won it, from the one summary it reads", async () => {
+    const store = new MemoryStore();
+    const client = titleClient(fixture("mlb-nlds-walkoff"), fixture("mlb-summary-401908003"));
+    await new LeaguePoller(mlb, rulesFor("mlb"), { client, store, config, now: nlds }).tick();
+    const walkoff = [...store.moments.values()].find((m) => m.type === "walkoff_win");
+    assert.deepEqual((walkoff?.detail.decider as Decider).athletes, [{ id: "4917869", name: "Jackson Chourio" }]);
+    assert.equal(client.summaries, 1);
+  });
+
+  it("a regular-season walk-off reads no summary", async () => {
+    const store = new MemoryStore();
+    const client = titleClient(regularSeason(fixture("mlb-nlds-walkoff")), fixture("mlb-summary-401908003"));
+    await new LeaguePoller(mlb, rulesFor("mlb"), { client, store, config, now: nlds }).tick();
+    const walkoff = [...store.moments.values()].find((m) => m.type === "walkoff_win");
+    assert.ok(walkoff, "the final was handled");
+    assert.equal(walkoff.detail.decider, undefined);
+    assert.equal(client.summaries, 0);
+  });
+
+  it("a walk-off doesn't wait on a summary that fails", async () => {
+    const store = new MemoryStore();
+    const client = titleClient(fixture("mlb-nlds-walkoff"), new Error("summary down"));
+    await new LeaguePoller(mlb, rulesFor("mlb"), { client, store, config, now: nlds }).tick();
+    const walkoff = [...store.moments.values()].find((m) => m.type === "walkoff_win");
+    assert.ok(walkoff, "saved on the first poll");
+    assert.equal(walkoff.detail.decider, undefined);
   });
 });
 

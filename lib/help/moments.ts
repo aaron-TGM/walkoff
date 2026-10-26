@@ -1,10 +1,25 @@
 // How each sport's big finishes become moments, for the moments page. The
 // thresholds live in the engine's rules; help.test.ts checks each "check"
 // is still in engine/moments/rules.ts, so the page can't drift from them.
+import { FAME } from "../../engine/athletes/signings";
 import { LEAGUE_RULES } from "../../engine/moments/sports";
 import type { Sport } from "../../engine/moments/types";
 import { LEAGUES } from "../leagues";
 import { DEFAULT_RULE } from "../mcp/queue";
+import { TOURS } from "../tours";
+
+/** Who counts as a star for a Big Signing: one of their league's best known. */
+export const SIGNING_TOP = FAME.top;
+
+/** "a, b and c". */
+const listOf = (xs: string[]) => (xs.length < 2 ? xs.join("") : `${xs.slice(0, -1).join(", ")} and ${xs.at(-1)}`);
+
+/** The tours Walkoff follows for hometown moments, by sport:
+ *  { sport: "Golf", tours: "PGA Tour, LPGA Tour, DP World Tour and LIV Golf" }. */
+export const TOUR_FACTS = [...new Set(TOURS.map((t) => t.sport))].map((sport) => ({
+  sport: sport.charAt(0).toUpperCase() + sport.slice(1),
+  tours: listOf(TOURS.filter((t) => t.sport === sport).map((t) => t.name)),
+}));
 
 export const FINISHES: { moment: string; sport: string; text: string; check: string }[] = [
   { moment: "Walk-Off Win", sport: "Baseball", text: "The home team wins in its last at-bat, starting it tied or behind.", check: "Home team won in a bottom half it started tied or behind." },

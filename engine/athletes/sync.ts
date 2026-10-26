@@ -1,8 +1,11 @@
 // Keeps athletes and where they're from up to date: every team's roster
 // once a day, where ESPN says each player was born, high schools and
 // birthplaces from Wikidata, and the hometowns in data/athletes/curated.json.
-// A little work each tick, with progress saved, so a restart picks up where
-// it stopped. See engine/README.md.
+// Once 010_player_moments.sql has run, it also notes who moved teams and
+// how well known each player is, and a star's move makes a big_signing
+// moment for the new team (signings.ts). A little work each tick, with
+// progress saved, so a restart picks up where it stopped. See
+// engine/README.md.
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { TEAM_HOMES } from "../../lib/affinity/geo";
 import {
@@ -11,7 +14,9 @@ import {
   athletesReady,
   CURATED_HOMES,
   curatedPlace,
+  has010,
   loadAthletes,
+  optedOut,
   placesOf,
   saveAthletes,
   savePlaces,
@@ -19,10 +24,11 @@ import {
   type AthletePlace,
 } from "../../lib/athletes";
 import { LEAGUES } from "../../lib/leagues";
-import { nearestPlace, resolvePlace, type Place, type Resolved } from "../../lib/places";
+import { nearestPlace, resolvePlace, type Resolved } from "../../lib/places";
 import { errorMessage, log } from "../log";
 import { birthPlaceText, type AthleteFeed, type RosterPlayer } from "./feed";
-import { ESPN_PROPERTIES, WikidataBusy, type WikidataClient, type WikidataPlace } from "./wikidata";
+import { FAME, fameRank, signingRow, type Mover } from "./signings";
+import { ESPN_PROPERTIES, locatePlace, WikidataBusy, type WikidataClient, type WikidataPlace } from "./wikidata";
 
 const MINUTE = 60_000;
 const HOUR = 60 * MINUTE;
@@ -94,10 +100,16 @@ interface SyncRow {
 
 type AthleteRow = { id: string; sport: string; external_id: string; display_name: string; name_key: string };
 
+/** Where an athlete was before a roster read: their team, or the one they
+ *  left. */
+type Before = { team_id: string | null; previous_team_id: string | null };
+
 export interface AthleteSyncOptions {
   leagues: string[];
   /** Null when WIKIDATA=0. */
   wikidata: WikidataClient | null;
+  /** Make big_signing moments (SIGNINGS=0 turns them off). Default on. */
+  signings?: boolean;
   now?: () => number;
   /** lib/places, unless a test swaps them. */
   resolve?: (b: { city: string; state: string; country: string }) => Promise<Resolved>;
@@ -112,6 +124,9 @@ export class AthleteSync {
   private curatedAt = -Infinity;
   private failures = 0;
   private waiting = false;
+  private after010 = false;
+  /** Moves this run has judged already, as moments' dedupe keys. */
+  private readonly judged = new Set<string>();
 
   constructor(
     private readonly db: SupabaseClient,
@@ -135,6 +150,7 @@ export class AthleteSync {
       const teams = await this.syncTeams();
       const asked = await this.askWikidata();
       await this.syncCurated();
+      await this.bigSignings();
       this.failures = 0;
       await this.heartbeat(started, teams.fresh, null);
       return teams.synced > 0 || asked > 0 ? SYNC.busy : SYNC.idle;
@@ -162,6 +178,12 @@ export class AthleteSync {
     if (row?.synced_at && this.now() - Date.parse(row.synced_at) < maxAge) return "fresh";
     if (row && row.failures > 0 && !this.due(row)) return "failed";
     return (await this.syncTeam(team, row)) ? "synced" : "failed";
+  }
+
+  /** Whether 010_player_moments.sql has run: moves and fame are kept. */
+  private async moves(): Promise<boolean> {
+    if (!this.after010) this.after010 = await has010(this.db);
+    return this.after010;
   }
 
   // ── Rosters ──────────────────────────────────────────────────────
@@ -231,12 +253,43 @@ export class AthleteSync {
       rosterStatus: p.reserve ? "reserve" : "active",
       college: p.college,
     }));
+    const moves = await this.moves();
+    const before = moves ? await this.whereBefore(athletes.map((a) => a.id)) : new Map<string, Before>();
     await saveAthletes(this.db, athletes, at);
-    const left = await this.clearDeparted(team.id, new Set(athletes.map((a) => a.id)));
+    const left = await this.clearDeparted(team.id, new Set(athletes.map((a) => a.id)), moves);
+    const joined = moves ? await this.noteJoins(team.id, athletes, before, at) : 0;
     const placed = await this.saveBirthplaces(team, players);
     await this.saveSync({ team_id: team.id, league: team.league, synced_at: at, athletes: athletes.length, failures: 0, last_error: null, updated_at: at });
-    log("INFO", "Synced roster", { team: team.name, players: athletes.length, reserve: players.filter((p) => p.reserve).length, left, birthplaces: placed });
+    log("INFO", "Synced roster", { team: team.name, players: athletes.length, reserve: players.filter((p) => p.reserve).length, left, joined, birthplaces: placed });
     return true;
+  }
+
+  private async whereBefore(ids: string[]): Promise<Map<string, Before>> {
+    const out = new Map<string, Before>();
+    for (let i = 0; i < ids.length; i += 100) {
+      const { data, error } = await this.db.from("athletes").select("id, team_id, previous_team_id").in("id", ids.slice(i, i + 100));
+      if (error) throw error;
+      for (const r of (data ?? []) as ({ id: string } & Before)[]) out.set(r.id, { team_id: r.team_id, previous_team_id: r.previous_team_id });
+    }
+    return out;
+  }
+
+  /** Athletes Walkoff knew on another team, now on this one: when they
+   *  joined, and the team they left. Someone new to Walkoff, or back on the
+   *  team they left, hasn't moved. */
+  private async noteJoins(teamId: string, athletes: Athlete[], before: Map<string, Before>, at: string): Promise<number> {
+    const from = new Map<string, string[]>();
+    for (const a of athletes) {
+      const b = before.get(a.id);
+      const left = b?.team_id ?? b?.previous_team_id;
+      if (!left || left === teamId) continue;
+      from.set(left, [...(from.get(left) ?? []), a.id]);
+    }
+    for (const [left, ids] of from) {
+      const { error } = await this.db.from("athletes").update({ previous_team_id: left, joined_at: at }).in("id", ids);
+      if (error) throw error;
+    }
+    return [...from.values()].reduce((n, ids) => n + ids.length, 0);
   }
 
   private async saveSync(row: Record<string, unknown>): Promise<void> {
@@ -244,15 +297,16 @@ export class AthleteSync {
     if (error) throw error;
   }
 
-  /** Players the team no longer lists, until their next team's sync. */
-  private async clearDeparted(teamId: string, keep: Set<string>): Promise<number> {
+  /** Players the team no longer lists, until their next team's sync. With
+   *  010 run, the team they left is kept, for when they join another. */
+  private async clearDeparted(teamId: string, keep: Set<string>, moves: boolean): Promise<number> {
     const { data, error } = await this.db.from("athletes").select("id").eq("team_id", teamId);
     if (error) throw error;
     const gone = ((data ?? []) as { id: string }[]).map((r) => r.id).filter((id) => !keep.has(id));
     for (let i = 0; i < gone.length; i += 100) {
       const { error: e } = await this.db
         .from("athletes")
-        .update({ team_id: null, roster_status: null, updated_at: new Date(this.now()).toISOString() })
+        .update({ team_id: null, roster_status: null, updated_at: new Date(this.now()).toISOString(), ...(moves ? { previous_team_id: teamId } : {}) })
         .in("id", gone.slice(i, i + 100));
       if (e) throw e;
     }
@@ -279,12 +333,59 @@ export class AthleteSync {
     return rows.length;
   }
 
+  // ── Big signings ─────────────────────────────────────────────────
+
+  /** A big_signing moment for each star who joined a team lately, once:
+   *  the moments table skips a repeat. */
+  private async bigSignings(): Promise<number> {
+    if (this.options.signings === false || !(await this.moves())) return 0;
+    const since = new Date(this.now() - FAME.window).toISOString();
+    const { data, error } = await this.db
+      .from("athletes")
+      .select("id, league, display_name, position, team_id, previous_team_id, joined_at, sitelinks")
+      .gte("joined_at", since)
+      .gte("sitelinks", FAME.min)
+      .not("team_id", "is", null);
+    if (error) throw error;
+    const key = (m: Mover) => `big_signing:${m.id}:${m.team_id}`;
+    const fresh = ((data ?? []) as Mover[]).filter((m) => !this.judged.has(key(m)));
+    // Nobody who asked Walkoff to stop using them (011_athlete_opt_outs.sql).
+    const out = await optedOut(this.db, fresh.map((m) => m.id));
+    const rows = [];
+    for (const m of fresh.filter((m) => !out.has(m.id))) {
+      const rank = await fameRank(this.db, m);
+      if (rank < FAME.top) rows.push({ m, rank });
+    }
+    const saved = rows.length ? await this.saveSignings(rows) : 0;
+    for (const m of fresh) this.judged.add(key(m));
+    return saved;
+  }
+
+  private async saveSignings(rows: { m: Mover; rank: number }[]): Promise<number> {
+    const teamIds = [...new Set(rows.flatMap(({ m }) => [m.team_id, m.previous_team_id].filter((t): t is string => !!t)))];
+    const { data: teamRows, error: teamError } = await this.db.from("teams").select("id, display_name").in("id", teamIds);
+    if (teamError) throw teamError;
+    const names = new Map(((teamRows ?? []) as { id: string; display_name: string }[]).map((t) => [t.id, t.display_name]));
+    const { data: saved, error: e } = await this.db
+      .from("moments")
+      .upsert(
+        rows.map(({ m, rank }) => signingRow(m, rank, names)),
+        { onConflict: "dedupe_key", ignoreDuplicates: true },
+      )
+      .select("headline");
+    if (e) throw e;
+    for (const r of (saved ?? []) as { headline: string }[]) log("INFO", r.headline, { moment: "big_signing" });
+    return saved?.length ?? 0;
+  }
+
   // ── Wikidata ─────────────────────────────────────────────────────
 
   /** Up to a batch of athletes from one league that Wikidata hasn't been
-   *  asked about, or not lately. */
+   *  asked about, or not lately. Once 010 has run, those it found before
+   *  without counting their pages go next. */
   private async wikidataDue(): Promise<{ league: string; rows: AthleteRow[] } | null> {
     const cutoff = this.now() - SYNC.wikidataAge;
+    const moves = await this.moves();
     for (const league of this.options.leagues.filter((l) => ESPN_PROPERTIES[l])) {
       const never = await this.db
         .from("athletes")
@@ -294,6 +395,17 @@ export class AthleteSync {
         .limit(SYNC.wikidataBatch);
       if (never.error) throw never.error;
       if (never.data?.length) return { league, rows: never.data as AthleteRow[] };
+      if (moves) {
+        const uncounted = await this.db
+          .from("athletes")
+          .select("id, sport, external_id, display_name, name_key")
+          .eq("league", league)
+          .not("wikidata_id", "is", null)
+          .is("sitelinks", null)
+          .limit(SYNC.wikidataBatch);
+        if (uncounted.error) throw uncounted.error;
+        if (uncounted.data?.length) return { league, rows: uncounted.data as AthleteRow[] };
+      }
       const old = await this.db
         .from("athletes")
         .select("id, sport, external_id, display_name, name_key, wikidata_checked_at")
@@ -331,6 +443,7 @@ export class AthleteSync {
     }
     const at = new Date(this.now()).toISOString();
     const byId = new Map(found.map((f) => [f.externalId, f]));
+    const moves = await this.moves();
     const { error } = await this.db.from("athletes").upsert(
       batch.rows.map((r) => ({
         id: r.id,
@@ -339,6 +452,7 @@ export class AthleteSync {
         display_name: r.display_name,
         name_key: r.name_key,
         wikidata_id: byId.get(r.external_id)?.item ?? null,
+        ...(moves ? { sitelinks: byId.get(r.external_id)?.sitelinks ?? null } : {}),
         wikidata_checked_at: at,
         updated_at: at,
       })),
@@ -362,16 +476,9 @@ export class AthleteSync {
     return batch.rows.length;
   }
 
-  /** The town a Wikidata place is in: by its coordinates, or by its name
-   *  when it has none. */
-  private async locate(p: WikidataPlace): Promise<Resolved> {
-    if (p.country === "outside") return { status: "outside", country: "" };
-    if (!p.country) return { status: "unknown" };
-    if (p.lat !== null && p.lng !== null) {
-      const place: Place | null = await (this.options.locate ?? nearestPlace)(p.country, p.lat, p.lng);
-      return place ? { status: "found", place } : { status: "unknown" };
-    }
-    return (this.options.resolve ?? resolvePlace)({ city: p.name, state: "", country: p.country });
+  /** The town a Wikidata place is in. */
+  private locate(p: WikidataPlace): Promise<Resolved> {
+    return locatePlace(p, { locate: this.options.locate, resolve: this.options.resolve });
   }
 
   // ── The curated file ─────────────────────────────────────────────

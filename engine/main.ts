@@ -1,24 +1,36 @@
 // Walkoff moment engine: polls live sports data, detects moments and saves
 // them to Supabase. It also has Claude tag each brand's new products
 // (tagger.ts), keeps rosters and where athletes are from
-// (athletes/sync.ts), and makes a moment for each town a champion's
-// players are from (hometown.ts). See engine/README.md.
+// (athletes/sync.ts), follows golf's and tennis's tours, racing's series and
+// surfing's Championship Tour (golf/, tennis/, racing/, surfing/), and makes
+// a moment for each town a champion's players are from (hometown.ts). See
+// engine/README.md.
 import { claudeSend, colorTask, productTask } from "../lib/affinity/claude-tagger";
 import { LEAGUES } from "../lib/leagues";
+import { toursOf } from "../lib/tours";
 import { createAthleteFeed } from "./athletes/feed";
 import { AthleteSync } from "./athletes/sync";
 import { createWikidataClient } from "./athletes/wikidata";
+import type { CircuitPoller } from "./circuits/poller";
 import { loadConfig } from "./config";
 import { createEspnClient } from "./espn/client";
+import { createGolfFeed } from "./golf/feed";
+import { GolfPoller } from "./golf/poller";
 import { isHealthy, startHealthServer } from "./health";
 import { HometownJob } from "./hometown";
 import { errorMessage, log } from "./log";
 import { rulesFor } from "./moments/sports";
 import { LeaguePoller } from "./poller";
+import { createRacingFeed } from "./racing/feed";
+import { RacingPoller } from "./racing/poller";
+import { createSurfingFeed } from "./surfing/feed";
+import { SurfingPoller } from "./surfing/poller";
 import { MemoryStore } from "./store/memory";
 import { createSupabaseStore, serviceClient } from "./store/supabase";
 import type { Store } from "./store/types";
 import { CatalogTagger } from "./tagger";
+import { createTennisFeed } from "./tennis/feed";
+import { TennisPoller } from "./tennis/poller";
 
 async function main(): Promise<void> {
   const config = loadConfig();
@@ -61,10 +73,25 @@ async function main(): Promise<void> {
       ? new AthleteSync(service, createAthleteFeed(), {
           leagues: config.leagues,
           wikidata: config.wikidata ? createWikidataClient() : null,
+          signings: config.signings,
         })
       : null;
-  // A moment for each town a champion's players are from.
+  // A moment for each town a champion's players, or a playoff game's
+  // decider, are from.
   const hometown = config.hometown && service ? new HometownJob(service, { rosters: athletes }) : null;
+  // Golf's and tennis's tours, racing's series and surfing's tour: their
+  // winners, and their towns' moments.
+  const circuits: CircuitPoller[] = [];
+  if (service) {
+    const options = { hometown: config.hometown };
+    const golfFeed = createGolfFeed();
+    const tennisFeed = createTennisFeed();
+    const racingFeed = createRacingFeed();
+    if (config.golf) circuits.push(...toursOf("golf").map((t) => new GolfPoller(t, service, golfFeed, options)));
+    if (config.tennis) circuits.push(...toursOf("tennis").map((t) => new TennisPoller(t, service, tennisFeed, options)));
+    if (config.racing) circuits.push(...toursOf("racing").map((t) => new RacingPoller(t, service, racingFeed, options)));
+    if (config.surfing) circuits.push(...toursOf("surfing").map((t) => new SurfingPoller(t, service, createSurfingFeed(), options)));
+  }
   log("INFO", "Moment engine starting", {
     leagues: config.leagues,
     store: store.kind,
@@ -72,6 +99,7 @@ async function main(): Promise<void> {
     tagging: !!tagger,
     athletes: athletes ? (config.wikidata ? "with Wikidata" : "without Wikidata") : false,
     hometown: !!hometown,
+    tours: circuits.map((c) => c.tour.id),
   });
 
   if (config.once) {
@@ -123,6 +151,15 @@ async function main(): Promise<void> {
   };
   if (hometown) hometownTimer = setTimeout(() => void hometownLoop(hometown), 45_000);
 
+  // And the tours and series, one at a time.
+  const circuitTimers = new Map<CircuitPoller, NodeJS.Timeout>();
+  const circuitLoop = async (c: CircuitPoller): Promise<void> => {
+    if (stopping) return;
+    const delay = await c.tick();
+    if (!stopping) circuitTimers.set(c, setTimeout(() => void circuitLoop(c), delay));
+  };
+  circuits.forEach((c, i) => circuitTimers.set(c, setTimeout(() => void circuitLoop(c), 60_000 + i * 5_000)));
+
   const shutdown = (signal: string) => {
     if (stopping) return;
     stopping = true;
@@ -131,6 +168,7 @@ async function main(): Promise<void> {
     clearTimeout(tagTimer);
     clearTimeout(athleteTimer);
     clearTimeout(hometownTimer);
+    for (const t of circuitTimers.values()) clearTimeout(t);
     server.close();
     setTimeout(() => process.exit(0), 2000).unref();
   };

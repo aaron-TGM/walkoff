@@ -6,21 +6,21 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import {
-  ACADEMIES,
   athletePlace,
   athletesReady,
   findAthletes,
   loadAthletes,
-  momentHomes,
-  placesOf,
   saveAthletes,
   savePlaces,
   saveResults,
+  slugOf,
+  walkoffAthleteId,
   type Athlete,
   type AthleteResult,
 } from "../athletes";
-import { deriveHometownMoments, saveHometownMoments, type Town } from "../hometown";
-import { placeByKey, placeLabel, resolveTown, townCircle } from "../places";
+import { makeHometownMoments } from "../hometown";
+import { placeLabel, resolveTown } from "../places";
+import { notOptedOut } from "./athlete-tools";
 import { brandsFor, has009, momentById, ToolError } from "./data";
 import { teamFromFeedId } from "./teams";
 import type { ToolContext } from "./tools";
@@ -37,18 +37,6 @@ const isDate = (s: string) => {
   return DATE.test(s) && !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === s;
 };
 
-/** "griffin-colapinto". */
-const slug = (s: string) =>
-  s
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-
-/** An athlete Walkoff doesn't follow, for create_moment: "walkoff:surfing:griffin-colapinto". */
-const walkoffId = (sport: string, name: string) => `walkoff:${sport}:${slug(name)}`;
-
 export function registerHometownOperatorTools(server: McpServer, ctx: ToolContext, operatorOnly: Run): void {
   const { db, principal } = ctx;
 
@@ -57,10 +45,10 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
     {
       title: "Create a hometown moment",
       description:
-        "Walkoff operators only. Records a win Walkoff doesn't follow itself, like a surfing win or a medal, and makes the moment for each town the athlete is from right away, for brands with customers there. The athlete is one Walkoff knows from a roster, or someone new: then give their sport and hometown. A note on where you learned it is required.",
+        "Walkoff operators only. Records a win Walkoff doesn't follow itself, like a medal or a big-wave contest, and makes the moment for each town the athlete is from right away, for brands with customers there. The athlete is one Walkoff knows from a roster or a tour, or someone new: then give their sport and hometown. A note on where you learned it is required.",
       inputSchema: {
         athlete: z.string().min(2).max(100).describe('The athlete\'s full name, like "Griffin Colapinto", or Walkoff\'s id for them.'),
-        event: z.string().min(2).max(120).describe('What they won, for the marketer\'s eyes: "WSL Finals". Never in campaign copy.'),
+        event: z.string().min(2).max(120).describe('What they won, for the marketer\'s eyes: "Olympic gold". Never in campaign copy.'),
         date: z.string().describe('When they won, like "2026-09-10".'),
         note: z.string().min(1).max(500).describe("Where you learned it: a link to the result, and for someone new, to where they're from."),
         sport: z.enum(SPORTS).optional().describe("For someone Walkoff doesn't know yet."),
@@ -84,6 +72,7 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
         } else if (found.length === 1) {
           if (args.hometown) throw new ToolError(`Walkoff knows ${found[0].displayName} already. To change where they're from, use set_athlete_home first.`);
           a = found[0];
+          await notOptedOut(ctx, a);
         } else {
           if (!args.sport || !args.hometown) {
             throw new ToolError(`Walkoff has no athlete called ${args.athlete}. To add them, give their sport and hometown too.`);
@@ -98,8 +87,8 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
                   : `Walkoff can't find ${args.hometown}. Try "Town, ST" (like "San Clemente, CA") or a postal code.`,
             );
           }
-          const id = walkoffId(args.sport, args.athlete);
-          a = { id, sport: args.sport, league: null, externalId: slug(args.athlete), displayName: args.athlete.trim(), teamId: null, position: null, jersey: null, rosterStatus: null, college: null };
+          const id = walkoffAthleteId(args.sport, args.athlete);
+          a = { id, sport: args.sport, league: null, externalId: slugOf(args.athlete), displayName: args.athlete.trim(), teamId: null, position: null, jersey: null, rosterStatus: null, college: null };
           const known = await loadAthletes(db, [id]);
           if (!known.length) await saveAthletes(db, [a], now.toISOString());
           await savePlaces(db, [athletePlace(id, "hometown", "operator", args.hometown, town, args.note)], principal.email);
@@ -110,7 +99,7 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
         const occurredAt = (at.getTime() > now.getTime() ? now : at).toISOString();
         const result: AthleteResult = {
           athleteId: a.id,
-          eventKey: `walkoff:${slug(args.event)}:${args.date}`,
+          eventKey: `walkoff:${slugOf(args.event)}:${args.date}`,
           eventName: args.event.trim(),
           kind: "win",
           role: "leader",
@@ -121,13 +110,8 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
           createdBy: principal.email,
         };
         await saveResults(db, [result]);
-        const homes = momentHomes(await placesOf(db, [a.id]), ACADEMIES);
-        const towns = new Map<string, Town>();
-        for (const h of homes) {
-          const place = await placeByKey(h.placeKey);
-          if (place) towns.set(h.placeKey, { place, label: placeLabel(place), circle: await townCircle(place) });
-        }
-        const moments = deriveHometownMoments(
+        const { moments, saved, homes } = await makeHometownMoments(
+          db,
           {
             key: result.eventKey,
             name: result.eventName,
@@ -139,10 +123,8 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
             opponentTeamId: null,
             occurredAt,
           },
-          [{ athlete: a, result, homes }],
-          towns,
+          [result],
         );
-        const saved = await saveHometownMoments(db, moments);
         const made = new Set(saved.map((m) => m.dedupeKey));
         return {
           athlete: { name: a.displayName, id: a.id, team: a.teamId ? (teamFromFeedId(a.teamId)?.team.name ?? a.teamId) : null },
@@ -151,7 +133,7 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
           ...(moments.length
             ? {}
             : {
-                note: homes.length
+                note: homes
                   ? "Their home is a big city, where Walkoff makes no hometown moments unless the home was set by hand."
                   : "Walkoff isn't sure enough where they're from to make a moment. set_athlete_home sets it, then run this again.",
               }),

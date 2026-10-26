@@ -4,6 +4,7 @@ import type { FeedClient } from "./espn/client";
 import { normalizeScoreboard, scoringEventsFromSummary } from "./espn/normalize";
 import type { EspnScoreboard, EspnSummary } from "./espn/types";
 import { errorMessage, log } from "./log";
+import { addDeciders } from "./moments/deciders";
 import { addHeroes } from "./moments/heroes";
 import { finalMoments, finalStatus, liveMoments, preMoments, track } from "./moments/rules";
 import type { LeagueRules } from "./moments/sports";
@@ -109,7 +110,7 @@ export class LeaguePoller {
         } else if (final === "process") {
           const { events, summary, ok } = await this.finalDetails(g);
           if (ok || t.summaryAttempts >= 2) {
-            moments.push(...(await this.withHeroes(g, finalMoments(t, this.rules, events, now), summary)));
+            moments.push(...(await this.withPlayers(g, finalMoments(t, this.rules, events, now), summary)));
             t = { ...t, finalProcessed: true };
             finalized.push(g.id);
           } else {
@@ -231,13 +232,16 @@ export class LeaguePoller {
     }
   }
 
-  /** Adds the champion's players to a title moment. Baseball and hockey
-   *  fetch the summary just for this, once: a title never waits on it. */
-  private async withHeroes(g: GameState, finals: Moment[], summary: EspnSummary | null): Promise<Moment[]> {
-    if (!finals.some((m) => m.type === "title_won")) return finals;
+  /** Adds the players behind a title (the champion's) and behind a playoff
+   *  walk-off or buzzer-beater (who decided it). Baseball and hockey fetch
+   *  the summary just for this, once: the moments never wait on it. */
+  private async withPlayers(g: GameState, finals: Moment[], summary: EspnSummary | null): Promise<Moment[]> {
+    const title = finals.some((m) => m.type === "title_won");
+    const finish = g.seasonType === 3 && finals.some((m) => m.type === "walkoff_win" || m.type === "buzzer_beater");
+    if (!title && !finish) return finals;
     try {
       summary ??= await this.deps.client.summary(this.league.feedPath, g.externalId);
-      return addHeroes(finals, g.sport, summary);
+      return addDeciders(addHeroes(finals, g.sport, summary), g, summary, this.rules.regulationPeriods);
     } catch (e) {
       log("WARNING", `Box score unavailable for ${g.shortName}`, {
         league: this.league.id,

@@ -15,10 +15,14 @@ import {
   athletesReady,
   clearOperatorHome,
   findAthletes,
+  has011,
   homePlaces,
   loadAthletes,
   momentHomes,
   namingRights,
+  optedOut,
+  optIn,
+  optOut,
   placesOf,
   recordRights,
   revokeRights,
@@ -32,6 +36,7 @@ import {
 import { helpUrl } from "../help/pages";
 import { NATIONS, placeByKey, placeLabel, resolveTown, townCircle, townCustomers, townLift } from "../places";
 import { brandFor, ToolError } from "./data";
+import { tourById } from "../tours";
 import { teamFromFeedId } from "./teams";
 import type { ToolContext } from "./tools";
 
@@ -58,11 +63,14 @@ export const sourceWords = (f: { kind: string; source: string }) => SOURCE_WORDS
 
 const teamName = (a: Athlete) => (a.teamId ? (teamFromFeedId(a.teamId)?.team.name ?? a.teamId) : null);
 
+/** A golfer's tour stands in for a team. */
+const teamOrTour = (a: Athlete) => tourById(a.league ?? "")?.name ?? teamName(a) ?? (a.sport === "golf" ? "golf" : "not on a roster now");
+
 function athleteView(a: Athlete) {
   return {
     name: a.displayName,
     id: a.id,
-    team: teamName(a) ?? "not on a roster now",
+    team: teamOrTour(a),
     position: a.position,
     ...(a.rosterStatus === "reserve" ? { roster: "reserve (injured, practice squad or suspended)" } : {}),
   };
@@ -74,6 +82,16 @@ const homeView = (h: Home) => ({
   sure: h.confidence,
   from: h.from.map(sourceWords),
 });
+
+/** Refuses an athlete who asked Walkoff to stop using them. */
+export async function notOptedOut(ctx: ToolContext, a: Athlete): Promise<void> {
+  const at = (await optedOut(ctx.db, [a.id])).get(a.id);
+  if (at) {
+    throw new ToolError(
+      `${a.displayName} asked Walkoff to stop using them, on ${at.slice(0, 10)}: Walkoff keeps no hometown for them and makes no moments about them. If they ask to be included again, exclude_athlete with undo: true takes it back.`,
+    );
+  }
+}
 
 async function oneAthlete(ctx: ToolContext, query: string): Promise<Athlete> {
   const found = await findAthletes(ctx.db, query);
@@ -215,6 +233,7 @@ export function registerAthleteOperatorTools(server: McpServer, ctx: ToolContext
         if (!args.clear && !args.hometown) throw new ToolError("Give a hometown, or clear: true to take one away.");
         if (args.clear && args.hometown) throw new ToolError("Give a hometown or clear: true, not both.");
         const a = await oneAthlete(ctx, args.athlete);
+        await notOptedOut(ctx, a);
         const before = homePlaces(await placesOf(db, [a.id]), ACADEMIES);
         if (args.clear) await clearOperatorHome(db, a.id);
         else {
@@ -275,6 +294,51 @@ export function registerAthleteOperatorTools(server: McpServer, ctx: ToolContext
           rule: on.some((r) => r.status === "in date")
             ? `${b.name}'s campaigns may name ${a.displayName} while the agreement is in date, within what it allows. Get the athlete's OK for each use, and use photos only if the agreement covers them.`
             : `${b.name}'s campaigns never name ${a.displayName}: there's no agreement in date.`,
+        };
+      }),
+  );
+
+  server.registerTool(
+    "exclude_athlete",
+    {
+      title: "Stop using an athlete",
+      description:
+        "Walkoff operators only. For an athlete, or their representative, who asked Walkoff to stop using them, as the privacy policy promises: deletes where Walkoff has them from and never saves it again, so no hometown moment or big signing is made about them. Walkoff keeps their roster details, to know them when it sees them again. A note on who asked and how is required. undo: true takes it back when they ask to be included again. Lists the moments about them from the last week, for retract_moment.",
+      inputSchema: {
+        athlete: athleteArg,
+        note: z.string().min(1).max(500).describe('Who asked and how, for the record: "His agent, by email to hello@walkoff.io".'),
+        undo: z.boolean().optional().describe("They asked to be included again."),
+      },
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
+    },
+    (args) =>
+      operatorOnly(async () => {
+        if (!(await athletesReady(db))) throw new ToolError(NOT_READY);
+        if (!(await has011(db))) throw new ToolError("Excluding an athlete needs supabase/011_athlete_opt_outs.sql to have run.");
+        const a = await oneAthlete(ctx, args.athlete);
+        const at = ctx.now().toISOString();
+        const was = (await optedOut(db, [a.id])).get(a.id) ?? null;
+        if (args.undo) {
+          if (was) await optIn(db, a.id, at);
+          return {
+            athlete: athleteView(a),
+            excluded: false,
+            ...(was ? {} : { note: `${a.displayName} wasn't excluded.` }),
+            next: "Walkoff learns where they're from again as it reads their roster, bio and Wikidata, within a day or so, and makes moments about them again.",
+          };
+        }
+        const deleted = was ? 0 : await optOut(db, a.id, args.note.trim(), at);
+        const since = new Date(ctx.now().getTime() - 7 * 24 * 3_600_000).toISOString();
+        const moments = await athleteMoments(db, a.id, since);
+        return {
+          athlete: athleteView(a),
+          excluded: true,
+          since: (was ?? at).slice(0, 10),
+          ...(was ? { note: "They were excluded already." } : { places_deleted: deleted }),
+          recent_moments: moments.map((m) => ({ id: m.id, headline: m.headline, detected_at: m.detectedAt })),
+          next: moments.length
+            ? "These moments are about them and may still be in brands' queues. retract_moment takes each back."
+            : "No moments about them from the last week.",
         };
       }),
   );

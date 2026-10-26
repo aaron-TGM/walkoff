@@ -51,6 +51,7 @@ const OPERATOR_TOOLS = [
   "record_athlete_rights",
   "create_moment",
   "retract_moment",
+  "exclude_athlete",
 ];
 
 async function memberClient() {

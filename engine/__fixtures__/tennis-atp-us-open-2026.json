@@ -1,0 +1,742 @@
+{
+ "events": [
+  {
+   "id": "189-2026",
+   "name": "US Open",
+   "date": "2026-08-24T04:00Z",
+   "endDate": "2026-09-14T03:59Z",
+   "major": true,
+   "status": {
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final"
+    }
+   },
+   "groupings": [
+    {
+     "grouping": {
+      "slug": "mens-singles",
+      "displayName": "Men's Singles"
+     },
+     "competitions": [
+      {
+       "id": "182656",
+       "date": "2026-08-30T15:05Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "1590",
+         "winner": false,
+         "athlete": {
+          "displayName": "Pablo Carreno Busta"
+         }
+        },
+        {
+         "id": "3754",
+         "winner": true,
+         "athlete": {
+          "displayName": "Jiri Lehecka"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182663",
+       "date": "2026-08-30T15:05Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3093",
+         "winner": false,
+         "athlete": {
+          "displayName": "Adam Walton"
+         }
+        },
+        {
+         "id": "2875",
+         "winner": true,
+         "athlete": {
+          "displayName": "Wu Yibing"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182758",
+       "date": "2026-08-30T15:05Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "8325",
+         "winner": false,
+         "athlete": {
+          "displayName": "Hamad Medjedovic"
+         }
+        },
+        {
+         "id": "2416",
+         "winner": true,
+         "athlete": {
+          "displayName": "Kamil Majchrzak"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182778",
+       "date": "2026-08-30T15:05Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3511",
+         "winner": true,
+         "athlete": {
+          "displayName": "Arthur Rinderknech"
+         }
+        },
+        {
+         "id": "3935",
+         "winner": false,
+         "athlete": {
+          "displayName": "Sho Shimabukuro"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182777",
+       "date": "2026-09-08T18:25Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "11400",
+         "winner": false,
+         "athlete": {
+          "displayName": "Alex Michelsen"
+         }
+        },
+        {
+         "id": "2708",
+         "winner": true,
+         "athlete": {
+          "displayName": "Frances Tiafoe"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182780",
+       "date": "2026-09-09T03:00Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3782",
+         "winner": false,
+         "athlete": {
+          "displayName": "Carlos Alcaraz"
+         }
+        },
+        {
+         "id": "9250",
+         "winner": true,
+         "athlete": {
+          "displayName": "Ben Shelton"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182770",
+       "date": "2026-09-09T21:05Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_RETIRED",
+         "state": "post",
+         "completed": true,
+         "description": "Retired",
+         "detail": "Retired"
+        }
+       },
+       "competitors": [
+        {
+         "id": "11757",
+         "winner": false,
+         "athlete": {
+          "displayName": "Alexander Blockx"
+         }
+        },
+        {
+         "id": "2367",
+         "winner": true,
+         "athlete": {
+          "displayName": "Karen Khachanov"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182772",
+       "date": "2026-09-10T00:00Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3310",
+         "winner": false,
+         "athlete": {
+          "displayName": "Botic Van De Zandschulp"
+         }
+        },
+        {
+         "id": "2375",
+         "winner": true,
+         "athlete": {
+          "displayName": "Alexander Zverev"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182768",
+       "date": "2026-09-11T19:15Z",
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2367",
+         "winner": false,
+         "athlete": {
+          "displayName": "Karen Khachanov"
+         }
+        },
+        {
+         "id": "2375",
+         "winner": true,
+         "athlete": {
+          "displayName": "Alexander Zverev"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182766",
+       "date": "2026-09-11T23:40Z",
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "9250",
+         "winner": true,
+         "athlete": {
+          "displayName": "Ben Shelton"
+         }
+        },
+        {
+         "id": "2708",
+         "winner": false,
+         "athlete": {
+          "displayName": "Frances Tiafoe"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182677",
+       "date": "2026-09-13T18:15Z",
+       "round": {
+        "displayName": "Final"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "9250",
+         "winner": false,
+         "athlete": {
+          "displayName": "Ben Shelton"
+         }
+        },
+        {
+         "id": "2375",
+         "winner": true,
+         "athlete": {
+          "displayName": "Alexander Zverev"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "grouping": {
+      "slug": "womens-singles",
+      "displayName": "Women's Singles"
+     },
+     "competitions": [
+      {
+       "id": "182632",
+       "date": "2026-08-30T15:05Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "5878",
+         "winner": false,
+         "athlete": {
+          "displayName": "Veronika Erjavec"
+         }
+        },
+        {
+         "id": "2615",
+         "winner": true,
+         "athlete": {
+          "displayName": "Jasmine Paolini"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182591",
+       "date": "2026-08-30T15:10Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2042",
+         "winner": false,
+         "athlete": {
+          "displayName": "Barbora Krejcikova"
+         }
+        },
+        {
+         "id": "3908",
+         "winner": true,
+         "athlete": {
+          "displayName": "Kamilla Rakhimova"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182593",
+       "date": "2026-08-30T15:10Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "17104",
+         "winner": true,
+         "athlete": {
+          "displayName": "Polina Iatcenko"
+         }
+        },
+        {
+         "id": "2751",
+         "winner": false,
+         "athlete": {
+          "displayName": "Renata Zarazua"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182624",
+       "date": "2026-08-30T15:10Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2040",
+         "winner": true,
+         "athlete": {
+          "displayName": "Donna Vekic"
+         }
+        },
+        {
+         "id": "6708",
+         "winner": false,
+         "athlete": {
+          "displayName": "Talia Gibson"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182533",
+       "date": "2026-09-08T15:40Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "6970",
+         "winner": false,
+         "athlete": {
+          "displayName": "Linda Noskova"
+         }
+        },
+        {
+         "id": "3038",
+         "winner": true,
+         "athlete": {
+          "displayName": "Aryna Sabalenka"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182535",
+       "date": "2026-09-09T00:20Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3785",
+         "winner": false,
+         "athlete": {
+          "displayName": "Emma Navarro"
+         }
+        },
+        {
+         "id": "2113",
+         "winner": true,
+         "athlete": {
+          "displayName": "Jessica Pegula"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182576",
+       "date": "2026-09-09T15:40Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3126",
+         "winner": true,
+         "athlete": {
+          "displayName": "Elena Rybakina"
+         }
+        },
+        {
+         "id": "6048",
+         "winner": false,
+         "athlete": {
+          "displayName": "Zheng Qinwen"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182573",
+       "date": "2026-09-09T18:20Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3626",
+         "winner": true,
+         "athlete": {
+          "displayName": "Coco Gauff"
+         }
+        },
+        {
+         "id": "9820",
+         "winner": false,
+         "athlete": {
+          "displayName": "Mirra Andreeva"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182553",
+       "date": "2026-09-10T23:15Z",
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2113",
+         "winner": false,
+         "athlete": {
+          "displayName": "Jessica Pegula"
+         }
+        },
+        {
+         "id": "3038",
+         "winner": true,
+         "athlete": {
+          "displayName": "Aryna Sabalenka"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182551",
+       "date": "2026-09-11T00:55Z",
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3126",
+         "winner": true,
+         "athlete": {
+          "displayName": "Elena Rybakina"
+         }
+        },
+        {
+         "id": "3626",
+         "winner": false,
+         "athlete": {
+          "displayName": "Coco Gauff"
+         }
+        }
+       ]
+      },
+      {
+       "id": "182589",
+       "date": "2026-09-12T20:15Z",
+       "round": {
+        "displayName": "Final"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "3126",
+         "winner": true,
+         "athlete": {
+          "displayName": "Elena Rybakina"
+         }
+        },
+        {
+         "id": "3038",
+         "winner": false,
+         "athlete": {
+          "displayName": "Aryna Sabalenka"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

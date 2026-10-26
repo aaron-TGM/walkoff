@@ -98,9 +98,9 @@ const MOMENT_TYPES = TRIGGERS.map((t) => t.id) as [string, ...string[]];
 const ALL_MOMENT_TYPES = ALL_TRIGGERS.map((t) => t.id) as [string, ...string[]];
 const PHASE_OF = new Map(ALL_TRIGGERS.map((t) => [t.id, t.category]));
 
-/** Hometown moments: for everyone once they launch, and for operators
- *  before that, to test (lib/hometown/flag.ts). */
-const hometownOn = (p: Principal) => hometownLive() || isOperator(p);
+/** Hometown moments: for everyone, unless WALKOFF_HOMETOWN=0 turns them off
+ *  for brands. Operators get them either way, to test (lib/hometown/flag.ts). */
+export const hometownOn = (p: Principal) => hometownLive() || isOperator(p);
 
 // ── Shared arguments ───────────────────────────────────────────────
 
@@ -503,9 +503,12 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           }
         }
         if (scope !== "teams" && !brand) brand = await brandFor(db, principal, args.brand);
+        const counts = scope !== "teams" && brand ? await loadAreaCounts(db, brand.id) : [];
+        // No customer counts either: no towns to show, so say how to set up.
+        if (teamNote && !counts.length) throw new ToolError(teamNote);
         const rows = teams.length ? await recentMoments(db, { teamIds: teams.map(feedIdOf), since, types: args.types, limit: 100 }) : [];
-        const townRows = scope !== "teams" && brand ? await hometownMoments(db, { since, types: args.types }) : [];
-        const fits = townRows.length ? await townFits(townRows, await loadAreaCounts(db, brand!.id)) : new Map<string, TownFit>();
+        const townRows = counts.length ? await hometownMoments(db, { since, types: args.types }) : [];
+        const fits = townRows.length ? await townFits(townRows, counts) : new Map<string, TownFit>();
         const near = townRows.filter((r) => {
           const fit = r.place_key ? fits.get(r.place_key) : undefined;
           return fit && localEnough(fit, {});
@@ -788,14 +791,14 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           })
           .filter((x) => x.rule);
         // Hometown moments, by town: the brand's customers there, at most a
-        // few towns an event, and none inside the champion's territory when
-        // the team's own title is in this queue.
+        // few towns an event, and none inside the winner's territory when
+        // the team's own moment for the game is in this queue.
         const towns = townRows.length
           ? localQueue(townRows, await townFits(townRows, await loadAreaCounts(db, b.id)), {
               rules,
               standouts,
               towns: await ruleTowns(rules),
-              titleGames: new Set(teamMatches.filter((x) => x.r.type === "title_won" && x.r.game_id).map((x) => x.r.game_id!)),
+              teamGames: new Set(teamMatches.filter((x) => x.r.game_id && x.r.team_id).map((x) => `${x.r.game_id}|${x.r.team_id}`)),
               now,
             })
           : { items: [], also: [], inTeamTerritory: 0 };
@@ -817,7 +820,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           })),
           ...(towns.also.length ? { also_from_these_events: towns.also } : {}),
           ...(towns.inTeamTerritory
-            ? { left_out: `${towns.inTeamTerritory} hometown ${towns.inTeamTerritory === 1 ? "moment" : "moments"} in the champion's own territory, where the team's title already reaches.` }
+            ? { left_out: `${towns.inTeamTerritory} hometown ${towns.inTeamTerritory === 1 ? "moment" : "moments"} in the team's own territory, where its own moment already reaches.` }
             : {}),
           handled_in_window: acted.size,
           next: queue.length ? "build_campaign with a moment_id, or log_send with status skipped to clear one." : "Nothing to act on right now.",

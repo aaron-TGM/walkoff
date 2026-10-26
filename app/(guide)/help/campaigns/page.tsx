@@ -88,6 +88,17 @@ export default function CampaignsPage() {
           Moment headlines, like &ldquo;Walk-off win: Chargers 27, Chiefs 24&rdquo;, name teams
           for your eyes only. If you or Claude rewrite the copy, keep the rules.
         </p>
+        <h3>Hometown campaigns</h3>
+        <p>
+          A <Link href={helpPath("moments", "hometown")}>hometown moment</Link> celebrates the
+          town, not the athlete. Every hometown campaign follows these rules:
+        </p>
+        <RuleList rules={rules.hometown} />
+        <p>
+          The one exception: an athlete who agreed in writing that your brand may name them. With
+          the agreement on file with Walkoff, the campaign may name them, within it. Ask us to put
+          one on file.
+        </p>
       </HelpSection>
 
       <HelpSection page={P} id="timing">

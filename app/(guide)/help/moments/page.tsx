@@ -2,18 +2,19 @@ import Link from "next/link";
 import { Ask } from "@/components/help/blocks";
 import { HelpPage, HelpSection } from "@/components/help/HelpPage";
 import { FinishTable, LeagueTable, MomentTables } from "@/components/help/moments";
+import { SIGNING_TOP, TOUR_FACTS } from "@/lib/help/moments";
 import { helpMetadata, helpPath } from "@/lib/help/pages";
-import { DEFAULT_RULE, WINDOW_HOURS } from "@/lib/mcp/queue";
-import { TRIGGERS } from "@/lib/triggers";
+import { DEFAULT_RULE, LOCAL, WINDOW_HOURS } from "@/lib/mcp/queue";
+import { brandTriggers } from "@/lib/triggers";
 
 export const metadata = helpMetadata("moments");
 
 const P = "moments";
 
-const live = TRIGGERS.filter((t) => !t.coming).length;
-const coming = TRIGGERS.length - live;
-
 export default function MomentsPage() {
+  const triggers = brandTriggers();
+  const live = triggers.filter((t) => !t.coming).length;
+  const coming = triggers.length - live;
   return (
     <HelpPage slug={P}>
       <HelpSection page={P} id="types">
@@ -25,10 +26,76 @@ export default function MomentsPage() {
         <h3>Big finishes, by sport</h3>
         <p>A last-second finish means something different in each sport:</p>
         <FinishTable />
+        <h3>Big signings</h3>
+        <p>
+          Walkoff reads every team&apos;s roster each day. When a star joins a new team, by trade,
+          signing or transfer, that team&apos;s fans get a Big Signing. A star is one of their
+          league&apos;s {SIGNING_TOP} best-known players: Walkoff counts the Wikipedias with a page
+          about them. Copy never names the player.
+        </p>
         <p>
           Moment headlines name the teams, for your eyes. Campaign copy follows your{" "}
           <Link href={helpPath("campaigns", "copy-rules")}>copy rules</Link>.
         </p>
+      </HelpSection>
+
+      <HelpSection page={P} id="hometown">
+        <p>
+          When an athlete from a town near your customers wins, the town gets its own moment.
+          Walkoff watches for:
+        </p>
+        <ul>
+          <li>
+            <strong>Titles.</strong> Everyone on the champion&apos;s roster, from the Super Bowl to
+            the Stanley Cup.
+          </li>
+          <li>
+            <strong>Playoff games won at the very end.</strong> Whoever hit the walk-off, made the
+            buzzer-beater or scored in overtime.
+          </li>
+          <li>
+            <strong>Tour wins.</strong> Whoever wins on these tours. In golf, also whoever is in
+            contention going into the final round, and in tennis, whoever plays in the final.
+            <ul>
+              {TOUR_FACTS.map((t) => (
+                <li key={t.sport}>
+                  {t.sport}: {t.tours}
+                </li>
+              ))}
+            </ul>
+          </li>
+        </ul>
+        <p>
+          Walkoff knows where athletes are from by their high school, where they were born and
+          our own research. When it isn&apos;t sure, it makes no moment.
+        </p>
+        <p>A town&apos;s moment reaches you when enough of your customers live around it:</p>
+        <ul>
+          <li>
+            About {LOCAL.minCustomers} or more of your customers, or {LOCAL.minWithLift} or more
+            when that&apos;s {LOCAL.minLift} times the town&apos;s share of people.
+          </li>
+          <li>
+            From one event, up to {LOCAL.townsPerEvent} towns, starting with whoever did the most.
+            Claude names the rest.
+          </li>
+          <li>
+            Big cities are left out. A hometown moment is for a town, and a city&apos;s fans hear
+            from you through its teams.
+          </li>
+          <li>
+            A town in the champion&apos;s own territory is left out when the team&apos;s own
+            moment already reaches it, so nobody hears from you twice.
+          </li>
+        </ul>
+        <p>
+          The campaign goes to one circle around the town, never your whole list. Its copy
+          celebrates the town, in the colors everyone there is wearing. It never names or
+          describes the athlete.{" "}
+          <Link href={helpPath("campaigns", "copy-rules")}>Copy rules</Link>
+        </p>
+        <p>To see who&apos;s from near your customers, ask:</p>
+        <Ask>Which athletes are from near our customers?</Ask>
       </HelpSection>
 
       <HelpSection page={P} id="leagues">
@@ -90,6 +157,10 @@ export default function MomentsPage() {
           <li>
             <strong>Intensity:</strong> skip smaller moments. Walk-offs are about 0.9, close
             losses 0.5.
+          </li>
+          <li>
+            <strong>Towns:</strong> for hometown moments in and near the towns you name, like San
+            Clemente, CA. A trigger with towns takes only hometown moments.
           </li>
         </ul>
         <p>

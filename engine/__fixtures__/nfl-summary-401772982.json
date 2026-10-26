@@ -1,0 +1,839 @@
+{
+ "header": {
+  "id": "401772982"
+ },
+ "scoringPlays": [
+  {
+   "homeScore": 3,
+   "awayScore": 0,
+   "text": "Wil Lutz 28 Yd Field Goal",
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 449,
+    "displayValue": "7:29"
+   },
+   "team": {
+    "id": "7"
+   }
+  },
+  {
+   "homeScore": 3,
+   "awayScore": 7,
+   "text": "Mecole Hardman Jr. 4 Yd pass from Josh Allen (Matt Prater Kick)",
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 5,
+    "displayValue": "0:05"
+   },
+   "team": {
+    "id": "2"
+   }
+  },
+  {
+   "homeScore": 10,
+   "awayScore": 7,
+   "text": "Frank Crum 7 Yd pass from Bo Nix (Wil Lutz Kick)",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 573,
+    "displayValue": "9:33"
+   },
+   "team": {
+    "id": "7"
+   }
+  },
+  {
+   "homeScore": 10,
+   "awayScore": 10,
+   "text": "Matt Prater 33 Yd Field Goal ",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 133,
+    "displayValue": "2:13"
+   },
+   "team": {
+    "id": "2"
+   }
+  },
+  {
+   "homeScore": 17,
+   "awayScore": 10,
+   "text": "Lil'Jordan Humphrey 29 Yd pass from Bo Nix (Wil Lutz Kick)",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 22,
+    "displayValue": "0:22"
+   },
+   "team": {
+    "id": "7"
+   }
+  },
+  {
+   "homeScore": 20,
+   "awayScore": 10,
+   "text": "Wil Lutz 50 Yd Field Goal ",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 0,
+    "displayValue": "0:00"
+   },
+   "team": {
+    "id": "7"
+   }
+  },
+  {
+   "homeScore": 23,
+   "awayScore": 10,
+   "text": "Wil Lutz 33 Yd Field Goal ",
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "value": 695,
+    "displayValue": "11:35"
+   },
+   "team": {
+    "id": "7"
+   }
+  },
+  {
+   "homeScore": 23,
+   "awayScore": 17,
+   "text": "Keon Coleman 10 Yd pass from Josh Allen (Matt Prater Kick)",
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "value": 409,
+    "displayValue": "6:49"
+   },
+   "team": {
+    "id": "2"
+   }
+  },
+  {
+   "homeScore": 23,
+   "awayScore": 24,
+   "text": "Dalton Kincaid 14 Yd pass from Josh Allen (Matt Prater Kick)",
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 804,
+    "displayValue": "13:24"
+   },
+   "team": {
+    "id": "2"
+   }
+  },
+  {
+   "homeScore": 23,
+   "awayScore": 27,
+   "text": "Matt Prater 31 Yd Field Goal",
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 251,
+    "displayValue": "4:11"
+   },
+   "team": {
+    "id": "2"
+   }
+  },
+  {
+   "homeScore": 30,
+   "awayScore": 27,
+   "text": "Marvin Mims Jr. 26 Yd pass from Bo Nix (Wil Lutz Kick)",
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 55,
+    "displayValue": "0:55"
+   },
+   "team": {
+    "id": "7"
+   }
+  },
+  {
+   "homeScore": 30,
+   "awayScore": 30,
+   "text": "Matt Prater 50 Yd Field Goal",
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 5,
+    "displayValue": "0:05"
+   },
+   "team": {
+    "id": "2"
+   }
+  },
+  {
+   "homeScore": 33,
+   "awayScore": 30,
+   "text": "Wil Lutz 23 Yd Field Goal ",
+   "period": {
+    "number": 5
+   },
+   "clock": {
+    "value": 284,
+    "displayValue": "4:44"
+   },
+   "team": {
+    "id": "7"
+   }
+  }
+ ],
+ "boxscore": {
+  "players": [
+   {
+    "team": {
+     "id": "2"
+    },
+    "statistics": [
+     {
+      "name": "passing",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "3918298",
+         "displayName": "Josh Allen"
+        }
+       }
+      ]
+     },
+     {
+      "name": "rushing",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4379399",
+         "displayName": "James Cook III"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3918298",
+         "displayName": "Josh Allen"
+        }
+       }
+      ]
+     },
+     {
+      "name": "receiving",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4385690",
+         "displayName": "Dalton Kincaid"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4373678",
+         "displayName": "Khalil Shakir"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4429501",
+         "displayName": "Ray Davis"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3930086",
+         "displayName": "Dawson Knox"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4379399",
+         "displayName": "James Cook III"
+        }
+       },
+       {
+        "athlete": {
+         "id": "16731",
+         "displayName": "Brandin Cooks"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4635008",
+         "displayName": "Keon Coleman"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4035004",
+         "displayName": "Mecole Hardman Jr."
+        }
+       },
+       {
+        "athlete": {
+         "id": "3121427",
+         "displayName": "Curtis Samuel"
+        }
+       }
+      ]
+     },
+     {
+      "name": "fumbles",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "3918298",
+         "displayName": "Josh Allen"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4379399",
+         "displayName": "James Cook III"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4367203",
+         "displayName": "Alec Anderson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4030899",
+         "displayName": "Spencer Brown"
+        }
+       }
+      ]
+     },
+     {
+      "name": "defensive",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4676004",
+         "displayName": "Cole Bishop"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3916577",
+         "displayName": "Cam Lewis"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3121003",
+         "displayName": "Taron Johnson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "2978313",
+         "displayName": "Shaq Thompson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3042717",
+         "displayName": "Tre'Davious White"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3051389",
+         "displayName": "Joey Bosa"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3915419",
+         "displayName": "Darnell Savage"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4831989",
+         "displayName": "Deone Walker"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3046287",
+         "displayName": "Matt Milano"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4379778",
+         "displayName": "Christian Benford"
+        }
+       },
+       {
+        "athlete": {
+         "id": "16910",
+         "displayName": "DaQuan Jones"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4362506",
+         "displayName": "Greg Rousseau"
+        }
+       },
+       {
+        "athlete": {
+         "id": "16731",
+         "displayName": "Brandin Cooks"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4373678",
+         "displayName": "Khalil Shakir"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4385690",
+         "displayName": "Dalton Kincaid"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4568624",
+         "displayName": "Dorian Williams"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4240585",
+         "displayName": "AJ Epenesa"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4366349",
+         "displayName": "Joe Andreessen"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4428548",
+         "displayName": "Javon Solomon"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4429805",
+         "displayName": "Frank Gore Jr."
+        }
+       }
+      ]
+     },
+     {
+      "name": "interceptions",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4831989",
+         "displayName": "Deone Walker"
+        }
+       }
+      ]
+     },
+     {
+      "name": "kickReturns",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4429501",
+         "displayName": "Ray Davis"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4035004",
+         "displayName": "Mecole Hardman Jr."
+        }
+       }
+      ]
+     },
+     {
+      "name": "puntReturns",
+      "athletes": []
+     },
+     {
+      "name": "kicking",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "11122",
+         "displayName": "Matt Prater"
+        }
+       }
+      ]
+     },
+     {
+      "name": "punting",
+      "athletes": []
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "7"
+    },
+    "statistics": [
+     {
+      "name": "passing",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4426338",
+         "displayName": "Bo Nix"
+        }
+       }
+      ]
+     },
+     {
+      "name": "rushing",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4426338",
+         "displayName": "Bo Nix"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4722893",
+         "displayName": "Jaleel McLaughlin"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4568490",
+         "displayName": "RJ Harvey"
+        }
+       }
+      ]
+     },
+     {
+      "name": "receiving",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4686472",
+         "displayName": "Marvin Mims Jr."
+        }
+       },
+       {
+        "athlete": {
+         "id": "3128429",
+         "displayName": "Courtland Sutton"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4568490",
+         "displayName": "RJ Harvey"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4039057",
+         "displayName": "Lil'Jordan Humphrey"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4600981",
+         "displayName": "Pat Bryant"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4361691",
+         "displayName": "Frank Crum"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3051876",
+         "displayName": "Evan Engram"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4362748",
+         "displayName": "Tyler Badie"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4383440",
+         "displayName": "Nate Adkins"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3911853",
+         "displayName": "Adam Trautman"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3929914",
+         "displayName": "Adam Prentice"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4722893",
+         "displayName": "Jaleel McLaughlin"
+        }
+       }
+      ]
+     },
+     {
+      "name": "fumbles",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4426338",
+         "displayName": "Bo Nix"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4037559",
+         "displayName": "Devon Key"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4039064",
+         "displayName": "Malcolm Roach"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4360853",
+         "displayName": "Talanoa Hufanga"
+        }
+       }
+      ]
+     },
+     {
+      "name": "defensive",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "2612151",
+         "displayName": "Alex Singleton"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4360853",
+         "displayName": "Talanoa Hufanga"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3929850",
+         "displayName": "P.J. Locke"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5216101",
+         "displayName": "Dondrea Tillman"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4039064",
+         "displayName": "Malcolm Roach"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3915282",
+         "displayName": "Zach Allen"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4037559",
+         "displayName": "Devon Key"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4382401",
+         "displayName": "Riley Moss"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3916903",
+         "displayName": "Dre Greenlaw"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4360259",
+         "displayName": "Nik Bonitto"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4372012",
+         "displayName": "Pat Surtain II"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4687592",
+         "displayName": "Jonah Elliss"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4066109",
+         "displayName": "Eyioma Uwazurike"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4040608",
+         "displayName": "Jonathon Cooper"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4428503",
+         "displayName": "JL Skinner"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3919548",
+         "displayName": "Justin Strnad"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4035662",
+         "displayName": "Garett Bolles"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4567462",
+         "displayName": "Ja'Quan McMillian"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4693373",
+         "displayName": "Jordan Turner"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3120464",
+         "displayName": "John Franklin-Myers"
+        }
+       }
+      ]
+     },
+     {
+      "name": "interceptions",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "3929850",
+         "displayName": "P.J. Locke"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4567462",
+         "displayName": "Ja'Quan McMillian"
+        }
+       }
+      ]
+     },
+     {
+      "name": "kickReturns",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4722893",
+         "displayName": "Jaleel McLaughlin"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4686472",
+         "displayName": "Marvin Mims Jr."
+        }
+       },
+       {
+        "athlete": {
+         "id": "4362748",
+         "displayName": "Tyler Badie"
+        }
+       }
+      ]
+     },
+     {
+      "name": "puntReturns",
+      "athletes": []
+     },
+     {
+      "name": "kicking",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "2985659",
+         "displayName": "Wil Lutz"
+        }
+       }
+      ]
+     },
+     {
+      "name": "punting",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4589212",
+         "displayName": "Jeremy Crawshaw"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

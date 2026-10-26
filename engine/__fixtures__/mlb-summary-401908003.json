@@ -1,0 +1,459 @@
+{
+ "header": {
+  "id": "401908003"
+ },
+ "plays": [
+  {
+   "period": {
+    "number": 1,
+    "type": "Top"
+   },
+   "scoringPlay": true,
+   "homeScore": 0,
+   "awayScore": 1,
+   "text": "France singled to center, Machado scored.",
+   "team": {
+    "id": "25"
+   },
+   "participants": [
+    {
+     "type": "pitcher",
+     "athlete": {
+      "id": "4917878"
+     }
+    },
+    {
+     "type": "batter",
+     "athlete": {
+      "id": "35591"
+     }
+    },
+    {
+     "type": "onFirst",
+     "athlete": {
+      "id": "35591"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 5,
+    "type": "Top"
+   },
+   "scoringPlay": true,
+   "homeScore": 0,
+   "awayScore": 2,
+   "text": "Harris grounded into fielder's choice to second. Campusano scored, Harris safe at second on throwing error by shortstop Pratt. Tatis Jr. out at second.",
+   "team": {
+    "id": "25"
+   },
+   "participants": [
+    {
+     "type": "pitcher",
+     "athlete": {
+      "id": "4917878"
+     }
+    },
+    {
+     "type": "batter",
+     "athlete": {
+      "id": "4917924"
+     }
+    },
+    {
+     "type": "onSecond",
+     "athlete": {
+      "id": "4917924"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 5,
+    "type": "Bottom"
+   },
+   "scoringPlay": true,
+   "homeScore": 1,
+   "awayScore": 2,
+   "text": "Frelick singled to left, Yelich scored.",
+   "team": {
+    "id": "8"
+   },
+   "participants": [
+    {
+     "type": "pitcher",
+     "athlete": {
+      "id": "40429"
+     }
+    },
+    {
+     "type": "batter",
+     "athlete": {
+      "id": "4417795"
+     }
+    },
+    {
+     "type": "onFirst",
+     "athlete": {
+      "id": "4417795"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 7,
+    "type": "Top"
+   },
+   "scoringPlay": true,
+   "homeScore": 1,
+   "awayScore": 3,
+   "text": "France singled to right, Tatis Jr. scored, Machado thrown out at third.",
+   "team": {
+    "id": "25"
+   },
+   "participants": [
+    {
+     "type": "pitcher",
+     "athlete": {
+      "id": "4917865"
+     }
+    },
+    {
+     "type": "batter",
+     "athlete": {
+      "id": "35591"
+     }
+    },
+    {
+     "type": "onFirst",
+     "athlete": {
+      "id": "35591"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 7,
+    "type": "Bottom"
+   },
+   "scoringPlay": true,
+   "homeScore": 2,
+   "awayScore": 3,
+   "text": "Hamilton reaches on fielding error by second baseman Cronenworth. Mitchell scored, Pratt to third, Hamilton to second on throwing error by second baseman Cronenworth.",
+   "team": {
+    "id": "8"
+   },
+   "participants": [
+    {
+     "type": "pitcher",
+     "athlete": {
+      "id": "5266086"
+     }
+    },
+    {
+     "type": "batter",
+     "athlete": {
+      "id": "42987"
+     }
+    },
+    {
+     "type": "onFirst",
+     "athlete": {
+      "id": "42987"
+     }
+    },
+    {
+     "type": "onThird",
+     "athlete": {
+      "id": "5149101"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 9,
+    "type": "Bottom"
+   },
+   "scoringPlay": true,
+   "homeScore": 4,
+   "awayScore": 3,
+   "text": "Chourio singled to center, Frelick scored and Yelich scored, Ortiz to second.",
+   "team": {
+    "id": "8"
+   },
+   "participants": [
+    {
+     "type": "pitcher",
+     "athlete": {
+      "id": "4730225"
+     }
+    },
+    {
+     "type": "batter",
+     "athlete": {
+      "id": "4917869"
+     }
+    },
+    {
+     "type": "onFirst",
+     "athlete": {
+      "id": "4917869"
+     }
+    },
+    {
+     "type": "onSecond",
+     "athlete": {
+      "id": "42958"
+     }
+    }
+   ]
+  }
+ ],
+ "boxscore": {
+  "players": [
+   {
+    "team": {
+     "id": "25"
+    },
+    "statistics": [
+     {
+      "type": "batting",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "35983",
+         "displayName": "Fernando Tatis Jr."
+        }
+       },
+       {
+        "athlete": {
+         "id": "4917924",
+         "displayName": "Dustin Harris"
+        }
+       },
+       {
+        "athlete": {
+         "id": "42704",
+         "displayName": "Jase Bowen"
+        }
+       },
+       {
+        "athlete": {
+         "id": "31097",
+         "displayName": "Manny Machado"
+        }
+       },
+       {
+        "athlete": {
+         "id": "35591",
+         "displayName": "Ty France"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4872691",
+         "displayName": "Jackson Merrill"
+        }
+       },
+       {
+        "athlete": {
+         "id": "40700",
+         "displayName": "Gavin Sheets"
+        }
+       },
+       {
+        "athlete": {
+         "id": "36928",
+         "displayName": "Austin Hays"
+        }
+       },
+       {
+        "athlete": {
+         "id": "39710",
+         "displayName": "Samad Taylor"
+        }
+       },
+       {
+        "athlete": {
+         "id": "31606",
+         "displayName": "Xander Bogaerts"
+        }
+       },
+       {
+        "athlete": {
+         "id": "40521",
+         "displayName": "Luis Campusano"
+        }
+       },
+       {
+        "athlete": {
+         "id": "41928",
+         "displayName": "Freddy Fermin"
+        }
+       },
+       {
+        "athlete": {
+         "id": "36364",
+         "displayName": "Jake Cronenworth"
+        }
+       }
+      ]
+     },
+     {
+      "type": "pitching",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "40429",
+         "displayName": "Michael King"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4142414",
+         "displayName": "Yuki Matsui"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5266086",
+         "displayName": "Bradgley Rodriguez"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4730225",
+         "displayName": "Mason Miller"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "8"
+    },
+    "statistics": [
+     {
+      "type": "batting",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4917869",
+         "displayName": "Jackson Chourio"
+        }
+       },
+       {
+        "athlete": {
+         "id": "41179",
+         "displayName": "Brice Turang"
+        }
+       },
+       {
+        "athlete": {
+         "id": "35013",
+         "displayName": "Jake Bauers"
+        }
+       },
+       {
+        "athlete": {
+         "id": "39895",
+         "displayName": "William Contreras"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4313442",
+         "displayName": "Garrett Mitchell"
+        }
+       },
+       {
+        "athlete": {
+         "id": "31283",
+         "displayName": "Christian Yelich"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4417795",
+         "displayName": "Sal Frelick"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5149101",
+         "displayName": "Cooper Pratt"
+        }
+       },
+       {
+        "athlete": {
+         "id": "42394",
+         "displayName": "Andrew Vaughn"
+        }
+       },
+       {
+        "athlete": {
+         "id": "42987",
+         "displayName": "David Hamilton"
+        }
+       },
+       {
+        "athlete": {
+         "id": "31095",
+         "displayName": "Gary Sanchez"
+        }
+       },
+       {
+        "athlete": {
+         "id": "42958",
+         "displayName": "Joey Ortiz"
+        }
+       }
+      ]
+     },
+     {
+      "type": "pitching",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4917878",
+         "displayName": "Logan Henderson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "40456",
+         "displayName": "JoJo Romero"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4917865",
+         "displayName": "Abner Uribe"
+        }
+       },
+       {
+        "athlete": {
+         "id": "41325",
+         "displayName": "Aaron Ashby"
+        }
+       },
+       {
+        "athlete": {
+         "id": "40080",
+         "displayName": "Trevor Megill"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

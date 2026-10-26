@@ -1,0 +1,173 @@
+{
+ "events": [
+  {
+   "id": "401859966",
+   "date": "2026-06-11T00:30Z",
+   "name": "San Antonio Spurs at New York Knicks",
+   "shortName": "SA @ NY",
+   "season": {
+    "year": 2026,
+    "type": 3,
+    "slug": "post-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0.0",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401859966",
+     "date": "2026-06-11T00:30Z",
+     "neutralSite": false,
+     "notes": [
+      {
+       "type": "event",
+       "headline": "NBA Finals - Game 4"
+      }
+     ],
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "NY leads series 3-1",
+      "completed": false,
+      "totalCompetitions": 7,
+      "competitors": [
+       {
+        "id": "18",
+        "uid": "s:40~l:46~t:18",
+        "wins": 3,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2026/teams/18?lang=en&region=us"
+       },
+       {
+        "id": "24",
+        "uid": "s:40~l:46~t:24",
+        "wins": 1,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2026/teams/24?lang=en&region=us"
+       }
+      ]
+     },
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0.0",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "107",
+       "linescores": [
+        {
+         "value": 22.0,
+         "period": 1
+        },
+        {
+         "value": 27.0,
+         "period": 2
+        },
+        {
+         "value": 26.0,
+         "period": 3
+        },
+        {
+         "value": 32.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "53-29"
+        },
+        {
+         "type": "home",
+         "summary": "30-10"
+        },
+        {
+         "type": "road",
+         "summary": "22-19"
+        }
+       ],
+       "team": {
+        "id": "18",
+        "abbreviation": "NY",
+        "displayName": "New York Knicks",
+        "shortDisplayName": "Knicks",
+        "name": "Knicks",
+        "location": "New York",
+        "color": "1d428a",
+        "alternateColor": "f58426"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "106",
+       "linescores": [
+        {
+         "value": 41.0,
+         "period": 1
+        },
+        {
+         "value": 35.0,
+         "period": 2
+        },
+        {
+         "value": 14.0,
+         "period": 3
+        },
+        {
+         "value": 16.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "62-20"
+        },
+        {
+         "type": "home",
+         "summary": "32-8"
+        },
+        {
+         "type": "road",
+         "summary": "29-12"
+        }
+       ],
+       "team": {
+        "id": "24",
+        "abbreviation": "SA",
+        "displayName": "San Antonio Spurs",
+        "shortDisplayName": "Spurs",
+        "name": "Spurs",
+        "location": "San Antonio",
+        "color": "000000",
+        "alternateColor": "c4ced4"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

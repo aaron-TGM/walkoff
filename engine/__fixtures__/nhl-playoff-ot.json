@@ -1,0 +1,173 @@
+{
+ "events": [
+  {
+   "id": "401869772",
+   "date": "2026-04-27T01:52Z",
+   "name": "Edmonton Oilers at Anaheim Ducks",
+   "shortName": "EDM @ ANA",
+   "season": {
+    "year": 2026,
+    "type": 3,
+    "slug": "post-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final/OT",
+     "shortDetail": "Final/OT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401869772",
+     "date": "2026-04-27T01:52Z",
+     "neutralSite": false,
+     "notes": [
+      {
+       "type": "event",
+       "headline": "West 1st Round - Game 4"
+      }
+     ],
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "ANA leads series 3-1",
+      "completed": false,
+      "totalCompetitions": 7,
+      "competitors": [
+       {
+        "id": "25",
+        "uid": "s:70~l:90~t:25",
+        "wins": 3,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2026/teams/25?lang=en&region=us"
+       },
+       {
+        "id": "6",
+        "uid": "s:70~l:90~t:6",
+        "wins": 1,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2026/teams/6?lang=en&region=us"
+       }
+      ]
+     },
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final/OT",
+       "shortDetail": "Final/OT"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "4",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 2.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        },
+        {
+         "value": 1.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "43-33-6"
+        },
+        {
+         "type": "home",
+         "summary": "24-13-4"
+        },
+        {
+         "type": "road",
+         "summary": "19-20-2"
+        }
+       ],
+       "team": {
+        "id": "25",
+        "abbreviation": "ANA",
+        "displayName": "Anaheim Ducks",
+        "shortDisplayName": "Ducks",
+        "name": "Ducks",
+        "location": "Anaheim",
+        "color": "fc4c02",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "3",
+       "linescores": [
+        {
+         "value": 2.0,
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "period": 2
+        },
+        {
+         "value": 1.0,
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "41-30-11"
+        },
+        {
+         "type": "home",
+         "summary": "22-14-5"
+        },
+        {
+         "type": "road",
+         "summary": "19-16-6"
+        }
+       ],
+       "team": {
+        "id": "6",
+        "abbreviation": "EDM",
+        "displayName": "Edmonton Oilers",
+        "shortDisplayName": "Oilers",
+        "name": "Oilers",
+        "location": "Edmonton",
+        "color": "00205b",
+        "alternateColor": "ff4c00"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

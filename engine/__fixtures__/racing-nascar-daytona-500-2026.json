@@ -1,0 +1,124 @@
+{
+ "events": [
+  {
+   "id": "202602150001",
+   "name": "Daytona 500",
+   "date": "2026-02-15T18:30Z",
+   "status": {
+    "period": 200,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "202602150001",
+     "date": "2026-02-15T18:30Z",
+     "type": null,
+     "status": {
+      "period": 200,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "id": "669",
+       "winner": false,
+       "athlete": {
+        "displayName": "J.J. Yeley",
+        "fullName": "J.J. Yeley"
+       }
+      },
+      {
+       "id": "4615",
+       "winner": false,
+       "athlete": {
+        "displayName": "Corey LaJoie",
+        "fullName": "Corey LaJoie"
+       }
+      },
+      {
+       "id": "5588",
+       "winner": false,
+       "athlete": {
+        "displayName": "Anthony Alfredo",
+        "fullName": "Anthony Alfredo"
+       }
+      },
+      {
+       "id": "5602",
+       "winner": false,
+       "athlete": {
+        "displayName": "Chandler Smith",
+        "fullName": "Chandler Smith"
+       }
+      },
+      {
+       "id": "4577",
+       "order": 1,
+       "winner": true,
+       "athlete": {
+        "displayName": "Tyler Reddick",
+        "fullName": "Tyler Reddick"
+       }
+      },
+      {
+       "id": "4351",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "Ricky Stenhouse Jr.",
+        "fullName": "Ricky Stenhouse Jr."
+       }
+      },
+      {
+       "id": "4319",
+       "order": 3,
+       "winner": false,
+       "athlete": {
+        "displayName": "Joey Logano",
+        "fullName": "Joey Logano"
+       }
+      },
+      {
+       "id": "4574",
+       "order": 4,
+       "winner": false,
+       "athlete": {
+        "displayName": "Chase Elliott",
+        "fullName": "Chase Elliott"
+       }
+      },
+      {
+       "id": "626",
+       "order": 5,
+       "winner": false,
+       "athlete": {
+        "displayName": "Brad Keselowski",
+        "fullName": "Brad Keselowski"
+       }
+      },
+      {
+       "id": "5558",
+       "order": 6,
+       "winner": false,
+       "athlete": {
+        "displayName": "Zane Smith",
+        "fullName": "Zane Smith"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

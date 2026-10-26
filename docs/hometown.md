@@ -9,10 +9,11 @@ Darnold, who grew up in San Clemente, California, led Seattle in passing. A
 brand with customers around San Clemente gets "San Clemente, what a night."
 for the people within 5 miles of 92673.
 
-**Status:** built, and off for brands. Counsel signs off on the copy rules
-below before launch. Until then, Walkoff operators see hometown moments in
-Claude, to test: `HOMETOWN=1` on the engine makes them, and only operators
-see them until `WALKOFF_HOMETOWN=1` on the website.
+**Status:** live. Counsel signed off on the copy rules below in October
+2026, and hometown moments are on for every brand. Two switches turn them
+off: `HOMETOWN=0` on the engine stops making them, and
+`WALKOFF_HOMETOWN=0` on the website keeps them from brands (operators still
+see them, to test).
 
 ## How a moment is made
 
@@ -25,8 +26,8 @@ see them until `WALKOFF_HOMETOWN=1` on the website.
 2. **The title.** When a team wins a title, the poller puts its players on
    the title moment: the game's leaders, and everyone with a line in the
    box score (`engine/moments/heroes.ts`).
-3. **The towns.** The hometown job (`engine/hometown.ts`, on with
-   `HOMETOWN=1`) records each player's part and makes one moment per town:
+3. **The towns.** The hometown job (`engine/hometown.ts`) records each
+   player's part and makes one moment per town:
 
    | Part | Who | Intensity |
    |------|-----|-----------|
@@ -38,9 +39,45 @@ see them until `WALKOFF_HOMETOWN=1` on the website.
    Big cities (more than 750,000 people in the town's circle) get a moment
    only when a person set the home: a birthplace is too thin a link to a
    city of millions.
-4. **Wins Walkoff doesn't follow.** An operator records them with
-   `create_moment` (a surfing win, a medal), and the towns' moments are made
-   right away.
+4. **Golf.** The engine follows the PGA Tour, LPGA, DP World Tour and LIV
+   (`engine/golf`). A winner's town gets `hometown_win` once the event is
+   final: 0.95 for a major, 0.85 for an elevated PGA Tour event, 0.80 on the
+   PGA Tour or LPGA, 0.75 on the DP World Tour, 0.70 on LIV, and 0.05 more
+   for a playoff. Whoever leads into the final round gets
+   `hometown_contender` once their tee times are out: 0.7 at a major, 0.55
+   elsewhere, open until they tee off.
+5. **Playoff game-winners.** When a playoff game ends on a walk-off, a
+   buzzer-beater or an overtime winner, whoever decided it gets
+   `hometown_game_winner` for their town: the batter of the walk-off, the
+   scorer of the overtime goal, the shooter of the buzzer-beater, and in
+   football the players the scoring play names (`engine/moments/deciders.ts`).
+   0.9, or 0.95 in the World Series, NBA Finals or Stanley Cup Final. A
+   walk-off on an error or a wild pitch has no decider. In a title game the
+   decider is one of the champion's leaders instead, so the town gets the
+   title once. Example: Ryan Poehling's overtime goal for the Ducks in the
+   2026 first round makes "Lakeville, what a finish." for Lakeville,
+   Minnesota, where he was born. Needs `supabase/010_player_moments.sql`.
+6. **Tennis.** The engine follows the ATP and the WTA, singles only
+   (`engine/tennis`). A winner's town gets `hometown_win` once the final is
+   over: 0.95 for a Grand Slam, 0.90 for the year-end Finals, 0.85 for a
+   1000-level event, 0.75 for any other tour event. Both finalists' towns
+   get `hometown_contender` before the final: 0.7 at a Slam, 0.55
+   elsewhere, open until it starts.
+7. **Racing.** NASCAR's Cup Series, Formula 1 and IndyCar (`engine/racing`).
+   A race winner's town gets `hometown_win`: 0.95 for the Daytona 500 and
+   the Indy 500, 0.85 in Formula 1, 0.80 in the Cup Series, 0.75 in
+   IndyCar. Example: Tyler Reddick's 2026 Daytona 500 makes one for
+   Corning, California.
+8. **Surfing.** The WSL's Championship Tour, men's and women's
+   (`engine/surfing`), from the season's Wikipedia article: the WSL has no
+   feed, and its robots.txt shuts out AI agents. A champion's town gets
+   `hometown_win` once the article has named them for 30 minutes: 0.85, or
+   0.90 at the Pipe Masters. Birthplaces come from Wikidata, and the
+   curated file has the surfers it doesn't know. Example: Griffin
+   Colapinto's win in Portugal in October 2026 makes one for San Clemente.
+9. **Wins Walkoff doesn't follow.** An operator records them with
+   `create_moment` (a medal, a big-wave contest), and the towns' moments
+   are made right away.
 
 ## Who sees it
 
@@ -60,9 +97,9 @@ A brand gets a town's moment when:
 - it's one of the event's top 5 towns for the brand: the towns of those who
   did the most first, then the most customers. The rest are listed by name.
 
-A town inside the champion's own core territory is left out when the
-brand's queue already has the team's title, so nobody there gets two
-sends. Team queries never include hometown moments: a Seattle brand gets
+A town inside the winner's own core territory is left out when the brand's
+queue already has the team's moment for that game (its title, its
+walk-off), so nobody there gets two sends. Team queries never include hometown moments: a Seattle brand gets
 the title, not San Clemente's moment.
 
 ## The campaign
@@ -73,16 +110,22 @@ the title, not San Clemente's moment.
   once as "Walkoff · San Clemente, CA (5 mi)" and reused for every later
   moment there. Only Klaviyo subscribers inside it get the email.
 - **Products:** the brand's own named for the town first ("San Clemente
-  Pier Hoodie"), then the champion's colors. For an athlete without a team,
-  their sport's scene (golf, tennis, motorsports, surf).
+  Pier Hoodie"), then the champion's colors. For a golfer or anyone else
+  without a team, their sport's scene (golf, tennis, motorsports, surf).
+  The colors in the copy come from the products picked for them, not from
+  one picked for the town's name.
+- **A contender's send** goes out the morning of the final round, in the
+  town's time: "All eyes on Holywood today."
 - **Copy:** "San Clemente, what a night." "Navy and green all over San
-  Clemente today." The send time is the town's, never late at night.
+  Clemente today." A game-winner's: "Lakeville, what a finish." The send
+  time is the town's, never late at night.
 - **Name:** "Walkoff · San Clemente, CA · Hometown Champion · Feb 8". No
   athlete or team, in the campaign or the segment.
 
-## Copy rules, for counsel
+## Copy rules
 
-Without an athlete's written agreement on file, in date:
+Counsel signed off on these in October 2026. Without an athlete's written
+agreement on file, in date:
 
 1. Celebrate the town, never the athlete: no name, nickname, initials,
    number, position, school or photo, and nothing like "local kid", "one of
@@ -113,26 +156,45 @@ Tests hold the generated copy to these rules: `assertNeverNamesAthlete` and
 - `create_moment` records a win Walkoff doesn't follow.
 - `local_athletes` shows any brand which athletes are from near its
   customers.
+- `exclude_athlete` is for an athlete, or someone for them, who asks
+  Walkoff to stop using them, as the privacy policy promises
+  (`/privacy#athletes`). It deletes where they're from, and nothing saves
+  it again: not the roster sync, Wikidata, a bio or an operator. No
+  hometown moment or big signing is made about them. It keeps their roster
+  details, so Walkoff knows them when a roster lists them again, and lists
+  the moments about them from the last week: retract those. If they're in
+  `data/athletes/curated.json`, take them out too. `undo: true` takes it
+  back when they ask, and their roster, bio and Wikidata are read again.
+  Needs `supabase/011_athlete_opt_outs.sql`.
 
-## Launch
+## Switches
 
-One small change, after counsel signs off:
+| Where | Switch | Default | Off |
+|-------|--------|---------|-----|
+| Engine (Cloud Run) | `HOMETOWN` | on | `0`: no new hometown moments |
+| Website (Vercel) | `WALKOFF_HOMETOWN` | on | `0`: brands don't see them; operators still do |
 
-1. `WALKOFF_HOMETOWN=1` on the website (Vercel), and `HOMETOWN=1` on the
-   engine (Cloud Run) if it isn't on already for testing.
-2. The hometown types join the site's moment lists (`lib/triggers.ts`) and
-   the help center, with the copy rules.
-3. The town-only copy rule joins Claude's instructions for everyone
-   (`lib/mcp/server.ts`).
-4. The privacy policy mentions athlete data: public facts about public
-   figures, no birth dates. The founder words it.
+The site's moment lists and the help center's tables follow
+`WALKOFF_HOMETOWN` too (`brandTriggers` in `lib/triggers.ts`).
 
 ## Limits
 
-- ESPN's API is unofficial. Rosters add about 650 requests a day, and a
-  title one more summary.
+- ESPN's API is unofficial. Rosters add about 650 requests a day, a title
+  one more summary, and golf, tennis and racing about 1,800 reads a day
+  across their nine tours and series, plus a bio for each athlete the first
+  time they play. Surfing reads one Wikipedia article every 10 minutes, and
+  Wikidata once for each new surfer.
+- Surfing's results come from Wikipedia, so they're as quick and as right
+  as its editors: usually within hours of a final.
 - A roster is read when the title is recorded, so a player signed in the
   days after a title can count as on the roster.
+- A playoff game-winner needs one more read of the game's summary in
+  baseball and hockey: a few a year.
 - Customer counts by postal area undercount a brand whose customers bunch
   in one town. Klaviyo's count for the circle is the real one.
-- Golf, tennis, racing and surfing come next. Until then, `create_moment`.
+- Golfers', tennis players' and drivers' birthplaces come from ESPN's bios.
+  Some are places Walkoff doesn't know (Scarborough, New York, is a hamlet
+  with no postal name of its own), some only a town's name ("Worcester",
+  which could be in England or Massachusetts), and some are missing: those
+  make no moment until an operator sets the home.
+- Surfing has no feed, so its wins come in through `create_moment`.

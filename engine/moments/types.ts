@@ -24,6 +24,7 @@ export const EMITTED_TYPES = [
   "heartbreak_loss",
   "playoff_advance",
   "title_won",
+  "big_signing",
 ] as const;
 export type MomentType = (typeof EMITTED_TYPES)[number];
 
@@ -117,6 +118,9 @@ export interface ScoringEvent {
   awayScore: number;
   teamExternalId: string | null;
   text: string;
+  /** Feed ids of who scored, the scorer first, when the feed says
+   *  (basketball). */
+  athleteIds?: string[];
 }
 
 /** What the engine remembers about a game between polls. */

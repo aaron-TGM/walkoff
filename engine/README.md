@@ -56,18 +56,42 @@ they're from (`athletes/sync.ts`, `lib/athletes`, `lib/places`).
   by mistake.
 - Until `supabase/009_athletes.sql` has run, it waits an hour and checks
   again.
+- Once `supabase/010_player_moments.sql` has run, it also keeps who moved:
+  a player Walkoff knew on another team who shows up on this one has
+  joined it (`joined_at`, and `previous_team_id` for the team they left;
+  a team that clears a player keeps itself there). Someone new to Walkoff,
+  or back on the team they left, hasn't moved. Wikidata also says how many
+  Wikimedia sites have a page about each player (`sitelinks`); players it
+  found before 010 ran are asked again first.
 - Its heartbeat is the `athletes` row in `engine_heartbeats`, where `games`
   is the number of teams whose roster is under a day old.
 - It's on whenever the engine saves to Supabase. `ATHLETES=0` turns it off,
   and `WIKIDATA=0` turns off only the Wikidata lookups.
 
+## Big signings
+
+When a star joins a team, by trade, signing or transfer, the team's fans get
+`big_signing` (`athletes/signings.ts`), from the roster sync above.
+
+- A star has pages on at least 15 Wikimedia sites and is one of their
+  league's 50 best known: fame is next to the rest of the league, since an
+  average Premier League player has more pages than the NFL's best known.
+  Checked live: the Lakers' best known is Luka Doncic with 58 pages, the
+  Seahawks' Sam Darnold with 15, and Arsenal's median player has 49.
+- 0.85 for the league's 10 best known, 0.75 for the rest. The moment is the
+  new team's, for 3 days after the sync saw the move, once per player and
+  team. The headline names the player and the team they left, for the
+  marketer; copy never names the player.
+- Waits for `supabase/010_player_moments.sql`. `SIGNINGS=0` turns it off,
+  and it needs `ATHLETES` and `WIKIDATA` on.
+
 ## Hometown moments
 
 When a team wins a title, every town its players are from gets a moment of
-its own (`hometown.ts`, `lib/hometown`). A brand with customers near the
-town can celebrate it, without naming the player. Off unless `HOMETOWN=1`:
-hometown campaigns wait for counsel to sign off on their copy rules
-(docs/hometown.md).
+its own (`hometown.ts`, `lib/hometown`), and so does the town of whoever
+decided a playoff game at the very end. A brand with customers near the
+town can celebrate it, without naming the player (docs/hometown.md).
+`HOMETOWN=0` turns it off.
 
 - The poller puts the champion's players on the title moment
   (`detail.heroes`, `moments/heroes.ts`): its leaders in the deciding game
@@ -89,9 +113,141 @@ hometown campaigns wait for counsel to sign off on their copy rules
   curated file set the home.
 - Super Bowl LX's roster makes about 75 towns. Brands see only those near
   their customers, a few an event (docs/hometown.md).
+- A playoff walk-off or buzzer-beater carries who decided it
+  (`detail.decider`, `moments/deciders.ts`): the batter of the walk-off,
+  the scorer of the overtime goal, the shooter of the buzzer-beater, and in
+  football the players the scoring play names (the receiver, then the
+  passer), found in the box score. A walk-off on an error, wild pitch,
+  passed ball or balk has none. Baseball and hockey read the summary for
+  it, once. In a title game the decider is one of the champion's leaders
+  instead, so their town gets the title once.
+- The job records a decider as `game_winner` (0.9, or 0.95 in the World
+  Series, NBA Finals or Stanley Cup Final), reading the team's roster again
+  first if they aren't on file, and makes `hometown_game_winner` for their
+  town. A year of playoffs in the six leagues had 38. Game-winners wait for
+  `supabase/010_player_moments.sql`.
 - Until `supabase/009_athletes.sql` has run, it waits an hour and checks
   again. Its heartbeat is the `hometown` row in `engine_heartbeats`, where
   `games` is the moments the last tick made.
+
+## Tours and series
+
+Golfers, tennis players, drivers and surfers compete for themselves, so
+their towns are where these sports reach brands (`lib/tours.ts`). One
+poller per tour or series, all on the same loop (`circuits/poller.ts`):
+each sport reads its own feed and decides who won (`golf/`, `tennis/`,
+`racing/`, `surfing/`). The pollers save the field as athletes, read five
+bios a poll for where they were born, and record each winner as a result.
+The winners' towns get `hometown_win`, and contenders' towns
+`hometown_contender`. Heartbeats are one row each: `golf:pga`,
+`tennis:atp`, `racing:nascar`, `surfing:wsl`. The feeds are undocumented,
+so each change in an event's status is logged.
+
+## Golf
+
+One poller per tour: the PGA Tour, LPGA, DP World Tour and LIV.
+
+- Each tour's current leaderboard, every 5 minutes while an event is under
+  way and every 10 otherwise. The field is saved as athletes, and five bios
+  a poll say where golfers were born (ESPN's golfer ids are the same on
+  every tour). The winner's and leaders' bios are read right away.
+- A win counts only when the feed says the event is final, and only within
+  60 hours of its last day: after round 3 the feed calls the round
+  complete too, and a suspended final round reads as finished for players
+  who are done.
+
+  | Win | Intensity |
+  |-----|-----------|
+  | A major (by name: `golf/majors.ts`) | 0.95 |
+  | An elevated PGA Tour event | 0.85 |
+  | PGA Tour, LPGA | 0.80 |
+  | DP World Tour | 0.75 |
+  | LIV | 0.70 |
+  | In a playoff | 0.05 more |
+
+- After the next-to-last round, whoever leads, ties too, is a contender
+  once their final-round tee times are in the feed: 0.7 at a major, 0.55
+  elsewhere (under the default trigger's 0.6). The moment closes when they
+  tee off. Each change in an event's status is logged: the feed is
+  undocumented, and if it reads differently between rounds, no contender
+  moment is made.
+- Results are keyed by the event's name and last day, so an event two
+  tours share counts once. The towns get `hometown_win` and
+  `hometown_contender` moments, the same way as titles.
+- Heartbeats are the `golf:pga`, `golf:lpga`, `golf:eur` and `golf:liv`
+  rows. `GOLF=0` turns golf off.
+
+## Tennis
+
+One poller each for the ATP and the WTA (`tennis/`), singles only. Each
+tour takes its own draw, men's or women's, so a Slam that's on both feeds
+counts once per draw.
+
+- Each tour's current tournaments, every 5 minutes while one is under way,
+  every 10 otherwise. Bios come from ESPN's core API, a line like "Irvine,
+  CA, USA": a bare town name ("Worcester") is left unknown rather than
+  guessed.
+- A win counts once the final is over (played, retired or a walkover),
+  within 60 hours of it. ESPN flags only the Slams, so the other tiers go by
+  name (`tennis/outcome.ts`):
+
+  | Win | Intensity |
+  |-----|-----------|
+  | A Grand Slam | 0.95 |
+  | The ATP or WTA Finals | 0.90 |
+  | A 1000-level event, each tour's own | 0.85 |
+  | Any other tour event | 0.75 |
+
+- Both finalists are contenders once the final has them and is scheduled:
+  0.7 at a Slam, 0.55 elsewhere. The moment closes when the final starts.
+  The tests use the 2026 US Open's real draw: Ben Shelton and Alexander
+  Zverev as finalists with the final turned back to scheduled, then
+  Zverev's win.
+- `TENNIS=0` turns tennis off.
+
+## Racing
+
+One poller each for NASCAR's Cup Series, Formula 1 and IndyCar (`racing/`).
+
+- Each series' current race weekend, every 5 minutes while a session is
+  under way, every 10 otherwise. Only the race counts: not practice,
+  qualifying, an F1 sprint or Daytona's Duels.
+- A win counts once the race is final, within 60 hours of its start: 0.95
+  for the Daytona 500 and the Indianapolis 500, 0.85 in Formula 1, 0.80 in
+  the Cup Series, 0.75 in IndyCar. No contenders: a pole isn't a moment.
+- Bios come from ESPN's core API: NASCAR's give a town and a state for
+  nearly every driver; IndyCar's and F1's are patchier, and most F1
+  drivers were born outside the US, Canada and the UK.
+- Checked live: Kyle Larson's win at Talladega makes a moment for Elk Grove,
+  California, and Tyler Reddick's 2026 Daytona 500 one for Corning.
+- `RACING=0` turns racing off.
+
+## Surfing
+
+The World Surf League's Championship Tour (`surfing/`), men's and women's.
+ESPN doesn't cover surfing, the WSL has no feed, and its robots.txt shuts
+out AI agents, so this reads Wikipedia instead.
+
+- The season's article ("2026 World Surf League"), every 10 minutes: its
+  raw text from Wikipedia's cache, with a `User-Agent` that says who's
+  asking. The schedule table gives each event's waiting period, and the
+  event results table its champions and runners-up, matched by the
+  event's article. Columns are found by their headers; a row it can't read
+  is left out.
+- A champion counts once the article has named them for 30 minutes, so a
+  wrong edit that's undone doesn't make a moment, and only within 60 hours
+  of the end of the waiting period: 0.85, or 0.90 at the Pipe Masters,
+  where the world titles are decided. Both champions are one outcome, so a
+  town with both gets one moment.
+- Surfers have Walkoff's own ids, the ones `create_moment` gives:
+  `walkoff:surfing:griffin-colapinto`. Their article is the external id,
+  and Wikidata finds where they were born by it, by coordinates. Those it
+  has no birthplace for are in `data/athletes/curated.json`, with sources.
+- Wikipedia's text is CC BY-SA; Walkoff keeps only facts from it: who won
+  which event, and when.
+- Checked live: the 2026 article's ten finished events, and Griffin
+  Colapinto's win in Portugal makes a moment for San Clemente.
+- `SURFING=0` turns surfing off.
 
 ## What it detects
 
@@ -112,6 +268,7 @@ hometown campaigns wait for counsel to sign off on their copy rules
 | After  | `heartbreak_loss` | Loser lost on a walk-off or late winner, blew a big lead, or lost by one score |
 | Season | `playoff_advance` | Won a playoff series or single-elimination playoff game |
 | Season | `title_won`       | World Series, NBA Finals, Stanley Cup, Super Bowl or national championship |
+| Season | `big_signing`     | One of a league's 50 best-known players joined the team (from the roster sync, not a game) |
 
 Thresholds per league live in `moments/sports.ts`. Every moment has an
 `intensity` from 0 to 1 (postseason adds 0.1), so brands can choose how big a
@@ -167,7 +324,12 @@ not saved.
 | `WALKOFF_TAG_EFFORT`        | `medium`       | `low` to `max` |
 | `ATHLETES`                  | `1`            | `0` turns the athlete sync off |
 | `WIKIDATA`                  | `1`            | `0` turns its Wikidata lookups off |
-| `HOMETOWN`                  | `0`            | `1` turns hometown moments on |
+| `HOMETOWN`                  | `1`            | `0` turns hometown moments off |
+| `SIGNINGS`                  | `1`            | `0` turns big signings off |
+| `GOLF`                      | `1`            | `0` turns the golf pollers off |
+| `TENNIS`                    | `1`            | `0` turns the tennis pollers off |
+| `RACING`                    | `1`            | `0` turns the racing pollers off |
+| `SURFING`                   | `1`            | `0` turns the surfing poller off |
 
 ## Set up Supabase
 
@@ -175,7 +337,11 @@ Run `supabase/003_moment_engine.sql` in the Supabase SQL editor (after
 `002_early_access.sql`). It creates `teams`, `games`, `moments` and
 `engine_heartbeats`, with row level security on and no public access. For
 the athlete sync, also run `supabase/009_athletes.sql`; until then the sync
-waits and the rest of the engine runs as before.
+waits and the rest of the engine runs as before. Then
+`supabase/010_player_moments.sql` for big signings and playoff
+game-winners; until it has run, the engine makes neither. Then
+`supabase/011_athlete_opt_outs.sql`, so athletes who ask Walkoff to stop
+using them are left out (docs/hometown.md).
 
 ## Deploy to Google Cloud Run
 
@@ -239,11 +405,13 @@ Logs are JSON lines with `severity`, so Cloud Logging filters work, e.g.
 
 ## Not yet
 
-- `playoff_clinch` (needs standings), `player_milestone`, `big_signing` and
+- `playoff_clinch` (needs standings), `player_milestone` and
   `great_escape` are in the site's trigger library but not detected yet.
-- Hometown moments for golf, tennis, racing and surfing, and for a
-  player's walk-off or buzzer beater. Until then an operator can record a
-  win with `create_moment` (docs/hometown.md).
+- Surfing: the world titles, and the WSL's other tours (the Challenger
+  Series, big-wave events). An operator records those with
+  `create_moment`.
+- Season championships in racing (the Cup Series title, the F1 drivers'
+  championship): only race wins for now.
 - Hockey late winners need hockey play-by-play.
 - Brands act on moments through the MCP server (docs/mcp.md): it matches
   each moment to the brand's fan territories and products and drafts the

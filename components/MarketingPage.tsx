@@ -19,7 +19,7 @@ import { LEAGUES } from "@/lib/leagues";
 import { MOMENT_CATEGORIES, MOMENT_STATUS_LABEL } from "@/lib/moments";
 import { SEND_HOURS } from "@/lib/mcp/timing";
 import { PRICING } from "@/lib/pricing";
-import { TRIGGERS, TRIGGER_CATEGORIES } from "@/lib/triggers";
+import { brandTriggers, TRIGGER_CATEGORIES } from "@/lib/triggers";
 
 const AUDIENCES = [
   {
@@ -198,6 +198,7 @@ const PROOF_POINTS: { title: string; body: string; soon?: true }[] = [
 ];
 
 export function MarketingPage() {
+  const triggers = brandTriggers();
   return (
     <>
       <SiteNav />
@@ -440,8 +441,8 @@ export function MarketingPage() {
                 The sports trigger library
               </div>
               <div className="trigger-library-count">
-                {TRIGGERS.filter((t) => !t.coming).length} live,{" "}
-                {TRIGGERS.filter((t) => t.coming).length} coming &middot; every
+                {triggers.filter((t) => !t.coming).length} live,{" "}
+                {triggers.filter((t) => t.coming).length} coming &middot; every
                 brand gets all of them
               </div>
             </div>
@@ -451,7 +452,7 @@ export function MarketingPage() {
                   key={cat.id}
                   categoryId={cat.id}
                   label={cat.label}
-                  items={TRIGGERS.filter((t) => t.category === cat.id)}
+                  items={triggers.filter((t) => t.category === cat.id)}
                 />
               ))}
             </div>

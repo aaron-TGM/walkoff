@@ -32,13 +32,13 @@ export const HELP_TOOLS = {
   },
   trigger_queue: {
     summary:
-      "Your to-do list: recent moments that match your triggers, or big moments for your standout teams if you have none, that you haven't drafted, sent or skipped. Most urgent first, with how long each is worth acting on.",
+      "Your to-do list: recent moments that match your triggers, that you haven't drafted, sent or skipped. With no triggers of your own, big moments for your standout teams, and hometown moments in towns near your customers. Most urgent first, with how long each is worth acting on.",
     asks: ["What should we send this week?", "Anything we should act on today?"],
     options: { hours: "How far back to look. Default 72." },
   },
   build_campaign: {
     summary:
-      "A ready-to-draft campaign for a moment: subject lines, preview text, the email, your products with links and prices, the audience, when to send, the copy rules and the steps to draft it in Klaviyo.",
+      "A ready-to-draft campaign for a moment: subject lines, preview text, the email, your products with links and prices, the audience, when to send, the copy rules and the steps to draft it in Klaviyo. For a hometown moment, the audience is one circle around the town.",
     asks: ["Build a campaign for the top moment in our queue.", "Show me a sample campaign for a Chargers walk-off."],
     options: {
       moment_id: "The moment, from the queue or recent moments.",
@@ -46,6 +46,8 @@ export const HELP_TOOLS = {
       offer: 'An offer to feature, like "15% off with code BOLT15 through Monday".',
       products: "Your own picks to feature instead of Walkoff's.",
       reach: "Core fans only (the default), or wide to include shared markets.",
+      town: 'With a hometown moment type, a sample for a town, like "San Clemente, CA".',
+      radius_miles: "For a hometown moment, a tighter or wider circle around the town, in miles.",
     },
   },
   get_affinity_map: {
@@ -61,9 +63,13 @@ export const HELP_TOOLS = {
   },
   recent_moments: {
     summary:
-      "What just happened for your standout teams, or for any team you name: walk-offs, comebacks, rivalry wins and the rest, each with how long it's worth acting on and what you already did with it.",
-    asks: ["What happened for our teams this weekend?"],
-    options: { team: "Any team, not just your standouts.", hours: "How far back to look. Default 48." },
+      "What just happened for your standout teams, or for any team you name, and in towns near your customers: walk-offs, comebacks, rivalry wins, hometown wins and the rest, each with how long it's worth acting on and what you already did with it.",
+    asks: ["What happened for our teams this weekend?", "Did anyone from our customers' towns win this week?"],
+    options: {
+      team: "Any team, not just your standouts.",
+      hours: "How far back to look. Default 48.",
+      scope: "Teams, towns or both.",
+    },
   },
   upcoming_games: {
     summary: "Games coming up for your standout teams, or one team, in your fans' local time, with rivalries and big games flagged.",
@@ -88,6 +94,8 @@ export const HELP_TOOLS = {
       moment_types: "Which kinds of moments. Empty means any.",
       teams: "Which teams. Empty means your standout teams.",
       min_intensity: "Skip smaller moments. Walk-offs are about 0.9, close losses 0.5.",
+      towns: 'For hometown moments in and near these towns, like "San Clemente, CA". A trigger with towns takes only hometown moments.',
+      min_local_customers: "How many of your customers a town needs, estimated, for its hometown moments to count.",
     },
     changes: true,
   },

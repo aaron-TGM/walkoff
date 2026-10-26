@@ -1,0 +1,550 @@
+{
+ "header": {
+  "id": "401869772"
+ },
+ "plays": [
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "0:38"
+   },
+   "scoringPlay": true,
+   "homeScore": 0,
+   "awayScore": 1,
+   "text": "Kasperi Kapanen Goal (4) Snap Shot, assists: Jake Walman (4), Jason Dickinson (1)",
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "type": "scorer",
+     "athlete": {
+      "id": "3114775",
+      "displayName": "Kasperi Kapanen"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "3151136",
+      "displayName": "Jake Walman"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "3042062",
+      "displayName": "Jason Dickinson"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "displayValue": "6:32"
+   },
+   "scoringPlay": true,
+   "homeScore": 0,
+   "awayScore": 2,
+   "text": "Ryan Nugent-Hopkins Goal (2) Snap Shot, assists: Evan Bouchard (3), Connor McDavid (2)",
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "type": "scorer",
+     "athlete": {
+      "id": "2562624",
+      "displayName": "Ryan Nugent-Hopkins"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "4352722",
+      "displayName": "Evan Bouchard"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "3895074",
+      "displayName": "Connor McDavid"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "7:36"
+   },
+   "scoringPlay": true,
+   "homeScore": 1,
+   "awayScore": 2,
+   "text": "Cutter Gauthier Goal (3) Snap Shot, assists: Jackson LaCombe (6), Alex Killorn (3)",
+   "team": {
+    "id": "25"
+   },
+   "participants": [
+    {
+     "type": "scorer",
+     "athlete": {
+      "id": "5080145",
+      "displayName": "Cutter Gauthier"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "4565262",
+      "displayName": "Jackson LaCombe"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "4968",
+      "displayName": "Alex Killorn"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "displayValue": "18:43"
+   },
+   "scoringPlay": true,
+   "homeScore": 2,
+   "awayScore": 2,
+   "text": "Mikael Granlund Goal (2) Snap Shot, assists: Leo Carlsson (3), John Carlson (3)",
+   "team": {
+    "id": "25"
+   },
+   "participants": [
+    {
+     "type": "scorer",
+     "athlete": {
+      "id": "5831",
+      "displayName": "Mikael Granlund"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "5149153",
+      "displayName": "Leo Carlsson"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "5118",
+      "displayName": "John Carlson"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "3:27"
+   },
+   "scoringPlay": true,
+   "homeScore": 2,
+   "awayScore": 3,
+   "text": "Evan Bouchard Goal (1) Snap Shot, assists: Connor McDavid (3), Leon Draisaitl (6)",
+   "team": {
+    "id": "6"
+   },
+   "participants": [
+    {
+     "type": "scorer",
+     "athlete": {
+      "id": "4352722",
+      "displayName": "Evan Bouchard"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "3895074",
+      "displayName": "Connor McDavid"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "3114727",
+      "displayName": "Leon Draisaitl"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "displayValue": "13:31"
+   },
+   "scoringPlay": true,
+   "homeScore": 3,
+   "awayScore": 3,
+   "text": "Jeffrey Viel Goal (2) Slap Shot, assists: John Carlson (4), Jackson LaCombe (7)",
+   "team": {
+    "id": "25"
+   },
+   "participants": [
+    {
+     "type": "scorer",
+     "athlete": {
+      "id": "4588188",
+      "displayName": "Jeffrey Viel"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "5118",
+      "displayName": "John Carlson"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "4565262",
+      "displayName": "Jackson LaCombe"
+     }
+    }
+   ]
+  },
+  {
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "displayValue": "2:29"
+   },
+   "scoringPlay": true,
+   "homeScore": 4,
+   "awayScore": 3,
+   "text": "Ryan Poehling Goal (3) Wrist Shot, assists: Mason McTavish (1)",
+   "team": {
+    "id": "25"
+   },
+   "participants": [
+    {
+     "type": "scorer",
+     "athlete": {
+      "id": "4233668",
+      "displayName": "Ryan Poehling"
+     }
+    },
+    {
+     "type": "assister",
+     "athlete": {
+      "id": "4874718",
+      "displayName": "Mason McTavish"
+     }
+    }
+   ]
+  }
+ ],
+ "boxscore": {
+  "players": [
+   {
+    "team": {
+     "id": "6"
+    },
+    "statistics": [
+     {
+      "name": "forwards",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "3042062",
+         "displayName": "Jason Dickinson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3114727",
+         "displayName": "Leon Draisaitl"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4024997",
+         "displayName": "Trent Frederic"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5509",
+         "displayName": "Zach Hyman"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3114775",
+         "displayName": "Kasperi Kapanen"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3042023",
+         "displayName": "Curtis Lazar"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3895074",
+         "displayName": "Connor McDavid"
+        }
+       },
+       {
+        "athlete": {
+         "id": "2562624",
+         "displayName": "Ryan Nugent-Hopkins"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4565231",
+         "displayName": "Vasily Podkolzin"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3904098",
+         "displayName": "Jack Roslovic"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5278080",
+         "displayName": "Josh Samanski"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5080153",
+         "displayName": "Matt Savoie"
+        }
+       }
+      ]
+     },
+     {
+      "name": "defenses",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4352722",
+         "displayName": "Evan Bouchard"
+        }
+       },
+       {
+        "athlete": {
+         "id": "2558631",
+         "displayName": "Mattias Ekholm"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4587566",
+         "displayName": "Ty Emberson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "2562618",
+         "displayName": "Connor Murphy"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3041997",
+         "displayName": "Darnell Nurse"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3151136",
+         "displayName": "Jake Walman"
+        }
+       }
+      ]
+     },
+     {
+      "name": "skaters",
+      "athletes": []
+     },
+     {
+      "name": "goalies",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "3042020",
+         "displayName": "Tristan Jarry"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "25"
+    },
+    "statistics": [
+     {
+      "name": "forwards",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5149153",
+         "displayName": "Leo Carlsson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5080145",
+         "displayName": "Cutter Gauthier"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5831",
+         "displayName": "Mikael Granlund"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4968",
+         "displayName": "Alex Killorn"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5833",
+         "displayName": "Chris Kreider"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4874718",
+         "displayName": "Mason McTavish"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4233668",
+         "displayName": "Ryan Poehling"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5216858",
+         "displayName": "Beckett Sennecke"
+        }
+       },
+       {
+        "athlete": {
+         "id": "3942905",
+         "displayName": "Troy Terry"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4588188",
+         "displayName": "Jeffrey Viel"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4996085",
+         "displayName": "Tim Washe"
+        }
+       }
+      ]
+     },
+     {
+      "name": "defenses",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5118",
+         "displayName": "John Carlson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4565270",
+         "displayName": "Drew Helleson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5103702",
+         "displayName": "Tyson Hinds"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4565262",
+         "displayName": "Jackson LaCombe"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5080154",
+         "displayName": "Pavel Mintyukov"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5188523",
+         "displayName": "Ian Moore"
+        }
+       },
+       {
+        "athlete": {
+         "id": "2976839",
+         "displayName": "Jacob Trouba"
+        }
+       }
+      ]
+     },
+     {
+      "name": "skaters",
+      "athletes": []
+     },
+     {
+      "name": "goalies",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4588165",
+         "displayName": "Lukas Dostal"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

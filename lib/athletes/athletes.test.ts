@@ -21,6 +21,7 @@ import {
   savePlaces,
   saveResults,
   sourceConfidence,
+  walkoffAthleteId,
   type Athlete,
   type AthletePlace,
   type PlaceKind,
@@ -108,7 +109,9 @@ describe("the curated file", () => {
     assert.ok(CURATED_HOMES.length >= 1);
     assert.equal(new Set(CURATED_HOMES.map((h) => h.athlete)).size, CURATED_HOMES.length, "one entry per athlete");
     for (const h of CURATED_HOMES) {
-      assert.match(h.athlete, /^espn:[a-z-]+:\d+$/, h.name);
+      assert.match(h.athlete, /^(espn:[a-z-]+:\d+|walkoff:[a-z-]+:[a-z0-9-]+)$/, h.name);
+      // A surfer's id is the one the surfing feed gives them, from their name.
+      if (h.athlete.startsWith("walkoff:")) assert.equal(h.athlete, walkoffAthleteId(h.athlete.split(":")[1], h.name));
       assert.match(h.source, /^https:\/\//, h.name);
       const place = await curatedPlace(h);
       assert.equal(place.resolution, "found", `${h.name}: ${h.hometown}`);
