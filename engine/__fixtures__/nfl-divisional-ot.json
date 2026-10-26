@@ -1,0 +1,158 @@
+{
+ "events": [
+  {
+   "id": "401772982",
+   "date": "2026-01-17T21:30Z",
+   "name": "Buffalo Bills at Denver Broncos",
+   "shortName": "BUF @ DEN",
+   "season": {
+    "year": 2025,
+    "type": 3,
+    "slug": "post-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 5,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final/OT",
+     "shortDetail": "Final/OT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401772982",
+     "date": "2026-01-17T21:30Z",
+     "neutralSite": false,
+     "notes": [
+      {
+       "type": "event",
+       "headline": "AFC Divisional Playoffs"
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 5,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final/OT",
+       "shortDetail": "Final/OT"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "33",
+       "linescores": [
+        {
+         "value": 3.0,
+         "period": 1
+        },
+        {
+         "value": 17.0,
+         "period": 2
+        },
+        {
+         "value": 3.0,
+         "period": 3
+        },
+        {
+         "value": 7.0,
+         "period": 4
+        },
+        {
+         "value": 3.0,
+         "period": 5
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "14-3"
+        },
+        {
+         "type": "home",
+         "summary": "8-1"
+        },
+        {
+         "type": "road",
+         "summary": "6-2"
+        }
+       ],
+       "team": {
+        "id": "7",
+        "abbreviation": "DEN",
+        "displayName": "Denver Broncos",
+        "shortDisplayName": "Broncos",
+        "name": "Broncos",
+        "location": "Denver",
+        "color": "0a2343",
+        "alternateColor": "fc4c02"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "30",
+       "linescores": [
+        {
+         "value": 7.0,
+         "period": 1
+        },
+        {
+         "value": 3.0,
+         "period": 2
+        },
+        {
+         "value": 7.0,
+         "period": 3
+        },
+        {
+         "value": 13.0,
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "period": 5
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "12-5"
+        },
+        {
+         "type": "home",
+         "summary": "7-2"
+        },
+        {
+         "type": "road",
+         "summary": "5-3"
+        }
+       ],
+       "team": {
+        "id": "2",
+        "abbreviation": "BUF",
+        "displayName": "Buffalo Bills",
+        "shortDisplayName": "Bills",
+        "name": "Bills",
+        "location": "Buffalo",
+        "color": "00338d",
+        "alternateColor": "d50a0a"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

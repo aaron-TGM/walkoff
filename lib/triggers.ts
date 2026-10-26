@@ -137,7 +137,6 @@ export const TRIGGERS: Trigger[] = [
     description:
       "Star trade or transfer lands in your market. New jersey, new reason to buy.",
     category: "season",
-    coming: true,
   },
   {
     name: "Great Escape",
@@ -180,6 +179,13 @@ export const HOMETOWN_TRIGGERS: Trigger[] = [
     description:
       "Someone from the town leads going into the final round. The town is watching.",
     category: "before",
+  },
+  {
+    name: "Hometown Game-Winner",
+    id: "hometown_game_winner",
+    description:
+      "Someone from the town won a playoff game at the very end: a walk-off, a buzzer-beater, an overtime winner.",
+    category: "after",
   },
 ];
 

@@ -112,7 +112,9 @@ export function buildHometownCampaign(input: {
     image: /^https?:\/\//.test(p.image) ? p.image : null,
     hex: p.hex,
   }));
-  const colors = moment.team ? colorWords(picks, moment.team.team.colors) : null;
+  // The team's colors in the brand's words, from the picks their color
+  // earned: a product named for the town is there for its name.
+  const colors = moment.team ? colorWords(picks.filter((p) => p.colorway), moment.team.team.colors) : null;
   const first = products[0];
   const copy = hometownCopy({
     type: moment.type,

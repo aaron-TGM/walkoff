@@ -66,7 +66,7 @@ export async function ruleTowns(rules: TriggerRule[]): Promise<Map<string, { lat
 }
 
 /** Whether a town is in a team's core territory, where most fans follow the
- *  team: its own title moment already reaches them. */
+ *  team: its own moment for the game already reaches them. */
 export function inTeamCore(teamKey: string, place: Place): boolean {
   const [league, id] = teamKey.split(":");
   const code = place.country === "GB" ? place.ref.split(" ")[0] : place.ref.slice(0, 3);
@@ -93,13 +93,13 @@ const queueMoment = (m: MomentRow, fit: TownFit | null): QueueMoment => ({
 /** The hometown moments that make a brand's queue: matched by a rule, still
  *  open, at most LOCAL.townsPerEvent towns per event (the towns of those
  *  who did the most first, then the most customers). A town in the
- *  champion's core territory is left out when the brand's queue has the
- *  team's own title (titleGames), so nobody there gets two sends. also
- *  lists, per event, the towns that didn't fit. */
+ *  winner's core territory is left out when the brand's queue has the
+ *  team's own moment for that game (teamGames, "game|team"), so nobody
+ *  there gets two sends. also lists, per event, the towns that didn't fit. */
 export function localQueue(
   rows: MomentRow[],
   fits: Map<string, TownFit>,
-  opts: { rules: TriggerRule[]; standouts: string[]; towns: Map<string, { lat: number; lng: number }>; titleGames: Set<string>; now: Date },
+  opts: { rules: TriggerRule[]; standouts: string[]; towns: Map<string, { lat: number; lng: number }>; teamGames: Set<string>; now: Date },
 ): { items: LocalItem[]; also: { event: string; towns: string[] }[]; inTeamTerritory: number } {
   const matched: LocalItem[] = [];
   let inTeamTerritory = 0;
@@ -110,7 +110,7 @@ export function localQueue(
     const rule = matchingRule(qm, opts.rules, opts.standouts, opts.towns);
     const window = momentWindow(qm, opts.now);
     if (!rule || window.status === "closed") continue;
-    if (row.game_id && opts.titleGames.has(row.game_id) && qm.teamKey && inTeamCore(qm.teamKey, fit.place)) {
+    if (row.game_id && opts.teamGames.has(`${row.game_id}|${row.team_id}`) && qm.teamKey && inTeamCore(qm.teamKey, fit.place)) {
       inTeamTerritory++;
       continue;
     }
@@ -131,6 +131,9 @@ export function localQueue(
   }
   return { items, also, inTeamTerritory };
 }
+
+/** What a game-winner did, whatever their role. */
+const DECIDED = "made the deciding play";
 
 const ROLE_WORDS: Record<string, string> = {
   leader: "led the team",
@@ -156,13 +159,14 @@ export function hometownView(m: MomentRow, fit: TownFit | undefined) {
     circle: d.town ? `${fit?.circle.radiusMiles ?? d.town.radius_miles} miles around ${d.town.ref}` : null,
     ...(fit ? { customers_estimate: fit.customers, lift: fit.lift } : {}),
     event: d.event?.name ?? null,
+    ...(d.event?.play ? { play: d.event.play } : {}),
     team: champion,
     league: m.league,
     athletes: (d.athletes ?? []).map((a) => ({
       name: a.name,
       id: a.id,
       position: a.position,
-      part: `${ROLE_WORDS[a.role] ?? a.role}${a.led?.length ? ` (${a.led.join(", ")})` : ""}`,
+      part: d.event?.kind === "game_winner" ? DECIDED : `${ROLE_WORDS[a.role] ?? a.role}${a.led?.length ? ` (${a.led.join(", ")})` : ""}`,
       how_walkoff_knows: a.from.map(sourceWords),
       sure: a.sure,
     })),

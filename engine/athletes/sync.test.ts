@@ -231,3 +231,123 @@ describe("the athlete sync", () => {
     );
   });
 });
+
+const SEA = "espn:nfl:26";
+const MIN = "espn:nfl:16";
+
+/** Sam Darnold's row before Seattle's roster is read: on the Vikings, or
+ *  however a test sets it, and a few better-known NFL players. */
+function darnoldBefore(db: ReturnType<typeof world>["db"], row: Row) {
+  db.tables.teams.push({ id: MIN, league: "nfl", external_id: "16", display_name: "Minnesota Vikings" });
+  const base = (id: string, name: string, sitelinks: number): Row => ({ id, sport: "football", league: "nfl", external_id: id.split(":")[2], display_name: name, name_key: name.toLowerCase().replace(/[^a-z]/g, ""), sitelinks });
+  db.tables.athletes = [
+    { ...base(DARNOLD, "Sam Darnold", 15), team_id: MIN, roster_status: "active", position: "QB", ...row },
+    ...[40, 35, 30].map((n, i) => ({ ...base(`espn:football:90000${i}`, `Star ${i}`, n), team_id: MIN })),
+  ];
+}
+
+const signings = (db: { tables: Record<string, Row[]> }) => (db.tables.moments ?? []).filter((m) => m.type === "big_signing");
+
+describe("moves and big signings", () => {
+  it("Sam Darnold to Seattle: the move, and one big signing for Seattle's fans", async () => {
+    const { clock, db } = world();
+    darnoldBefore(db, {});
+    const sync = new AthleteSync(db, feedOf(() => SEAHAWKS).feed, { leagues: ["nfl"], wikidata: null, now: () => clock.now });
+    await sync.tick();
+
+    const darnold = db.tables.athletes.find((a) => a.id === DARNOLD)!;
+    assert.deepEqual([darnold.team_id, darnold.previous_team_id, darnold.joined_at], [SEA, MIN, new Date(START).toISOString()]);
+    assert.equal(db.tables.athletes.filter((a) => a.joined_at).length, 1, "the other 82 are new to Walkoff, not new to Seattle");
+
+    const [m] = signings(db);
+    assert.equal(m.headline, "Big signing: Sam Darnold (QB) joins the Seattle Seahawks from the Minnesota Vikings");
+    assert.deepEqual([m.team_id, m.athlete_id, m.league, m.phase, m.game_id, m.intensity], [SEA, DARNOLD, "nfl", "season", null, 0.85]);
+    assert.equal(m.dedupe_key, `big_signing:${DARNOLD}:${SEA}`);
+    assert.deepEqual(m.detail, { athlete: { id: DARNOLD, name: "Sam Darnold", position: "QB" }, from: { id: MIN, name: "Minnesota Vikings" }, fame: { sitelinks: 15, rank: 4 } });
+
+    clock.now += HOUR;
+    await sync.tick();
+    assert.equal(signings(db).length, 1, "once");
+  });
+
+  it("keeps the team a player left, so a later signing elsewhere is a move from it", async () => {
+    const { clock, db, refresh } = world();
+    darnoldBefore(db, { team_id: null, roster_status: null, previous_team_id: MIN });
+    let roster = SEAHAWKS;
+    const sync = new AthleteSync(db, feedOf(() => roster).feed, { leagues: ["nfl"], wikidata: null, now: () => clock.now });
+    await sync.tick();
+    assert.equal(signings(db).length, 1, "a free agent the Vikings let go, signed by Seattle");
+
+    roster = SEAHAWKS.filter((p) => athleteId("football", p.externalId) !== DARNOLD);
+    clock.now += 25 * HOUR;
+    refresh();
+    await sync.tick();
+    const darnold = db.tables.athletes.find((a) => a.id === DARNOLD)!;
+    assert.deepEqual([darnold.team_id, darnold.previous_team_id], [null, SEA], "Seattle let him go");
+  });
+
+  it("isn't a move to be back on the team he left", async () => {
+    const { clock, db } = world();
+    darnoldBefore(db, { team_id: null, roster_status: null, previous_team_id: SEA });
+    await new AthleteSync(db, feedOf(() => SEAHAWKS).feed, { leagues: ["nfl"], wikidata: null, now: () => clock.now }).tick();
+    assert.equal(db.tables.athletes.find((a) => a.id === DARNOLD)!.joined_at ?? null, null);
+    assert.deepEqual(signings(db), []);
+  });
+
+  it("only a star: enough pages, and among the league's best known", async () => {
+    for (const [sitelinks, ahead, note] of [
+      [14, 0, "under the 15 pages a star needs"],
+      [15, 50, "50 NFL players are better known"],
+    ] as const) {
+      const { clock, db } = world();
+      darnoldBefore(db, { sitelinks });
+      for (let i = 0; i < ahead; i++) db.tables.athletes.push({ id: `espn:football:8${i}`, sport: "football", league: "nfl", external_id: `8${i}`, display_name: `P ${i}`, name_key: `p${i}`, sitelinks: 20 });
+      await new AthleteSync(db, feedOf(() => SEAHAWKS).feed, { leagues: ["nfl"], wikidata: null, now: () => clock.now }).tick();
+      assert.equal(db.tables.athletes.find((a) => a.id === DARNOLD)!.previous_team_id, MIN, "the move is noted");
+      assert.deepEqual(signings(db), [], note);
+    }
+  });
+
+  it("makes no moment with SIGNINGS=0", async () => {
+    const { clock, db } = world();
+    darnoldBefore(db, {});
+    await new AthleteSync(db, feedOf(() => SEAHAWKS).feed, { leagues: ["nfl"], wikidata: null, signings: false, now: () => clock.now }).tick();
+    assert.deepEqual(signings(db), []);
+  });
+
+  it("before 010_player_moments.sql: no moves or fame kept, and the sync works as before", async () => {
+    const { clock, db } = world({ through: "009" });
+    db.tables.teams.push({ id: MIN, league: "nfl", external_id: "16", display_name: "Minnesota Vikings" });
+    db.tables.athletes = [{ id: DARNOLD, sport: "football", league: "nfl", external_id: "3912547", display_name: "Sam Darnold", name_key: "samdarnold", team_id: MIN, roster_status: "active" }];
+    const wikidata: WikidataClient = { lookup: async (_league, ids) => WIKIDATA.filter((w) => ids.includes(w.externalId)) };
+    const sync = new AthleteSync(db, feedOf(() => SEAHAWKS).feed, { leagues: ["nfl"], wikidata, now: () => clock.now });
+    assert.equal(await sync.tick(), SYNC.busy);
+    assert.equal(db.tables.athletes.find((a) => a.id === DARNOLD)!.team_id, SEA);
+    assert.equal(db.tables.athletes.find((a) => a.id === DARNOLD)!.wikidata_id, "Q27049069");
+    assert.ok(db.tables.athletes.every((a) => !("sitelinks" in a) && !("previous_team_id" in a)));
+    assert.deepEqual(signings(db), []);
+  });
+
+  it("keeps how well known each player is, and asks again for those it found before without", async () => {
+    const { clock, db } = world();
+    const asked: string[][] = [];
+    const wikidata: WikidataClient = {
+      async lookup(_league, ids) {
+        asked.push(ids);
+        return WIKIDATA.filter((w) => ids.includes(w.externalId));
+      },
+    };
+    const sync = new AthleteSync(db, feedOf(() => SEAHAWKS).feed, { leagues: ["nfl"], wikidata, now: () => clock.now });
+    await sync.tick();
+    assert.equal(db.tables.athletes.find((a) => a.id === DARNOLD)!.sitelinks, 15);
+    assert.equal(db.tables.athletes.filter((a) => typeof a.sitelinks === "number").length, 53);
+
+    // Looked up before 010 ran: found, but with no count.
+    for (const a of db.tables.athletes) if (a.wikidata_id) a.sitelinks = null;
+    clock.now += 2 * HOUR;
+    await sync.tick();
+    assert.equal(asked.length, 2);
+    assert.equal(asked[1].length, 53, "only those Wikidata has");
+    assert.equal(db.tables.athletes.filter((a) => typeof a.sitelinks === "number").length, 53);
+  });
+});

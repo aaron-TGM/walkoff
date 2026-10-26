@@ -1,0 +1,761 @@
+{
+ "header": {
+  "id": "401778312"
+ },
+ "scoringPlays": [
+  {
+   "homeScore": 0,
+   "awayScore": 7,
+   "text": "Jacob De Jesus 41 Yd pass from Jaron-Keawe Sagapolutele (Chase Meyer Kick)",
+   "period": {
+    "number": 1
+   },
+   "clock": {
+    "value": 421,
+    "displayValue": "7:01"
+   },
+   "team": {
+    "id": "25"
+   }
+  },
+  {
+   "homeScore": 0,
+   "awayScore": 14,
+   "text": "Kendrick Raphael 19 Yd Run (Chase Meyer Kick)",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 895,
+    "displayValue": "14:55"
+   },
+   "team": {
+    "id": "25"
+   }
+  },
+  {
+   "homeScore": 0,
+   "awayScore": 21,
+   "text": "Anthony League 8 Yd Run (Chase Meyer Kick)",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 578,
+    "displayValue": "9:38"
+   },
+   "team": {
+    "id": "25"
+   }
+  },
+  {
+   "homeScore": 7,
+   "awayScore": 21,
+   "text": "Pofele Ashlock 13 Yd pass from Micah Alejado (Kansei Matsuzawa Kick)",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 237,
+    "displayValue": "3:57"
+   },
+   "team": {
+    "id": "62"
+   }
+  },
+  {
+   "homeScore": 10,
+   "awayScore": 21,
+   "text": "Kansei Matsuzawa 29 Yd Field Goal  ",
+   "period": {
+    "number": 2
+   },
+   "clock": {
+    "value": 27,
+    "displayValue": "0:27"
+   },
+   "team": {
+    "id": "62"
+   }
+  },
+  {
+   "homeScore": 13,
+   "awayScore": 21,
+   "text": "Kansei Matsuzawa 39 Yd Field Goal  ",
+   "period": {
+    "number": 3
+   },
+   "clock": {
+    "value": 358,
+    "displayValue": "5:58"
+   },
+   "team": {
+    "id": "62"
+   }
+  },
+  {
+   "homeScore": 21,
+   "awayScore": 21,
+   "text": "Pofele Ashlock 3 Yd pass from Micah Alejado (Micah Alejado Pass to Cam Barfield for Two-Point Conversion)",
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 830,
+    "displayValue": "13:50"
+   },
+   "team": {
+    "id": "62"
+   }
+  },
+  {
+   "homeScore": 21,
+   "awayScore": 24,
+   "text": "Chase Meyer 22 Yd Field Goal  ",
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 536,
+    "displayValue": "8:56"
+   },
+   "team": {
+    "id": "25"
+   }
+  },
+  {
+   "homeScore": 28,
+   "awayScore": 24,
+   "text": "Brandon White 17 Yd pass from Micah Alejado (Kansei Matsuzawa Kick)",
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 439,
+    "displayValue": "7:19"
+   },
+   "team": {
+    "id": "62"
+   }
+  },
+  {
+   "homeScore": 28,
+   "awayScore": 31,
+   "text": "Jaron-Keawe Sagapolutele 1 Yd Run (Chase Meyer Kick)",
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 117,
+    "displayValue": "1:57"
+   },
+   "team": {
+    "id": "25"
+   }
+  },
+  {
+   "homeScore": 35,
+   "awayScore": 31,
+   "text": "Nick Cenacle 22 Yd pass from Luke Weaver (Kansei Matsuzawa Kick)",
+   "period": {
+    "number": 4
+   },
+   "clock": {
+    "value": 10,
+    "displayValue": "0:10"
+   },
+   "team": {
+    "id": "62"
+   }
+  }
+ ],
+ "boxscore": {
+  "players": [
+   {
+    "team": {
+     "id": "25"
+    },
+    "statistics": [
+     {
+      "name": "passing",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5164313",
+         "displayName": "Jaron-Keawe Sagapolutele"
+        }
+       }
+      ]
+     },
+     {
+      "name": "rushing",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4899368",
+         "displayName": "Kendrick Raphael"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5164327",
+         "displayName": "Anthony League"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5164313",
+         "displayName": "Jaron-Keawe Sagapolutele"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4705557",
+         "displayName": "QuaRon Adams"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5155179",
+         "displayName": "Jacob De Jesus"
+        }
+       }
+      ]
+     },
+     {
+      "name": "receiving",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5155179",
+         "displayName": "Jacob De Jesus"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4875272",
+         "displayName": "Trond Grizzell"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4705557",
+         "displayName": "QuaRon Adams"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4683306",
+         "displayName": "Landon Morris"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4899368",
+         "displayName": "Kendrick Raphael"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5082662",
+         "displayName": "Cole Boscia"
+        }
+       }
+      ]
+     },
+     {
+      "name": "fumbles",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5155179",
+         "displayName": "Jacob De Jesus"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4875272",
+         "displayName": "Trond Grizzell"
+        }
+       }
+      ]
+     },
+     {
+      "name": "defensive",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4954453",
+         "displayName": "Cade Uluave"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5082398",
+         "displayName": "Brent Austin"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4871085",
+         "displayName": "Jasiah Wagoner"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5218746",
+         "displayName": "Aaron Hampton"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4917354",
+         "displayName": "Hezekiah Masses"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5139216",
+         "displayName": "Luke Ferrelli"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4897443",
+         "displayName": "Harrison Taggart"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5141574",
+         "displayName": "Aiden Manutai"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5178385",
+         "displayName": "Quimari Shemwell"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5083212",
+         "displayName": "Dru Polidore Jr."
+        }
+       },
+       {
+        "athlete": {
+         "id": "4597241",
+         "displayName": "Derek Wilkins"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4896021",
+         "displayName": "Chris Victor"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5218738",
+         "displayName": "Ja'ir Smith"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4685557",
+         "displayName": "Cam Sidney"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4917620",
+         "displayName": "TJ Bush Jr."
+        }
+       },
+       {
+        "athlete": {
+         "id": "4431162",
+         "displayName": "T.J. Bollers"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5196843",
+         "displayName": "Khamani Hudson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4430121",
+         "displayName": "Aidan Keanaaina"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4433872",
+         "displayName": "Stanley Saole-McKenzie"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4871030",
+         "displayName": "Jayden Wayne"
+        }
+       }
+      ]
+     },
+     {
+      "name": "interceptions",
+      "athletes": []
+     },
+     {
+      "name": "kickReturns",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5155179",
+         "displayName": "Jacob De Jesus"
+        }
+       }
+      ]
+     },
+     {
+      "name": "puntReturns",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5155179",
+         "displayName": "Jacob De Jesus"
+        }
+       }
+      ]
+     },
+     {
+      "name": "kicking",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5084425",
+         "displayName": "Chase Meyer"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5085351",
+         "displayName": "Abram Murray"
+        }
+       }
+      ]
+     },
+     {
+      "name": "punting",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5089328",
+         "displayName": "Michael Kern"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "62"
+    },
+    "statistics": [
+     {
+      "name": "passing",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5101124",
+         "displayName": "Micah Alejado"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5295238",
+         "displayName": "Luke Weaver"
+        }
+       }
+      ]
+     },
+     {
+      "name": "rushing",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4875791",
+         "displayName": "Landon Sims"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5101124",
+         "displayName": "Micah Alejado"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4869582",
+         "displayName": "Cam Barfield"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5218872",
+         "displayName": "Christian Vaughn"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5218881",
+         "displayName": "Tama Uiliata"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5148935",
+         "displayName": "Demaricus Davis"
+        }
+       }
+      ]
+     },
+     {
+      "name": "receiving",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5084135",
+         "displayName": "Pofele Ashlock"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5092477",
+         "displayName": "Nick Cenacle"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4875803",
+         "displayName": "Karsyn Pupunu"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4894839",
+         "displayName": "Brandon White"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4819259",
+         "displayName": "Devon Tauaefa"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4875791",
+         "displayName": "Landon Sims"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4869582",
+         "displayName": "Cam Barfield"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5085023",
+         "displayName": "Max Ware"
+        }
+       }
+      ]
+     },
+     {
+      "name": "fumbles",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4429556",
+         "displayName": "Virdel Edwards II"
+        }
+       }
+      ]
+     },
+     {
+      "name": "defensive",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5084124",
+         "displayName": "Peter Manuma"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4432712",
+         "displayName": "Wynden Ho'ohuli"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4689354",
+         "displayName": "Kilinahe Mendiola-Jensen"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4429556",
+         "displayName": "Virdel Edwards II"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4431205",
+         "displayName": "Devyn King"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4880763",
+         "displayName": "Giovanni Iovino"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5084114",
+         "displayName": "Jalen Smith"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4710007",
+         "displayName": "Tariq Jones"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5074099",
+         "displayName": "Elijah Palmer"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5151459",
+         "displayName": "Lesterlaisene Lagafuaina"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4426695",
+         "displayName": "De'Jon Benton"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5158930",
+         "displayName": "Jaheim Wilson-Jones"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4819249",
+         "displayName": "Ka'eo Akana"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4875791",
+         "displayName": "Landon Sims"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5084119",
+         "displayName": "Matagi Thompson"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5218880",
+         "displayName": "Blaze Kamoku"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5295256",
+         "displayName": "Sean Olvera-Harle"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4683516",
+         "displayName": "Luther McCoy"
+        }
+       },
+       {
+        "athlete": {
+         "id": "4877899",
+         "displayName": "Carsen Stocklinski"
+        }
+       }
+      ]
+     },
+     {
+      "name": "interceptions",
+      "athletes": []
+     },
+     {
+      "name": "kickReturns",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4869582",
+         "displayName": "Cam Barfield"
+        }
+       },
+       {
+        "athlete": {
+         "id": "5218880",
+         "displayName": "Blaze Kamoku"
+        }
+       }
+      ]
+     },
+     {
+      "name": "puntReturns",
+      "athletes": []
+     },
+     {
+      "name": "kicking",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5158921",
+         "displayName": "Kansei Matsuzawa"
+        }
+       }
+      ]
+     },
+     {
+      "name": "punting",
+      "athletes": [
+       {
+        "athlete": {
+         "id": "5295243",
+         "displayName": "Billy Gowers"
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

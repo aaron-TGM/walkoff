@@ -47,15 +47,19 @@ export function hometownCopy(c: HometownCopyInput): HometownCopy {
     };
   }
   const title = c.type === "hometown_title";
-  const subjects = [`${town}, what a ${part}.`, Colors ? `${Colors} all over ${town} today.` : `${town} is celebrating.`, `Big ${part} for ${town}.`];
+  const finish = c.type === "hometown_game_winner";
+  const what = finish ? "finish" : part;
+  const subjects = [`${town}, what a ${what}.`, Colors ? `${Colors} all over ${town} today.` : `${town} is celebrating.`, `Big ${part} for ${town}.`];
   const lead = c.mayName ? `${c.mayName} did it, and ${town} has a lot to celebrate today.` : `${town} has a lot to celebrate today.`;
   return {
     angle: title
       ? "The town is celebrating: someone from here just won it all. The town's name and the colors carry it."
-      : "The town is celebrating: someone from here just won. The town's name carries it.",
-    subjects: c.mayName ? [`${c.mayName} did it. ${town}, what a ${part}.`, ...subjects.slice(1)] : subjects,
+      : finish
+        ? "The town is celebrating: someone from here just won a playoff game at the very end. The town's name and the colors carry it."
+        : "The town is celebrating: someone from here just won. The town's name carries it.",
+    subjects: c.mayName ? [`${c.mayName} did it. ${town}, what a ${what}.`, ...subjects.slice(1)] : subjects,
     preview: c.colors ? `A few things in the colors ${town} is wearing today.` : `A few things for ${town} to celebrate in.`,
-    headline: `${town}, what a ${part}.`,
+    headline: `${town}, what a ${what}.`,
     body: `${lead} ${picked}`,
   };
 }

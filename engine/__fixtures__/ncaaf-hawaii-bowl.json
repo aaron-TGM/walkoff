@@ -1,0 +1,158 @@
+{
+ "events": [
+  {
+   "id": "401778312",
+   "date": "2025-12-25T01:00Z",
+   "name": "California Golden Bears at Hawai'i Rainbow Warriors",
+   "shortName": "CAL @ HAW",
+   "season": {
+    "year": 2025,
+    "type": 3,
+    "slug": "post-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401778312",
+     "date": "2025-12-25T01:00Z",
+     "neutralSite": false,
+     "notes": [
+      {
+       "type": "event",
+       "headline": "Sheraton Hawaiʻi Bowl"
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "homeAway": "home",
+       "winner": true,
+       "score": "35",
+       "linescores": [
+        {
+         "value": 0.0,
+         "period": 1
+        },
+        {
+         "value": 10.0,
+         "period": 2
+        },
+        {
+         "value": 3.0,
+         "period": 3
+        },
+        {
+         "value": 22.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "9-4"
+        },
+        {
+         "type": "home",
+         "summary": "7-1"
+        },
+        {
+         "type": "road",
+         "summary": "2-3"
+        },
+        {
+         "type": "vsconf",
+         "summary": "5-3"
+        }
+       ],
+       "team": {
+        "id": "62",
+        "abbreviation": "HAW",
+        "displayName": "Hawai'i Rainbow Warriors",
+        "shortDisplayName": "Hawai'i",
+        "name": "Rainbow Warriors",
+        "location": "Hawai'i",
+        "color": "005737",
+        "alternateColor": "000000"
+       }
+      },
+      {
+       "homeAway": "away",
+       "winner": false,
+       "score": "31",
+       "linescores": [
+        {
+         "value": 7.0,
+         "period": 1
+        },
+        {
+         "value": 14.0,
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "period": 3
+        },
+        {
+         "value": 10.0,
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "type": "total",
+         "summary": "7-6"
+        },
+        {
+         "type": "home",
+         "summary": "4-2"
+        },
+        {
+         "type": "road",
+         "summary": "3-4"
+        },
+        {
+         "type": "vsconf",
+         "summary": "4-4"
+        }
+       ],
+       "team": {
+        "id": "25",
+        "abbreviation": "CAL",
+        "displayName": "California Golden Bears",
+        "shortDisplayName": "California",
+        "name": "Golden Bears",
+        "location": "California",
+        "color": "041e42",
+        "alternateColor": "ffc72c"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

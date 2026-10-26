@@ -45,7 +45,18 @@ see them until `WALKOFF_HOMETOWN=1` on the website.
    for a playoff. Whoever leads into the final round gets
    `hometown_contender` once their tee times are out: 0.7 at a major, 0.55
    elsewhere, open until they tee off.
-5. **Wins Walkoff doesn't follow.** An operator records them with
+5. **Playoff game-winners.** When a playoff game ends on a walk-off, a
+   buzzer-beater or an overtime winner, whoever decided it gets
+   `hometown_game_winner` for their town: the batter of the walk-off, the
+   scorer of the overtime goal, the shooter of the buzzer-beater, and in
+   football the players the scoring play names (`engine/moments/deciders.ts`).
+   0.9, or 0.95 in the World Series, NBA Finals or Stanley Cup Final. A
+   walk-off on an error or a wild pitch has no decider. In a title game the
+   decider is one of the champion's leaders instead, so the town gets the
+   title once. Example: Ryan Poehling's overtime goal for the Ducks in the
+   2026 first round makes "Lakeville, what a finish." for Lakeville,
+   Minnesota, where he was born. Needs `supabase/010_player_moments.sql`.
+6. **Wins Walkoff doesn't follow.** An operator records them with
    `create_moment` (a surfing win, a medal), and the towns' moments are made
    right away.
 
@@ -67,9 +78,9 @@ A brand gets a town's moment when:
 - it's one of the event's top 5 towns for the brand: the towns of those who
   did the most first, then the most customers. The rest are listed by name.
 
-A town inside the champion's own core territory is left out when the
-brand's queue already has the team's title, so nobody there gets two
-sends. Team queries never include hometown moments: a Seattle brand gets
+A town inside the winner's own core territory is left out when the brand's
+queue already has the team's moment for that game (its title, its
+walk-off), so nobody there gets two sends. Team queries never include hometown moments: a Seattle brand gets
 the title, not San Clemente's moment.
 
 ## The campaign
@@ -82,10 +93,13 @@ the title, not San Clemente's moment.
 - **Products:** the brand's own named for the town first ("San Clemente
   Pier Hoodie"), then the champion's colors. For a golfer or anyone else
   without a team, their sport's scene (golf, tennis, motorsports, surf).
+  The colors in the copy come from the products picked for them, not from
+  one picked for the town's name.
 - **A contender's send** goes out the morning of the final round, in the
   town's time: "All eyes on Holywood today."
 - **Copy:** "San Clemente, what a night." "Navy and green all over San
-  Clemente today." The send time is the town's, never late at night.
+  Clemente today." A game-winner's: "Lakeville, what a finish." The send
+  time is the town's, never late at night.
 - **Name:** "Walkoff · San Clemente, CA · Hometown Champion · Feb 8". No
   athlete or team, in the campaign or the segment.
 
@@ -143,6 +157,8 @@ One small change, after counsel signs off:
   four tours, plus a bio for each golfer the first time they play.
 - A roster is read when the title is recorded, so a player signed in the
   days after a title can count as on the roster.
+- A playoff game-winner needs one more read of the game's summary in
+  baseball and hockey: a few a year.
 - Customer counts by postal area undercount a brand whose customers bunch
   in one town. Klaviyo's count for the circle is the real one.
 - Golfers' birthplaces come from ESPN's bios, and some are places Walkoff

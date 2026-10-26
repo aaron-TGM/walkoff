@@ -83,6 +83,7 @@ export const DEFAULT_RULE: TriggerRule = {
     "playoff_advance",
     "title_won",
     "great_escape",
+    "big_signing",
   ],
   team_keys: [],
   min_intensity: 0.6,

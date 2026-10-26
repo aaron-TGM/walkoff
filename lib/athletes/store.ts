@@ -24,7 +24,8 @@ export interface Athlete {
   college: string | null;
 }
 
-export type ResultKind = "title" | "win" | "lead";
+/** game_winner: decided a playoff game at the very end (010_player_moments.sql). */
+export type ResultKind = "title" | "win" | "lead" | "game_winner";
 /** leader: led the team in the title game, or won alone. */
 export type ResultRole = "leader" | "played" | "roster" | "reserve";
 
@@ -79,6 +80,14 @@ async function byIds<T>(ids: string[], read: (chunk: string[]) => PromiseLike<{ 
 /** Whether 009_athletes.sql has run. */
 export async function athletesReady(db: SupabaseClient): Promise<boolean> {
   const { error } = await db.from("athletes").select("id").limit(1);
+  if (error && !isMissingSchema(error)) throw error;
+  return !error;
+}
+
+/** Whether 010_player_moments.sql has run: playoff game-winners, and moves
+ *  between teams. */
+export async function has010(db: SupabaseClient): Promise<boolean> {
+  const { error } = await db.from("athletes").select("joined_at").limit(1);
   if (error && !isMissingSchema(error)) throw error;
   return !error;
 }

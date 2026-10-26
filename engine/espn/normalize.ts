@@ -195,6 +195,7 @@ export function scoringEventsFromSummary(sport: Sport, summary: EspnSummary): Sc
         awayScore: p.awayScore ?? 0,
         teamExternalId: p.team?.id ?? null,
         text: p.text ?? "",
+        athleteIds: (p.participants ?? []).map((x) => x.athlete?.id).filter((id): id is string => !!id),
       }));
   }
   return [];
