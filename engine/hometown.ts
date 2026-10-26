@@ -6,21 +6,8 @@
 // It reads only what's saved, so a poll never waits on it. Off unless
 // HOMETOWN is 1: hometown campaigns wait on counsel. See engine/README.md.
 import type { SupabaseClient } from "@supabase/supabase-js";
-import {
-  ACADEMIES,
-  athletesReady,
-  loadAthletes,
-  momentHomes,
-  placesOf,
-  resultsFor,
-  saveResults,
-  teamRoster,
-  type AthletePlace,
-  type AthleteResult,
-  type ResultRole,
-} from "../lib/athletes";
-import { deriveHometownMoments, ROLE_INTENSITY, saveHometownMoments, type Local, type Town } from "../lib/hometown";
-import { placeByKey, placeLabel, townCircle } from "../lib/places";
+import { athletesReady, resultsFor, saveResults, teamRoster, type AthleteResult, type ResultRole } from "../lib/athletes";
+import { makeHometownMoments, ROLE_INTENSITY } from "../lib/hometown";
 import type { AthleteSync } from "./athletes/sync";
 import { errorMessage, log } from "./log";
 import type { Heroes } from "./moments/heroes";
@@ -171,24 +158,17 @@ export class HometownJob {
   /** A moment for each town the champion's players are from. Towns that
    *  have theirs already keep it. */
   private async towns(t: TitleRow, results: AthleteResult[]): Promise<number> {
-    const ids = results.map((r) => r.athleteId);
-    const [athletes, places, team] = await Promise.all([loadAthletes(this.db, ids), placesOf(this.db, ids), this.teamName(t.team_id)]);
-    const byAthlete = new Map<string, AthletePlace[]>();
-    for (const p of places) byAthlete.set(p.athleteId, [...(byAthlete.get(p.athleteId) ?? []), p]);
-    const led = new Map((heroesOf(t)?.leaders ?? []).map((l) => [l.id, l.why]));
-    const result = new Map(results.map((r) => [r.athleteId, r]));
-    const locals: Local[] = [];
-    for (const a of athletes) {
-      const homes = momentHomes(byAthlete.get(a.id) ?? [], ACADEMIES);
-      if (homes.length) locals.push({ athlete: a, result: result.get(a.id)!, homes, led: led.get(a.externalId) });
-    }
-    const towns = new Map<string, Town>();
-    for (const key of new Set(locals.flatMap((l) => l.homes.map((h) => h.placeKey)))) {
-      const place = await placeByKey(key);
-      if (place) towns.set(key, { place, label: placeLabel(place), circle: await townCircle(place) });
+    // What each leader led, by athlete id ("espn:football:3912547" from the
+    // feed's "3912547").
+    const why = new Map((heroesOf(t)?.leaders ?? []).map((l) => [l.id, l.why]));
+    const led = new Map<string, string[]>();
+    for (const r of results) {
+      const w = why.get(r.athleteId.split(":").pop()!);
+      if (w) led.set(r.athleteId, w);
     }
     const first = results[0];
-    const moments = deriveHometownMoments(
+    const { moments, saved } = await makeHometownMoments(
+      this.db,
       {
         key: first.eventKey,
         name: first.eventName,
@@ -196,14 +176,13 @@ export class HometownJob {
         league: t.league,
         gameId: t.game_id,
         teamId: t.team_id,
-        teamName: team,
+        teamName: await this.teamName(t.team_id),
         opponentTeamId: t.opponent_team_id,
         occurredAt: t.occurred_at,
       },
-      locals,
-      towns,
+      results,
+      led,
     );
-    const saved = await saveHometownMoments(this.db, moments);
     if (saved.length) {
       log("INFO", "Hometown moments", { title: t.headline, towns: saved.length, of: moments.length, examples: saved.slice(0, 3).map((m) => m.headline) });
     }

@@ -180,7 +180,6 @@ export const HOMETOWN_TRIGGERS: Trigger[] = [
     description:
       "Someone from the town leads going into the final round. The town is watching.",
     category: "before",
-    coming: true,
   },
 ];
 

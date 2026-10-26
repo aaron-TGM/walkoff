@@ -1,0 +1,616 @@
+{
+ "_note": "Built from the 2026 Masters final leaderboard (event 401811941): rounds 1 to 3 and Sunday's tee times, with the event between rounds as ESPN reports it after round 3.",
+ "events": [
+  {
+   "id": "401811941",
+   "name": "Masters Tournament",
+   "date": "2026-04-09T04:00Z",
+   "endDate": "2026-04-12T04:00Z",
+   "status": {
+    "type": {
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false
+    }
+   },
+   "tournament": {
+    "major": true,
+    "numberOfRounds": 4
+   },
+   "competitions": [
+    {
+     "id": "401811941",
+     "date": "2026-04-09T04:00Z",
+     "endDate": "2026-04-12T04:00Z",
+     "status": {
+      "period": 3,
+      "type": {
+       "name": "STATUS_PLAY_COMPLETE",
+       "state": "post",
+       "completed": true,
+       "detail": "Round 3 - Play Complete"
+      }
+     },
+     "competitors": [
+      {
+       "id": "3470",
+       "sortOrder": 1,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T18:25Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "T1",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 205,
+        "displayValue": "-11"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 67.0,
+         "teeTime": "2026-04-09T14:31Z"
+        },
+        {
+         "period": 2,
+         "value": 65.0,
+         "teeTime": "2026-04-10T17:44Z"
+        },
+        {
+         "period": 3,
+         "value": 73.0,
+         "teeTime": "2026-04-11T18:50Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T18:25Z"
+        }
+       ],
+       "athlete": {
+        "id": "3470",
+        "displayName": "Rory McIlroy"
+       }
+      },
+      {
+       "id": "4425906",
+       "sortOrder": 2,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T18:25Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "T1",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 205,
+        "displayValue": "-11"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 73.0,
+         "teeTime": "2026-04-09T14:31Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "teeTime": "2026-04-10T17:44Z"
+        },
+        {
+         "period": 3,
+         "value": 65.0,
+         "teeTime": "2026-04-11T17:55Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T18:25Z"
+        }
+       ],
+       "athlete": {
+        "id": "4425906",
+        "displayName": "Cameron Young"
+       }
+      },
+      {
+       "id": "9938",
+       "sortOrder": 3,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T18:14Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "3",
+         "isTie": false
+        }
+       },
+       "score": {
+        "value": 206,
+        "displayValue": "-10"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 67.0,
+         "teeTime": "2026-04-09T13:19Z"
+        },
+        {
+         "period": 2,
+         "value": 71.0,
+         "teeTime": "2026-04-10T16:32Z"
+        },
+        {
+         "period": 3,
+         "value": 68.0,
+         "teeTime": "2026-04-11T18:50Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T18:14Z"
+        }
+       ],
+       "athlete": {
+        "id": "9938",
+        "displayName": "Sam Burns"
+       }
+      },
+      {
+       "id": "4587",
+       "sortOrder": 4,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T18:14Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "4",
+         "isTie": false
+        }
+       },
+       "score": {
+        "value": 207,
+        "displayValue": "-9"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 70.0,
+         "teeTime": "2026-04-09T13:43Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "teeTime": "2026-04-10T16:56Z"
+        },
+        {
+         "period": 3,
+         "value": 68.0,
+         "teeTime": "2026-04-11T18:28Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T18:14Z"
+        }
+       ],
+       "athlete": {
+        "id": "4587",
+        "displayName": "Shane Lowry"
+       }
+      },
+      {
+       "id": "1680",
+       "sortOrder": 5,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T18:03Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "T5",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 208,
+        "displayValue": "-8"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 69.0,
+         "teeTime": "2026-04-09T13:43Z"
+        },
+        {
+         "period": 2,
+         "value": 71.0,
+         "teeTime": "2026-04-10T16:56Z"
+        },
+        {
+         "period": 3,
+         "value": 68.0,
+         "teeTime": "2026-04-11T17:55Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T18:03Z"
+        }
+       ],
+       "athlete": {
+        "id": "1680",
+        "displayName": "Jason Day"
+       }
+      },
+      {
+       "id": "569",
+       "sortOrder": 6,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T18:03Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "T5",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 208,
+        "displayValue": "-8"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 70.0,
+         "teeTime": "2026-04-09T17:20Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "teeTime": "2026-04-10T13:55Z"
+        },
+        {
+         "period": 3,
+         "value": 69.0,
+         "teeTime": "2026-04-11T18:39Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T18:03Z"
+        }
+       ],
+       "athlete": {
+        "id": "569",
+        "displayName": "Justin Rose"
+       }
+      },
+      {
+       "id": "9221",
+       "sortOrder": 7,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:52Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "T7",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 209,
+        "displayValue": "-7"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 71.0,
+         "teeTime": "2026-04-09T11:40Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "teeTime": "2026-04-10T14:51Z"
+        },
+        {
+         "period": 3,
+         "value": 69.0,
+         "teeTime": "2026-04-11T18:06Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T17:52Z"
+        }
+       ],
+       "athlete": {
+        "id": "9221",
+        "displayName": "Haotong Li"
+       }
+      },
+      {
+       "id": "9478",
+       "sortOrder": 8,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:52Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "T7",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 209,
+        "displayValue": "-7"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 70.0,
+         "teeTime": "2026-04-09T17:44Z"
+        },
+        {
+         "period": 2,
+         "value": 74.0,
+         "teeTime": "2026-04-10T14:19Z"
+        },
+        {
+         "period": 3,
+         "value": 65.0,
+         "teeTime": "2026-04-11T16:16Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T17:52Z"
+        }
+       ],
+       "athlete": {
+        "id": "9478",
+        "displayName": "Scottie Scheffler"
+       }
+      },
+      {
+       "id": "5409",
+       "sortOrder": 9,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:41Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "T9",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 210,
+        "displayValue": "-6"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 73.0,
+         "teeTime": "2026-04-09T14:19Z"
+        },
+        {
+         "period": 2,
+         "value": 71.0,
+         "teeTime": "2026-04-10T17:32Z"
+        },
+        {
+         "period": 3,
+         "value": 66.0,
+         "teeTime": "2026-04-11T15:54Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T17:41Z"
+        }
+       ],
+       "athlete": {
+        "id": "5409",
+        "displayName": "Russell Henley"
+       }
+      },
+      {
+       "id": "5579",
+       "sortOrder": 10,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:30Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "T9",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 210,
+        "displayValue": "-6"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 69.0,
+         "teeTime": "2026-04-09T13:55Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "teeTime": "2026-04-10T17:08Z"
+        },
+        {
+         "period": 3,
+         "value": 72.0,
+         "teeTime": "2026-04-11T18:39Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T17:30Z"
+        }
+       ],
+       "athlete": {
+        "id": "5579",
+        "displayName": "Patrick Reed"
+       }
+      },
+      {
+       "id": "6007",
+       "sortOrder": 11,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:41Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "T9",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 210,
+        "displayValue": "-6"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 77.0,
+         "teeTime": "2026-04-09T14:43Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "teeTime": "2026-04-10T17:56Z"
+        },
+        {
+         "period": 3,
+         "value": 66.0,
+         "teeTime": "2026-04-11T15:43Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T17:41Z"
+        }
+       ],
+       "athlete": {
+        "id": "6007",
+        "displayName": "Patrick Cantlay"
+       }
+      },
+      {
+       "id": "10592",
+       "sortOrder": 12,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:30Z",
+        "thru": 0,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_SCHEDULED",
+         "state": "pre",
+         "completed": false
+        },
+        "position": {
+         "displayName": "T12",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 211,
+        "displayValue": "-5"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 74.0,
+         "teeTime": "2026-04-09T14:19Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "teeTime": "2026-04-10T17:32Z"
+        },
+        {
+         "period": 3,
+         "value": 68.0,
+         "teeTime": "2026-04-11T16:38Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-04-12T17:30Z"
+        }
+       ],
+       "athlete": {
+        "id": "10592",
+        "displayName": "Collin Morikawa"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

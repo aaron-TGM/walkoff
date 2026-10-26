@@ -1,0 +1,668 @@
+{
+ "events": [
+  {
+   "id": "401850917",
+   "name": "Butterfield Bermuda Championship",
+   "shortName": "Butterfield Bermuda Championship",
+   "date": "2026-10-22T04:00Z",
+   "endDate": "2026-10-26T04:00Z",
+   "status": {
+    "type": {
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "In Progress"
+    }
+   },
+   "tournament": {
+    "id": "3773",
+    "displayName": "Butterfield Bermuda Championship",
+    "major": false,
+    "numberOfRounds": 3,
+    "cutRound": 2
+   },
+   "competitions": [
+    {
+     "id": "401850917",
+     "date": "2026-10-22T04:00Z",
+     "endDate": "2026-10-26T04:00Z",
+     "status": {
+      "period": 3,
+      "type": {
+       "name": "STATUS_SUSPENDED",
+       "state": "post",
+       "detail": "Round 3 - Suspended",
+       "shortDetail": "Round 3 - Suspended"
+      }
+     },
+     "competitors": [
+      {
+       "id": "11056",
+       "sortOrder": 1,
+       "amateur": false,
+       "status": {
+        "period": 3,
+        "teeTime": "2026-10-24T14:18Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T1",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 197.0,
+        "displayValue": "-16"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 65.0,
+         "displayValue": "-6",
+         "teeTime": "2026-10-22T10:57Z"
+        },
+        {
+         "period": 2,
+         "value": 66.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-23T15:27Z"
+        },
+        {
+         "period": 3,
+         "value": 66.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-24T14:18Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-10-25T12:46Z"
+        }
+       ],
+       "athlete": {
+        "id": "11056",
+        "displayName": "Austin Smotherman",
+        "shortName": "A. Smotherman",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "CA"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "6001",
+       "sortOrder": 2,
+       "amateur": false,
+       "status": {
+        "period": 3,
+        "teeTime": "2026-10-24T14:51Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T1",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 197.0,
+        "displayValue": "-16"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 66.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-22T15:16Z"
+        },
+        {
+         "period": 2,
+         "value": 64.0,
+         "displayValue": "-7",
+         "teeTime": "2026-10-23T10:46Z"
+        },
+        {
+         "period": 3,
+         "value": 67.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-24T14:51Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-10-25T12:46Z"
+        }
+       ],
+       "athlete": {
+        "id": "6001",
+        "displayName": "Séamus Power",
+        "shortName": "S. Power",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "IRL"
+        },
+        "flag": {
+         "alt": "Ireland"
+        }
+       }
+      },
+      {
+       "id": "10664",
+       "sortOrder": 3,
+       "amateur": false,
+       "status": {
+        "period": 3,
+        "teeTime": "2026-10-24T13:45Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T3",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 199.0,
+        "displayValue": "-14"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 65.0,
+         "displayValue": "-6",
+         "teeTime": "2026-10-22T11:30Z"
+        },
+        {
+         "period": 2,
+         "value": 68.0,
+         "displayValue": "-3",
+         "teeTime": "2026-10-23T16:00Z"
+        },
+        {
+         "period": 3,
+         "value": 66.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-24T13:45Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-10-25T12:46Z"
+        }
+       ],
+       "athlete": {
+        "id": "10664",
+        "displayName": "Taylor Moore",
+        "shortName": "T. Moore",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "TX"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "8910",
+       "sortOrder": 4,
+       "amateur": false,
+       "status": {
+        "period": 3,
+        "teeTime": "2026-10-24T14:40Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T3",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 199.0,
+        "displayValue": "-14"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 63.0,
+         "displayValue": "-8",
+         "teeTime": "2026-10-22T11:08Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-23T15:38Z"
+        },
+        {
+         "period": 3,
+         "value": 69.0,
+         "displayValue": "-2",
+         "teeTime": "2026-10-24T14:40Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-10-25T12:35Z"
+        }
+       ],
+       "athlete": {
+        "id": "8910",
+        "displayName": "Ben Silverman",
+        "shortName": "B. Silverman",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "CAN",
+         "stateAbbreviation": "ON"
+        },
+        "flag": {
+         "alt": "Canada"
+        }
+       }
+      },
+      {
+       "id": "9126",
+       "sortOrder": 5,
+       "amateur": false,
+       "status": {
+        "period": 3,
+        "teeTime": "2026-10-24T14:40Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T3",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 199.0,
+        "displayValue": "-14"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 63.0,
+         "displayValue": "-8",
+         "teeTime": "2026-10-22T15:27Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-23T10:57Z"
+        },
+        {
+         "period": 3,
+         "value": 69.0,
+         "displayValue": "-2",
+         "teeTime": "2026-10-24T14:40Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-10-25T12:35Z"
+        }
+       ],
+       "athlete": {
+        "id": "9126",
+        "displayName": "Corey Conners",
+        "shortName": "C. Conners",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "CAN",
+         "stateAbbreviation": "ON"
+        },
+        "flag": {
+         "alt": "Canada"
+        }
+       }
+      },
+      {
+       "id": "5724",
+       "sortOrder": 6,
+       "amateur": false,
+       "status": {
+        "period": 3,
+        "teeTime": "2026-10-24T14:07Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T6",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 200.0,
+        "displayValue": "-13"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 64.0,
+         "displayValue": "-7",
+         "teeTime": "2026-10-22T11:30Z"
+        },
+        {
+         "period": 2,
+         "value": 72.0,
+         "displayValue": "+1",
+         "teeTime": "2026-10-23T16:00Z"
+        },
+        {
+         "period": 3,
+         "value": 64.0,
+         "displayValue": "-7",
+         "teeTime": "2026-10-24T14:07Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-10-25T12:24Z"
+        }
+       ],
+       "athlete": {
+        "id": "5724",
+        "displayName": "Chan Kim",
+        "shortName": "C. Kim",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "SKO"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "6086",
+       "sortOrder": 7,
+       "amateur": false,
+       "status": {
+        "period": 3,
+        "teeTime": "2026-10-24T12:50Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T6",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 200.0,
+        "displayValue": "-13"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 68.0,
+         "displayValue": "-3",
+         "teeTime": "2026-10-22T15:05Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-23T10:35Z"
+        },
+        {
+         "period": 3,
+         "value": 65.0,
+         "displayValue": "-6",
+         "teeTime": "2026-10-24T12:50Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-10-25T12:35Z"
+        }
+       ],
+       "athlete": {
+        "id": "6086",
+        "displayName": "Tom Hoge",
+        "shortName": "T. Hoge",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "NC"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "3449",
+       "sortOrder": 8,
+       "amateur": false,
+       "status": {
+        "period": 3,
+        "teeTime": "2026-10-24T14:07Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T6",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 200.0,
+        "displayValue": "-13"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 66.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-22T15:38Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-23T11:08Z"
+        },
+        {
+         "period": 3,
+         "value": 67.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-24T14:07Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-10-25T12:24Z"
+        }
+       ],
+       "athlete": {
+        "id": "3449",
+        "displayName": "Chris Kirk",
+        "shortName": "C. Kirk",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "TN"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "4408319",
+       "sortOrder": 9,
+       "amateur": false,
+       "status": {
+        "period": 3,
+        "teeTime": "2026-10-24T14:29Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T6",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 200.0,
+        "displayValue": "-13"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 63.0,
+         "displayValue": "-8",
+         "teeTime": "2026-10-22T11:41Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-23T16:11Z"
+        },
+        {
+         "period": 3,
+         "value": 70.0,
+         "displayValue": "-1",
+         "teeTime": "2026-10-24T14:29Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-10-25T12:24Z"
+        }
+       ],
+       "athlete": {
+        "id": "4408319",
+        "displayName": "Danny Walker",
+        "shortName": "D. Walker",
+        "amateur": false,
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "4618114",
+       "sortOrder": 10,
+       "amateur": false,
+       "status": {
+        "period": 3,
+        "teeTime": "2026-10-24T14:51Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T6",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 200.0,
+        "displayValue": "-13"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 62.0,
+         "displayValue": "-9",
+         "teeTime": "2026-10-22T16:33Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-23T12:03Z"
+        },
+        {
+         "period": 3,
+         "value": 71.0,
+         "displayValue": "E",
+         "teeTime": "2026-10-24T14:51Z"
+        },
+        {
+         "period": 4,
+         "teeTime": "2026-10-25T12:13Z"
+        }
+       ],
+       "athlete": {
+        "id": "4618114",
+        "displayName": "Chandler Blanchet",
+        "shortName": "C. Blanchet",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "FL"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

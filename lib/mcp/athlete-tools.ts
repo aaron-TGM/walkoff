@@ -32,6 +32,7 @@ import {
 import { helpUrl } from "../help/pages";
 import { NATIONS, placeByKey, placeLabel, resolveTown, townCircle, townCustomers, townLift } from "../places";
 import { brandFor, ToolError } from "./data";
+import { tourById } from "../tours";
 import { teamFromFeedId } from "./teams";
 import type { ToolContext } from "./tools";
 
@@ -58,11 +59,14 @@ export const sourceWords = (f: { kind: string; source: string }) => SOURCE_WORDS
 
 const teamName = (a: Athlete) => (a.teamId ? (teamFromFeedId(a.teamId)?.team.name ?? a.teamId) : null);
 
+/** A golfer's tour stands in for a team. */
+const teamOrTour = (a: Athlete) => (a.sport === "golf" ? (tourById(a.league ?? "")?.name ?? "golf") : (teamName(a) ?? "not on a roster now"));
+
 function athleteView(a: Athlete) {
   return {
     name: a.displayName,
     id: a.id,
-    team: teamName(a) ?? "not on a roster now",
+    team: teamOrTour(a),
     position: a.position,
     ...(a.rosterStatus === "reserve" ? { roster: "reserve (injured, practice squad or suspended)" } : {}),
   };

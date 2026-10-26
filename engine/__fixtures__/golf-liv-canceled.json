@@ -1,0 +1,71 @@
+{
+ "events": [
+  {
+   "id": "401843582",
+   "name": "LIV Golf Michigan - Stroke Play",
+   "shortName": "LIV Golf Michigan - Stroke Play",
+   "date": "2026-08-30T04:00Z",
+   "endDate": "2026-08-30T04:00Z",
+   "status": {
+    "type": {
+     "name": "STATUS_CANCELED",
+     "state": "post",
+     "completed": false,
+     "description": "Canceled"
+    }
+   },
+   "tournament": {
+    "id": "5127",
+    "displayName": "LIV Finale Stroke",
+    "major": false,
+    "numberOfRounds": 1,
+    "cutRound": 0
+   },
+   "competitions": [
+    {
+     "id": "401843582",
+     "date": "2026-08-30T04:00Z",
+     "endDate": "2026-08-30T04:00Z",
+     "status": {
+      "period": 0,
+      "type": {
+       "name": "STATUS_CANCELED",
+       "state": "post",
+       "detail": "Canceled",
+       "shortDetail": "Canceled"
+      }
+     },
+     "competitors": []
+    }
+   ]
+  },
+  {
+   "id": "401843581",
+   "name": "LIV Golf Michigan - Match Play",
+   "shortName": "LIV Golf Michigan - Match Play",
+   "date": "2026-08-27T04:00Z",
+   "endDate": "2026-08-29T04:00Z",
+   "status": {
+    "type": {
+     "name": "STATUS_CANCELED",
+     "state": "post",
+     "completed": false,
+     "description": "Canceled"
+    }
+   },
+   "tournament": {
+    "id": "5126",
+    "displayName": "LIV Finale Match",
+    "major": false,
+    "numberOfRounds": 3,
+    "cutRound": 0
+   },
+   "competitions": [
+    {
+     "status": {},
+     "competitors": []
+    }
+   ]
+  }
+ ]
+}

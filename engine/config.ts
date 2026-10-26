@@ -31,6 +31,9 @@ export interface EngineConfig {
    *  (engine/hometown.ts). Off unless HOMETOWN is 1, until counsel signs
    *  off on hometown campaigns. */
   hometown: boolean;
+  /** Golf leaderboards, golfers and their wins (engine/golf). On unless
+   *  GOLF is 0; their towns' moments need HOMETOWN too. */
+  golf: boolean;
 }
 
 function seconds(value: string | undefined, fallback: number): number {
@@ -75,5 +78,6 @@ export function loadConfig(
     athletes: env.ATHLETES !== "0",
     wikidata: env.WIKIDATA !== "0",
     hometown: env.HOMETOWN === "1",
+    golf: env.GOLF !== "0",
   };
 }
