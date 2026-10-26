@@ -1,14 +1,14 @@
-// One circuit: a golf tour, a tennis tour or a racing series, where athletes
-// compete for themselves. Its current events every 5 minutes while one is
-// under way, every 10 otherwise. The field is saved as athletes, and a few
-// bios each poll tell where they were born. A winner, or whoever is in
-// contention for the last day, is recorded as a result, with their bios
-// read right away, and the towns they're from get their moments
-// (lib/hometown), unless HOMETOWN is 0. Each sport adapts its feed to this (golf/, tennis/,
-// racing/). It keeps no state that matters: after a restart a repeat adds
-// nothing. See engine/README.md.
+// One circuit: a golf tour, a tennis tour, a racing series or surfing's
+// Championship Tour, where athletes compete for themselves. Its current
+// events every 5 minutes while one is under way, every 10 otherwise. The
+// field is saved as athletes, and a few bios each poll tell where they were
+// born. A winner, or whoever is in contention for the last day, is recorded
+// as a result, with their bios read right away, and the towns they're from
+// get their moments (lib/hometown), unless HOMETOWN is 0. Each sport adapts
+// its feed to this (golf/, tennis/, racing/, surfing/). It keeps no state
+// that matters: after a restart a repeat adds nothing. See engine/README.md.
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { athleteId, athletePlace, athletesReady, eventResults, saveAthletes, savePlaces, saveResults, type Athlete, type AthleteResult } from "../../lib/athletes";
+import { athleteId, athletePlace, athletesReady, eventResults, saveAthletes, savePlaces, saveResults, type Athlete, type AthleteResult, type PlaceSource } from "../../lib/athletes";
 import { makeHometownMoments } from "../../lib/hometown";
 import { nameKey, resolvePlace, type Resolved } from "../../lib/places";
 import type { Tour } from "../../lib/tours";
@@ -68,6 +68,10 @@ export interface Bio {
   city: string;
   state: string;
   country: string;
+  /** Who says so: ESPN, unless the bio comes from elsewhere. */
+  source?: PlaceSource;
+  /** The town, when the feed found it already (by coordinates). */
+  resolved?: Resolved;
 }
 
 /** A sport's feed and rules for one tour or series. */
@@ -75,8 +79,11 @@ export interface Circuit<E extends CircuitEvent = CircuitEvent> {
   tour: Tour;
   events(): Promise<E[]>;
   outcomes(e: E, now: number): CircuitOutcome[];
-  /** Null when the bio doesn't say. */
+  /** Null when the bio doesn't say. Throws to be asked again later. */
   bio(externalId: string): Promise<Bio | null>;
+  /** Walkoff's id for an athlete in the feed: ESPN's, unless the feed
+   *  isn't ESPN's. */
+  athleteId?(externalId: string): string;
 }
 
 export interface CircuitPollerOptions {
@@ -140,9 +147,14 @@ export class CircuitPoller<E extends CircuitEvent = CircuitEvent> {
     log("INFO", `${e.name}: ${e.statusLine}`, { tour: this.tour.id, event: e.id, state: e.state });
   }
 
+  /** Walkoff's id for someone in the feed. */
+  private idOf(externalId: string): string {
+    return this.circuit.athleteId?.(externalId) ?? athleteId(this.tour.sport, externalId);
+  }
+
   private athlete(p: Entrant): Athlete {
     return {
-      id: athleteId(this.tour.sport, p.externalId),
+      id: this.idOf(p.externalId),
       sport: this.tour.sport,
       league: this.tour.id,
       externalId: p.externalId,
@@ -163,7 +175,7 @@ export class CircuitPoller<E extends CircuitEvent = CircuitEvent> {
 
   /** Records who won or is in contention, and makes their towns' moments. */
   private async record(o: CircuitOutcome): Promise<void> {
-    const ids = o.players.map((p) => athleteId(this.tour.sport, p.externalId));
+    const ids = o.players.map((p) => this.idOf(p.externalId));
     await this.bios(ids);
     const at = new Date(this.now()).toISOString();
     const results: AthleteResult[] = ids.map((id) => ({
@@ -224,7 +236,7 @@ export class CircuitPoller<E extends CircuitEvent = CircuitEvent> {
         log("WARNING", "Bio unavailable", { athlete: r.id, error: errorMessage(e) });
         continue;
       }
-      if (bio) await savePlaces(this.db, [athletePlace(r.id, "birthplace", "espn", birthPlaceText(bio), await resolve(bio))]);
+      if (bio) await savePlaces(this.db, [athletePlace(r.id, "birthplace", bio.source ?? "espn", birthPlaceText(bio), bio.resolved ?? (await resolve(bio)))]);
       const at = new Date(this.now()).toISOString();
       const { error: e } = await this.db
         .from("athletes")

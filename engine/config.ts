@@ -44,6 +44,9 @@ export interface EngineConfig {
   /** NASCAR's Cup Series, Formula 1 and IndyCar: race winners
    *  (engine/racing). On unless RACING is 0. */
   racing: boolean;
+  /** Surfing's Championship Tour: event champions, from Wikipedia
+   *  (engine/surfing). On unless SURFING is 0. */
+  surfing: boolean;
 }
 
 function seconds(value: string | undefined, fallback: number): number {
@@ -92,5 +95,6 @@ export function loadConfig(
     golf: env.GOLF !== "0",
     tennis: env.TENNIS !== "0",
     racing: env.RACING !== "0",
+    surfing: env.SURFING !== "0",
   };
 }

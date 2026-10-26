@@ -101,8 +101,8 @@ export default function DataAndSafetyPage() {
       <HelpSection page={P} id="athletes">
         <p>
           Walkoff keeps public facts about the athletes it follows: their team, position and where
-          they&apos;re from, from ESPN, Wikidata and our own research. No birth dates, ages or
-          photos.
+          they&apos;re from, from ESPN, Wikipedia, Wikidata and our own research. No birth dates,
+          ages or photos.
         </p>
         <p>
           When you ask Claude which athletes are from near your customers, you see their names.

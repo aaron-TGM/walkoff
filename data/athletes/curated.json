@@ -7,6 +7,34 @@
       "hometown": "San Clemente, CA",
       "source": "https://en.wikipedia.org/wiki/Sam_Darnold",
       "note": "Played at San Clemente High School. ESPN gives his birthplace, Capistrano Beach, 4 miles away."
+    },
+    {
+      "athlete": "walkoff:surfing:cole-houshmand",
+      "name": "Cole Houshmand",
+      "hometown": "San Clemente, CA",
+      "source": "https://en.wikipedia.org/wiki/Cole_Houshmand",
+      "note": "Born in San Clemente. Wikidata has no birthplace for him yet."
+    },
+    {
+      "athlete": "walkoff:surfing:sawyer-lindblad",
+      "name": "Sawyer Lindblad",
+      "hometown": "San Clemente, CA",
+      "source": "https://en.wikipedia.org/wiki/Sawyer_Lindblad",
+      "note": "An American surfer from San Clemente, born there. Wikidata has no birthplace for her yet."
+    },
+    {
+      "athlete": "walkoff:surfing:gabriela-bryan",
+      "name": "Gabriela Bryan",
+      "hometown": "Kilauea, HI",
+      "source": "https://en.wikipedia.org/wiki/Gabriela_Bryan",
+      "note": "Born in Kilauea, on Kauai. Wikidata has no birthplace for her yet."
+    },
+    {
+      "athlete": "walkoff:surfing:seth-moniz",
+      "name": "Seth Moniz",
+      "hometown": "Honolulu, HI",
+      "source": "https://en.wikipedia.org/wiki/Seth_Moniz",
+      "note": "Born in Honolulu. Wikidata has no birthplace for him yet."
     }
   ],
   "academies": [

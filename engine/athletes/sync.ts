@@ -24,11 +24,11 @@ import {
   type AthletePlace,
 } from "../../lib/athletes";
 import { LEAGUES } from "../../lib/leagues";
-import { nearestPlace, resolvePlace, type Place, type Resolved } from "../../lib/places";
+import { nearestPlace, resolvePlace, type Resolved } from "../../lib/places";
 import { errorMessage, log } from "../log";
 import { birthPlaceText, type AthleteFeed, type RosterPlayer } from "./feed";
 import { FAME, fameRank, signingRow, type Mover } from "./signings";
-import { ESPN_PROPERTIES, WikidataBusy, type WikidataClient, type WikidataPlace } from "./wikidata";
+import { ESPN_PROPERTIES, locatePlace, WikidataBusy, type WikidataClient, type WikidataPlace } from "./wikidata";
 
 const MINUTE = 60_000;
 const HOUR = 60 * MINUTE;
@@ -476,16 +476,9 @@ export class AthleteSync {
     return batch.rows.length;
   }
 
-  /** The town a Wikidata place is in: by its coordinates, or by its name
-   *  when it has none. */
-  private async locate(p: WikidataPlace): Promise<Resolved> {
-    if (p.country === "outside") return { status: "outside", country: "" };
-    if (!p.country) return { status: "unknown" };
-    if (p.lat !== null && p.lng !== null) {
-      const place: Place | null = await (this.options.locate ?? nearestPlace)(p.country, p.lat, p.lng);
-      return place ? { status: "found", place } : { status: "unknown" };
-    }
-    return (this.options.resolve ?? resolvePlace)({ city: p.name, state: "", country: p.country });
+  /** The town a Wikidata place is in. */
+  private locate(p: WikidataPlace): Promise<Resolved> {
+    return locatePlace(p, { locate: this.options.locate, resolve: this.options.resolve });
   }
 
   // ── The curated file ─────────────────────────────────────────────

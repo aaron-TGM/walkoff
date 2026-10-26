@@ -60,6 +60,19 @@ export function athleteId(sport: string, externalId: string): string {
   return `espn:${sport}:${externalId}`;
 }
 
+/** A name as a slug: "Ítalo Ferreira" is "italo-ferreira". */
+export const slugOf = (s: string) =>
+  s
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+/** An athlete ESPN doesn't know, by sport and name: surfers, and anyone an
+ *  operator adds with create_moment. "walkoff:surfing:griffin-colapinto". */
+export const walkoffAthleteId = (sport: string, name: string) => `walkoff:${sport}:${slugOf(name)}`;
+
 /** Ids per request, to keep the URLs short. */
 const CHUNK = 100;
 
@@ -292,8 +305,8 @@ export async function namingRights(
   return out;
 }
 
-/** Athletes by Walkoff's id ("espn:football:3912547", or for someone an
- *  operator added, "walkoff:surfing:griffin-colapinto") or by full name,
+/** Athletes by Walkoff's id ("espn:football:3912547", or for someone ESPN
+ *  doesn't know, "walkoff:surfing:griffin-colapinto") or by full name,
  *  however it's spelled ("sam darnold"). More than one shares some names. */
 export async function findAthletes(db: SupabaseClient, query: string, limit = 10): Promise<Athlete[]> {
   const q = query.trim();

@@ -132,15 +132,16 @@ town can celebrate it, without naming the player (docs/hometown.md).
 
 ## Tours and series
 
-Golfers, tennis players and drivers compete for themselves, so their towns
-are where these sports reach brands (`lib/tours.ts`). One poller per tour
-or series, all on the same loop (`circuits/poller.ts`): each sport reads
-its own feed and decides who won (`golf/`, `tennis/`, `racing/`). The
-pollers save the field as athletes, read five bios a poll for where they
-were born, and record each winner as a result. The winners' towns get
-`hometown_win`, and contenders' towns `hometown_contender`. Heartbeats are one row each: `golf:pga`, `tennis:atp`,
-`racing:nascar`. The feeds are undocumented, so each change in an event's
-status is logged.
+Golfers, tennis players, drivers and surfers compete for themselves, so
+their towns are where these sports reach brands (`lib/tours.ts`). One
+poller per tour or series, all on the same loop (`circuits/poller.ts`):
+each sport reads its own feed and decides who won (`golf/`, `tennis/`,
+`racing/`, `surfing/`). The pollers save the field as athletes, read five
+bios a poll for where they were born, and record each winner as a result.
+The winners' towns get `hometown_win`, and contenders' towns
+`hometown_contender`. Heartbeats are one row each: `golf:pga`,
+`tennis:atp`, `racing:nascar`, `surfing:wsl`. The feeds are undocumented,
+so each change in an event's status is logged.
 
 ## Golf
 
@@ -220,6 +221,33 @@ One poller each for NASCAR's Cup Series, Formula 1 and IndyCar (`racing/`).
 - Checked live: Kyle Larson's win at Talladega makes a moment for Elk Grove,
   California, and Tyler Reddick's 2026 Daytona 500 one for Corning.
 - `RACING=0` turns racing off.
+
+## Surfing
+
+The World Surf League's Championship Tour (`surfing/`), men's and women's.
+ESPN doesn't cover surfing, the WSL has no feed, and its robots.txt shuts
+out AI agents, so this reads Wikipedia instead.
+
+- The season's article ("2026 World Surf League"), every 10 minutes: its
+  raw text from Wikipedia's cache, with a `User-Agent` that says who's
+  asking. The schedule table gives each event's waiting period, and the
+  event results table its champions and runners-up, matched by the
+  event's article. Columns are found by their headers; a row it can't read
+  is left out.
+- A champion counts once the article has named them for 30 minutes, so a
+  wrong edit that's undone doesn't make a moment, and only within 60 hours
+  of the end of the waiting period: 0.85, or 0.90 at the Pipe Masters,
+  where the world titles are decided. Both champions are one outcome, so a
+  town with both gets one moment.
+- Surfers have Walkoff's own ids, the ones `create_moment` gives:
+  `walkoff:surfing:griffin-colapinto`. Their article is the external id,
+  and Wikidata finds where they were born by it, by coordinates. Those it
+  has no birthplace for are in `data/athletes/curated.json`, with sources.
+- Wikipedia's text is CC BY-SA; Walkoff keeps only facts from it: who won
+  which event, and when.
+- Checked live: the 2026 article's ten finished events, and Griffin
+  Colapinto's win in Portugal makes a moment for San Clemente.
+- `SURFING=0` turns surfing off.
 
 ## What it detects
 
@@ -301,6 +329,7 @@ not saved.
 | `GOLF`                      | `1`            | `0` turns the golf pollers off |
 | `TENNIS`                    | `1`            | `0` turns the tennis pollers off |
 | `RACING`                    | `1`            | `0` turns the racing pollers off |
+| `SURFING`                   | `1`            | `0` turns the surfing poller off |
 
 ## Set up Supabase
 
@@ -378,8 +407,9 @@ Logs are JSON lines with `severity`, so Cloud Logging filters work, e.g.
 
 - `playoff_clinch` (needs standings), `player_milestone` and
   `great_escape` are in the site's trigger library but not detected yet.
-- Surfing has no feed: an operator records a WSL win with `create_moment`
-  (docs/hometown.md). Automating it waits on WSL's terms.
+- Surfing: the world titles, and the WSL's other tours (the Challenger
+  Series, big-wave events). An operator records those with
+  `create_moment`.
 - Season championships in racing (the Cup Series title, the F1 drivers'
   championship): only race wins for now.
 - Hockey late winners need hockey play-by-play.

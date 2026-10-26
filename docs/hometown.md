@@ -68,9 +68,16 @@ see them, to test).
    the Indy 500, 0.85 in Formula 1, 0.80 in the Cup Series, 0.75 in
    IndyCar. Example: Tyler Reddick's 2026 Daytona 500 makes one for
    Corning, California.
-8. **Wins Walkoff doesn't follow.** An operator records them with
-   `create_moment` (a surfing win, a medal), and the towns' moments are made
-   right away.
+8. **Surfing.** The WSL's Championship Tour, men's and women's
+   (`engine/surfing`), from the season's Wikipedia article: the WSL has no
+   feed, and its robots.txt shuts out AI agents. A champion's town gets
+   `hometown_win` once the article has named them for 30 minutes: 0.85, or
+   0.90 at the Pipe Masters. Birthplaces come from Wikidata, and the
+   curated file has the surfers it doesn't know. Example: Griffin
+   Colapinto's win in Portugal in October 2026 makes one for San Clemente.
+9. **Wins Walkoff doesn't follow.** An operator records them with
+   `create_moment` (a medal, a big-wave contest), and the towns' moments
+   are made right away.
 
 ## Who sees it
 
@@ -175,7 +182,10 @@ The site's moment lists and the help center's tables follow
 - ESPN's API is unofficial. Rosters add about 650 requests a day, a title
   one more summary, and golf, tennis and racing about 1,800 reads a day
   across their nine tours and series, plus a bio for each athlete the first
-  time they play.
+  time they play. Surfing reads one Wikipedia article every 10 minutes, and
+  Wikidata once for each new surfer.
+- Surfing's results come from Wikipedia, so they're as quick and as right
+  as its editors: usually within hours of a final.
 - A roster is read when the title is recorded, so a player signed in the
   days after a title can count as on the roster.
 - A playoff game-winner needs one more read of the game's summary in

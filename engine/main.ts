@@ -1,9 +1,10 @@
 // Walkoff moment engine: polls live sports data, detects moments and saves
 // them to Supabase. It also has Claude tag each brand's new products
 // (tagger.ts), keeps rosters and where athletes are from
-// (athletes/sync.ts), follows golf's and tennis's tours and racing's series
-// (golf/, tennis/, racing/), and makes a moment for each town a champion's
-// players are from (hometown.ts). See engine/README.md.
+// (athletes/sync.ts), follows golf's and tennis's tours, racing's series and
+// surfing's Championship Tour (golf/, tennis/, racing/, surfing/), and makes
+// a moment for each town a champion's players are from (hometown.ts). See
+// engine/README.md.
 import { claudeSend, colorTask, productTask } from "../lib/affinity/claude-tagger";
 import { LEAGUES } from "../lib/leagues";
 import { toursOf } from "../lib/tours";
@@ -22,6 +23,8 @@ import { rulesFor } from "./moments/sports";
 import { LeaguePoller } from "./poller";
 import { createRacingFeed } from "./racing/feed";
 import { RacingPoller } from "./racing/poller";
+import { createSurfingFeed } from "./surfing/feed";
+import { SurfingPoller } from "./surfing/poller";
 import { MemoryStore } from "./store/memory";
 import { createSupabaseStore, serviceClient } from "./store/supabase";
 import type { Store } from "./store/types";
@@ -76,8 +79,8 @@ async function main(): Promise<void> {
   // A moment for each town a champion's players, or a playoff game's
   // decider, are from.
   const hometown = config.hometown && service ? new HometownJob(service, { rosters: athletes }) : null;
-  // Golf's and tennis's tours and racing's series: their winners, and with
-  // HOMETOWN their towns' moments.
+  // Golf's and tennis's tours, racing's series and surfing's tour: their
+  // winners, and their towns' moments.
   const circuits: CircuitPoller[] = [];
   if (service) {
     const options = { hometown: config.hometown };
@@ -87,6 +90,7 @@ async function main(): Promise<void> {
     if (config.golf) circuits.push(...toursOf("golf").map((t) => new GolfPoller(t, service, golfFeed, options)));
     if (config.tennis) circuits.push(...toursOf("tennis").map((t) => new TennisPoller(t, service, tennisFeed, options)));
     if (config.racing) circuits.push(...toursOf("racing").map((t) => new RacingPoller(t, service, racingFeed, options)));
+    if (config.surfing) circuits.push(...toursOf("surfing").map((t) => new SurfingPoller(t, service, createSurfingFeed(), options)));
   }
   log("INFO", "Moment engine starting", {
     leagues: config.leagues,

@@ -129,8 +129,8 @@ export default function PrivacyPage() {
       <ul>
         <li>
           <strong>Roster facts.</strong> Name, the ids ESPN and Wikidata use
-          for them, sport, team or tour, position, jersey number, college, and
-          the team they last played for.
+          for them or their Wikipedia article, sport, team or tour, position,
+          jersey number, college, and the team they last played for.
         </li>
         <li>
           <strong>Where they&apos;re from.</strong> Their birthplace, high
@@ -152,9 +152,9 @@ export default function PrivacyPage() {
         </li>
       </ul>
       <p>
-        It comes from public sources: ESPN, Wikidata, the results and profiles
-        that leagues and tours publish, and our own research of public
-        reporting. We don&apos;t keep birth dates, ages, photos or contact
+        It comes from public sources: ESPN, Wikipedia, Wikidata, the results
+        and profiles that leagues and tours publish, and our own research of
+        public reporting. We don&apos;t keep birth dates, ages, photos or contact
         details.
       </p>
       <p>
