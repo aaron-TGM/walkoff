@@ -88,6 +88,7 @@ const queueMoment = (m: MomentRow, fit: TownFit | null): QueueMoment => ({
   gameStart: typeof m.detail?.startsAt === "string" ? new Date(m.detail.startsAt) : null,
   teamKey: teamFromFeedId(m.team_id)?.key ?? null,
   local: fit,
+  league: m.league,
 });
 
 /** The hometown moments that make a brand's queue: matched by a rule, still

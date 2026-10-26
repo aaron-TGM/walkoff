@@ -38,6 +38,12 @@ export interface EngineConfig {
   /** Golf leaderboards, golfers and their wins (engine/golf). On unless
    *  GOLF is 0; their towns' moments need HOMETOWN too. */
   golf: boolean;
+  /** The ATP and WTA: singles winners and finalists (engine/tennis). On
+   *  unless TENNIS is 0. */
+  tennis: boolean;
+  /** NASCAR's Cup Series, Formula 1 and IndyCar: race winners
+   *  (engine/racing). On unless RACING is 0. */
+  racing: boolean;
 }
 
 function seconds(value: string | undefined, fallback: number): number {
@@ -84,5 +90,7 @@ export function loadConfig(
     hometown: env.HOMETOWN === "1",
     signings: env.SIGNINGS !== "0",
     golf: env.GOLF !== "0",
+    tennis: env.TENNIS !== "0",
+    racing: env.RACING !== "0",
   };
 }

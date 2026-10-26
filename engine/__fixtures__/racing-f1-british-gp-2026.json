@@ -1,0 +1,567 @@
+{
+ "events": [
+  {
+   "id": "600057437",
+   "name": "Pirelli British Grand Prix",
+   "date": "2026-07-03T11:30Z",
+   "endDate": "2026-07-05T14:00Z",
+   "status": {
+    "period": 32,
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401839078",
+     "date": "2026-07-03T11:30Z",
+     "type": {
+      "abbreviation": "FP1"
+     },
+     "status": {
+      "period": 32,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "id": "868",
+       "order": 1,
+       "winner": false,
+       "athlete": {
+        "displayName": "Lewis Hamilton",
+        "fullName": "Lewis Hamilton"
+       }
+      },
+      {
+       "id": "5829",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "Kimi Antonelli",
+        "fullName": "Kimi Antonelli"
+       }
+      },
+      {
+       "id": "5498",
+       "order": 3,
+       "winner": false,
+       "athlete": {
+        "displayName": "Charles Leclerc",
+        "fullName": "Charles Leclerc"
+       }
+      },
+      {
+       "id": "5503",
+       "order": 4,
+       "winner": false,
+       "athlete": {
+        "displayName": "George Russell",
+        "fullName": "George Russell"
+       }
+      },
+      {
+       "id": "5752",
+       "order": 5,
+       "winner": false,
+       "athlete": {
+        "displayName": "Oscar Piastri",
+        "fullName": "Oscar Piastri"
+       }
+      },
+      {
+       "id": "4665",
+       "order": 6,
+       "winner": false,
+       "athlete": {
+        "displayName": "Max Verstappen",
+        "fullName": "Max Verstappen"
+       }
+      },
+      {
+       "id": "5579",
+       "order": 7,
+       "winner": false,
+       "athlete": {
+        "displayName": "Lando Norris",
+        "fullName": "Lando Norris"
+       }
+      },
+      {
+       "id": "5790",
+       "order": 8,
+       "winner": false,
+       "athlete": {
+        "displayName": "Isack Hadjar",
+        "fullName": "Isack Hadjar"
+       }
+      },
+      {
+       "id": "4396",
+       "order": 9,
+       "winner": false,
+       "athlete": {
+        "displayName": "Nico Hülkenberg",
+        "fullName": "Nico Hülkenberg"
+       }
+      },
+      {
+       "id": "5741",
+       "order": 10,
+       "winner": false,
+       "athlete": {
+        "displayName": "Liam Lawson",
+        "fullName": "Liam Lawson"
+       }
+      }
+     ]
+    },
+    {
+     "id": "401839079",
+     "date": "2026-07-03T15:30Z",
+     "type": {
+      "abbreviation": "SS"
+     },
+     "status": {
+      "period": 14,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "id": "868",
+       "order": 1,
+       "winner": false,
+       "athlete": {
+        "displayName": "Lewis Hamilton",
+        "fullName": "Lewis Hamilton"
+       }
+      },
+      {
+       "id": "5829",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "Kimi Antonelli",
+        "fullName": "Kimi Antonelli"
+       }
+      },
+      {
+       "id": "4665",
+       "order": 3,
+       "winner": false,
+       "athlete": {
+        "displayName": "Max Verstappen",
+        "fullName": "Max Verstappen"
+       }
+      },
+      {
+       "id": "5498",
+       "order": 4,
+       "winner": false,
+       "athlete": {
+        "displayName": "Charles Leclerc",
+        "fullName": "Charles Leclerc"
+       }
+      },
+      {
+       "id": "5503",
+       "order": 5,
+       "winner": false,
+       "athlete": {
+        "displayName": "George Russell",
+        "fullName": "George Russell"
+       }
+      },
+      {
+       "id": "5579",
+       "order": 6,
+       "winner": false,
+       "athlete": {
+        "displayName": "Lando Norris",
+        "fullName": "Lando Norris"
+       }
+      },
+      {
+       "id": "5752",
+       "order": 7,
+       "winner": false,
+       "athlete": {
+        "displayName": "Oscar Piastri",
+        "fullName": "Oscar Piastri"
+       }
+      },
+      {
+       "id": "5790",
+       "order": 8,
+       "winner": false,
+       "athlete": {
+        "displayName": "Isack Hadjar",
+        "fullName": "Isack Hadjar"
+       }
+      },
+      {
+       "id": "5741",
+       "order": 9,
+       "winner": false,
+       "athlete": {
+        "displayName": "Liam Lawson",
+        "fullName": "Liam Lawson"
+       }
+      },
+      {
+       "id": "5855",
+       "order": 10,
+       "winner": false,
+       "athlete": {
+        "displayName": "Arvid Lindblad",
+        "fullName": "Arvid Lindblad"
+       }
+      }
+     ]
+    },
+    {
+     "id": "401839080",
+     "date": "2026-07-04T11:00Z",
+     "type": {
+      "abbreviation": "SR"
+     },
+     "status": {
+      "period": 17,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "id": "5829",
+       "order": 1,
+       "winner": true,
+       "athlete": {
+        "displayName": "Kimi Antonelli",
+        "fullName": "Kimi Antonelli"
+       }
+      },
+      {
+       "id": "868",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "Lewis Hamilton",
+        "fullName": "Lewis Hamilton"
+       }
+      },
+      {
+       "id": "5579",
+       "order": 3,
+       "winner": false,
+       "athlete": {
+        "displayName": "Lando Norris",
+        "fullName": "Lando Norris"
+       }
+      },
+      {
+       "id": "5503",
+       "order": 4,
+       "winner": false,
+       "athlete": {
+        "displayName": "George Russell",
+        "fullName": "George Russell"
+       }
+      },
+      {
+       "id": "5498",
+       "order": 5,
+       "winner": false,
+       "athlete": {
+        "displayName": "Charles Leclerc",
+        "fullName": "Charles Leclerc"
+       }
+      },
+      {
+       "id": "4665",
+       "order": 6,
+       "winner": false,
+       "athlete": {
+        "displayName": "Max Verstappen",
+        "fullName": "Max Verstappen"
+       }
+      },
+      {
+       "id": "5752",
+       "order": 7,
+       "winner": false,
+       "athlete": {
+        "displayName": "Oscar Piastri",
+        "fullName": "Oscar Piastri"
+       }
+      },
+      {
+       "id": "5741",
+       "order": 8,
+       "winner": false,
+       "athlete": {
+        "displayName": "Liam Lawson",
+        "fullName": "Liam Lawson"
+       }
+      },
+      {
+       "id": "5790",
+       "order": 9,
+       "winner": false,
+       "athlete": {
+        "displayName": "Isack Hadjar",
+        "fullName": "Isack Hadjar"
+       }
+      },
+      {
+       "id": "5855",
+       "order": 10,
+       "winner": false,
+       "athlete": {
+        "displayName": "Arvid Lindblad",
+        "fullName": "Arvid Lindblad"
+       }
+      }
+     ]
+    },
+    {
+     "id": "401839081",
+     "date": "2026-07-04T15:00Z",
+     "type": {
+      "abbreviation": "Qual"
+     },
+     "status": {
+      "period": 19,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "id": "5829",
+       "order": 1,
+       "winner": false,
+       "athlete": {
+        "displayName": "Kimi Antonelli",
+        "fullName": "Kimi Antonelli"
+       }
+      },
+      {
+       "id": "5498",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "Charles Leclerc",
+        "fullName": "Charles Leclerc"
+       }
+      },
+      {
+       "id": "868",
+       "order": 3,
+       "winner": false,
+       "athlete": {
+        "displayName": "Lewis Hamilton",
+        "fullName": "Lewis Hamilton"
+       }
+      },
+      {
+       "id": "5503",
+       "order": 4,
+       "winner": false,
+       "athlete": {
+        "displayName": "George Russell",
+        "fullName": "George Russell"
+       }
+      },
+      {
+       "id": "5790",
+       "order": 5,
+       "winner": false,
+       "athlete": {
+        "displayName": "Isack Hadjar",
+        "fullName": "Isack Hadjar"
+       }
+      },
+      {
+       "id": "5579",
+       "order": 6,
+       "winner": false,
+       "athlete": {
+        "displayName": "Lando Norris",
+        "fullName": "Lando Norris"
+       }
+      },
+      {
+       "id": "4665",
+       "order": 7,
+       "winner": false,
+       "athlete": {
+        "displayName": "Max Verstappen",
+        "fullName": "Max Verstappen"
+       }
+      },
+      {
+       "id": "5752",
+       "order": 8,
+       "winner": false,
+       "athlete": {
+        "displayName": "Oscar Piastri",
+        "fullName": "Oscar Piastri"
+       }
+      },
+      {
+       "id": "5855",
+       "order": 9,
+       "winner": false,
+       "athlete": {
+        "displayName": "Arvid Lindblad",
+        "fullName": "Arvid Lindblad"
+       }
+      },
+      {
+       "id": "5741",
+       "order": 10,
+       "winner": false,
+       "athlete": {
+        "displayName": "Liam Lawson",
+        "fullName": "Liam Lawson"
+       }
+      }
+     ]
+    },
+    {
+     "id": "401839082",
+     "date": "2026-07-05T14:00Z",
+     "type": {
+      "abbreviation": "Race"
+     },
+     "status": {
+      "period": 52,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final"
+      }
+     },
+     "competitors": [
+      {
+       "id": "5498",
+       "order": 1,
+       "winner": true,
+       "athlete": {
+        "displayName": "Charles Leclerc",
+        "fullName": "Charles Leclerc"
+       }
+      },
+      {
+       "id": "5503",
+       "order": 2,
+       "winner": false,
+       "athlete": {
+        "displayName": "George Russell",
+        "fullName": "George Russell"
+       }
+      },
+      {
+       "id": "868",
+       "order": 3,
+       "winner": false,
+       "athlete": {
+        "displayName": "Lewis Hamilton",
+        "fullName": "Lewis Hamilton"
+       }
+      },
+      {
+       "id": "5579",
+       "order": 4,
+       "winner": false,
+       "athlete": {
+        "displayName": "Lando Norris",
+        "fullName": "Lando Norris"
+       }
+      },
+      {
+       "id": "5790",
+       "order": 5,
+       "winner": false,
+       "athlete": {
+        "displayName": "Isack Hadjar",
+        "fullName": "Isack Hadjar"
+       }
+      },
+      {
+       "id": "5741",
+       "order": 6,
+       "winner": false,
+       "athlete": {
+        "displayName": "Liam Lawson",
+        "fullName": "Liam Lawson"
+       }
+      },
+      {
+       "id": "5855",
+       "order": 7,
+       "winner": false,
+       "athlete": {
+        "displayName": "Arvid Lindblad",
+        "fullName": "Arvid Lindblad"
+       }
+      },
+      {
+       "id": "5835",
+       "order": 8,
+       "winner": false,
+       "athlete": {
+        "displayName": "Gabriel Bortoleto",
+        "fullName": "Gabriel Bortoleto"
+       }
+      },
+      {
+       "id": "5823",
+       "order": 9,
+       "winner": false,
+       "athlete": {
+        "displayName": "Franco Colapinto",
+        "fullName": "Franco Colapinto"
+       }
+      },
+      {
+       "id": "5501",
+       "order": 10,
+       "winner": false,
+       "athlete": {
+        "displayName": "Pierre Gasly",
+        "fullName": "Pierre Gasly"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -6,6 +6,7 @@
 // save what comes back.
 import type { Athlete, AthleteResult, Home, ResultKind, ResultRole } from "../athletes";
 import type { Place, TownCircle } from "../places";
+import { tourById } from "../tours";
 
 export const HOMETOWN_TYPES = ["hometown_title", "hometown_win", "hometown_contender", "hometown_game_winner"] as const;
 export type HometownType = (typeof HOMETOWN_TYPES)[number];
@@ -150,6 +151,8 @@ function headline(event: HometownEvent, people: Athlete[], town: string): string
     const team = event.teamName ? ` for the ${event.teamName}` : "";
     return `Hometown ${people.length === 1 ? "game-winner" : "game-winners"}: ${names} won it${team} in ${what} · ${town}`;
   }
+  // A golfer leads into the last round; a tennis player is in the final.
+  if (tourById(event.league)?.sport === "tennis") return `Hometown contender: ${names} ${people.length === 1 ? "plays" : "play"} in the final of ${what} · ${town}`;
   return `Hometown contender: ${names} ${people.length === 1 ? "leads" : "lead"} ${what} going into the final round · ${town}`;
 }
 

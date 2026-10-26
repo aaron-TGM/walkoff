@@ -1,6 +1,7 @@
 // Which moments a brand should act on, and how long each one keeps.
 import { haversineKm } from "../affinity/geo";
 import { HOMETOWN_TYPES, isHometownType } from "../hometown/derive";
+import { tourById } from "../tours";
 import { momentKind } from "./campaign";
 
 export interface TriggerRule {
@@ -39,6 +40,8 @@ export interface QueueMoment {
   teamKey: string | null;
   /** Hometown moments only. */
   local?: LocalFit | null;
+  /** The moment's league or tour: "nfl", "atp". */
+  league?: string | null;
 }
 
 /** When a town is worth a hometown moment to a brand: enough of its
@@ -150,8 +153,8 @@ export function momentWindow(m: QueueMoment, now: Date): MomentWindow {
       : start + (kind === "live" ? WINDOW_HOURS.live : kind === "season" ? WINDOW_HOURS.season : WINDOW_HOURS.result) * HOUR;
   const left = closes - now.getTime();
   const closesAt = new Date(closes).toISOString();
-  // A contender's window closes when the final round starts.
-  const what = m.type === "hometown_contender" ? "The final round" : "The game";
+  // A contender's window closes when the final round, or the final, starts.
+  const what = m.type !== "hometown_contender" ? "The game" : tourById(m.league ?? "")?.sport === "tennis" ? "The final" : "The final round";
   if (left <= 0) return { status: "closed", closes_at: closesAt, note: kind === "pregame" ? `${what} has started.` : "The window has passed." };
   const hours = left / HOUR;
   const leftText = hours < 1 ? `${Math.max(1, Math.round(hours * 60))} minutes` : `${Math.round(hours)} hours`;

@@ -1,0 +1,382 @@
+{
+ "events": [
+  {
+   "id": "964-2026",
+   "name": "Kia Open",
+   "date": "2026-09-07T04:00Z",
+   "endDate": "2026-09-13T03:59Z",
+   "major": false,
+   "status": {
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final"
+    }
+   },
+   "groupings": [
+    {
+     "grouping": {
+      "slug": "womens-singles",
+      "displayName": "Women's Singles"
+     },
+     "competitions": [
+      {
+       "id": "183629",
+       "date": "2026-09-07T17:20Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "6769",
+         "winner": false,
+         "athlete": {
+          "displayName": "Darja Semenistaja"
+         }
+        },
+        {
+         "id": "5626",
+         "winner": true,
+         "athlete": {
+          "displayName": "Anastasia Tikhonova"
+         }
+        }
+       ]
+      },
+      {
+       "id": "183620",
+       "date": "2026-09-07T18:25Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "5057",
+         "winner": false,
+         "athlete": {
+          "displayName": "Suzan Lamens"
+         }
+        },
+        {
+         "id": "2974",
+         "winner": true,
+         "athlete": {
+          "displayName": "Kayla Day"
+         }
+        }
+       ]
+      },
+      {
+       "id": "183623",
+       "date": "2026-09-07T19:10Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "423",
+         "winner": true,
+         "athlete": {
+          "displayName": "Varvara Lepchenko"
+         }
+        },
+        {
+         "id": "7812",
+         "winner": false,
+         "athlete": {
+          "displayName": "Katrina Scott"
+         }
+        }
+       ]
+      },
+      {
+       "id": "183619",
+       "date": "2026-09-07T22:45Z",
+       "round": {
+        "displayName": "Round 1"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "17105",
+         "winner": true,
+         "athlete": {
+          "displayName": "Carol Young Suh Lee"
+         }
+        },
+        {
+         "id": "17702",
+         "winner": false,
+         "athlete": {
+          "displayName": "Vendula Valdmannova"
+         }
+        }
+       ]
+      },
+      {
+       "id": "183640",
+       "date": "2026-09-10T20:05Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2980",
+         "winner": true,
+         "athlete": {
+          "displayName": "Claire Liu"
+         }
+        },
+        {
+         "id": "14460",
+         "winner": false,
+         "athlete": {
+          "displayName": "Kaitlin Quevedo"
+         }
+        }
+       ]
+      },
+      {
+       "id": "183639",
+       "date": "2026-09-10T20:05Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "5626",
+         "winner": false,
+         "athlete": {
+          "displayName": "Anastasia Tikhonova"
+         }
+        },
+        {
+         "id": "6061",
+         "winner": true,
+         "athlete": {
+          "displayName": "Elsa Jacquemot"
+         }
+        }
+       ]
+      },
+      {
+       "id": "183638",
+       "date": "2026-09-10T21:55Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "4453",
+         "winner": true,
+         "athlete": {
+          "displayName": "Leolia Jeanjean"
+         }
+        },
+        {
+         "id": "17105",
+         "winner": false,
+         "athlete": {
+          "displayName": "Carol Young Suh Lee"
+         }
+        }
+       ]
+      },
+      {
+       "id": "183643",
+       "date": "2026-09-11T00:05Z",
+       "round": {
+        "displayName": "Quarterfinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2902",
+         "winner": true,
+         "athlete": {
+          "displayName": "Anna Blinkova"
+         }
+        },
+        {
+         "id": "5749",
+         "winner": false,
+         "athlete": {
+          "displayName": "Julia Riera"
+         }
+        }
+       ]
+      },
+      {
+       "id": "183642",
+       "date": "2026-09-11T21:05Z",
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2980",
+         "winner": true,
+         "athlete": {
+          "displayName": "Claire Liu"
+         }
+        },
+        {
+         "id": "4453",
+         "winner": false,
+         "athlete": {
+          "displayName": "Leolia Jeanjean"
+         }
+        }
+       ]
+      },
+      {
+       "id": "183641",
+       "date": "2026-09-11T23:00Z",
+       "round": {
+        "displayName": "Semifinal"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2902",
+         "winner": true,
+         "athlete": {
+          "displayName": "Anna Blinkova"
+         }
+        },
+        {
+         "id": "6061",
+         "winner": false,
+         "athlete": {
+          "displayName": "Elsa Jacquemot"
+         }
+        }
+       ]
+      },
+      {
+       "id": "183644",
+       "date": "2026-09-12T21:35Z",
+       "round": {
+        "displayName": "Final"
+       },
+       "status": {
+        "type": {
+         "name": "STATUS_FINAL",
+         "state": "post",
+         "completed": true,
+         "description": "Final",
+         "detail": "Final"
+        }
+       },
+       "competitors": [
+        {
+         "id": "2902",
+         "winner": false,
+         "athlete": {
+          "displayName": "Anna Blinkova"
+         }
+        },
+        {
+         "id": "2980",
+         "winner": true,
+         "athlete": {
+          "displayName": "Claire Liu"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
