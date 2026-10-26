@@ -536,6 +536,8 @@ describe("playoff game-winners' hometown moments", () => {
     assert.match(c.campaign_name, /^Walkoff · Lakeville, MN · Hometown Game-Winner · /);
     assert.deepEqual(c.audience.circles.map((x: { postal_code: string; radius_miles: number }) => [x.postal_code, x.radius_miles]), [["55044", 8]]);
     assert.equal(c.subject_lines[0], "Lakeville, what a finish.");
+    // The Ducks' orange, not the navy of the tee named for the town.
+    assert.equal(c.subject_lines[1], "Orange all over Lakeville today.");
     assert.deepEqual(c.products.map((p: { title: string }) => p.title), ["Lakeville Lakes Tee", "Rink Hoodie"], "the town's own, then the team's colors");
     assertNeverNamesAthlete(seen(c), { name: "Ryan Poehling", jersey: "25", position: "C" });
     assertNeverNames(seen(c), teamByKey("nhl:25")!);
