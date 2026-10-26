@@ -1,0 +1,678 @@
+{
+ "events": [
+  {
+   "id": "401835173",
+   "name": "BMW Ladies Championship",
+   "shortName": "BMW Ladies Championship",
+   "date": "2026-10-22T04:00Z",
+   "endDate": "2026-10-25T04:00Z",
+   "status": {
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final"
+    }
+   },
+   "tournament": {
+    "id": "3686",
+    "displayName": "BMW Ladies Championship",
+    "major": false,
+    "numberOfRounds": 4,
+    "cutRound": 0
+   },
+   "competitions": [
+    {
+     "id": "401835173",
+     "date": "2026-10-22T04:00Z",
+     "endDate": "2026-10-25T04:00Z",
+     "status": {
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "detail": "Final",
+       "shortDetail": "Complete"
+      }
+     },
+     "competitors": [
+      {
+       "id": "11425",
+       "sortOrder": 1,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-10-25T00:27Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "1",
+         "isTie": false
+        }
+       },
+       "score": {
+        "value": 271.0,
+        "displayValue": "-17"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 66.0,
+         "displayValue": "-6",
+         "teeTime": "2026-10-21T23:33Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-10-23T01:13Z"
+        },
+        {
+         "period": 3,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-24T00:46Z"
+        },
+        {
+         "period": 4,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-25T00:27Z"
+        }
+       ],
+       "athlete": {
+        "id": "11425",
+        "displayName": "Yuri Yoshida",
+        "shortName": "Y. Yoshida",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "JPN"
+        },
+        "flag": {
+         "alt": "Japan"
+        }
+       }
+      },
+      {
+       "id": "9945",
+       "sortOrder": 2,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-10-25T00:38Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T2",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 272.0,
+        "displayValue": "-16"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 71.0,
+         "displayValue": "-1",
+         "teeTime": "2026-10-22T01:12Z"
+        },
+        {
+         "period": 2,
+         "value": 66.0,
+         "displayValue": "-6",
+         "teeTime": "2026-10-22T23:01Z"
+        },
+        {
+         "period": 3,
+         "value": 66.0,
+         "displayValue": "-6",
+         "teeTime": "2026-10-24T00:35Z"
+        },
+        {
+         "period": 4,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-10-25T00:38Z"
+        }
+       ],
+       "athlete": {
+        "id": "9945",
+        "displayName": "Hye-Jin Choi",
+        "shortName": "H. Choi",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "SKO"
+        },
+        "flag": {
+         "alt": "South Korea"
+        }
+       }
+      },
+      {
+       "id": "10620",
+       "sortOrder": 3,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-10-25T00:38Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T2",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 272.0,
+        "displayValue": "-16"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-22T01:23Z"
+        },
+        {
+         "period": 2,
+         "value": 64.0,
+         "displayValue": "-8",
+         "teeTime": "2026-10-23T01:02Z"
+        },
+        {
+         "period": 3,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-24T01:08Z"
+        },
+        {
+         "period": 4,
+         "value": 73.0,
+         "displayValue": "+1",
+         "teeTime": "2026-10-25T00:38Z"
+        }
+       ],
+       "athlete": {
+        "id": "10620",
+        "displayName": "Haeran Ryu",
+        "shortName": "H. Ryu",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "SKO"
+        },
+        "flag": {
+         "alt": "South Korea"
+        }
+       }
+      },
+      {
+       "id": "5075180",
+       "sortOrder": 4,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-10-24T23:54Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T4",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 273.0,
+        "displayValue": "-15"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-10-22T00:50Z"
+        },
+        {
+         "period": 2,
+         "value": 66.0,
+         "displayValue": "-6",
+         "teeTime": "2026-10-22T23:45Z"
+        },
+        {
+         "period": 3,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-10-24T00:35Z"
+        },
+        {
+         "period": 4,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-24T23:54Z"
+        }
+       ],
+       "athlete": {
+        "id": "5075180",
+        "displayName": "Minsol Kim",
+        "shortName": "M. Kim",
+        "amateur": false,
+        "flag": {
+         "alt": "South Korea"
+        }
+       }
+      },
+      {
+       "id": "7913",
+       "sortOrder": 5,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-10-25T00:16Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T4",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 273.0,
+        "displayValue": "-15"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-10-22T01:12Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-10-23T00:18Z"
+        },
+        {
+         "period": 3,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-23T23:51Z"
+        },
+        {
+         "period": 4,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-25T00:16Z"
+        }
+       ],
+       "athlete": {
+        "id": "7913",
+        "displayName": "Hyo Joo Kim",
+        "shortName": "H. Kim",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "SKO"
+        },
+        "flag": {
+         "alt": "South Korea"
+        }
+       }
+      },
+      {
+       "id": "10484",
+       "sortOrder": 6,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-10-24T23:32Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T6",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 274.0,
+        "displayValue": "-14"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-10-22T00:39Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-10-22T23:45Z"
+        },
+        {
+         "period": 3,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-10-23T23:29Z"
+        },
+        {
+         "period": 4,
+         "value": 66.0,
+         "displayValue": "-6",
+         "teeTime": "2026-10-24T23:32Z"
+        }
+       ],
+       "athlete": {
+        "id": "10484",
+        "displayName": "Nasa Hataoka",
+        "shortName": "N. Hataoka",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "JPN"
+        },
+        "flag": {
+         "alt": "Japan"
+        }
+       }
+      },
+      {
+       "id": "7553",
+       "sortOrder": 7,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-10-24T23:43Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T6",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 274.0,
+        "displayValue": "-14"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-10-21T23:11Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-23T00:07Z"
+        },
+        {
+         "period": 3,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-10-24T00:35Z"
+        },
+        {
+         "period": 4,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-24T23:43Z"
+        }
+       ],
+       "athlete": {
+        "id": "7553",
+        "displayName": "Jodi Ewart Shadoff",
+        "shortName": "J. Ewart Shadoff",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "ENG"
+        },
+        "flag": {
+         "alt": "England"
+        }
+       }
+      },
+      {
+       "id": "7424",
+       "sortOrder": 8,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-10-24T23:43Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T6",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 274.0,
+        "displayValue": "-14"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-10-21T23:22Z"
+        },
+        {
+         "period": 2,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-23T00:51Z"
+        },
+        {
+         "period": 3,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-10-24T00:24Z"
+        },
+        {
+         "period": 4,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-24T23:43Z"
+        }
+       ],
+       "athlete": {
+        "id": "7424",
+        "displayName": "Carlota Ciganda",
+        "shortName": "C. Ciganda",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "ESP"
+        },
+        "flag": {
+         "alt": "Spain"
+        }
+       }
+      },
+      {
+       "id": "11422",
+       "sortOrder": 9,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-10-25T00:05Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T6",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 274.0,
+        "displayValue": "-14"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 73.0,
+         "displayValue": "+1",
+         "teeTime": "2026-10-22T01:01Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-10-22T23:45Z"
+        },
+        {
+         "period": 3,
+         "value": 66.0,
+         "displayValue": "-6",
+         "teeTime": "2026-10-23T23:18Z"
+        },
+        {
+         "period": 4,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-10-25T00:05Z"
+        }
+       ],
+       "athlete": {
+        "id": "11422",
+        "displayName": "Grace Kim",
+        "shortName": "G. Kim",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "AUS"
+        },
+        "flag": {
+         "alt": "Australia"
+        }
+       }
+      },
+      {
+       "id": "5383624",
+       "sortOrder": 10,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-10-25T00:16Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "10",
+         "isTie": false
+        }
+       },
+       "score": {
+        "value": 275.0,
+        "displayValue": "-13"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-10-22T01:01Z"
+        },
+        {
+         "period": 2,
+         "value": 64.0,
+         "displayValue": "-8",
+         "teeTime": "2026-10-23T00:29Z"
+        },
+        {
+         "period": 3,
+         "value": 72.0,
+         "displayValue": "E",
+         "teeTime": "2026-10-24T01:08Z"
+        },
+        {
+         "period": 4,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-10-25T00:16Z"
+        }
+       ],
+       "athlete": {
+        "id": "5383624",
+        "displayName": "Minsun7 Kim",
+        "shortName": "M. Kim",
+        "amateur": false,
+        "flag": {
+         "alt": "South Korea"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

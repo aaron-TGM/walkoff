@@ -44,6 +44,8 @@ export interface HometownEvent {
   teamName: string | null;
   opponentTeamId: string | null;
   occurredAt: string;
+  /** Contenders: when the final round starts, which ends their window. */
+  startsAt?: string | null;
 }
 
 /** An athlete with a result in the event, and their homes. */
@@ -97,6 +99,8 @@ export interface HometownDetail {
   };
   event: { key: string; name: string; kind: ResultKind };
   team: { id: string; name: string } | null;
+  /** Contenders: the final round's first tee time. */
+  startsAt?: string;
   /** Everyone from the town, the most prominent first. Names are for the
    *  marketer, never for campaign copy. */
   athletes: {
@@ -183,6 +187,7 @@ export function deriveHometownMoments(event: HometownEvent, locals: Local[], tow
         },
         event: { key: event.key, name: event.name, kind: event.kind },
         team: event.teamId && event.teamName ? { id: event.teamId, name: event.teamName } : null,
+        ...(event.startsAt ? { startsAt: event.startsAt } : {}),
         athletes: ranked.map(({ local: { athlete: a, result: r, led }, home: h }) => ({
           id: a.id,
           name: a.displayName,

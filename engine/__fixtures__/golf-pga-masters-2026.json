@@ -1,0 +1,1015 @@
+{
+ "events": [
+  {
+   "id": "401811941",
+   "name": "Masters Tournament",
+   "shortName": "Masters Tournament",
+   "date": "2026-04-09T04:00Z",
+   "endDate": "2026-04-12T04:00Z",
+   "status": {
+    "type": {
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final"
+    }
+   },
+   "tournament": {
+    "id": "15",
+    "displayName": "Masters Tournament",
+    "major": true,
+    "numberOfRounds": 4,
+    "cutRound": 2
+   },
+   "competitions": [
+    {
+     "id": "401811941",
+     "date": "2026-04-09T04:00Z",
+     "endDate": "2026-04-12T04:00Z",
+     "status": {
+      "period": 4,
+      "type": {
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "detail": "Final",
+       "shortDetail": "Complete"
+      }
+     },
+     "competitors": [
+      {
+       "id": "3470",
+       "sortOrder": 1,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T18:25Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "1",
+         "isTie": false
+        }
+       },
+       "score": {
+        "value": 276.0,
+        "displayValue": "-12"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-04-09T14:31Z"
+        },
+        {
+         "period": 2,
+         "value": 65.0,
+         "displayValue": "-7",
+         "teeTime": "2026-04-10T17:44Z"
+        },
+        {
+         "period": 3,
+         "value": 73.0,
+         "displayValue": "+1",
+         "teeTime": "2026-04-11T18:50Z"
+        },
+        {
+         "period": 4,
+         "value": 71.0,
+         "displayValue": "-1",
+         "teeTime": "2026-04-12T18:25Z"
+        }
+       ],
+       "athlete": {
+        "id": "3470",
+        "displayName": "Rory McIlroy",
+        "shortName": "R. McIlroy",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "NIR"
+        },
+        "flag": {
+         "alt": "Northern Ireland"
+        }
+       }
+      },
+      {
+       "id": "9478",
+       "sortOrder": 2,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:52Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "2",
+         "isTie": false
+        }
+       },
+       "score": {
+        "value": 277.0,
+        "displayValue": "-11"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-04-09T17:44Z"
+        },
+        {
+         "period": 2,
+         "value": 74.0,
+         "displayValue": "+2",
+         "teeTime": "2026-04-10T14:19Z"
+        },
+        {
+         "period": 3,
+         "value": 65.0,
+         "displayValue": "-7",
+         "teeTime": "2026-04-11T16:16Z"
+        },
+        {
+         "period": 4,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-04-12T17:52Z"
+        }
+       ],
+       "athlete": {
+        "id": "9478",
+        "displayName": "Scottie Scheffler",
+        "shortName": "S. Scheffler",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "TX"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "5553",
+       "sortOrder": 3,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T16:35Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T3",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 278.0,
+        "displayValue": "-10"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 74.0,
+         "displayValue": "+2",
+         "teeTime": "2026-04-09T16:56Z"
+        },
+        {
+         "period": 2,
+         "value": 66.0,
+         "displayValue": "-6",
+         "teeTime": "2026-04-10T13:31Z"
+        },
+        {
+         "period": 3,
+         "value": 72.0,
+         "displayValue": "E",
+         "teeTime": "2026-04-11T18:17Z"
+        },
+        {
+         "period": 4,
+         "value": 66.0,
+         "displayValue": "-6",
+         "teeTime": "2026-04-12T16:35Z"
+        }
+       ],
+       "athlete": {
+        "id": "5553",
+        "displayName": "Tyrrell Hatton",
+        "shortName": "T. Hatton",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "ENG"
+        },
+        "flag": {
+         "alt": "England"
+        }
+       }
+      },
+      {
+       "id": "5409",
+       "sortOrder": 4,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:41Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T3",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 278.0,
+        "displayValue": "-10"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 73.0,
+         "displayValue": "+1",
+         "teeTime": "2026-04-09T14:19Z"
+        },
+        {
+         "period": 2,
+         "value": 71.0,
+         "displayValue": "-1",
+         "teeTime": "2026-04-10T17:32Z"
+        },
+        {
+         "period": 3,
+         "value": 66.0,
+         "displayValue": "-6",
+         "teeTime": "2026-04-11T15:54Z"
+        },
+        {
+         "period": 4,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-04-12T17:41Z"
+        }
+       ],
+       "athlete": {
+        "id": "5409",
+        "displayName": "Russell Henley",
+        "shortName": "R. Henley",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "GA"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "569",
+       "sortOrder": 5,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T18:03Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T3",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 278.0,
+        "displayValue": "-10"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-04-09T17:20Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-04-10T13:55Z"
+        },
+        {
+         "period": 3,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-04-11T18:39Z"
+        },
+        {
+         "period": 4,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-04-12T18:03Z"
+        }
+       ],
+       "athlete": {
+        "id": "569",
+        "displayName": "Justin Rose",
+        "shortName": "J. Rose",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "RSA"
+        },
+        "flag": {
+         "alt": "England"
+        }
+       }
+      },
+      {
+       "id": "4425906",
+       "sortOrder": 6,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T18:25Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T3",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 278.0,
+        "displayValue": "-10"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 73.0,
+         "displayValue": "+1",
+         "teeTime": "2026-04-09T14:31Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-04-10T17:44Z"
+        },
+        {
+         "period": 3,
+         "value": 65.0,
+         "displayValue": "-7",
+         "teeTime": "2026-04-11T17:55Z"
+        },
+        {
+         "period": 4,
+         "value": 73.0,
+         "displayValue": "+1",
+         "teeTime": "2026-04-12T18:25Z"
+        }
+       ],
+       "athlete": {
+        "id": "4425906",
+        "displayName": "Cameron Young",
+        "shortName": "C. Young",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "NY"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "10592",
+       "sortOrder": 7,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:30Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T7",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 279.0,
+        "displayValue": "-9"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 74.0,
+         "displayValue": "+2",
+         "teeTime": "2026-04-09T14:19Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-04-10T17:32Z"
+        },
+        {
+         "period": 3,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-04-11T16:38Z"
+        },
+        {
+         "period": 4,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-04-12T17:30Z"
+        }
+       ],
+       "athlete": {
+        "id": "10592",
+        "displayName": "Collin Morikawa",
+        "shortName": "C. Morikawa",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "CA"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "9938",
+       "sortOrder": 8,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T18:14Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T7",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 279.0,
+        "displayValue": "-9"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-04-09T13:19Z"
+        },
+        {
+         "period": 2,
+         "value": 71.0,
+         "displayValue": "-1",
+         "teeTime": "2026-04-10T16:32Z"
+        },
+        {
+         "period": 3,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-04-11T18:50Z"
+        },
+        {
+         "period": 4,
+         "value": 73.0,
+         "displayValue": "+1",
+         "teeTime": "2026-04-12T18:14Z"
+        }
+       ],
+       "athlete": {
+        "id": "9938",
+        "displayName": "Sam Burns",
+        "shortName": "S. Burns",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "LA"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "8973",
+       "sortOrder": 9,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T15:51Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T9",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 280.0,
+        "displayValue": "-8"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 72.0,
+         "displayValue": "E",
+         "teeTime": "2026-04-09T11:50Z"
+        },
+        {
+         "period": 2,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-04-10T15:03Z"
+        },
+        {
+         "period": 3,
+         "value": 71.0,
+         "displayValue": "-1",
+         "teeTime": "2026-04-11T17:22Z"
+        },
+        {
+         "period": 4,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-04-12T15:51Z"
+        }
+       ],
+       "athlete": {
+        "id": "8973",
+        "displayName": "Max Homa",
+        "shortName": "M. Homa",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "CA"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "10140",
+       "sortOrder": 10,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T16:57Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T9",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 280.0,
+        "displayValue": "-8"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-04-09T14:07Z"
+        },
+        {
+         "period": 2,
+         "value": 72.0,
+         "displayValue": "E",
+         "teeTime": "2026-04-10T17:20Z"
+        },
+        {
+         "period": 3,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-04-11T17:11Z"
+        },
+        {
+         "period": 4,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-04-12T16:57Z"
+        }
+       ],
+       "athlete": {
+        "id": "10140",
+        "displayName": "Xander Schauffele",
+        "shortName": "X. Schauffele",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "CA"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "9843",
+       "sortOrder": 11,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:08Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "11",
+         "isTie": false
+        }
+       },
+       "score": {
+        "value": 281.0,
+        "displayValue": "-7"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 73.0,
+         "displayValue": "+1",
+         "teeTime": "2026-04-09T13:19Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-04-10T16:32Z"
+        },
+        {
+         "period": 3,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-04-11T17:11Z"
+        },
+        {
+         "period": 4,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-04-12T17:08Z"
+        }
+       ],
+       "athlete": {
+        "id": "9843",
+        "displayName": "Jake Knapp",
+        "shortName": "J. Knapp",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "CA"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "5467",
+       "sortOrder": 12,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T15:07Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T12",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 283.0,
+        "displayValue": "-5"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 72.0,
+         "displayValue": "E",
+         "teeTime": "2026-04-09T17:20Z"
+        },
+        {
+         "period": 2,
+         "value": 73.0,
+         "displayValue": "+1",
+         "teeTime": "2026-04-10T13:55Z"
+        },
+        {
+         "period": 3,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-04-11T15:21Z"
+        },
+        {
+         "period": 4,
+         "value": 68.0,
+         "displayValue": "-4",
+         "teeTime": "2026-04-12T15:07Z"
+        }
+       ],
+       "athlete": {
+        "id": "5467",
+        "displayName": "Jordan Spieth",
+        "shortName": "J. Spieth",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "TX"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "5860",
+       "sortOrder": 13,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T15:18Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T12",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 283.0,
+        "displayValue": "-5"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 72.0,
+         "displayValue": "E",
+         "teeTime": "2026-04-09T14:19Z"
+        },
+        {
+         "period": 2,
+         "value": 70.0,
+         "displayValue": "-2",
+         "teeTime": "2026-04-10T17:32Z"
+        },
+        {
+         "period": 3,
+         "value": 72.0,
+         "displayValue": "E",
+         "teeTime": "2026-04-11T17:00Z"
+        },
+        {
+         "period": 4,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-04-12T15:18Z"
+        }
+       ],
+       "athlete": {
+        "id": "5860",
+        "displayName": "Hideki Matsuyama",
+        "shortName": "H. Matsuyama",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "JPN"
+        },
+        "flag": {
+         "alt": "Japan"
+        }
+       }
+      },
+      {
+       "id": "6798",
+       "sortOrder": 14,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T16:46Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T12",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 283.0,
+        "displayValue": "-5"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 72.0,
+         "displayValue": "E",
+         "teeTime": "2026-04-09T17:20Z"
+        },
+        {
+         "period": 2,
+         "value": 69.0,
+         "displayValue": "-3",
+         "teeTime": "2026-04-10T13:55Z"
+        },
+        {
+         "period": 3,
+         "value": 71.0,
+         "displayValue": "-1",
+         "teeTime": "2026-04-11T17:33Z"
+        },
+        {
+         "period": 4,
+         "value": 71.0,
+         "displayValue": "-1",
+         "teeTime": "2026-04-12T16:46Z"
+        }
+       ],
+       "athlete": {
+        "id": "6798",
+        "displayName": "Brooks Koepka",
+        "shortName": "B. Koepka",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "FL"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      },
+      {
+       "id": "6007",
+       "sortOrder": 15,
+       "amateur": false,
+       "status": {
+        "period": 4,
+        "teeTime": "2026-04-12T17:41Z",
+        "thru": 18,
+        "playoff": false,
+        "type": {
+         "name": "STATUS_FINISH",
+         "state": "post",
+         "completed": true,
+         "detail": "Finish",
+         "shortDetail": "F"
+        },
+        "position": {
+         "displayName": "T12",
+         "isTie": true
+        }
+       },
+       "score": {
+        "value": 283.0,
+        "displayValue": "-5"
+       },
+       "linescores": [
+        {
+         "period": 1,
+         "value": 77.0,
+         "displayValue": "+5",
+         "teeTime": "2026-04-09T14:43Z"
+        },
+        {
+         "period": 2,
+         "value": 67.0,
+         "displayValue": "-5",
+         "teeTime": "2026-04-10T17:56Z"
+        },
+        {
+         "period": 3,
+         "value": 66.0,
+         "displayValue": "-6",
+         "teeTime": "2026-04-11T15:43Z"
+        },
+        {
+         "period": 4,
+         "value": 73.0,
+         "displayValue": "+1",
+         "teeTime": "2026-04-12T17:41Z"
+        }
+       ],
+       "athlete": {
+        "id": "6007",
+        "displayName": "Patrick Cantlay",
+        "shortName": "P. Cantlay",
+        "amateur": false,
+        "birthPlace": {
+         "countryAbbreviation": "USA",
+         "stateAbbreviation": "CA"
+        },
+        "flag": {
+         "alt": "USA"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

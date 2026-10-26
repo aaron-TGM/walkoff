@@ -5,22 +5,9 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
-import {
-  ACADEMIES,
-  athletePlace,
-  athletesReady,
-  findAthletes,
-  loadAthletes,
-  momentHomes,
-  placesOf,
-  saveAthletes,
-  savePlaces,
-  saveResults,
-  type Athlete,
-  type AthleteResult,
-} from "../athletes";
-import { deriveHometownMoments, saveHometownMoments, type Town } from "../hometown";
-import { placeByKey, placeLabel, resolveTown, townCircle } from "../places";
+import { athletePlace, athletesReady, findAthletes, loadAthletes, saveAthletes, savePlaces, saveResults, type Athlete, type AthleteResult } from "../athletes";
+import { makeHometownMoments } from "../hometown";
+import { placeLabel, resolveTown } from "../places";
 import { brandsFor, has009, momentById, ToolError } from "./data";
 import { teamFromFeedId } from "./teams";
 import type { ToolContext } from "./tools";
@@ -121,13 +108,8 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
           createdBy: principal.email,
         };
         await saveResults(db, [result]);
-        const homes = momentHomes(await placesOf(db, [a.id]), ACADEMIES);
-        const towns = new Map<string, Town>();
-        for (const h of homes) {
-          const place = await placeByKey(h.placeKey);
-          if (place) towns.set(h.placeKey, { place, label: placeLabel(place), circle: await townCircle(place) });
-        }
-        const moments = deriveHometownMoments(
+        const { moments, saved, homes } = await makeHometownMoments(
+          db,
           {
             key: result.eventKey,
             name: result.eventName,
@@ -139,10 +121,8 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
             opponentTeamId: null,
             occurredAt,
           },
-          [{ athlete: a, result, homes }],
-          towns,
+          [result],
         );
-        const saved = await saveHometownMoments(db, moments);
         const made = new Set(saved.map((m) => m.dedupeKey));
         return {
           athlete: { name: a.displayName, id: a.id, team: a.teamId ? (teamFromFeedId(a.teamId)?.team.name ?? a.teamId) : null },
@@ -151,7 +131,7 @@ export function registerHometownOperatorTools(server: McpServer, ctx: ToolContex
           ...(moments.length
             ? {}
             : {
-                note: homes.length
+                note: homes
                   ? "Their home is a big city, where Walkoff makes no hometown moments unless the home was set by hand."
                   : "Walkoff isn't sure enough where they're from to make a moment. set_athlete_home sets it, then run this again.",
               }),

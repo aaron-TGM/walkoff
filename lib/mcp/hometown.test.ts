@@ -418,3 +418,63 @@ describe("retract_moment and create_moment", () => {
     await client.close();
   });
 });
+
+describe("golf's hometown moments", () => {
+  const ULSTER = "7d1c2f9e-4444-4c8a-9a51-0d6c3b0e8f10";
+  const RORY = "espn:golf:3470";
+  const LEADS_AT = new Date(NOW.getTime() + 20 * 3_600_000).toISOString();
+
+  /** McIlroy leading the Masters into Sunday, then winning it, and a brand
+   *  with customers around Belfast and Holywood. */
+  async function links() {
+    const db = fakeDb({
+      brands: [{ id: ULSTER, name: "Ulster Links", store_url: "https://ulsterlinks.co.uk", licensed: false, upload_token: "l".repeat(24) }],
+      brand_area_counts: [
+        { brand_id: ULSTER, country: "GB", area: "BT18", customers: 300, orders: 0, revenue: 0 },
+        { brand_id: ULSTER, country: "GB", area: "BT1", customers: 500, orders: 0, revenue: 0 },
+      ],
+      brand_products: [
+        { brand_id: ULSTER, handle: "harbour-tee", title: "Holywood Harbour Tee", teams: [], colors: [], uses: [], interests: [], colorways: [{ name: "Navy", skus: [], image: "" }], price: 30 },
+        { brand_id: ULSTER, handle: "links-polo", title: "Links Polo", teams: [], colors: [], uses: [], interests: ["golf"], colorways: [{ name: "White", skus: [], image: "" }], price: 55 },
+        { brand_id: ULSTER, handle: "rain-shell", title: "Rain Shell", teams: [], colors: [], uses: [], interests: [], colorways: [{ name: "Grey", skus: [], image: "" }], price: 90 },
+      ],
+      athletes: [{ id: RORY, sport: "golf", league: "pga", external_id: "3470", display_name: "Rory McIlroy", name_key: "rorymcilroy", team_id: null, position: null, jersey: null, roster_status: null, college: null }],
+    });
+    await savePlaces(db, [athletePlace(RORY, "birthplace", "espn", "Holywood, Northern Ireland", await resolveTown("Holywood, Northern Ireland"))]);
+    const homes = momentHomes(await placesOf(db, [RORY]), ACADEMIES);
+    const place = (await placeByKey(homes[0].placeKey))!;
+    const towns = new Map<string, Town>([[place.key, { place, label: placeLabel(place), circle: await townCircle(place) }]]);
+    const athlete: Athlete = { id: RORY, sport: "golf", league: "pga", externalId: "3470", displayName: "Rory McIlroy", teamId: null, position: null, jersey: null, rosterStatus: null, college: null };
+    const event = { key: "golf:masters-tournament:2026-04-12", name: "Masters Tournament", league: "pga", gameId: null, teamId: null, teamName: null, opponentTeamId: null };
+    for (const [kind, intensity, at, startsAt] of [
+      ["lead", 0.7, new Date(NOW.getTime() - 2 * 3_600_000).toISOString(), LEADS_AT],
+      ["win", 0.95, new Date(NOW.getTime() - 3_600_000).toISOString(), null],
+    ] as const) {
+      const result: AthleteResult = { athleteId: RORY, eventKey: event.key, eventName: event.name, kind, role: "leader", teamId: null, momentId: null, intensity, occurredAt: at, createdBy: "engine" };
+      await saveHometownMoments(db, deriveHometownMoments({ ...event, kind, occurredAt: at, startsAt }, [{ athlete, result, homes }], towns));
+    }
+    return db;
+  }
+
+  it("a contender's town is in the queue until the final round starts, then the win's", async () => {
+    const db = await links();
+    const client = await connect(operator, db);
+    const q = (await call(client, "trigger_queue", { brand: "Ulster Links" })).json();
+    const items = hometownItems(q.queue);
+    assert.deepEqual(items.map((x) => x.type).sort(), ["hometown_contender", "hometown_win"]);
+    assert.ok(items.every((x) => x.town === "Holywood, Northern Ireland"));
+    const lead = q.queue.find((x: Item & { window: { note: string } }) => x.type === "hometown_contender");
+    assert.equal(lead.window.note, "The final round starts in 20 hours.");
+
+    const c = (await call(client, "build_campaign", { brand: "Ulster Links", moment_id: lead.id })).json();
+    // It goes out the morning of the final round, in Holywood's time.
+    assert.equal(c.send.send_at_local, "Tue 8:00 AM GMT");
+    assert.equal(c.subject_lines[0], "All eyes on Holywood today.");
+    assert.deepEqual(c.audience.circles.map((x: { postal_code: string; country: string }) => [x.postal_code, x.country]), [["BT18", "GB"]]);
+    assert.equal(c.audience.klaviyo_segment.definition.condition_groups[0].conditions[0].country_code, "GBR");
+    assert.deepEqual(c.products.map((p: { title: string }) => p.title), ["Holywood Harbour Tee", "Links Polo"], "the town's own, then golf");
+    assert.match(c.products[0].price, /^£/);
+    assertNeverNamesAthlete(seen(c), { name: "Rory McIlroy" });
+    await client.close();
+  });
+});

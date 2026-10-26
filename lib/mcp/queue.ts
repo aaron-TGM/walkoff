@@ -149,13 +149,15 @@ export function momentWindow(m: QueueMoment, now: Date): MomentWindow {
       : start + (kind === "live" ? WINDOW_HOURS.live : kind === "season" ? WINDOW_HOURS.season : WINDOW_HOURS.result) * HOUR;
   const left = closes - now.getTime();
   const closesAt = new Date(closes).toISOString();
-  if (left <= 0) return { status: "closed", closes_at: closesAt, note: kind === "pregame" ? "The game has started." : "The window has passed." };
+  // A contender's window closes when the final round starts.
+  const what = m.type === "hometown_contender" ? "The final round" : "The game";
+  if (left <= 0) return { status: "closed", closes_at: closesAt, note: kind === "pregame" ? `${what} has started.` : "The window has passed." };
   const hours = left / HOUR;
   const leftText = hours < 1 ? `${Math.max(1, Math.round(hours * 60))} minutes` : `${Math.round(hours)} hours`;
   const closing = left < 0.25 * Math.max(closes - start, HOUR);
   return {
     status: closing ? "closing" : "open",
     closes_at: closesAt,
-    note: kind === "pregame" ? `The game starts in ${leftText}.` : `About ${leftText} left to act.`,
+    note: kind === "pregame" ? `${what} starts in ${leftText}.` : `About ${leftText} left to act.`,
   };
 }
