@@ -47,6 +47,29 @@ const LEAGUE_HINTS: Record<string, string[]> = {
   epl: ["premier league", "soccer", "football club", "epl", "kit", "home kit", "away kit"],
 };
 
+/** Nicknames that are everyday words, prints or products: "diamante stars",
+ *  "heat transfer", "teddy bears", "phone chargers", anything orange. Alone,
+ *  one counts only with the team's sport, its place or a fan's words
+ *  ("Stars hockey", "Dallas", "Go Stars"). Full names always count. */
+const EVERYDAY = new Set([
+  "angels", "avalanche", "badgers", "bears", "bills", "blue jays", "bluejays", "blues", "braves", "brewers", "broncos", "browns",
+  "buccaneers", "bucks", "buffaloes", "bulldogs", "bulls", "capitals", "cardinal", "cardinals", "cavaliers", "chargers",
+  "chiefs", "clippers", "colts", "cougars", "cowboys", "cubs", "cyclones", "devils", "dolphins", "ducks", "flames",
+  "flyers", "gators", "giants", "grizzlies", "guardians", "hawks", "heat", "hornets", "hurricanes", "huskies",
+  "islanders", "jaguars", "jazz", "jets", "kings", "knights", "kraken", "lightning", "lions", "longhorns", "magic",
+  "mammoth", "mariners", "marlins", "mavericks", "mountaineers", "mustangs", "nationals", "nets", "nuggets", "orange",
+  "orioles", "pacers", "panthers", "patriots", "pelicans", "penguins", "pirates", "pistons", "predators", "raiders",
+  "rams", "rangers", "raptors", "ravens", "rays", "rebels", "reds", "rockets", "rockies", "royals", "saints", "sharks",
+  "spartans", "spurs", "stars", "suns", "texans", "thunder", "tigers", "titans", "trail blazers", "trojans", "twins",
+  "vikings", "volunteers", "warriors", "wild", "wildcats", "wizards",
+]);
+
+/** Words that put a product at the game, whatever the team. */
+const FAN_WORDS = ["game day", "gameday", "tailgate", "tailgating", "playoffs", "playoff", "season tickets"];
+
+/** How fans cheer a team by its nickname: "Go Stars", "Bears fans". */
+const cheers = (nickname: string) => [`go ${nickname}`, `${nickname} fan`, `${nickname} fans`, `${nickname} nation`, `${nickname} kingdom`, `${nickname} mafia`];
+
 /** Common names for Premier League clubs, by feed abbreviation. */
 const EPL_ALIASES: Record<string, string[]> = {
   TOT: ["spurs", "tottenham"],
@@ -120,9 +143,8 @@ interface Candidate {
 interface Matcher {
   phrase: string;
   candidates: Candidate[];
-  /** True when the phrase names more than one team or school ("Giants",
-   *  "Spurs"); it then needs a sport word to count. */
-  ambiguous: boolean;
+  /** An everyday word ("stars"): it needs the team's context to count. */
+  everyday: boolean;
 }
 
 let matchers: Matcher[] | null = null;
@@ -160,11 +182,7 @@ function buildMatchers(): Matcher[] {
   }
 
   return [...phrases.entries()]
-    .map(([phrase, candidates]) => ({
-      phrase,
-      candidates,
-      ambiguous: new Set(candidates.map((c) => c.identity)).size > 1,
-    }))
+    .map(([phrase, candidates]) => ({ phrase, candidates, everyday: EVERYDAY.has(phrase) }))
     // Longest first, so "Michigan State" wins over "Michigan".
     .sort((a, b) => b.phrase.length - a.phrase.length);
 }
@@ -194,14 +212,24 @@ export function tagProduct(item: Pick<CatalogItem, "title" | "productType" | "ca
 
   const saysCollege = ["college", "ncaa", "university", "march madness", "bowl game"].some((w) => contains(text, w));
 
+  const atTheGame = FAN_WORDS.some((w) => contains(text, w));
+
   const teams = new Map<string, TeamTag>();
   let remaining = text;
   for (const m of matchers) {
     if (!contains(remaining, m.phrase)) continue;
-    let chosen = m.candidates;
-    if (m.ambiguous) {
-      const inSport = m.candidates.filter((c) => hinted.has(c.league));
-      chosen = settle(inSport.length ? inSport : m.candidates, saysCollege);
+    // An everyday word is left in the text, so "orange" still reads as a color.
+    const pool =
+      m.everyday && !atTheGame && !cheers(m.phrase).some((p) => contains(text, p))
+        ? m.candidates.filter((c) => hinted.has(c.league) || contains(text, c.team.location))
+        : m.candidates;
+    if (!pool.length) continue;
+    // A name more than one team or school shares ("Giants", "Spurs") needs
+    // a sport word to count.
+    let chosen = pool;
+    if (new Set(pool.map((c) => c.identity)).size > 1) {
+      const inSport = pool.filter((c) => hinted.has(c.league));
+      chosen = settle(inSport.length ? inSport : pool, saysCollege);
     }
     if (!chosen.length) continue;
     for (const c of chosen) {

@@ -81,7 +81,8 @@ counts its color match, half without a photo. Stores at **0.6** or more are
 
 Only common color names count here ("Azure Heather", "Navy"). Fanciful ones
 ("Dune", "Cove") wait for Claude in onboarding, so some good stores score
-low. Picks go by color alone: rules-only team tags misfire on everyday words.
+low. Picks go by color alone: most prospects have no license, and a team tag
+from the rules is a guess until Claude checks it.
 
 ## 3. Find the people
 

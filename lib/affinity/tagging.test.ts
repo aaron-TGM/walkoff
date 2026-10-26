@@ -59,6 +59,40 @@ describe("tagProduct", () => {
   });
 });
 
+describe("tagProduct everyday words", () => {
+  it("doesn't read an everyday word as a team", () => {
+    const products: [string, string][] = [
+      // From a real store's feed.
+      ["Joggy Doggy Tee", "Tee features scrapbook scribbles all over and diamante stars."],
+      ["Stars and Stripes Tee", ""],
+      ["Teddy Bears Onesie", ""],
+      ["Wireless Chargers 2-Pack", ""],
+      ["Heat Transfer Vinyl Tee", ""],
+      ["Lightning Bolt Tee", ""],
+      ["Cowboys and Cowgirls Hat", ""],
+      ["Angels Ornament", ""],
+    ];
+    for (const [title, description] of products) assert.deepEqual(teams(tag(title, { description })), [], title);
+  });
+
+  it("still finds the team with its sport, its place or its fans", () => {
+    assert.deepEqual(teams(tag("Stars Hockey Hoodie")), ["nhl:Dallas Stars"]);
+    assert.deepEqual(teams(tag("Stars Tee", { description: "Printed in Dallas." })), ["nhl:Dallas Stars"]);
+    assert.deepEqual(teams(tag("Go Stars Tee")), ["nhl:Dallas Stars"]);
+    assert.deepEqual(teams(tag("Dallas Stars Tee")), ["nhl:Dallas Stars"]);
+    assert.deepEqual(teams(tag("Bears Fans Tumbler")), ["nfl:Chicago Bears"]);
+    assert.deepEqual(teams(tag("Heat Game Day Tee")), ["nba:Miami Heat"]);
+    assert.deepEqual(teams(tag("LA Kings Hockey Hoodie")), ["nhl:Los Angeles Kings"]);
+  });
+
+  it("keeps a color that's also a nickname", () => {
+    const orange = tag("Orange Crew Sweatshirt");
+    assert.deepEqual([teams(orange), orange.colors], [[], ["orange"]]);
+    assert.deepEqual(tag("Syracuse Orange Hoodie").colors, [], "the full name is the team");
+    assert.deepEqual(tag("Cardinal Red Beanie").colors, ["red"]);
+  });
+});
+
 describe("tagProduct colors", () => {
   it("ignores colors inside team names", () => {
     assert.deepEqual(tag("Duke Blue Devils Tee").colors, []);

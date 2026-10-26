@@ -42,8 +42,8 @@ export interface ScoreResult {
 
 /** The catalog as pickForTeam reads it, tagged by the rules alone: what
  *  saveCatalog and loadTaggedCatalog do, without saving anything. Picks go
- *  by color only. Rules-only team tags misfire on everyday words ("diamante
- *  stars" isn't the Dallas Stars), and most prospects have no license. */
+ *  by color only: most prospects have no license, and a team tag from the
+ *  rules is a guess Claude hasn't checked yet. */
 export function pickProducts(items: CatalogItem[]): PickProduct[] {
   return items.map((item) => {
     const tags = tagProduct(item);
