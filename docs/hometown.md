@@ -38,7 +38,14 @@ see them until `WALKOFF_HOMETOWN=1` on the website.
    Big cities (more than 750,000 people in the town's circle) get a moment
    only when a person set the home: a birthplace is too thin a link to a
    city of millions.
-4. **Wins Walkoff doesn't follow.** An operator records them with
+4. **Golf.** The engine follows the PGA Tour, LPGA, DP World Tour and LIV
+   (`engine/golf`). A winner's town gets `hometown_win` once the event is
+   final: 0.95 for a major, 0.85 for an elevated PGA Tour event, 0.80 on the
+   PGA Tour or LPGA, 0.75 on the DP World Tour, 0.70 on LIV, and 0.05 more
+   for a playoff. Whoever leads into the final round gets
+   `hometown_contender` once their tee times are out: 0.7 at a major, 0.55
+   elsewhere, open until they tee off.
+5. **Wins Walkoff doesn't follow.** An operator records them with
    `create_moment` (a surfing win, a medal), and the towns' moments are made
    right away.
 
@@ -73,8 +80,10 @@ the title, not San Clemente's moment.
   once as "Walkoff · San Clemente, CA (5 mi)" and reused for every later
   moment there. Only Klaviyo subscribers inside it get the email.
 - **Products:** the brand's own named for the town first ("San Clemente
-  Pier Hoodie"), then the champion's colors. For an athlete without a team,
-  their sport's scene (golf, tennis, motorsports, surf).
+  Pier Hoodie"), then the champion's colors. For a golfer or anyone else
+  without a team, their sport's scene (golf, tennis, motorsports, surf).
+- **A contender's send** goes out the morning of the final round, in the
+  town's time: "All eyes on Holywood today."
 - **Copy:** "San Clemente, what a night." "Navy and green all over San
   Clemente today." The send time is the town's, never late at night.
 - **Name:** "Walkoff · San Clemente, CA · Hometown Champion · Feb 8". No
@@ -129,10 +138,14 @@ One small change, after counsel signs off:
 
 ## Limits
 
-- ESPN's API is unofficial. Rosters add about 650 requests a day, and a
-  title one more summary.
+- ESPN's API is unofficial. Rosters add about 650 requests a day, a title
+  one more summary, and golf about 800 leaderboard reads a day across the
+  four tours, plus a bio for each golfer the first time they play.
 - A roster is read when the title is recorded, so a player signed in the
   days after a title can count as on the roster.
 - Customer counts by postal area undercount a brand whose customers bunch
   in one town. Klaviyo's count for the circle is the real one.
-- Golf, tennis, racing and surfing come next. Until then, `create_moment`.
+- Golfers' birthplaces come from ESPN's bios, and some are places Walkoff
+  doesn't know (Scarborough, New York, is a hamlet with no postal name of
+  its own): those make no moment until an operator sets the home.
+- Tennis, racing and surfing come next. Until then, `create_moment`.

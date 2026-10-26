@@ -93,6 +93,42 @@ hometown campaigns wait for counsel to sign off on their copy rules
   again. Its heartbeat is the `hometown` row in `engine_heartbeats`, where
   `games` is the moments the last tick made.
 
+## Golf
+
+Golfers play for no team, so their towns are where golf reaches brands
+(`golf/`, `lib/tours.ts`). One poller per tour: the PGA Tour, LPGA, DP
+World Tour and LIV.
+
+- Each tour's current leaderboard, every 5 minutes while an event is under
+  way and every 10 otherwise. The field is saved as athletes, and five bios
+  a poll say where golfers were born (ESPN's golfer ids are the same on
+  every tour). The winner's and leaders' bios are read right away.
+- A win counts only when the feed says the event is final, and only within
+  60 hours of its last day: after round 3 the feed calls the round
+  complete too, and a suspended final round reads as finished for players
+  who are done.
+
+  | Win | Intensity |
+  |-----|-----------|
+  | A major (by name: `golf/majors.ts`) | 0.95 |
+  | An elevated PGA Tour event | 0.85 |
+  | PGA Tour, LPGA | 0.80 |
+  | DP World Tour | 0.75 |
+  | LIV | 0.70 |
+  | In a playoff | 0.05 more |
+
+- After the next-to-last round, whoever leads, ties too, is a contender
+  once their final-round tee times are in the feed: 0.7 at a major, 0.55
+  elsewhere (under the default trigger's 0.6). The moment closes when they
+  tee off. Each change in an event's status is logged: the feed is
+  undocumented, and if it reads differently between rounds, no contender
+  moment is made.
+- Results are keyed by the event's name and last day, so an event two
+  tours share counts once. With `HOMETOWN=1` the towns get `hometown_win`
+  and `hometown_contender` moments, the same way as titles.
+- Heartbeats are the `golf:pga`, `golf:lpga`, `golf:eur` and `golf:liv`
+  rows. `GOLF=0` turns golf off.
+
 ## What it detects
 
 | Phase  | Moment            | When it fires |
@@ -168,6 +204,7 @@ not saved.
 | `ATHLETES`                  | `1`            | `0` turns the athlete sync off |
 | `WIKIDATA`                  | `1`            | `0` turns its Wikidata lookups off |
 | `HOMETOWN`                  | `0`            | `1` turns hometown moments on |
+| `GOLF`                      | `1`            | `0` turns the golf pollers off |
 
 ## Set up Supabase
 
@@ -241,9 +278,9 @@ Logs are JSON lines with `severity`, so Cloud Logging filters work, e.g.
 
 - `playoff_clinch` (needs standings), `player_milestone`, `big_signing` and
   `great_escape` are in the site's trigger library but not detected yet.
-- Hometown moments for golf, tennis, racing and surfing, and for a
-  player's walk-off or buzzer beater. Until then an operator can record a
-  win with `create_moment` (docs/hometown.md).
+- Hometown moments for tennis, racing and surfing, and for a player's
+  walk-off or buzzer beater. Until then an operator can record a win with
+  `create_moment` (docs/hometown.md).
 - Hockey late winners need hockey play-by-play.
 - Brands act on moments through the MCP server (docs/mcp.md): it matches
   each moment to the brand's fan territories and products and drafts the
