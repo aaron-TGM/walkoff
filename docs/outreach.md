@@ -13,11 +13,11 @@ Store Leads CSV ─► import ─► score ─► contacts ─► pitch ─► y
 ```
 
 All of it runs from `npm run prospects` (`scripts/prospects.ts`), on the
-tables in `supabase/010_outreach.sql`. The logic is in `lib/outreach/`.
+tables in `supabase/012_outreach.sql`. The logic is in `lib/outreach/`.
 
 ## Before the first send
 
-1. Run `supabase/010_outreach.sql` in the Supabase SQL editor (after 009).
+1. Run `supabase/012_outreach.sql` in the Supabase SQL editor (after 011).
 2. In `.env.local`, set who signs and the postal address every commercial
    email must carry (CAN-SPAM):
 

@@ -390,7 +390,7 @@ async function main() {
 }
 
 main().catch((err) => {
-  if (isMissingSchema(err)) usage("The outreach tables aren't there yet. Run supabase/010_outreach.sql in the Supabase SQL editor first.");
+  if (isMissingSchema(err)) usage("The outreach tables aren't there yet. Run supabase/012_outreach.sql in the Supabase SQL editor first.");
   console.error(err);
   process.exit(1);
 });

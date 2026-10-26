@@ -1,5 +1,5 @@
--- Run in Supabase SQL Editor after 009_athletes.sql. Safe to run more than
--- once. Walkoff's own outreach to brands it would like as customers:
+-- Run in Supabase SQL Editor after 011_athlete_opt_outs.sql. Safe to run more
+-- than once. Walkoff's own outreach to brands it would like as customers:
 -- prospects (from a Store Leads export), the people to write to (from
 -- Apollo, FullEnrich or Clay), each pitch and its private page
 -- (www.walkoff.io/p/<token>), and the addresses never to write to again.

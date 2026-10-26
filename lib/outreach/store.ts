@@ -1,4 +1,4 @@
-// Outreach in Supabase (supabase/010_outreach.sql): prospects, their
+// Outreach in Supabase (supabase/012_outreach.sql): prospects, their
 // contacts, each pitch and the addresses never to write to. The scripts
 // read and write all of it with the service role key; the pitch page reads
 // one pitch by its token and counts its views.
