@@ -56,7 +56,18 @@ see them until `WALKOFF_HOMETOWN=1` on the website.
    title once. Example: Ryan Poehling's overtime goal for the Ducks in the
    2026 first round makes "Lakeville, what a finish." for Lakeville,
    Minnesota, where he was born. Needs `supabase/010_player_moments.sql`.
-6. **Wins Walkoff doesn't follow.** An operator records them with
+6. **Tennis.** The engine follows the ATP and the WTA, singles only
+   (`engine/tennis`). A winner's town gets `hometown_win` once the final is
+   over: 0.95 for a Grand Slam, 0.90 for the year-end Finals, 0.85 for a
+   1000-level event, 0.75 for any other tour event. Both finalists' towns
+   get `hometown_contender` before the final: 0.7 at a Slam, 0.55
+   elsewhere, open until it starts.
+7. **Racing.** NASCAR's Cup Series, Formula 1 and IndyCar (`engine/racing`).
+   A race winner's town gets `hometown_win`: 0.95 for the Daytona 500 and
+   the Indy 500, 0.85 in Formula 1, 0.80 in the Cup Series, 0.75 in
+   IndyCar. Example: Tyler Reddick's 2026 Daytona 500 makes one for
+   Corning, California.
+8. **Wins Walkoff doesn't follow.** An operator records them with
    `create_moment` (a surfing win, a medal), and the towns' moments are made
    right away.
 
@@ -153,15 +164,18 @@ One small change, after counsel signs off:
 ## Limits
 
 - ESPN's API is unofficial. Rosters add about 650 requests a day, a title
-  one more summary, and golf about 800 leaderboard reads a day across the
-  four tours, plus a bio for each golfer the first time they play.
+  one more summary, and golf, tennis and racing about 1,800 reads a day
+  across their nine tours and series, plus a bio for each athlete the first
+  time they play.
 - A roster is read when the title is recorded, so a player signed in the
   days after a title can count as on the roster.
 - A playoff game-winner needs one more read of the game's summary in
   baseball and hockey: a few a year.
 - Customer counts by postal area undercount a brand whose customers bunch
   in one town. Klaviyo's count for the circle is the real one.
-- Golfers' birthplaces come from ESPN's bios, and some are places Walkoff
-  doesn't know (Scarborough, New York, is a hamlet with no postal name of
-  its own): those make no moment until an operator sets the home.
-- Tennis, racing and surfing come next. Until then, `create_moment`.
+- Golfers', tennis players' and drivers' birthplaces come from ESPN's bios.
+  Some are places Walkoff doesn't know (Scarborough, New York, is a hamlet
+  with no postal name of its own), some only a town's name ("Worcester",
+  which could be in England or Massachusetts), and some are missing: those
+  make no moment until an operator sets the home.
+- Surfing has no feed, so its wins come in through `create_moment`.

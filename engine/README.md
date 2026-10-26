@@ -131,11 +131,22 @@ hometown campaigns wait for counsel to sign off on their copy rules
   again. Its heartbeat is the `hometown` row in `engine_heartbeats`, where
   `games` is the moments the last tick made.
 
+## Tours and series
+
+Golfers, tennis players and drivers compete for themselves, so their towns
+are where these sports reach brands (`lib/tours.ts`). One poller per tour
+or series, all on the same loop (`circuits/poller.ts`): each sport reads
+its own feed and decides who won (`golf/`, `tennis/`, `racing/`). The
+pollers save the field as athletes, read five bios a poll for where they
+were born, and record each winner as a result. With `HOMETOWN=1` the
+winners' towns get `hometown_win`, and contenders' towns
+`hometown_contender`. Heartbeats are one row each: `golf:pga`, `tennis:atp`,
+`racing:nascar`. The feeds are undocumented, so each change in an event's
+status is logged.
+
 ## Golf
 
-Golfers play for no team, so their towns are where golf reaches brands
-(`golf/`, `lib/tours.ts`). One poller per tour: the PGA Tour, LPGA, DP
-World Tour and LIV.
+One poller per tour: the PGA Tour, LPGA, DP World Tour and LIV.
 
 - Each tour's current leaderboard, every 5 minutes while an event is under
   way and every 10 otherwise. The field is saved as athletes, and five bios
@@ -166,6 +177,51 @@ World Tour and LIV.
   and `hometown_contender` moments, the same way as titles.
 - Heartbeats are the `golf:pga`, `golf:lpga`, `golf:eur` and `golf:liv`
   rows. `GOLF=0` turns golf off.
+
+## Tennis
+
+One poller each for the ATP and the WTA (`tennis/`), singles only. Each
+tour takes its own draw, men's or women's, so a Slam that's on both feeds
+counts once per draw.
+
+- Each tour's current tournaments, every 5 minutes while one is under way,
+  every 10 otherwise. Bios come from ESPN's core API, a line like "Irvine,
+  CA, USA": a bare town name ("Worcester") is left unknown rather than
+  guessed.
+- A win counts once the final is over (played, retired or a walkover),
+  within 60 hours of it. ESPN flags only the Slams, so the other tiers go by
+  name (`tennis/outcome.ts`):
+
+  | Win | Intensity |
+  |-----|-----------|
+  | A Grand Slam | 0.95 |
+  | The ATP or WTA Finals | 0.90 |
+  | A 1000-level event, each tour's own | 0.85 |
+  | Any other tour event | 0.75 |
+
+- Both finalists are contenders once the final has them and is scheduled:
+  0.7 at a Slam, 0.55 elsewhere. The moment closes when the final starts.
+  The tests use the 2026 US Open's real draw: Ben Shelton and Alexander
+  Zverev as finalists with the final turned back to scheduled, then
+  Zverev's win.
+- `TENNIS=0` turns tennis off.
+
+## Racing
+
+One poller each for NASCAR's Cup Series, Formula 1 and IndyCar (`racing/`).
+
+- Each series' current race weekend, every 5 minutes while a session is
+  under way, every 10 otherwise. Only the race counts: not practice,
+  qualifying, an F1 sprint or Daytona's Duels.
+- A win counts once the race is final, within 60 hours of its start: 0.95
+  for the Daytona 500 and the Indianapolis 500, 0.85 in Formula 1, 0.80 in
+  the Cup Series, 0.75 in IndyCar. No contenders: a pole isn't a moment.
+- Bios come from ESPN's core API: NASCAR's give a town and a state for
+  nearly every driver; IndyCar's and F1's are patchier, and most F1
+  drivers were born outside the US, Canada and the UK.
+- Checked live: Kyle Larson's win at Talladega makes a moment for Elk Grove,
+  California, and Tyler Reddick's 2026 Daytona 500 one for Corning.
+- `RACING=0` turns racing off.
 
 ## What it detects
 
@@ -245,6 +301,8 @@ not saved.
 | `HOMETOWN`                  | `0`            | `1` turns hometown moments on |
 | `SIGNINGS`                  | `1`            | `0` turns big signings off |
 | `GOLF`                      | `1`            | `0` turns the golf pollers off |
+| `TENNIS`                    | `1`            | `0` turns the tennis pollers off |
+| `RACING`                    | `1`            | `0` turns the racing pollers off |
 
 ## Set up Supabase
 
@@ -320,8 +378,10 @@ Logs are JSON lines with `severity`, so Cloud Logging filters work, e.g.
 
 - `playoff_clinch` (needs standings), `player_milestone` and
   `great_escape` are in the site's trigger library but not detected yet.
-- Hometown moments for tennis, racing and surfing. Until then an operator
-  can record a win with `create_moment` (docs/hometown.md).
+- Surfing has no feed: an operator records a WSL win with `create_moment`
+  (docs/hometown.md). Automating it waits on WSL's terms.
+- Season championships in racing (the Cup Series title, the F1 drivers'
+  championship): only race wins for now.
 - Hockey late winners need hockey play-by-play.
 - Brands act on moments through the MCP server (docs/mcp.md): it matches
   each moment to the brand's fan territories and products and drafts the
