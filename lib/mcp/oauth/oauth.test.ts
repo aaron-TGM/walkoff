@@ -6,6 +6,7 @@ import { fakeDb } from "../../testing/fake-db";
 import { authorizationServerMetadata, canonicalResource, LIMITS, protectedResourceMetadata } from "./config";
 import { pkceMatches } from "./crypto";
 import { authorizeStart, authorizeStep } from "./handlers";
+import { overLimit, RATE } from "./limits";
 import { stillAllowed } from "./store";
 
 const ORIGIN = "https://www.walkoff.io";
@@ -179,5 +180,14 @@ describe("sign-in limits per address", () => {
     const res = await step({ step: "code", code: "000000" });
     assert.equal(res.status, 429);
     assert.match(await res.text(), /Too many wrong codes for this address/);
+  });
+});
+
+describe("early access requests", () => {
+  it("are capped per caller", async () => {
+    const d = fakeDb();
+    for (let i = 0; i < RATE.waitlist.perCaller; i++) assert.equal(await overLimit(d, "waitlist", "caller-a"), false);
+    assert.equal(await overLimit(d, "waitlist", "caller-a"), true);
+    assert.equal(await overLimit(d, "waitlist", "caller-b"), false);
   });
 });

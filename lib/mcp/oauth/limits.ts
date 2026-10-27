@@ -1,8 +1,9 @@
-// Caps on the sign-in endpoints anyone can call before signing in (app
-// registration and starting a sign-in), so nobody can fill the database or
-// make Walkoff fetch pages for them: per caller per hour, and overall as a
-// backstop. And per email address, on the codes sent to it and the wrong
-// codes tried for it. Uses oauth_events (supabase/007_hardening.sql).
+// Caps on the endpoints anyone can call without signing in (app
+// registration, starting a sign-in, and the early access form), so nobody
+// can fill the database, make Walkoff fetch pages or send email for them:
+// per caller per hour, and overall as a backstop. And per email address, on
+// the codes sent to it and the wrong codes tried for it. Uses oauth_events
+// (supabase/007_hardening.sql).
 import { createHmac } from "node:crypto";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
@@ -13,6 +14,7 @@ const hourAgo = () => new Date(Date.now() - 3_600_000).toISOString();
 export const RATE = {
   register: { perCaller: 20, total: 300 },
   authorize: { perCaller: 60, total: 1500 },
+  waitlist: { perCaller: 10, total: 500 },
 } as const;
 export type RateKind = keyof typeof RATE;
 
