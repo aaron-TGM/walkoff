@@ -139,6 +139,55 @@ describe("LeaguePoller", () => {
     assert.ok([...store.moments.values()].some((m) => m.type === "rivalry_win"));
   });
 
+  it("a restart while a final's summary is failing still makes its moments", async () => {
+    const store = new MemoryStore();
+    const client = fakeClient([wshAtPhi("in", 4, 200, 21, 17), wshAtPhi("post", 4, 0, 24, 22)]);
+    client.summary = async () => {
+      throw new Error("summary down");
+    };
+    const first = new LeaguePoller(nfl, rulesFor("nfl"), { client, store, config });
+    await first.tick();
+    const live = store.moments.size;
+    await first.tick();
+    assert.equal(store.moments.size, live, "waits for the summary");
+
+    const after = new LeaguePoller(nfl, rulesFor("nfl"), {
+      client: fakeClient([wshAtPhi("post", 4, 0, 24, 22)]),
+      store,
+      config,
+      now: () => new Date("2026-09-14T03:00:00Z"),
+    });
+    await after.tick();
+    assert.ok([...store.moments.values()].some((m) => m.type === "rivalry_win"));
+  });
+
+  it("a restart after moments failed to save still makes them", async () => {
+    const store = new MemoryStore();
+    const first = new LeaguePoller(nfl, rulesFor("nfl"), {
+      client: fakeClient([wshAtPhi("in", 4, 200, 21, 17), wshAtPhi("post", 4, 0, 24, 22)]),
+      store,
+      config,
+    });
+    await first.tick();
+    const save = store.saveMoments.bind(store);
+    store.saveMoments = async () => {
+      throw new Error("insert failed");
+    };
+    await first.tick();
+    assert.equal(first.status.consecutiveFailures, 1);
+    store.saveMoments = save;
+
+    const second = new LeaguePoller(nfl, rulesFor("nfl"), {
+      client: fakeClient([wshAtPhi("post", 4, 0, 24, 22)]),
+      store,
+      config,
+      now: () => new Date("2026-09-14T03:00:00Z"),
+    });
+    await second.tick();
+    assert.ok([...store.moments.values()].some((m) => m.type === "rivalry_win"));
+    assert.equal([...store.games.values()][0].finalProcessed, true);
+  });
+
   it("ignores old finals on a cold start", async () => {
     const store = new MemoryStore();
     const poller = new LeaguePoller(nfl, rulesFor("nfl"), {

@@ -23,6 +23,7 @@ export class MemoryStore implements Store {
         maxHomeDeficit: t.maxHomeDeficit,
         maxAwayDeficit: t.maxAwayDeficit,
         finalAt: t.finalAt,
+        finalProcessed: t.finalProcessed,
       }));
   }
 

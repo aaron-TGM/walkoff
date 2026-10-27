@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { isMissingSchema } from "../../lib/supabase";
 import type { GameStateName, Moment, TeamRef, TrackedGame } from "../moments/types";
 import type { Heartbeat, Store, StoredGame } from "./types";
 
@@ -19,7 +20,8 @@ export function teamRow(t: TeamRef) {
   };
 }
 
-export function gameRow(t: TrackedGame) {
+/** `withFinal` is false until supabase/013_final_processed.sql has run. */
+export function gameRow(t: TrackedGame, withFinal = true) {
   const g = t.game;
   return {
     id: g.id,
@@ -40,6 +42,7 @@ export function gameRow(t: TrackedGame) {
     max_home_deficit: t.maxHomeDeficit,
     max_away_deficit: t.maxAwayDeficit,
     final_at: t.finalAt,
+    ...(withFinal && { final_processed: t.finalProcessed }),
     updated_at: new Date().toISOString(),
   };
 }
@@ -68,26 +71,33 @@ export function serviceClient(url: string, serviceKey: string): SupabaseClient {
   });
 }
 
-export function createSupabaseStore(url: string, serviceKey: string): Store {
-  const db = serviceClient(url, serviceKey);
+const GAME_COLUMNS = "id, state, completed, max_home_deficit, max_away_deficit, final_at";
+
+export function createSupabaseStore(db: SupabaseClient): Store {
+  // supabase/013_final_processed.sql adds games.final_processed. Until it
+  // has run, games are saved and restored without it, as before.
+  let withFinal = true;
 
   return {
     kind: "supabase",
 
     async loadRecentGames(league: string, since: Date): Promise<StoredGame[]> {
-      const { data, error } = await db
-        .from("games")
-        .select("id, state, completed, max_home_deficit, max_away_deficit, final_at")
-        .eq("league", league)
-        .gte("updated_at", since.toISOString());
+      const recent = (columns: string) =>
+        db.from("games").select(columns).eq("league", league).gte("updated_at", since.toISOString());
+      let { data, error } = await recent(withFinal ? `${GAME_COLUMNS}, final_processed` : GAME_COLUMNS);
+      if (withFinal && isMissingSchema(error)) {
+        withFinal = false;
+        ({ data, error } = await recent(GAME_COLUMNS));
+      }
       if (error) throw error;
-      return (data ?? []).map((r) => ({
+      return ((data ?? []) as unknown as Record<string, unknown>[]).map((r) => ({
         id: r.id as string,
         state: r.state as GameStateName,
         completed: Boolean(r.completed),
         maxHomeDeficit: Number(r.max_home_deficit) || 0,
         maxAwayDeficit: Number(r.max_away_deficit) || 0,
         finalAt: (r.final_at as string | null) ?? null,
+        finalProcessed: typeof r.final_processed === "boolean" ? r.final_processed : null,
       }));
     },
 
@@ -99,7 +109,12 @@ export function createSupabaseStore(url: string, serviceKey: string): Store {
 
     async saveGames(games: TrackedGame[]): Promise<void> {
       if (!games.length) return;
-      const { error } = await db.from("games").upsert(games.map(gameRow), { onConflict: "id" });
+      const save = () => db.from("games").upsert(games.map((t) => gameRow(t, withFinal)), { onConflict: "id" });
+      let { error } = await save();
+      if (withFinal && isMissingSchema(error)) {
+        withFinal = false;
+        ({ error } = await save());
+      }
       if (error) throw error;
     },
 
