@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { visitAttribution } from "@/lib/analytics";
 import { helpPath } from "@/lib/help/pages";
 import { LEAGUES } from "@/lib/leagues";
 import { PRICING } from "@/lib/pricing";
-import { PLATFORMS, ROLES, type Attribution } from "@/lib/waitlist";
+import { DEMO_TEAMS_KEY, PLATFORMS, ROLES, type Attribution } from "@/lib/waitlist";
 
 /** defaults fill in what Walkoff already knows (a pitch page knows the
  *  brand). source says where the request came from, over the visit's own
@@ -24,6 +24,16 @@ export function WaitlistForm({ defaults, source }: { defaults?: { company?: stri
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+
+  // Teams the demo map found in the visitor's own file, if they made one.
+  useEffect(() => {
+    try {
+      const found = sessionStorage.getItem(DEMO_TEAMS_KEY);
+      if (found) setTeams((cur) => cur || found);
+    } catch {
+      // Storage can be off. The field just starts empty.
+    }
+  }, []);
 
   function toggleLeague(id: string) {
     setLeagues((cur) =>

@@ -1,28 +1,26 @@
 import type { CSSProperties } from "react";
 import { Swatches } from "@/components/upload/AffinityReportView";
+import { mapHighlights, sampleCampaign } from "@/lib/help/samples";
+import { teamByKey } from "@/lib/mcp/teams";
+import { territoryName } from "@/lib/outreach/pitch";
 
-// Example session shown in the homepage's Claude section. Lines reveal one
+// Example session shown in the homepage's Claude section, with the demo
+// brand's map and sample campaign (lib/help/samples.ts). Lines reveal one
 // after another (CSS only, see .console-line in globals.css).
-
-const AFFINITY = [
-  { name: "Chargers territory", customers: "2,310", lift: 2.4 },
-  { name: "Packers territory", customers: "1,402", lift: 1.8 },
-  { name: "Arsenal territory, UK", customers: "846", lift: 1.6 },
-];
-
-// A brand with no license: its own colorways, in the team's colors.
-const PICKS = [
-  { title: "Everyday Jogger", colorway: "Azure Heather", hex: "2e8bd8" },
-  { title: "Sunday Hoodie", colorway: "Sunflower", hex: "ffc512" },
-];
-
-const MAX_LIFT = Math.max(...AFFINITY.map((a) => a.lift));
 
 function line(i: number): CSSProperties {
   return { "--i": i } as CSSProperties;
 }
 
 export function AgentConsole() {
+  const affinity = mapHighlights(2, 1).map((g) => {
+    const team = teamByKey(`${g.league}:${g.teamId}`);
+    return { name: team ? territoryName(team) : g.teamName, customers: Math.round(g.customers).toLocaleString("en-US"), lift: g.lift };
+  });
+  const maxLift = Math.max(...affinity.map((a) => a.lift));
+  // A brand with no license: its own colorways, in the team's colors.
+  const campaign = sampleCampaign();
+  const picks = campaign.products.slice(0, 2);
   let i = 0;
   return (
     <figure className="console">
@@ -49,9 +47,9 @@ export function AgentConsole() {
           walkoff.get_affinity_map
         </div>
         <div className="console-line console-out" style={line(i++)}>
-          3 team territories stand out
+          {affinity.length} team territories stand out
         </div>
-        {AFFINITY.map((a) => (
+        {affinity.map((a) => (
           <div
             key={a.name}
             className="console-line console-row"
@@ -60,7 +58,7 @@ export function AgentConsole() {
             <span className="console-row-name">{a.name}</span>
             <span className="console-row-num">{a.customers}</span>
             <span className="console-row-bar" aria-hidden>
-              <span style={{ width: `${(a.lift / MAX_LIFT) * 100}%` }} />
+              <span style={{ width: `${(a.lift / maxLift) * 100}%` }} />
             </span>
             <span className="console-row-lift">{a.lift.toFixed(1)}&times;</span>
           </div>
@@ -81,9 +79,9 @@ export function AgentConsole() {
           walkoff.match_products
           <span className="console-dim"> &middot; their colors, your catalog</span>
         </div>
-        {PICKS.map((p) => (
-          <div key={p.colorway} className="console-line console-out console-pick" style={line(i++)}>
-            <Swatches hex={[p.hex]} />
+        {picks.map((p) => (
+          <div key={`${p.title}:${p.colorway}`} className="console-line console-out console-pick" style={line(i++)}>
+            <Swatches hex={p.hex} />
             {p.title} <span className="console-dim">&middot; {p.colorway}</span>
           </div>
         ))}
@@ -97,8 +95,12 @@ export function AgentConsole() {
           walkoff.build_campaign
         </div>
         <div className="console-line console-out" style={line(i++)}>
-          &ldquo;Azure and sunflower kind of Sunday.&rdquo;{" "}
-          <span className="console-dim">&middot; 2,310 customers</span>
+          &ldquo;{campaign.subject_lines[0]}&rdquo;{" "}
+          {campaign.audience.customers ? (
+            <span className="console-dim">
+              &middot; {campaign.audience.customers.in_circles.toLocaleString("en-US")} customers
+            </span>
+          ) : null}
         </div>
         <div className="console-line console-fired" style={line(i++)}>
           Drafted in Klaviyo &middot; waiting for your go-ahead

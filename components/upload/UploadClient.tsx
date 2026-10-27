@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Papa from "papaparse";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { hexForColorName } from "@/lib/affinity/colors";
 import { computeAffinity, type AffinityReport, type TaggedProduct } from "@/lib/affinity/compute";
 import { demoData } from "@/lib/affinity/demo";
@@ -19,6 +19,8 @@ import {
 } from "@/lib/affinity/imports";
 import { tagProduct } from "@/lib/affinity/tagging";
 import { helpPath } from "@/lib/help/pages";
+import { PRICING } from "@/lib/pricing";
+import { DEMO_TEAMS_KEY } from "@/lib/waitlist";
 import { AffinityReportView, Swatches } from "./AffinityReportView";
 import { ExportGuides } from "./ExportGuides";
 
@@ -119,6 +121,20 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
   const [catalogStats, setCatalogStats] = useState(initialCatalog);
   const [demoTags, setDemoTags] = useState<TaggedProduct[] | null>(null);
   const reportRef = useRef<HTMLDivElement>(null);
+
+  // A demo map from the visitor's own file: its standout teams wait in this
+  // tab for the early access form's Teams field. Team names only.
+  const ownMap = demo && customers.status === "done";
+  useEffect(() => {
+    if (!ownMap || !report) return;
+    const teams = report.standouts.slice(0, 3).map((g) => g.teamName);
+    try {
+      if (teams.length) sessionStorage.setItem(DEMO_TEAMS_KEY, teams.join(", "));
+      else sessionStorage.removeItem(DEMO_TEAMS_KEY);
+    } catch {
+      // Storage can be off. The form just starts empty.
+    }
+  }, [ownMap, report]);
 
   const showReport = (next: AffinityReport | null) => {
     setReport(next);
@@ -409,6 +425,29 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
             <Link href={helpPath("shopify")}>Shopify in Claude</Link>
           </p>
           {territories}
+          <aside className="demo-cta">
+            <div>
+              <h2 className="demo-cta-title">
+                {ownMap ? (
+                  <>
+                    Your customers have teams. <em>Now get the campaigns.</em>
+                  </>
+                ) : (
+                  <>
+                    Want this for your brand? <em>We&apos;ll set it up.</em>
+                  </>
+                )}
+              </h2>
+              <p>
+                During early access we set up your brand and invite your team. On Shopify, your own
+                map is ready in minutes, and Walkoff builds the campaign when one of your teams wins.{" "}
+                {PRICING.trialDays} days free, no credit card.
+              </p>
+            </div>
+            <Link href="/#form" className="btn-primary" data-cta="demo">
+              <span>Get early access</span>
+            </Link>
+          </aside>
           <details className="upload-try">
             <summary>Try it with your own file (optional)</summary>
             <p className="upload-step-body">{privacy} This demo doesn&apos;t upload anything at all.</p>

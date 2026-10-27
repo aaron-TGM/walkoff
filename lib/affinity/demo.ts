@@ -1,20 +1,39 @@
 // A sample brand for walkoff.io/upload/demo: a Southern California
 // athleisure brand with no sports license. Its customers follow the US
-// population, plus extra in San Diego, Orange County and LA, and its
-// catalog is colorways with names like "Azure Heather" and "Sunflower".
+// population, plus extra in San Diego, Orange County and LA, and in
+// Wisconsin, a long way from home: the kind of thing a map shows a brand on
+// day one. Each place buys a little more of one thing, and the catalog is
+// colorways with names like "Azure Heather" and "Sunflower".
 import type { AreaCount, ProductCount, TaggedProduct } from "./compute";
 import { hexForColorName } from "./colors";
 import { POSTAL_AREAS } from "./geo";
 
-const BOOST: Record<string, number> = {
+/** Where the customers bunch (3-digit ZIPs), how much, and what they buy
+ *  more of there. */
+const REGIONS: { boost: number; leans: string; areas: string[] }[] = [
   // San Diego
-  "919": 3.0, "920": 3.0, "921": 3.0,
+  { boost: 3.0, leans: "Trail Short", areas: ["919", "920", "921"] },
   // Orange County
-  "926": 2.1, "927": 2.1, "928": 2.1,
+  { boost: 2.1, leans: "Performance Tee", areas: ["926", "927", "928"] },
   // Los Angeles
-  "900": 1.5, "902": 1.5, "903": 1.5, "904": 1.5, "905": 1.5, "906": 1.5, "907": 1.5, "908": 1.5,
-  "910": 1.5, "911": 1.5, "912": 1.5, "913": 1.5, "914": 1.5, "915": 1.5, "916": 1.5, "917": 1.5, "918": 1.5,
-};
+  {
+    boost: 1.5,
+    leans: "Everyday Jogger",
+    areas: ["900", "902", "903", "904", "905", "906", "907", "908", "910", "911", "912", "913", "914", "915", "916", "917", "918"],
+  },
+  // Wisconsin
+  {
+    boost: 2.0,
+    leans: "Sunday Hoodie",
+    areas: ["530", "531", "532", "534", "535", "537", "538", "539", "540", "541", "542", "543", "544", "545", "546", "547", "548", "549"],
+  },
+];
+
+const REGION = new Map(REGIONS.flatMap((r) => r.areas.map((area) => [area, r] as const)));
+
+/** Orders per customer everywhere, before a place's lean adds to one. */
+const MIX: Record<string, number> = { "Everyday Jogger": 0.4, "Sunday Hoodie": 0.3, "Performance Tee": 0.3, "Trail Short": 0.2 };
+const LEAN = 0.5;
 
 export const DEMO_BRAND = "Sample Athleisure Co.";
 
@@ -33,18 +52,14 @@ export function demoData(total = 16_000): { areas: AreaCount[]; products: Produc
   const areas: AreaCount[] = [];
   const products: ProductCount[] = [];
   for (const a of us) {
-    const boost = BOOST[a.code] ?? 1;
-    const customers = Math.round(((total * a.population) / population) * boost);
+    const region = REGION.get(a.code);
+    const customers = Math.round(((total * a.population) / population) * (region?.boost ?? 1));
     if (!customers) continue;
     areas.push({ country: "US", area: a.code, customers, orders: Math.round(customers * 1.6), revenue: customers * 142 });
-    // Shorts sell year round where it's warm.
-    const warm = boost > 1;
-    products.push(
-      { country: "US", area: a.code, product: "Everyday Jogger", orders: Math.round(customers * 0.5) },
-      { country: "US", area: a.code, product: "Sunday Hoodie", orders: Math.round(customers * (warm ? 0.25 : 0.4)) },
-      { country: "US", area: a.code, product: "Performance Tee", orders: Math.round(customers * 0.3) },
-      { country: "US", area: a.code, product: "Trail Short", orders: Math.round(customers * (warm ? 0.45 : 0.12)) },
-    );
+    for (const [product, rate] of Object.entries(MIX)) {
+      const orders = Math.round(customers * (rate + (region?.leans === product ? LEAN : 0)));
+      products.push({ country: "US", area: a.code, product, orders });
+    }
   }
   const catalog: TaggedProduct[] = CATALOG.map((p) => ({
     handle: p.title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),

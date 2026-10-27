@@ -1,7 +1,7 @@
 // The examples on the help pages, made by the same code the tools run. The
 // pages are static, so this runs at build time and none of it (or the geo
 // data behind it) is sent to the browser.
-import { computeAffinity } from "../affinity/compute";
+import { computeAffinity, type TeamGroup } from "../affinity/compute";
 import { DEMO_BRAND, demoData } from "../affinity/demo";
 import { pickForTeam } from "../affinity/pick";
 import { hometownRules } from "../hometown/copy";
@@ -33,6 +33,15 @@ export const demoReport = () => {
   const s = demo();
   return computeAffinity(s.areas, { products: s.products, catalog: s.catalog, now: END });
 };
+
+/** The demo map's standouts for the homepage: the strongest near home in
+ *  California, then the strongest away from it, the part a brand wouldn't
+ *  have guessed. Only teams with products to feature. */
+export function mapHighlights(home: number, away: number): TeamGroup[] {
+  const standouts = demoReport().standouts.filter((g) => g.picks?.length);
+  const inCalifornia = (g: TeamGroup) => teamByKey(`${g.league}:${g.teamId}`)?.team.region === "CA";
+  return [...standouts.filter(inCalifornia).slice(0, home), ...standouts.filter((g) => !inCalifornia(g)).slice(0, away)];
+}
 
 export const sampleAudience = (reach: Reach = "core") =>
   teamAudience(SAMPLE_TEAM, { reach, customersByArea: new Map(demo().areas.map((a) => [`${a.country}:${a.area}`, a.customers])) });

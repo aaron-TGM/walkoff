@@ -16,11 +16,14 @@ import { WaitlistForm } from "@/components/WaitlistForm";
 import { CONNECTOR_STEPS, CONNECTOR_URL } from "@/lib/connect";
 import { TOUR_FACTS } from "@/lib/help/moments";
 import { helpPath } from "@/lib/help/pages";
+import { mapHighlights } from "@/lib/help/samples";
 import { HOME_ASKS } from "@/lib/help/tools";
 import { hometownLive } from "@/lib/hometown/flag";
 import { LEAGUES } from "@/lib/leagues";
-import { MOMENT_CATEGORIES, MOMENT_STATUS_LABEL } from "@/lib/moments";
+import { teamByKey } from "@/lib/mcp/teams";
 import { SEND_HOURS } from "@/lib/mcp/timing";
+import { MOMENT_CATEGORIES, MOMENT_STATUS_LABEL } from "@/lib/moments";
+import { territoryName } from "@/lib/outreach/pitch";
 import { PRICING } from "@/lib/pricing";
 import { TRIGGER_CATEGORIES, TRIGGERS } from "@/lib/triggers";
 
@@ -122,36 +125,12 @@ const STEPS = [
   },
 ];
 
-const AFFINITY_EXAMPLES = [
-  {
-    group: "Chargers territory",
-    customers: "2,310",
-    lift: "2.4×",
-    match: "Azure and sunflower colorways",
-    swatches: ["2e8bd8", "ffc512"],
-  },
-  {
-    group: "Padres territory",
-    customers: "1,880",
-    lift: "1.9×",
-    match: "Brown and gold colorways",
-    swatches: ["2f241d", "ffc425"],
-  },
-  {
-    group: "Packers territory",
-    customers: "1,402",
-    lift: "1.8×",
-    match: "Forest green and gold",
-    swatches: ["1e4d2b", "ffb81c"],
-  },
-  {
-    group: "Arsenal, North London",
-    customers: "846",
-    lift: "1.6×",
-    match: "Anything red and white",
-    swatches: ["ef0107", "f7f7f5"],
-  },
-];
+// The demo brand's map (/upload/demo): two standouts near home, two it
+// wouldn't have guessed.
+const MAP = mapHighlights(2, 2).map((g) => {
+  const team = teamByKey(`${g.league}:${g.teamId}`);
+  return { key: `${g.league}:${g.teamId}`, territory: team ? territoryName(team) : g.teamName, lift: g.lift, customers: Math.round(g.customers), pick: g.picks![0] };
+});
 
 // 21 -> "9 PM", 8 -> "8 AM"
 const hour = (h: number) => `${h % 12 || 12} ${h < 12 ? "AM" : "PM"}`;
@@ -479,25 +458,32 @@ export function MarketingPage() {
             standout is a segment you can email the next time that team wins.
           </p>
           <div className="affinity-grid">
-            {AFFINITY_EXAMPLES.map((a) => (
-              <div key={a.group} className="affinity-card">
-                <div className="affinity-lift">{a.lift}</div>
-                <div className="affinity-group">{a.group}</div>
+            {MAP.map((a) => (
+              <div key={a.key} className="affinity-card">
+                <div className="affinity-lift">{a.lift}&times;</div>
+                <div className="affinity-group">{a.territory}</div>
                 <div className="affinity-customers">
-                  {a.customers} customers
+                  {a.customers.toLocaleString("en-US")} customers
                 </div>
                 <div className="affinity-match">
-                  <span>Top match</span>
-                  <Swatches hex={a.swatches} />
-                  {a.match}
+                  <span>On a win, feature</span>
+                  <Swatches hex={a.pick.hex} />
+                  {a.pick.title} &middot; {a.pick.colorway}
                 </div>
               </div>
             ))}
           </div>
           <p className="affinity-foot">
-            Example map. 2.4&times; means 2.4 times more of your customers live
-            there than population alone would predict.
+            A sample brand&apos;s map. {MAP[0].lift}&times; means{" "}
+            {MAP[0].lift} times more of its customers live in{" "}
+            {MAP[0].territory} than population alone would predict.
           </p>
+          <div className="affinity-actions">
+            <Link href="/upload/demo" className="btn-primary">
+              <span>See the whole map</span>
+            </Link>
+            <span className="affinity-actions-note">No file needed</span>
+          </div>
         </div>
       </section>
 
