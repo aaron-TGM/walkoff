@@ -40,14 +40,6 @@ const AUDIENCES = [
   },
 ];
 
-// The founder's example: a brand with no license, its own catalog, a
-// team's colors.
-const MOMENT_PICKS = [
-  { title: "Everyday Jogger", colorway: "Azure Heather", hex: "2e8bd8" },
-  { title: "Sunday Hoodie", colorway: "Sunflower", hex: "ffc512" },
-  { title: "Coastal Crew", colorway: "Gold", hex: "ffb81c" },
-];
-
 const STEPS = [
   {
     title: "Connect your store in Claude",
@@ -310,18 +302,27 @@ export function MarketingPage() {
                 Ready 2 minutes later &middot; 2,310 customers in their territory
               </div>
               <div className="moment-card-email">
-                <div className="moment-card-subject">Powder blue kind of Sunday.</div>
-                <div className="moment-card-items">
-                  {MOMENT_PICKS.map((p) => (
-                    <div key={p.colorway} className="moment-card-item">
-                      <span className="moment-card-photo" style={{ backgroundColor: `#${p.hex}` }} aria-hidden />
-                      <b>{p.title}</b>
-                      <span>{p.colorway}</span>
-                    </div>
-                  ))}
+                <div className="moment-card-inbox">
+                  <span className="moment-card-from">Vuori</span>
+                  <span className="moment-card-subject">Powder blue kind of Sunday.</span>
+                </div>
+                <div
+                  className="moment-card-scroll"
+                  tabIndex={0}
+                  aria-label="The Vuori email, scrollable"
+                >
+                  <Image
+                    src="/examples/vuori-email.jpg"
+                    alt="Vuori's email: Kore shorts in Brass, a gym bag, socks and a hat in Bay Blue and Foggy Blue, all from its own catalog."
+                    width={654}
+                    height={1858}
+                    sizes="(min-width: 880px) 440px, 92vw"
+                    className="moment-card-shot"
+                  />
                 </div>
               </div>
               <div className="moment-card-foot">
+                <span className="moment-card-tag">Real send &middot; Vuori</span>
                 No logo. No license. Your catalog, in their colors.
               </div>
             </div>
