@@ -133,14 +133,14 @@ export type ToolName = keyof typeof HELP_TOOLS;
 
 /** The homepage's short list: real tools only, plus what's coming. */
 export const HOME_TOOLS: ({ name: ToolName; body: string } | { name: string; body: string; soon: true })[] = [
-  { name: "trigger_queue", body: "The moments to act on right now, for the teams your customers follow, most urgent first." },
+  { name: "trigger_queue", body: "The moments to act on right now, for your standout teams and towns, most urgent first." },
   {
     name: "build_campaign",
     body: "A ready-to-draft campaign: subject lines, the email, products in the team's colors, the audience and when to send.",
   },
   { name: "get_affinity_map", body: "Which fan territories hold more of your customers than population predicts, and by how much." },
   { name: "match_products", body: "Your own products in each team's colors. No license needed." },
-  { name: "get_territory", body: "Each team's fans as a Klaviyo segment. Claude creates it once, with your OK, and every moment reuses it." },
+  { name: "get_territory", body: "Each team's territory as a Klaviyo segment. Claude creates it once, with your OK, and every moment reuses it." },
   { name: "create_trigger", body: "Your rules for which moments matter, like walk-off wins in your top markets." },
   { name: "send_history", body: "Everything you drafted, sent and skipped, moment by moment, and how each did in Klaviyo." },
   { name: "benchmarks", body: "How each type of moment performs for brands like yours.", soon: true },

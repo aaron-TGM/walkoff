@@ -5,10 +5,9 @@ import { NavMenu } from "@/components/NavMenu";
 const LINKS = [
   { href: "/#how", label: "How it works" },
   { href: "/#moments", label: "Moments" },
-  { href: "/#mcp", label: "MCP" },
   { href: "/#pricing", label: "Pricing" },
+  { href: "/#faq", label: "FAQ" },
   { href: "/help", label: "Help" },
-  { href: "/status", label: "Status" },
 ];
 
 export function SiteNav() {

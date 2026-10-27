@@ -6,10 +6,11 @@ import { PRICING, annualMonthlyPrice, monthlyPrice } from "@/lib/pricing";
 
 const INCLUDED = [
   "Every trigger in every league you pick",
-  "Every new moment category as it launches",
-  "Your affinity map and product matching",
-  "MCP access for Claude and AI agents",
+  "Hometown moments, whatever leagues you pick",
+  "Your fan map and product matching",
+  "Works in Claude, with your Shopify and Klaviyo",
   "Setup done for you during early access",
+  "Every new moment category as it launches",
   "Holdout results and benchmarks as they launch",
 ];
 

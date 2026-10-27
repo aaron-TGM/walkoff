@@ -7,7 +7,12 @@ const ITEMS: { tag: string; headline: string; detail: string }[] = [
   {
     tag: "Derby win",
     headline: "Arsenal 2, Spurs 1",
-    detail: "North London · Home-kit colors flagged",
+    detail: "North London · Red and white products matched",
+  },
+  {
+    tag: "Hometown title",
+    headline: "San Clemente, CA",
+    detail: "412 customers within 5 miles · Campaign ready",
   },
   {
     tag: "Walk-off win",
@@ -27,12 +32,12 @@ const ITEMS: { tag: string; headline: string; detail: string }[] = [
   {
     tag: "Comeback win",
     headline: "Packers 31, Bears 28",
-    detail: "Down 14, won it late · Green and gold picks",
+    detail: "Down 14, won it late · Green and gold products ready",
   },
   {
     tag: "Series win",
     headline: "Oilers advance",
-    detail: "Edmonton · Playoff picks drafted for approval",
+    detail: "Edmonton · Playoff email drafted, waiting on you",
   },
 ];
 

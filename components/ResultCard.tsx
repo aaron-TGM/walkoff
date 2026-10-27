@@ -23,7 +23,7 @@ export function ResultCard() {
         Early test
       </div>
       <div className="result-card-meta">
-        Brand: Frost Buddy &middot; MLB &middot; Win triggers
+        Frost Buddy &middot; Licensed brand &middot; MLB win triggers
       </div>
       <div className="result-card-title">7 teams. 7 win-triggered emails.</div>
       <div className="result-card-headline">$5,689 in revenue.</div>
@@ -70,11 +70,14 @@ export function ResultCard() {
         </div>
       </div>
       <div className="result-card-attr">
-        The offer: &ldquo;Free Lid Win.&rdquo; No discount.
+        The offer: a free lid with the win. Nothing marked down. Revenue as
+        Klaviyo attributed it.
       </div>
       <p className="result-card-note">
-        MLB plans start on Opening Day 2027. The same win triggers run today
-        for NFL, NBA, NHL, NCAA and Premier League teams.
+        Frost Buddy is licensed, so its emails show the team. Without a
+        license, Walkoff features your own products in the team&apos;s colors
+        instead. MLB plans start on Opening Day 2027; the same win triggers
+        run today for NFL, NBA, NHL, NCAA and Premier League teams.
       </p>
     </div>
   );
