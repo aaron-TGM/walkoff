@@ -188,6 +188,16 @@
     display: none;
   }
 }
+/* The smallest phones: the menu keeps its icon and its name for screen
+   readers, so the bar fits in 320px. */
+@media (max-width: 359px) {
+  .nav-logo {
+    height: 24px;
+  }
+  .nav-menu-text {
+    @apply sr-only;
+  }
+}
 
 /* Buttons — parallelogram via skewX */
 .btn-primary,
@@ -288,6 +298,16 @@
    inkMuted: inkFaint is 2.25:1 on cream, too faint for text people need. */
 .hero-note {
   @apply font-mono text-[0.75rem] uppercase tracking-[0.12em] text-inkMuted;
+}
+/* The early test, in one line, so the proof is on the first screens. */
+.hero-proof {
+  @apply mt-5 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[0.92rem] leading-snug text-inkMuted;
+}
+.hero-proof-badge {
+  @apply shrink-0 bg-grass px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-cream;
+}
+.hero-proof a {
+  @apply whitespace-nowrap font-bold text-redDeep underline underline-offset-2;
 }
 
 .result-card {
@@ -405,13 +425,6 @@ section.block {
 }
 .section-lead {
   @apply mb-12 max-w-[58ch] text-[1.1rem] leading-[1.55] text-inkMuted;
-}
-
-.moment-tags {
-  @apply flex flex-wrap gap-1.5;
-}
-.moment-tag {
-  @apply border border-rule bg-cream px-2 py-0.5 font-mono text-[0.55rem] uppercase tracking-[0.1em] text-inkMuted;
 }
 
 /* How */
@@ -875,7 +888,7 @@ select.form-input {
   }
 }
 
-/* Agent console (hero) */
+/* Agent console (the homepage's Claude section) */
 .console {
   @apply relative m-0 border-2 border-ink bg-ink font-mono text-cream;
   box-shadow: 12px 12px 0 rgb(200 68 42);
@@ -1105,6 +1118,9 @@ select.form-input {
   @apply border-2 border-ink bg-paper p-5;
   box-shadow: 8px 8px 0 rgb(200 68 42);
 }
+.moment-card-hero {
+  box-shadow: 12px 12px 0 rgb(200 68 42);
+}
 .moment-card-final {
   @apply flex items-center gap-2.5 bg-ink px-3 py-2 font-mono text-[0.78rem] font-semibold uppercase tracking-[0.06em] text-cream;
 }
@@ -1150,6 +1166,39 @@ select.form-input {
 }
 .moment-card-foot {
   @apply mt-4 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink;
+}
+.moment-card-foot-ok {
+  @apply text-grass;
+}
+/* An example email as an inbox shows it (components/ExampleEmail.tsx): the
+   subject, then the email in its own font, like the one Klaviyo sends. */
+.mini-email-subject {
+  @apply flex flex-col gap-0.5 border-b border-rule bg-cream px-3.5 py-2.5 text-[0.95rem] font-bold leading-tight;
+}
+.mini-email-subject span {
+  @apply font-mono text-[0.55rem] font-normal uppercase tracking-[0.15em] text-inkMuted;
+}
+.mini-email {
+  @apply bg-white px-4 pb-5 text-ink;
+  font-family: Helvetica, Arial, sans-serif;
+}
+.mini-email-stripe {
+  @apply -mx-4 mb-4 flex h-2;
+}
+.mini-email-stripe i {
+  @apply block h-full flex-1;
+}
+.mini-email-brand {
+  @apply text-[0.6rem] uppercase tracking-[0.18em] text-inkMuted;
+}
+.mini-email-h {
+  @apply mt-1.5 text-[1.5rem] font-bold leading-tight tracking-[-0.01em];
+}
+.mini-email .moment-card-items {
+  @apply mt-3;
+}
+.mini-email-cta {
+  @apply mx-auto mt-4 w-fit rounded bg-ink px-4 py-2 text-[0.75rem] font-bold text-white;
 }
 @media (max-width: 480px) {
   .moment-card {
@@ -1258,23 +1307,8 @@ select.form-input {
   color: rgb(244 239 228 / 0.45);
 }
 
-/* Moment categories */
-.category-grid {
-  @apply mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 layout:grid-cols-5;
-}
-.category-card {
-  @apply flex flex-col border border-rule bg-paper p-6;
-}
-.category-card-now {
-  @apply border-2 border-ink;
-  box-shadow: 6px 6px 0 rgb(200 68 42);
-}
-.category-head {
-  @apply mb-3 flex items-start justify-between gap-2;
-}
-.category-name {
-  @apply font-display text-[1.05rem] font-bold uppercase leading-tight;
-}
+/* Moment category badges: Next and Soon, on the roadmap line and the
+   trigger library's coming moments. */
 .category-badge {
   @apply flex-shrink-0 px-2 py-0.5 font-mono text-[0.55rem] uppercase tracking-[0.18em];
 }
@@ -1287,17 +1321,8 @@ select.form-input {
 .category-badge-soon {
   @apply border border-ruleDark text-inkMuted;
 }
-.category-body {
-  @apply mb-4 text-[0.85rem] leading-[1.55] text-inkMuted;
-}
-.category-card .moment-tags {
-  @apply mt-auto;
-}
 
 /* Trigger library */
-.trigger-library {
-  @apply mt-16;
-}
 .trigger-library-head {
   @apply flex flex-wrap items-end justify-between gap-2;
 }
@@ -1309,6 +1334,52 @@ select.form-input {
 }
 .trigger-library .trigger-section {
   @apply mt-4;
+}
+
+/* Hometown moments, beside an example */
+.hometown {
+  @apply mt-16 grid items-start gap-10 layout:mt-20 layout:grid-cols-[1.1fr_1fr] layout:gap-14;
+}
+.hometown-eyebrow {
+  @apply mb-3 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-red;
+}
+.hometown-title {
+  @apply mb-4 font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-extrabold uppercase leading-none tracking-[-0.01em];
+}
+.hometown-title em {
+  @apply mt-1 block;
+  font-family: var(--font-amerik), sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: rgb(200 68 42);
+  letter-spacing: 0.02em;
+}
+.hometown-body {
+  @apply mb-5 max-w-[52ch] text-[1rem] leading-[1.6] text-inkMuted;
+}
+.hometown-sources {
+  @apply mb-6 flex list-none flex-wrap gap-x-5 gap-y-2;
+}
+.hometown-sources li {
+  @apply flex items-center gap-2 font-display text-[0.95rem] font-bold uppercase;
+}
+.hometown-sources li::before {
+  content: "";
+  @apply inline-block h-1.5 w-1.5 rounded-full bg-red;
+}
+
+/* The categories still to come, in one line */
+.moments-next {
+  @apply mt-14 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-rule pt-6;
+}
+.moments-next-label {
+  @apply font-mono text-[0.62rem] uppercase tracking-[0.2em] text-inkMuted;
+}
+.moments-next-item {
+  @apply flex items-center gap-2 font-display text-[0.95rem] font-bold uppercase;
+}
+.moments-next-note {
+  @apply mt-3 text-[0.9rem] text-inkMuted;
 }
 
 /* Red band */
@@ -1344,7 +1415,7 @@ select.form-input {
   color: rgb(244 239 228 / 0.35);
 }
 .mcp-grid {
-  @apply grid gap-12 layout:grid-cols-[1.05fr_1fr] layout:items-start;
+  @apply grid gap-12 layout:grid-cols-[1.05fr_1fr] layout:items-center;
 }
 /* Let long code lines scroll inside the column instead of widening it. */
 .mcp-grid > * {
@@ -1372,31 +1443,24 @@ select.form-input {
 .mcp-notes-badge {
   @apply mr-2 bg-mustard px-2 py-0.5 font-mono text-[0.55rem] uppercase tracking-[0.18em] text-ink;
 }
-.mcp-tools {
-  @apply grid gap-3 sm:grid-cols-2;
+.mcp-asks-label {
+  @apply mb-3 font-mono text-[0.6rem] uppercase tracking-[0.2em];
+  color: rgb(244 239 228 / 0.5);
 }
-.mcp-tool {
-  @apply p-5 transition-colors;
+.mcp-asks {
+  @apply mb-8 grid list-none gap-2;
+}
+.mcp-asks li {
+  @apply flex items-baseline gap-2.5 px-4 py-3 font-display text-[1rem] font-bold leading-snug text-cream;
   border: 1px solid rgb(244 239 228 / 0.14);
-  background: rgb(244 239 228 / 0.03);
+  background: rgb(244 239 228 / 0.04);
 }
-.mcp-tool:hover {
-  border-color: rgb(200 68 42);
+.mcp-asks li span {
+  @apply font-mono text-red;
 }
-.mcp-tool-name {
-  @apply mb-1.5 break-all font-mono text-[0.78rem] font-semibold text-mustard;
-}
-.mcp-tool-name::before {
-  content: "walkoff.";
-  color: rgb(244 239 228 / 0.4);
-  font-weight: 400;
-}
-.mcp-tool-soon {
-  @apply ml-2 bg-mustard px-1.5 py-0.5 align-middle font-mono text-[0.5rem] font-normal uppercase tracking-[0.18em] text-ink;
-}
-.mcp-tool-body {
-  @apply text-[0.85rem] leading-[1.5];
-  color: rgb(244 239 228 / 0.65);
+/* The example session is a picture of the asks, so phones get the asks. */
+.mcp-console {
+  @apply hidden layout:block;
 }
 
 /* Control */
@@ -2228,6 +2292,41 @@ select.form-input {
 }
 .upload-help a {
   @apply text-red underline;
+}
+
+/* The homepage on phones: less air between sections, no How it works
+   snippets (they're decoration), and fan map cards two to a row. */
+@media (max-width: 879px) {
+  section.block,
+  .dark-block {
+    @apply py-14;
+  }
+  .how-step .how-step-visual {
+    display: none;
+  }
+}
+@media (max-width: 639px) {
+  .audience-card {
+    @apply p-5;
+  }
+  .audience-num {
+    @apply mb-2 text-[1.75rem];
+  }
+  .affinity-grid {
+    @apply grid-cols-2 gap-3;
+  }
+  .affinity-grid .affinity-card {
+    @apply p-4;
+  }
+  .affinity-grid .affinity-lift {
+    font-size: 2.5rem;
+  }
+  .affinity-grid .affinity-group {
+    @apply text-[0.9rem];
+  }
+  .affinity-grid .affinity-match {
+    @apply mt-3 pt-3 text-[0.8rem];
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

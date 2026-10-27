@@ -22,7 +22,7 @@ import { HELP_PAGES, helpMetadata, helpUrl } from "./pages";
 import { sampleCampaign, sampleCopyRules, sampleEmailHtml, SAMPLE_TEAM, timingExamples } from "./samples";
 import { SESSIONS } from "./sessions";
 import { SHOPIFY } from "./shopify";
-import { HELP_TOOLS, HOME_TOOLS, type HelpTool } from "./tools";
+import { HELP_TOOLS, HOME_ASKS, type HelpTool } from "./tools";
 import { TROUBLE } from "./troubleshooting";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
@@ -116,8 +116,10 @@ describe("tool reference", () => {
     await client.close();
   });
 
-  it("the homepage lists only real tools, or marks them coming", () => {
-    for (const t of HOME_TOOLS) assert.ok(t.name in HELP_TOOLS || "soon" in t, t.name);
+  it("the homepage's asks are real asks of real tools", () => {
+    assert.equal(HOME_ASKS.length, 4);
+    const asks = new Set(Object.values(HELP_TOOLS).flatMap((t) => t.asks));
+    for (const a of HOME_ASKS) assert.ok(a && asks.has(a), a);
   });
 
   it("examples only call tools members have", () => {

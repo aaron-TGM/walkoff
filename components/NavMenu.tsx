@@ -16,7 +16,7 @@ export function NavMenu({ links }: { links: { href: string; label: string }[] })
           <i />
           <i />
         </span>
-        Menu
+        <span className="nav-menu-text">Menu</span>
       </summary>
       <div className="nav-menu-panel">
         {links.map((l) => (

@@ -12,6 +12,9 @@ const TEAM_SENDS = [
   { team: "Giants", img: "giants", color: "#fd5a1e" },
 ];
 
+/** Frost Buddy's early test, for the proof card and the hero's one-liner. */
+export const RESULT = { brand: "Frost Buddy", sends: TEAM_SENDS.length, revenue: "$5,689" };
+
 // Results from an early Walkoff test, shown in the proof section. Revenue per
 // recipient is across all 7 sends ($5,689 over 16K recipients), like the
 // click rate, not the best single send.
@@ -23,10 +26,12 @@ export function ResultCard() {
         Early test
       </div>
       <div className="result-card-meta">
-        Frost Buddy &middot; Licensed brand &middot; MLB win triggers
+        {RESULT.brand} &middot; Licensed brand &middot; MLB win triggers
       </div>
-      <div className="result-card-title">7 teams. 7 win-triggered emails.</div>
-      <div className="result-card-headline">$5,689 in revenue.</div>
+      <div className="result-card-title">
+        {RESULT.sends} teams. {RESULT.sends} win-triggered emails.
+      </div>
+      <div className="result-card-headline">{RESULT.revenue} in revenue.</div>
       <div className="result-card-sends-label">
         One email per team, the night they won
       </div>

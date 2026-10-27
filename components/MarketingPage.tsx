@@ -3,9 +3,10 @@ import Link from "next/link";
 import { AgentConsole } from "@/components/AgentConsole";
 import { BrandSpan } from "@/components/BrandSpan";
 import { Eyebrow } from "@/components/Eyebrow";
+import { HeroCampaign, HometownExample } from "@/components/ExampleEmail";
 import { FaqItem } from "@/components/FaqItem";
 import { PricingPicker } from "@/components/PricingPicker";
-import { ResultCard } from "@/components/ResultCard";
+import { RESULT, ResultCard } from "@/components/ResultCard";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav } from "@/components/SiteNav";
 import { Ticker } from "@/components/Ticker";
@@ -15,12 +16,13 @@ import { WaitlistForm } from "@/components/WaitlistForm";
 import { CONNECTOR_STEPS, CONNECTOR_URL } from "@/lib/connect";
 import { TOUR_FACTS } from "@/lib/help/moments";
 import { helpPath } from "@/lib/help/pages";
-import { HOME_TOOLS } from "@/lib/help/tools";
+import { HOME_ASKS } from "@/lib/help/tools";
+import { hometownLive } from "@/lib/hometown/flag";
 import { LEAGUES } from "@/lib/leagues";
 import { MOMENT_CATEGORIES, MOMENT_STATUS_LABEL } from "@/lib/moments";
 import { SEND_HOURS } from "@/lib/mcp/timing";
 import { PRICING } from "@/lib/pricing";
-import { brandTriggers, TRIGGER_CATEGORIES } from "@/lib/triggers";
+import { TRIGGER_CATEGORIES, TRIGGERS } from "@/lib/triggers";
 
 const AUDIENCES = [
   {
@@ -164,8 +166,8 @@ const CONTROLS = [
     body: "Every message waits for your yes. You see the moment, the audience and the message before anything sends.",
   },
   {
-    title: "Triggers",
-    body: "Pick the moments that matter, like walk-off wins in your top markets. They land in your queue, and you still say go.",
+    title: "Never your whole list",
+    body: "Each campaign goes to one segment: customers in that team's territory, or a circle around one town.",
   },
   {
     title: "Send timing",
@@ -177,11 +179,11 @@ const CONTROLS = [
   },
   {
     title: "Copy rules",
-    body: "Without a license, copy never names the team, league, players or event. Your products in their colors do the talking.",
+    body: "Without a license, copy never names the team, league, event or any athlete. Your products in their colors do the talking.",
   },
   {
     title: "Skip any moment",
-    body: "Not every win fits your brand. Skip it and it leaves your queue.",
+    body: "Not every win fits your brand. Skip it and it leaves your queue, or set triggers so only the moments you want show up.",
   },
 ];
 
@@ -199,15 +201,10 @@ const PROOF_POINTS: { title: string; body: string; soon?: true }[] = [
     body: "A random slice of every audience doesn't get the message, so you see what the moment added, not just who clicked.",
     soon: true,
   },
-  {
-    title: "Benchmarks",
-    body: "Compare against brands like yours. We pool results, never customers.",
-    soon: true,
-  },
 ];
 
 export function MarketingPage() {
-  const triggers = brandTriggers();
+  const hometown = hometownLive();
   return (
     <>
       <SiteNav />
@@ -241,9 +238,17 @@ export function MarketingPage() {
                 {PRICING.trialDays} days free &middot; No credit card &middot;{" "}
                 <span className="inline-block">In Claude, with Shopify and Klaviyo</span>
               </div>
+              <p className="hero-proof">
+                <span className="hero-proof-badge">Early test</span>
+                <span>
+                  {RESULT.brand}: {RESULT.sends} win emails, {RESULT.revenue} in
+                  revenue.{" "}
+                  <a href="#proof">See the test</a>
+                </span>
+              </p>
             </div>
 
-            <AgentConsole />
+            <HeroCampaign />
           </div>
         </div>
       </section>
@@ -394,173 +399,6 @@ export function MarketingPage() {
         </div>
       </section>
 
-      {/* ─── AFFINITY ────────────────────────────────────────── */}
-      <section className="dark-block" id="affinity">
-        <div className="container-w">
-          <div className="block-num block-num-dark">
-            <span className="eyebrow-dot" aria-hidden />
-            Your fan map
-          </div>
-          <h2 className="section-title section-title-stack">
-            Day one, you learn{" "}
-            <em>something new about your customers.</em>
-          </h2>
-          <p className="section-lead section-lead-dark">
-            Connect your Shopify store in Claude and Walkoff shows which team
-            territories hold more of your customers than population predicts,
-            then matches your products to each team, down to the colorway. Each
-            standout is a segment you can email the next time that team wins.
-          </p>
-          <div className="affinity-grid">
-            {AFFINITY_EXAMPLES.map((a) => (
-              <div key={a.group} className="affinity-card">
-                <div className="affinity-lift">{a.lift}</div>
-                <div className="affinity-group">{a.group}</div>
-                <div className="affinity-customers">
-                  {a.customers} customers
-                </div>
-                <div className="affinity-match">
-                  <span>Top match</span>
-                  <Swatches hex={a.swatches} />
-                  {a.match}
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="affinity-foot">
-            Example map. 2.4&times; means 2.4 times more of your customers live
-            there than population alone would predict.
-          </p>
-        </div>
-      </section>
-
-      {/* ─── MOMENTS ─────────────────────────────────────────── */}
-      <section className="block" id="moments">
-        <div className="container-w">
-          <div className="block-num">
-            <span className="eyebrow-dot" aria-hidden />
-            Moments
-          </div>
-          <h2 className="section-title section-title-stack">
-            Sports first. <em>Then everything that moves your customers.</em>
-          </h2>
-          <div className="category-grid">
-            {MOMENT_CATEGORIES.map((c) => (
-              <div
-                key={c.id}
-                className={`category-card category-card-${c.status}`}
-              >
-                <div className="category-head">
-                  <div className="category-name">{c.name}</div>
-                  <span className={`category-badge category-badge-${c.status}`}>
-                    {MOMENT_STATUS_LABEL[c.status]}
-                  </span>
-                </div>
-                <p className="category-body">{c.description}</p>
-                <div className="moment-tags">
-                  {c.examples.map((ex) => (
-                    <span key={ex} className="moment-tag">
-                      {ex}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="trigger-library">
-            <div className="trigger-library-head">
-              <div className="trigger-library-title">
-                The sports trigger library
-              </div>
-              <div className="trigger-library-count">
-                {triggers.filter((t) => !t.coming).length} live,{" "}
-                {triggers.filter((t) => t.coming).length} coming &middot; every
-                brand gets all of them
-              </div>
-            </div>
-            <div className="trigger-section">
-              {TRIGGER_CATEGORIES.map((cat) => (
-                <TriggerCategory
-                  key={cat.id}
-                  categoryId={cat.id}
-                  label={cat.label}
-                  items={triggers.filter((t) => t.category === cat.id)}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── RED BAND ────────────────────────────────────────── */}
-      <section className="red-band" aria-label="Why timing matters">
-        <div className="container-w">
-          <p className="red-band-line">
-            The first brand in the inbox
-            <span>owns the moment.</span>
-          </p>
-        </div>
-      </section>
-
-      {/* ─── MCP ─────────────────────────────────────────────── */}
-      <section className="dark-block" id="mcp">
-        <div className="container-w">
-          <div className="mcp-grid">
-            <div>
-              <div className="block-num block-num-dark">
-                <span className="eyebrow-dot" aria-hidden />
-                Works in Claude
-              </div>
-              <h2 className="section-title">
-                Ask what to send. <em>Get the campaign.</em>
-              </h2>
-              <p className="section-lead section-lead-dark">
-                Walkoff runs inside Claude, next to the Shopify and Klaviyo
-                connectors your team already uses. Ask in plain words. Walkoff
-                finds the moment and builds the campaign, your Klaviyo
-                connector drafts it, and you hit send.
-              </p>
-              <div className="code-block">
-                <span className="c">{`# Claude: ${CONNECTOR_STEPS}`}</span>
-                {"\n"}
-                <span className="s">{CONNECTOR_URL}</span>
-              </div>
-              <ul className="mcp-notes">
-                <li>
-                  <span className="mcp-notes-badge">Early access</span>
-                  Invited brands sign in with their work email. Ask us for an
-                  invite.
-                </li>
-                <li>
-                  The engine watches every game around the clock, so the
-                  moment is already in your queue when you open Claude.
-                </li>
-                <li>
-                  Every tool, and what to ask it:{" "}
-                  <Link href={helpPath("tools")}>Tools and asks</Link>.
-                </li>
-                <li>
-                  Using Claude Code?{" "}
-                  <Link href={helpPath("connect", "claude-code")}>Here&apos;s the command</Link>.
-                </li>
-              </ul>
-            </div>
-            <div className="mcp-tools">
-              {HOME_TOOLS.map((t) => (
-                <div key={t.name} className="mcp-tool">
-                  <div className="mcp-tool-name">
-                    {t.name}
-                    {"soon" in t && <span className="mcp-tool-soon">Coming</span>}
-                  </div>
-                  <p className="mcp-tool-body">{t.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ─── CONTROL ─────────────────────────────────────────── */}
       <section className="block" id="control">
         <div className="container-w">
@@ -619,6 +457,203 @@ export function MarketingPage() {
               </ul>
             </div>
             <ResultCard />
+          </div>
+        </div>
+      </section>
+
+      {/* ─── AFFINITY ────────────────────────────────────────── */}
+      <section className="dark-block" id="affinity">
+        <div className="container-w">
+          <div className="block-num block-num-dark">
+            <span className="eyebrow-dot" aria-hidden />
+            Your fan map
+          </div>
+          <h2 className="section-title section-title-stack">
+            Day one, you learn{" "}
+            <em>something new about your customers.</em>
+          </h2>
+          <p className="section-lead section-lead-dark">
+            Connect your Shopify store in Claude and Walkoff shows which team
+            territories hold more of your customers than population predicts,
+            then matches your products to each team, down to the colorway. Each
+            standout is a segment you can email the next time that team wins.
+          </p>
+          <div className="affinity-grid">
+            {AFFINITY_EXAMPLES.map((a) => (
+              <div key={a.group} className="affinity-card">
+                <div className="affinity-lift">{a.lift}</div>
+                <div className="affinity-group">{a.group}</div>
+                <div className="affinity-customers">
+                  {a.customers} customers
+                </div>
+                <div className="affinity-match">
+                  <span>Top match</span>
+                  <Swatches hex={a.swatches} />
+                  {a.match}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="affinity-foot">
+            Example map. 2.4&times; means 2.4 times more of your customers live
+            there than population alone would predict.
+          </p>
+        </div>
+      </section>
+
+      {/* ─── MOMENTS ─────────────────────────────────────────── */}
+      <section className="block" id="moments">
+        <div className="container-w">
+          <div className="block-num">
+            <span className="eyebrow-dot" aria-hidden />
+            Moments
+          </div>
+          <h2 className="section-title">
+            The moments <em>worth an email.</em>
+          </h2>
+          <p className="section-lead">
+            Wins, walk-offs, comebacks, rivalry games, titles and big signings,
+            from every game Walkoff watches. Each one lands in your queue in
+            Claude, most urgent first.{" "}
+            <Link href="/status" className="section-lead-link">
+              See the engine live
+            </Link>
+          </p>
+
+          <div className="trigger-library">
+            <div className="trigger-library-head">
+              <div className="trigger-library-title">Team moments</div>
+              <div className="trigger-library-count">
+                {TRIGGERS.filter((t) => !t.coming).length} live,{" "}
+                {TRIGGERS.filter((t) => t.coming).length} coming &middot; every
+                brand gets all of them
+              </div>
+            </div>
+            <div className="trigger-section">
+              {TRIGGER_CATEGORIES.map((cat) => (
+                <TriggerCategory
+                  key={cat.id}
+                  categoryId={cat.id}
+                  label={cat.label}
+                  items={TRIGGERS.filter((t) => t.category === cat.id)}
+                  defaultOpen={cat.id === "after"}
+                />
+              ))}
+            </div>
+          </div>
+
+          {hometown ? (
+            <div className="hometown">
+              <div>
+                <div className="hometown-eyebrow">Hometown moments</div>
+                <h3 className="hometown-title">
+                  Someone from town wins. <em>The town celebrates.</em>
+                </h3>
+                <p className="hometown-body">
+                  When someone from a town near your customers wins a title, a
+                  tournament or a race, or wins a playoff game at the very end,
+                  that town gets its own moment, if enough of your customers
+                  live there. The email goes to a circle around the town, never
+                  your whole list, and it celebrates the town. It never names or
+                  describes the athlete.
+                </p>
+                <ul className="hometown-sources">
+                  <li>Titles</li>
+                  <li>Playoff game-winners</li>
+                  {TOUR_FACTS.map((t) => (
+                    <li key={t.sport}>{t.sport}</li>
+                  ))}
+                </ul>
+                <Link href={helpPath("moments", "hometown")} className="section-lead-link">
+                  How hometown moments work
+                </Link>
+              </div>
+              <HometownExample />
+            </div>
+          ) : null}
+
+          <div className="moments-next">
+            <span className="moments-next-label">On the way</span>
+            {MOMENT_CATEGORIES.filter((c) => c.status !== "now").map((c) => (
+              <span key={c.id} className="moments-next-item">
+                {c.name}
+                <span className={`category-badge category-badge-${c.status}`}>
+                  {MOMENT_STATUS_LABEL[c.status]}
+                </span>
+              </span>
+            ))}
+          </div>
+          <p className="moments-next-note">
+            Every new category comes with your plan as it launches.
+          </p>
+        </div>
+      </section>
+
+      {/* ─── RED BAND ────────────────────────────────────────── */}
+      <section className="red-band" aria-label="Why timing matters">
+        <div className="container-w">
+          <p className="red-band-line">
+            The first brand in the inbox
+            <span>owns the moment.</span>
+          </p>
+        </div>
+      </section>
+
+      {/* ─── MCP ─────────────────────────────────────────────── */}
+      <section className="dark-block" id="mcp">
+        <div className="container-w">
+          <div className="mcp-grid">
+            <div>
+              <div className="block-num block-num-dark">
+                <span className="eyebrow-dot" aria-hidden />
+                Works in Claude
+              </div>
+              <h2 className="section-title">
+                Ask what to send. <em>Get the campaign.</em>
+              </h2>
+              <p className="section-lead section-lead-dark">
+                Walkoff runs inside Claude, next to the Shopify and Klaviyo
+                connectors your team already uses. Ask in plain words. Walkoff
+                finds the moment and builds the campaign, your Klaviyo
+                connector drafts it, and you hit send.
+              </p>
+              <div className="mcp-asks-label">Ask Claude</div>
+              <ul className="mcp-asks">
+                {HOME_ASKS.map((a) => (
+                  <li key={a}>
+                    <span aria-hidden>&rsaquo;</span>
+                    {a}
+                  </li>
+                ))}
+              </ul>
+              <div className="code-block">
+                <span className="c">{`# Claude: ${CONNECTOR_STEPS}`}</span>
+                {"\n"}
+                <span className="s">{CONNECTOR_URL}</span>
+              </div>
+              <ul className="mcp-notes">
+                <li>
+                  <span className="mcp-notes-badge">Early access</span>
+                  Invited brands sign in with their work email. Ask us for an
+                  invite.
+                </li>
+                <li>
+                  The engine watches every game around the clock, so the
+                  moment is already in your queue when you open Claude.
+                </li>
+                <li>
+                  Every tool, and what to ask it:{" "}
+                  <Link href={helpPath("tools")}>Tools and asks</Link>.
+                </li>
+                <li>
+                  Using Claude Code?{" "}
+                  <Link href={helpPath("connect", "claude-code")}>Here&apos;s the command</Link>.
+                </li>
+              </ul>
+            </div>
+            <div className="mcp-console">
+              <AgentConsole />
+            </div>
           </div>
         </div>
       </section>
