@@ -40,6 +40,14 @@ const AUDIENCES = [
   },
 ];
 
+// The founder's example: a brand with no license, its own catalog, a
+// team's colors.
+const MOMENT_PICKS = [
+  { title: "Everyday Jogger", colorway: "Azure Heather", hex: "2e8bd8" },
+  { title: "Sunday Hoodie", colorway: "Sunflower", hex: "ffc512" },
+  { title: "Coastal Crew", colorway: "Gold", hex: "ffb81c" },
+];
+
 const STEPS = [
   {
     title: "Connect your store in Claude",
@@ -297,6 +305,15 @@ export function MarketingPage() {
             <div className="moment-card" aria-label="Example: the email that goes out after a win">
               <div className="moment-card-final">
                 <span>Final</span>Chargers 27, Chiefs 20
+              </div>
+              <div className="moment-card-items">
+                {MOMENT_PICKS.map((p) => (
+                  <div key={p.colorway} className="moment-card-item">
+                    <span className="moment-card-photo" style={{ backgroundColor: `#${p.hex}` }} aria-hidden />
+                    <b>{p.title}</b>
+                    <span>{p.colorway}</span>
+                  </div>
+                ))}
               </div>
               <div className="moment-card-meta">
                 Ready 2 minutes later &middot; 2,310 customers in their territory
