@@ -2,7 +2,7 @@
 // wrappers around these, so the flow can be tested end to end.
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { authorizationServerMetadata, canonicalResource, COOKIE, CORS, LIMITS, protectedResourceMetadata, SCOPE, TTL } from "./config";
-import { ClientError, getClient, redirectAllowed, redirectHost, registerClient, type OAuthClient } from "./clients";
+import { appName, ClientError, getClient, redirectAllowed, redirectHost, registerClient, type OAuthClient } from "./clients";
 import { CHALLENGE, pkceMatches, randomToken, sameHash, sixDigits } from "./crypto";
 import { sendSignInCode } from "./email";
 import { callerKey, overLimit, sweep } from "./limits";
@@ -82,13 +82,11 @@ function readCookie(req: Request, requestId: string): string | null {
   return null;
 }
 
-function appName(client: OAuthClient): string {
-  if (client.client_name) return client.client_name;
-  if (client.kind === "cimd") return new URL(client.client_id).hostname;
-  return "An app";
-}
-
-const view = (r: AuthRequest, client: OAuthClient): FlowView => ({ requestId: r.id, app: appName(client), returnTo: redirectHost(r.redirect_uri) });
+const view = (r: AuthRequest, client: OAuthClient): FlowView => ({
+  requestId: r.id,
+  app: appName(client, r.redirect_uri),
+  returnTo: redirectHost(r.redirect_uri),
+});
 
 /** Back to the app, with a code or an error (RFC 9207: always the issuer). */
 function backTo(redirectUri: string, params: Record<string, string | null>, headers: Record<string, string> = {}): Response {

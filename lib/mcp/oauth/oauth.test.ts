@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { isMetadataUrl, privateAddress, readMetadataDocument, redirectAllowed, redirectHost, validRedirectUri } from "./clients";
+import { appName, isMetadataUrl, privateAddress, readMetadataDocument, redirectAllowed, redirectHost, validRedirectUri, type OAuthClient } from "./clients";
 import { authorizationServerMetadata, canonicalResource, protectedResourceMetadata } from "./config";
 import { pkceMatches } from "./crypto";
 import { stillAllowed } from "./store";
@@ -36,6 +36,22 @@ describe("redirect addresses", () => {
     assert.equal(redirectHost("https://claude.ai/api/mcp/auth_callback"), "claude.ai");
     assert.equal(redirectHost("http://localhost:54123/callback"), "localhost:54123");
     assert.equal(redirectHost("com.example.app:/oauth"), "com.example.app");
+  });
+
+  it("calls an app by its own name only when it comes back to Claude or this device", () => {
+    const claude = (redirect: string, kind: OAuthClient["kind"] = "dcr"): [OAuthClient, string] => [
+      { client_id: "https://evil.example/c.json", client_name: "Claude", redirect_uris: [redirect], kind },
+      redirect,
+    ];
+    assert.equal(appName(...claude("https://claude.ai/api/mcp/auth_callback", "cimd")), "Claude");
+    assert.equal(appName(...claude("https://app.claude.com/callback")), "Claude");
+    assert.equal(appName(...claude("http://localhost:54123/callback")), "Claude");
+    assert.equal(appName(...claude("com.example.app:/oauth")), "Claude");
+    assert.equal(appName(...claude("https://evil.example/cb", "cimd")), "evil.example");
+    assert.equal(appName(...claude("https://claude.ai.evil.example/cb")), "claude.ai.evil.example");
+    assert.equal(appName(...claude("https://evilclaude.ai/cb")), "evilclaude.ai");
+    const unnamed: OAuthClient = { client_id: "wo_client_x", client_name: null, redirect_uris: [], kind: "dcr" };
+    assert.equal(appName(unnamed, "http://localhost/callback"), "An app");
   });
 });
 

@@ -65,6 +65,22 @@ export function redirectHost(uri: string): string {
   return u.protocol === "https:" || u.protocol === "http:" ? u.host : u.protocol.replace(/:$/, "");
 }
 
+/** Claude's own sites, where Claude's connector comes back to. */
+const CLAUDE_HOSTS = /(^|\.)(claude\.ai|claude\.com|anthropic\.com)$/;
+
+/** What the consent screen and the code email call the app. Any app can
+ *  name itself "Claude", and the code goes wherever it comes back to, so an
+ *  app that comes back to a website other than Claude's is called by that
+ *  site's address. One that comes back to Claude, or to an app on this
+ *  device, keeps its own name. */
+export function appName(client: OAuthClient, redirectUri: string): string {
+  const u = parse(redirectUri);
+  if (u?.protocol === "https:" && !CLAUDE_HOSTS.test(u.hostname)) return u.host;
+  if (client.client_name) return client.client_name;
+  if (client.kind === "cimd") return new URL(client.client_id).hostname;
+  return "An app";
+}
+
 /** A client ID that's a metadata document URL: https, a path, and a public
  *  host name (not an IP address or a local name). */
 export function isMetadataUrl(clientId: string): boolean {

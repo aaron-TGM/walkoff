@@ -29,7 +29,10 @@ the address Claude connected to.
 
 Signing in: Walkoff emails a 6-digit code to the person's work email, they
 pick which brands Claude may use, and approve. The consent page names the app
-and where it sends them back (claude.ai, or localhost for Claude Code).
+and where it sends them back (claude.ai, or localhost for Claude Code). Any
+app can call itself Claude, so one that sends people back to a website other
+than Claude's is named by that site's address instead, there and in the code
+email.
 
 ## Who can sign in
 
