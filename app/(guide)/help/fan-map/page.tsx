@@ -105,7 +105,8 @@ export default function FanMapPage() {
       <HelpSection page={P} id="example">
         <p>
           This is the map for {DEMO_BRAND}, a sample Southern California brand with no team
-          license, made by the same code as yours.
+          license and a following in Wisconsin it wouldn&apos;t have guessed, made by the same
+          code as yours.
         </p>
         <div className="help-report">
           <AffinityReportView report={report} />

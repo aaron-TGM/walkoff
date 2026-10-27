@@ -12,6 +12,11 @@ export const PLATFORMS = [
   "Other / not sure",
 ] as const;
 
+/** Where the demo map (/upload/demo) leaves the standout teams from a
+ *  visitor's own file, for the early access form's Teams field. Team names
+ *  only, in this tab only: nothing else from the file, and never in a URL. */
+export const DEMO_TEAMS_KEY = "walkoff:demo-teams";
+
 export interface WaitlistSubmission {
   company: string;
   email: string;

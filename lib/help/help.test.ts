@@ -14,12 +14,13 @@ import { SHOPIFY_TOOLS, SHOPIFYQL } from "../affinity/shopify-counts";
 import { parseCustomerUpload } from "../affinity/validate";
 import { KLAVIYO_TOOLS } from "../mcp/campaign";
 import { createWalkoffServer } from "../mcp/server";
+import { teamByKey } from "../mcp/teams";
 import { noDb } from "../testing/fake-db";
 import { assertNeverNames } from "../testing/names";
 import { KLAVIYO_FLOW } from "./klaviyo";
 import { FINISHES } from "./moments";
 import { HELP_PAGES, helpMetadata, helpUrl } from "./pages";
-import { sampleCampaign, sampleCopyRules, sampleEmailHtml, SAMPLE_TEAM, timingExamples } from "./samples";
+import { mapHighlights, sampleCampaign, sampleCopyRules, sampleEmailHtml, SAMPLE_TEAM, timingExamples } from "./samples";
 import { SESSIONS } from "./sessions";
 import { SHOPIFY } from "./shopify";
 import { HELP_TOOLS, HOME_ASKS, type HelpTool } from "./tools";
@@ -114,6 +115,15 @@ describe("tool reference", () => {
     assert.ok(prompts.some((p) => p.name === "set_up_brand" && p.title === "Set up from Shopify"));
     assert.ok(client.getInstructions()?.includes("https://www.walkoff.io/help"), "Claude knows where the help is");
     await client.close();
+  });
+
+  it("the homepage's map is the demo's: two standouts near home, two it wouldn't have guessed", () => {
+    const map = mapHighlights(2, 2);
+    assert.equal(map.length, 4);
+    const regions = map.map((g) => teamByKey(`${g.league}:${g.teamId}`)?.team.region);
+    assert.deepEqual(regions.slice(0, 2), ["CA", "CA"]);
+    for (const r of regions.slice(2)) assert.ok(r && r !== "CA", "two away from California");
+    for (const g of map) assert.ok(g.picks?.length, `${g.teamName} has something to feature`);
   });
 
   it("the homepage's asks are real asks of real tools", () => {

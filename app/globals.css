@@ -1274,6 +1274,13 @@ select.form-input {
   @apply mt-6 font-mono text-[0.75rem] uppercase leading-relaxed tracking-[0.1em];
   color: rgb(244 239 228 / 0.6);
 }
+.affinity-actions {
+  @apply mt-8 flex flex-wrap items-center gap-x-5 gap-y-3;
+}
+.affinity-actions-note {
+  @apply font-mono text-[0.68rem] uppercase tracking-[0.15em];
+  color: rgb(244 239 228 / 0.6);
+}
 .swatches {
   @apply ml-2 inline-flex shrink-0 gap-1 align-[0.1em];
 }
@@ -2207,6 +2214,25 @@ select.form-input {
 .upload-invited a {
   @apply text-red underline;
 }
+/* The demo's next step, right under the map */
+.demo-cta {
+  @apply mt-10 grid items-center gap-6 border-2 border-ink bg-paper p-6 layout:grid-cols-[1fr_auto] layout:gap-10 layout:p-8;
+  box-shadow: 8px 8px 0 rgb(200 68 42);
+}
+.demo-cta-title {
+  @apply mb-3 font-display text-[clamp(1.4rem,2.4vw,1.9rem)] font-extrabold uppercase leading-none tracking-[-0.01em];
+}
+.demo-cta-title em {
+  @apply mt-1 block;
+  font-family: var(--font-amerik), sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: rgb(200 68 42);
+  letter-spacing: 0.02em;
+}
+.demo-cta p {
+  @apply max-w-[58ch] text-[0.98rem] leading-[1.55] text-inkMuted;
+}
 .upload-try {
   @apply mt-12 border-t-2 border-ink pt-2;
 }
@@ -2262,6 +2288,12 @@ select.form-input {
 }
 .report-table td:first-child {
   @apply max-w-[12rem] truncate;
+}
+/* The smallest phones: long team names wrap, so the table fits. */
+@media (max-width: 359px) {
+  .report-table td:first-child {
+    white-space: normal;
+  }
 }
 .report-up {
   @apply font-bold text-grass;
