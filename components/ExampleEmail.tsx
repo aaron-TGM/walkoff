@@ -61,7 +61,8 @@ export function HeroCampaign() {
   );
 }
 
-/** A hometown title in San Clemente: one circle, and the town, never the athlete. */
+/** A hometown title in San Clemente: one circle, and the town, never the
+ *  athlete. The card names him to say why the email wears Seattle's colors. */
 export async function HometownExample() {
   const c = await sampleHometownCampaign();
   const [circle] = c.audience.circles;
@@ -74,8 +75,11 @@ export async function HometownExample() {
       <div className="moment-card-meta">
         Example &middot; within {circle.radius_miles} miles of {circle.postal_code}
       </div>
+      <p className="moment-card-why">
+        <b>Why navy and green?</b> Sam Darnold plays for the Seahawks, and he&apos;s from San Clemente.
+      </p>
       <MiniEmail subject={c.subject_lines[0]} headline={c.headline} products={c.products} stripe={SAMPLE_CHAMPION.team.colors} cta={c.cta.label} />
-      <figcaption className="moment-card-foot">Celebrates the town. Never names the athlete.</figcaption>
+      <figcaption className="moment-card-foot">The email celebrates the town. It never names him.</figcaption>
     </figure>
   );
 }

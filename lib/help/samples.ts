@@ -68,8 +68,9 @@ export function sampleCampaign() {
   });
 }
 
-/** A hometown title for the demo brand: someone from San Clemente is on the
- *  champion's roster, and the champion wears navy and green. */
+/** A hometown title for the demo brand: Sam Darnold is from San Clemente and
+ *  plays for Seattle, so their title is the town's moment, in Seattle's navy
+ *  and green. The homepage card says so (components/ExampleEmail.tsx). */
 export const SAMPLE_TOWN = "San Clemente, CA";
 export const SAMPLE_CHAMPION = teamByKey("nfl:26")!;
 
