@@ -9,6 +9,7 @@ import { PricingPicker } from "@/components/PricingPicker";
 import { RESULT, ResultCard } from "@/components/ResultCard";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav } from "@/components/SiteNav";
+import { leagueSport, SportIcon } from "@/components/SportIcon";
 import { Ticker } from "@/components/Ticker";
 import { TriggerCategory } from "@/components/TriggerCategory";
 import { Swatches } from "@/components/upload/AffinityReportView";
@@ -261,6 +262,7 @@ export function MarketingPage() {
             <ul className="league-strip-list">
               {LEAGUES.map((l) => (
                 <li key={l.id}>
+                  <SportIcon sport={leagueSport(l)} />
                   {l.name}
                   {l.note ? <span className="league-strip-note">{l.note}</span> : null}
                 </li>
@@ -271,7 +273,10 @@ export function MarketingPage() {
             <span className="league-strip-label">Plus hometown moments from</span>
             <ul className="league-strip-list">
               {TOUR_FACTS.map((t) => (
-                <li key={t.sport}>{t.sport}</li>
+                <li key={t.sport}>
+                  <SportIcon sport={t.sport} />
+                  {t.sport}
+                </li>
               ))}
             </ul>
           </div>
@@ -529,7 +534,10 @@ export function MarketingPage() {
                   <li>Titles</li>
                   <li>Playoff game-winners</li>
                   {TOUR_FACTS.map((t) => (
-                    <li key={t.sport}>{t.sport}</li>
+                    <li key={t.sport}>
+                      <SportIcon sport={t.sport} />
+                      {t.sport}
+                    </li>
                   ))}
                 </ul>
                 <Link href={helpPath("moments", "hometown")} className="section-lead-link">
@@ -644,13 +652,19 @@ export function MarketingPage() {
               </span>
             </div>
             <div className="integration-item">
-              <div className="integration-name">Shopify</div>
+              <div className="integration-lockup">
+                <Image src="/shopify_logo.svg" alt="" width={24} height={24} unoptimized className="integration-mark" />
+                <span className="integration-name">Shopify</span>
+              </div>
               <span className="integration-badge integration-badge-live">
                 Live
               </span>
             </div>
             <div className="integration-item">
-              <div className="integration-name">Claude</div>
+              <div className="integration-lockup">
+                <Image src="/claude_logo.svg" alt="" width={24} height={24} unoptimized className="integration-mark" />
+                <span className="integration-name">Claude</span>
+              </div>
               <span className="integration-badge integration-badge-live">
                 Live
               </span>
@@ -894,16 +908,10 @@ export function MarketingPage() {
       {/* ─── FINAL CTA ───────────────────────────────────────── */}
       <section className="final-cta">
         <div className="container-narrow">
-          <div className="final-cta-script">
-            <Image
-              src="/walkoff_logov3.png"
-              alt="WALKOFF."
-              width={1539}
-              height={367}
-              className="prefooter-logo"
-            />
-          </div>
-          <h2 className="final-cta-h">Be first to the moment.</h2>
+          <h2 className="final-cta-h">
+            Their team wins.
+            <span className="script">Your campaign&apos;s ready.</span>
+          </h2>
           <div className="final-cta-actions">
             <a href="#form" className="btn-primary" data-cta="final">
               <span>Get early access</span>

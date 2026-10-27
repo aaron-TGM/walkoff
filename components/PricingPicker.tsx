@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { leagueSport, SportIcon } from "@/components/SportIcon";
 import { LEAGUES } from "@/lib/leagues";
 import { PRICING, annualMonthlyPrice, monthlyPrice } from "@/lib/pricing";
 
@@ -47,6 +48,7 @@ export function PricingPicker() {
               aria-pressed={on}
               onClick={() => toggle(l.id)}
             >
+              <SportIcon sport={leagueSport(l)} />
               {l.name}
               {l.note ? <span className="chip-note">{l.note}</span> : null}
             </button>

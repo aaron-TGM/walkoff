@@ -18,7 +18,6 @@ export function SiteFooter() {
                 className="footer-logo"
               />
             </div>
-            <p className="footer-tagline">The moment engine for brands.</p>
           </div>
           <div className="footer-col">
             <div className="footer-col-title">Product</div>
