@@ -35,6 +35,7 @@ const UNTRUE = [
   // files, can say they stay on the computer.
   "drop in your exports",
   "never leave your computer",
+  "encrypt stored api credentials",
   // Walkoff is documented for Claude and Claude Code, no other agent.
   "any ai agent",
   "every ai agent",
@@ -53,10 +54,9 @@ const UNTRUE = [
   "powder blue kind of sunday",
 ];
 
-// Legal text changes when the founder says so. The terms still cover
-// auto-fire rules. The upload page reads files in the browser.
+// Legal text changes when the founder says so. The upload page reads files
+// in the browser.
 const ALLOWED: Record<string, string[]> = {
-  "app/terms/page.tsx": ["auto-fire"],
   "components/upload/UploadClient.tsx": ["never leave your computer"],
 };
 

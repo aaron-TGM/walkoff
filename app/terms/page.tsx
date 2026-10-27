@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <LegalPage eyebrow="Legal" title="Terms of Service" updated="October 22, 2026">
+    <LegalPage eyebrow="Legal" title="Terms of Service" updated="October 27, 2026">
       <p>
         These terms apply when you use walkoff.io or the Walkoff service
         (&ldquo;Walkoff&rdquo;), operated by Tuff Ghost Media LLC
@@ -49,9 +49,9 @@ export default function TermsPage() {
           team or player.
         </li>
         <li>
-          <strong>Approvals and auto-fire rules.</strong> You&apos;re
-          responsible for messages you approve and for messages that send under
-          rules you set.
+          <strong>Approvals and triggers.</strong> You&apos;re responsible for
+          the messages you approve and send. Triggers you set fill your queue;
+          they don&apos;t send anything on their own.
         </li>
         <li>
           <strong>Fair use.</strong> Don&apos;t send us your customers&apos;

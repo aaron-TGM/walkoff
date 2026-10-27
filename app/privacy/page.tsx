@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage eyebrow="Legal" title="Privacy Policy" updated="October 26, 2026">
+    <LegalPage eyebrow="Legal" title="Privacy Policy" updated="October 27, 2026">
       <p>
         Walkoff (walkoff.io) is a product of Tuff Ghost Media LLC, based in San
         Clemente, California (&ldquo;Walkoff,&rdquo; &ldquo;we&rdquo; or
@@ -182,9 +182,10 @@ export default function PrivacyPage() {
 
       <h2 id="security">Security</h2>
       <p>
-        We encrypt data in transit, encrypt stored API credentials, ask for the
-        narrowest access each connected platform allows, and keep every
-        brand&apos;s data separate from every other brand&apos;s. Only the
+        We encrypt data in transit, keep only hashed versions of sign-in
+        tokens, and never hold your Klaviyo or Shopify keys: your own
+        connectors in Claude do that work. We keep every brand&apos;s data
+        separate from every other brand&apos;s. Only the
         people who run Walkoff can reach it. No system is perfectly secure, so
         if we learn of a breach that affects your information, we&apos;ll tell
         you promptly. Report security issues to{" "}
