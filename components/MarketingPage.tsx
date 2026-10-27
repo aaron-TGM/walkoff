@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AgentConsole } from "@/components/AgentConsole";
 import { BrandSpan } from "@/components/BrandSpan";
 import { Eyebrow } from "@/components/Eyebrow";
-import { HeroCampaign, HometownExample } from "@/components/ExampleEmail";
+import { HometownExample, TeamExample } from "@/components/ExampleEmail";
 import { FaqItem } from "@/components/FaqItem";
 import { PricingPicker } from "@/components/PricingPicker";
 import { RESULT, ResultCard } from "@/components/ResultCard";
@@ -44,14 +44,6 @@ const AUDIENCES = [
     title: "Agencies",
     body: "One setup that works across every brand you run.",
   },
-];
-
-// Products in Vuori's own email (public/examples/vuori-email.jpg), with the
-// colors sampled from its swatches: gold, powder blue and navy.
-const VUORI_PICKS = [
-  { title: "Kore Short", colorway: "Brass", hex: "e1b073" },
-  { title: "Rally Half Crew Sock", colorway: "Oasis Blue", hex: "98c4f2" },
-  { title: "Gym Bag 2.0", colorway: "Bay Blue", hex: "344153" },
 ];
 
 const STEPS = [
@@ -227,7 +219,34 @@ export function MarketingPage() {
               </p>
             </div>
 
-            <HeroCampaign />
+            <div className="moment-card moment-card-hero" aria-label="A real email: Vuori's own catalog in gold and blues">
+              <div className="moment-card-final">
+                <span>Real email</span>Vuori, used with permission
+              </div>
+              <div className="moment-card-meta">
+                Gold and blues, all from Vuori&apos;s own catalog
+              </div>
+              <div className="moment-card-email">
+                <div
+                  className="moment-card-scroll"
+                  tabIndex={0}
+                  aria-label="The Vuori email, scrollable"
+                >
+                  <Image
+                    src="/examples/vuori-email.jpg"
+                    alt="Vuori's email: Kore shorts in Brass, a gym bag, socks and a hat in Bay Blue and Foggy Blue, all from its own catalog."
+                    width={654}
+                    height={1858}
+                    priority
+                    sizes="(min-width: 880px) 440px, 92vw"
+                    className="moment-card-shot"
+                  />
+                </div>
+              </div>
+              <div className="moment-card-foot">
+                No logo. No license. Your catalog, in their colors.
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -305,42 +324,7 @@ export function MarketingPage() {
               </figcaption>
             </figure>
 
-            <div className="moment-card" aria-label="A real email: Vuori's own catalog in gold and blues">
-              <div className="moment-card-final">
-                <span>Real email</span>Vuori, used with permission
-              </div>
-              <div className="moment-card-items">
-                {VUORI_PICKS.map((p) => (
-                  <div key={p.colorway} className="moment-card-item">
-                    <span className="moment-card-photo" style={{ backgroundColor: `#${p.hex}` }} aria-hidden />
-                    <b>{p.title}</b>
-                    <span>{p.colorway}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="moment-card-meta">
-                Gold and blues, all from Vuori&apos;s own catalog
-              </div>
-              <div className="moment-card-email">
-                <div
-                  className="moment-card-scroll"
-                  tabIndex={0}
-                  aria-label="The Vuori email, scrollable"
-                >
-                  <Image
-                    src="/examples/vuori-email.jpg"
-                    alt="Vuori's email: Kore shorts in Brass, a gym bag, socks and a hat in Bay Blue and Foggy Blue, all from its own catalog."
-                    width={654}
-                    height={1858}
-                    sizes="(min-width: 880px) 440px, 92vw"
-                    className="moment-card-shot"
-                  />
-                </div>
-              </div>
-              <div className="moment-card-foot">
-                No logo. No license. Your catalog, in their colors.
-              </div>
-            </div>
+            <TeamExample />
           </div>
         </div>
       </section>

@@ -1130,6 +1130,12 @@ select.form-input {
 .moment-card-meta {
   @apply mt-4 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-inkMuted;
 }
+.moment-card-why {
+  @apply mt-3 text-[0.85rem] leading-snug text-ink;
+}
+.moment-card-why b {
+  @apply font-semibold;
+}
 .moment-card-items {
   @apply mt-4 grid grid-cols-3 gap-2.5;
 }
@@ -1157,6 +1163,12 @@ select.form-input {
   scrollbar-width: thin;
   -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent);
   mask-image: linear-gradient(to bottom, #000 82%, transparent);
+}
+/* On a phone, a swipe that reaches the end of the email carries on down the page. */
+@media (pointer: coarse) {
+  .moment-card-scroll {
+    overscroll-behavior: auto;
+  }
 }
 .moment-card-scroll:focus-visible {
   @apply outline outline-2 outline-offset-2 outline-red;
