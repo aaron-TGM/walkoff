@@ -5,11 +5,10 @@ import { authorizationServerMetadata, canonicalResource, COOKIE, CORS, LIMITS, p
 import { appName, ClientError, getClient, redirectAllowed, redirectHost, registerClient, type OAuthClient } from "./clients";
 import { CHALLENGE, pkceMatches, randomToken, sameHash, sixDigits } from "./crypto";
 import { sendSignInCode } from "./email";
-import { callerKey, overLimit, sweep } from "./limits";
+import { callerKey, emailEvents, overLimit, recordEmailEvent, sweep } from "./limits";
 import { codePage, consentPage, emailPage, errorPage, HTML_HEADERS, type FlowView } from "./pages";
 import {
   accessFor,
-  codesSentTo,
   createRequest,
   deleteRequest,
   emailCodeHash,
@@ -154,7 +153,7 @@ export async function authorizeStep(db: SupabaseClient, req: Request, origin: st
         return html(emailPage(v, { error: "That doesn't look like an email address.", email }), 400);
       }
       if (r.codes_sent >= LIMITS.codesSent) return html(errorPage("Too many codes for one sign-in. Start again from Claude."), 429);
-      if ((await codesSentTo(db, email)) >= LIMITS.codesPerEmailHour) {
+      if ((await emailEvents(db, "code_sent", email)) >= LIMITS.codesPerEmailHour) {
         return html(emailPage(v, { error: "We've sent that address a lot of codes this hour. Try again later.", email }), 429);
       }
       // The same answer whether or not the address has access, so the page
@@ -163,6 +162,7 @@ export async function authorizeStep(db: SupabaseClient, req: Request, origin: st
       const invited = access.operator || access.brands.length > 0;
       const code = invited ? sixDigits() : randomToken();
       await updateRequest(db, r.id, { email, email_code_hash: emailCodeHash(r.id, code), codes_sent: r.codes_sent + 1, attempts: 0, verified_at: null });
+      await recordEmailEvent(db, "code_sent", email);
       let sent: "sent" | "dev" | "none" = "none";
       if (invited) {
         try {
@@ -178,10 +178,15 @@ export async function authorizeStep(db: SupabaseClient, req: Request, origin: st
     case "code": {
       if (!r.email || !r.email_code_hash) return html(emailPage(v));
       if (r.attempts >= LIMITS.attempts) return html(errorPage("Too many wrong codes. Start again from Claude."), 429);
+      // Across sign-ins too, so starting over can't buy more guesses.
+      if ((await emailEvents(db, "wrong_code", r.email)) >= LIMITS.wrongCodesPerEmailHour) {
+        return html(errorPage("Too many wrong codes for this address in the last hour. Try again later."), 429);
+      }
       const code = (form.get("code")?.toString() ?? "").replace(/\D/g, "");
       if (!sameHash(emailCodeHash(r.id, code), r.email_code_hash)) {
         const left = LIMITS.attempts - r.attempts - 1;
         await updateRequest(db, r.id, { attempts: r.attempts + 1 });
+        await recordEmailEvent(db, "wrong_code", r.email);
         return left > 0
           ? html(codePage(v, r.email, { error: `That code didn't match. ${left} ${left === 1 ? "try" : "tries"} left.` }), 400)
           : html(errorPage("Too many wrong codes. Start again from Claude."), 429);

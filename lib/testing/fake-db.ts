@@ -21,6 +21,8 @@ const DEFAULTS: Record<string, Record<string, () => unknown>> = {
   prospects: { status: () => "new", home_teams: () => [], categories: () => [], apps: () => [], source: () => "storeleads" },
   prospect_contacts: { source: () => "csv" },
   outreach: { status: () => "drafted", views: () => 0 },
+  oauth_requests: { codes_sent: () => 0, attempts: () => 0 },
+  oauth_events: { at: () => new Date().toISOString() },
 };
 
 type Filter = (row: Row) => boolean;

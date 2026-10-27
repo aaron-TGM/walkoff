@@ -258,7 +258,10 @@ OAuth 2.1 as the MCP authorization spec and Claude's connector expect:
 - Codes and tokens are stored only as SHA-256 hashes (`oauth_grants`).
   Revoking any token ends the whole connection.
 - The email step answers the same way whether or not an address has
-  access, and only invited addresses get a code (10 an hour at most).
+  access, and only invited addresses get a code. Each address gets 10 codes
+  and 10 wrong tries an hour at most, counted across sign-ins (by a keyed
+  hash of the address, in `oauth_events`), so starting over doesn't reset
+  them.
 - App registration and starting a sign-in are capped per caller and
   overall (`lib/mcp/oauth/limits.ts`, `oauth_events`), and Walkoff only
   fetches client metadata from hosts that resolve to public addresses.

@@ -56,17 +56,6 @@ export async function deleteRequest(db: SupabaseClient, id: string): Promise<voi
 
 export const emailCodeHash = (requestId: string, code: string) => sha256(`${requestId}:${code}`);
 
-/** Codes emailed to an address in the last hour, across sign-ins. */
-export async function codesSentTo(db: SupabaseClient, email: string): Promise<number> {
-  const { data, error } = await db
-    .from("oauth_requests")
-    .select("codes_sent")
-    .eq("email", email)
-    .gte("created_at", new Date(Date.now() - 3_600_000).toISOString());
-  if (error) throw error;
-  return (data ?? []).reduce((n, r) => n + (r.codes_sent as number), 0);
-}
-
 // ── Who can use which brands ───────────────────────────────────────
 
 export interface Access {

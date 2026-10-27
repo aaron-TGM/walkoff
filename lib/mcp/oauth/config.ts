@@ -13,7 +13,7 @@ export const TTL = {
 } as const;
 /** Emailed codes per sign-in and per address per hour, and wrong guesses
  *  per code. */
-export const LIMITS = { codesSent: 5, codesPerEmailHour: 10, attempts: 5 } as const;
+export const LIMITS = { codesSent: 5, codesPerEmailHour: 10, attempts: 5, wrongCodesPerEmailHour: 10 } as const;
 export const COOKIE = "walkoff_oauth";
 
 /** This deployment's public origin: WALKOFF_PUBLIC_URL when set, else the
