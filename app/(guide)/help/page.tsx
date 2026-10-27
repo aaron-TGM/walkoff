@@ -24,8 +24,8 @@ export default function HelpHome() {
     <HelpPage slug={P}>
       <HelpSection page={P} id="start">
         <p>
-          Walkoff watches every game in its leagues and spots the moments your customers care
-          about: walk-offs, comebacks, rivalry wins and more. From your own customer counts, it
+          Walkoff watches every game in its leagues and spots the big moments: walk-offs,
+          comebacks, rivalry wins and more. From your own customer counts, it
           knows which fan territories your customers lean toward, and which of your products
           are in each team&apos;s colors. Claude sets it up from your Shopify store, with no
           files.

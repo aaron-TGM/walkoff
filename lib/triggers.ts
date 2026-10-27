@@ -23,7 +23,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Rivalry Preview",
     id: "rivalry_preview",
     description:
-      "Rival matchup or derby within 48 hours. Build anticipation before kickoff.",
+      "A rivalry game or derby in the next 48 hours. Get in before kickoff.",
     category: "before",
   },
   {
@@ -37,7 +37,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Season Opener",
     id: "season_opener",
     description:
-      "Opening Day, Puck Drop, Kickoff, Tip-Off. Best re-engagement of the year.",
+      "Opening Day, puck drop, kickoff, tip-off. Every fan base is 0-0.",
     category: "before",
   },
   {
@@ -51,7 +51,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Comeback Live",
     id: "comeback_live",
     description:
-      "Down big and rallying. Highest real-time engagement of any trigger.",
+      "Down big and coming back, right now.",
     category: "during",
   },
   {
@@ -72,14 +72,14 @@ export const TRIGGERS: Trigger[] = [
     name: "Walk-Off Win",
     id: "walkoff_win",
     description:
-      "Highest emotional spike in sports. Timing is the conversion lever.",
+      "Won it at the very end: the last at-bat, overtime, or a score in the last seconds.",
     category: "after",
   },
   {
     name: "Buzzer Beater",
     id: "buzzer_beater",
     description:
-      "Won on the final possession. NBA and college fans flood their phones.",
+      "Won on the last shot, with 3 seconds or less left.",
     category: "after",
   },
   {
@@ -93,7 +93,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Comeback Win",
     id: "comeback_win",
     description:
-      "Won after trailing. Strong cart recovery and lapsed buyer angle.",
+      "Won after trailing big. A natural angle for lapsed buyers and open carts.",
     category: "after",
   },
   {
@@ -107,7 +107,7 @@ export const TRIGGERS: Trigger[] = [
     name: "Heartbreaker Loss",
     id: "heartbreak_loss",
     description:
-      "Lost it late, or lost a close one. Consolation angle with a soft offer converts well.",
+      "Lost late, lost close or blew a lead. Go easy: no celebrating, maybe a small offer. Or skip it.",
     category: "after",
   },
   {
@@ -122,14 +122,14 @@ export const TRIGGERS: Trigger[] = [
     name: "Series Win",
     id: "playoff_advance",
     description:
-      "Won a playoff round. Fans are already buying for the next one.",
+      "Won a playoff round. On to the next one.",
     category: "season",
   },
   {
     name: "Player Milestone",
     id: "player_milestone",
     description:
-      "Records, awards, NIL moments. Big for NCAA.",
+      "Records and awards. Like every moment, the copy never names the player.",
     category: "season",
     coming: true,
   },
@@ -137,14 +137,14 @@ export const TRIGGERS: Trigger[] = [
     name: "Big Signing",
     id: "big_signing",
     description:
-      "Star trade or transfer lands in your market. New jersey, new reason to buy.",
+      "A star joins the team by trade, signing or transfer. A reason to email without a game.",
     category: "season",
   },
   {
     name: "Great Escape",
     id: "great_escape",
     description:
-      "Survived relegation on the final day. Relief sells almost as well as glory.",
+      "Survived relegation on the last day of the season.",
     category: "season",
     coming: true,
   },
@@ -166,7 +166,7 @@ export const HOMETOWN_TRIGGERS: Trigger[] = [
     name: "Hometown Champion",
     id: "hometown_title",
     description:
-      "A player from a town near your customers just won a title. The whole town is celebrating: celebrate the town, never the player.",
+      "Someone from a town near your customers just won a title. Celebrate the town, never the player.",
     category: "season",
   },
   {

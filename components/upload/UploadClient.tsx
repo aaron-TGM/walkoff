@@ -376,7 +376,7 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
     <div ref={reportRef} className={`upload-report${demo ? " upload-report-first" : ""}`}>
       <h2 className="section-title section-title-stack">
         {demo ? "Fan territories" : "Your territories"}
-        <em>{report ? (demo ? "who the customers cheer for" : "who your customers cheer for") : "appear here"}</em>
+        <em>{report ? (demo ? "where the customers cluster" : "where your customers cluster") : "appear here"}</em>
       </h2>
       {report ? (
         <AffinityReportView report={report} />
@@ -393,7 +393,7 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
     <div className="container-w upload">
       <div className="block-num">
         <span className="eyebrow-dot" aria-hidden />
-        {demo ? "Demo" : "Your affinity map"}
+        {demo ? "Demo" : "Your fan map"}
       </div>
       <h1 className="upload-h1">
         {brandName}

@@ -49,7 +49,7 @@ export function AgentConsole() {
           walkoff.get_affinity_map
         </div>
         <div className="console-line console-out" style={line(i++)}>
-          3 groups stand out in your customers
+          3 team territories stand out
         </div>
         {AFFINITY.map((a) => (
           <div

@@ -40,15 +40,17 @@ export function PitchView({ page, source, demo = false }: { page: PitchPage; sou
     <div className="container-w">
       <div className="block-num">
         <span className="eyebrow-dot" aria-hidden />
-        {demo ? "Sample pitch" : `Built for ${brand}`}
+        {demo ? "Sample campaign" : `Built for ${brand}`}
       </div>
       <h1 className="upload-h1">
         {day ? `${cap(who)} ${wonPhrase(page.moment.type)} ${day}.` : `When ${who} ${t ? winVerb(t) : "win"},`}
         <em>Here&apos;s your email.</em>
       </h1>
       <p className="upload-lead">
-        Walkoff built this from {possessive(brand)} catalog: your products in their colors, for customers
-        in {territory}. No logo, no license. {day ? "It's a sample: nothing was sent." : "It's a sample for their next win: nothing was sent."}
+        {demo
+          ? `Walkoff built this from ${possessive(brand)} catalog: its products in their colors, for customers in ${territory}.`
+          : `Walkoff built this from your catalog: your products in their colors, for customers in ${territory}.`}{" "}
+        No logo, no license. {day ? "It's a sample: nothing was sent." : "It's a sample for their next win: nothing was sent."}
       </p>
 
       <div className="pitch-grid">
@@ -102,8 +104,8 @@ export function PitchView({ page, source, demo = false }: { page: PitchPage; sou
           </h2>
           <p className="form-left-body">
             Setup happens in Claude with your Shopify and Klaviyo connectors, and your fan map is ready
-            in minutes. It shows which teams your customers actually follow, beyond your hometown.
-            Prefer email? Just reply to mine.
+            in minutes. It shows where your customers cluster by team, beyond your hometown.
+            {demo ? null : " Prefer email? Just reply to mine."}
           </p>
         </div>
         <WaitlistForm defaults={demo ? undefined : { company: brand, website: page.prospect.domain }} source={source} />

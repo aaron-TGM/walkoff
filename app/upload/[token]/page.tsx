@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
   const { token } = await params;
   return {
-    title: token === "demo" ? "A sample fan map · Walkoff" : "Your affinity map · Walkoff",
+    title: token === "demo" ? "A sample fan map · Walkoff" : "Your fan map · Walkoff",
     robots: { index: false, follow: false },
   };
 }

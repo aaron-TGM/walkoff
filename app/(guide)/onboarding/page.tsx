@@ -152,8 +152,9 @@ export default function OnboardingPage() {
             land.
           </li>
           <li>
-            <strong>Moments</strong> show up within about a minute of the final whistle.
-            Walkoff watches every game in its leagues, around the clock.
+            <strong>Moments</strong> from games show up within about a minute of the final
+            whistle. Golf, tennis and racing results take a few minutes, and surfing usually a
+            few hours.
           </li>
           <li>
             <strong>Your queue</strong> starts with Walkoff&apos;s default rule:{" "}
@@ -162,7 +163,7 @@ export default function OnboardingPage() {
           </li>
           <li>
             <strong>Timing matters.</strong> A result is worth acting on for about{" "}
-            {WINDOW_HOURS.result} hours, and most of the lift comes in the first day.
+            {WINDOW_HOURS.result} hours. Send it the same day if you can.
           </li>
           <li>
             <strong>Nothing sends without you.</strong> Claude drafts, and you decide.

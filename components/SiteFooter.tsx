@@ -18,9 +18,7 @@ export function SiteFooter() {
                 className="footer-logo"
               />
             </div>
-            <p className="footer-tagline">
-              The moment engine for brands and their AI agents.
-            </p>
+            <p className="footer-tagline">The moment engine for brands.</p>
           </div>
           <div className="footer-col">
             <div className="footer-col-title">Product</div>
@@ -32,13 +30,19 @@ export function SiteFooter() {
                 <Link href="/#moments">Moments</Link>
               </li>
               <li>
-                <Link href="/#mcp">MCP</Link>
+                <Link href="/#mcp">Works in Claude</Link>
               </li>
               <li>
                 <Link href="/#pricing">Pricing</Link>
               </li>
               <li>
                 <Link href="/#faq">FAQ</Link>
+              </li>
+              <li>
+                <Link href="/p/demo">Sample campaign</Link>
+              </li>
+              <li>
+                <Link href="/upload/demo">Sample fan map</Link>
               </li>
             </ul>
           </div>

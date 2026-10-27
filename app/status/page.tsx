@@ -11,6 +11,7 @@ import {
   runStatusChecks,
   type CheckResult,
 } from "@/lib/status";
+import { TOURS } from "@/lib/tours";
 
 // Re-run every check at most once a minute.
 export const revalidate = 60;
@@ -34,11 +35,6 @@ const COMING_ONLINE = [
     label: "Early access",
     detail: "Founding brands first, at www.walkoff.io/mcp",
   },
-  {
-    name: "Automated moment engine",
-    label: "Early access",
-    detail: "Watches every game in Walkoff's leagues",
-  },
   { name: "Postscript", label: "In progress", detail: "SMS sends from moments" },
   { name: "Attentive", label: "In progress", detail: "SMS sends from moments" },
   { name: "Webhooks", label: "Coming soon", detail: "Moments delivered to any URL" },
@@ -48,7 +44,7 @@ const TARGETS = [
   { value: "60s", label: "Every check on this page re-runs at most once a minute" },
   { value: "< 1 min", label: "From the final whistle to a moment in your queue" },
   { value: "0", label: "Sends without your go-ahead" },
-  { value: String(LEAGUES.length), label: "Leagues monitored live on this page" },
+  { value: String(LEAGUES.length + TOURS.length), label: "Leagues and tours monitored live on this page" },
 ];
 
 function formatTime(iso: string) {

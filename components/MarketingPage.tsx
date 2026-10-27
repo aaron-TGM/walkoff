@@ -13,6 +13,7 @@ import { TriggerCategory } from "@/components/TriggerCategory";
 import { Swatches } from "@/components/upload/AffinityReportView";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { CONNECTOR_STEPS, CONNECTOR_URL } from "@/lib/connect";
+import { TOUR_FACTS } from "@/lib/help/moments";
 import { helpPath } from "@/lib/help/pages";
 import { HOME_TOOLS } from "@/lib/help/tools";
 import { LEAGUES } from "@/lib/leagues";
@@ -31,8 +32,8 @@ const AUDIENCES = [
     body: "Team products in front of the fans who buy the minute their team wins.",
   },
   {
-    title: "Local businesses",
-    body: "Bars, restaurants and shops in a sports town with a customer list.",
+    title: "Golf, surf, tennis and racing brands",
+    body: "Your sport has no home team. It has hometowns. When someone from a town near your customers wins, that town gets its own campaign.",
   },
   {
     title: "Agencies",
@@ -40,18 +41,19 @@ const AUDIENCES = [
   },
 ];
 
-// The founder's example: a brand with no license, its own catalog, a
-// team's colors.
-const MOMENT_PICKS = [
-  { title: "Everyday Jogger", colorway: "Azure Heather", hex: "2e8bd8" },
-  { title: "Sunday Hoodie", colorway: "Sunflower", hex: "ffc512" },
-  { title: "Coastal Crew", colorway: "Gold", hex: "ffb81c" },
+// Products in Vuori's own email (public/examples/vuori-email.jpg), with the
+// colors sampled from its swatches: gold, powder blue and navy.
+const VUORI_PICKS = [
+  { title: "Kore Short", colorway: "Brass", hex: "e1b073" },
+  { title: "Rally Half Crew Sock", colorway: "Oasis Blue", hex: "98c4f2" },
+  { title: "Gym Bag 2.0", colorway: "Bay Blue", hex: "344153" },
 ];
 
 const STEPS = [
   {
     title: "Connect your store in Claude",
-    body: "Claude reads your products from your Shopify store, and customer counts by area from Shopify's analytics. No exports to download. Never a customer list.",
+    who: "You",
+    body: "Connect Walkoff, Shopify and Klaviyo in Claude. Walkoff reads your products, and customer counts by area from Shopify's analytics. No exports. Never a customer list.",
     visual: (
       <>
         <span className="c">{"// what reaches Walkoff"}</span>
@@ -68,8 +70,9 @@ const STEPS = [
     ),
   },
   {
-    title: "Get your affinity map",
-    body: "Walkoff finds the fan territories your customers lean toward, then matches your products and colorways to each team.",
+    title: "Get your fan map",
+    who: "Walkoff",
+    body: "Walkoff finds the team territories that hold more of your customers than population predicts, then matches your products and colorways to each team.",
     visual: (
       <>
         <span className="k">chargers_territory</span>:{" "}
@@ -84,15 +87,16 @@ const STEPS = [
     ),
   },
   {
-    title: "Moments get matched",
-    body: "We watch every game in your leagues and flag the moments your customers care about, from walk-offs to rivalry wins.",
+    title: "Moments land in your queue",
+    who: "Walkoff, 24/7",
+    body: "When a team on your map wins big, the moment is in your queue in Claude about a minute after the final whistle.",
     visual: (
       <>
         <span className="k">moment</span>:{" "}
-        <span className="v">&quot;rivalry_win&quot;</span>
+        <span className="v">&quot;walkoff_win&quot;</span>
         <br />
-        <span className="k">where</span>:{" "}
-        <span className="v">&quot;North London&quot;</span>
+        <span className="k">team</span>:{" "}
+        <span className="v">&quot;chargers&quot;</span>
         <br />
         <span className="k">products</span>: <span className="v">3</span>
       </>
@@ -100,7 +104,8 @@ const STEPS = [
   },
   {
     title: "You approve, Klaviyo sends",
-    body: "Claude drafts the campaign in your Klaviyo account, with the audience and the send time. You look it over and send it while the moment is still hot.",
+    who: "You",
+    body: "Claude drafts the campaign in your Klaviyo account, with the audience and the send time. You look it over and hit send.",
     visual: (
       <>
         <span className="k">status</span>:{" "}
@@ -148,6 +153,10 @@ const AFFINITY_EXAMPLES = [
 
 // 21 -> "9 PM", 8 -> "8 AM"
 const hour = (h: number) => `${h % 12 || 12} ${h < 12 ? "AM" : "PM"}`;
+
+// "golf (PGA Tour, …), tennis (…), racing (…) and surfing (…)"
+const tourList = TOUR_FACTS.map((t) => `${t.sport.toLowerCase()} (${t.tours})`);
+const TOURS_LINE = `${tourList.slice(0, -1).join(", ")} and ${tourList.at(-1)}`;
 
 const CONTROLS = [
   {
@@ -209,28 +218,28 @@ export function MarketingPage() {
         <div className="container-w">
           <div className="hero-grid">
             <div>
-              <Eyebrow>Sports first &middot; Built for AI agents</Eyebrow>
+              <Eyebrow>Sports moments &middot; Ready in Klaviyo</Eyebrow>
               <h1>
-                The moment engine
-                <span className="script">for brands and their AI&nbsp;agents.</span>
+                Their team wins.
+                <span className="script">Your campaign&apos;s ready.</span>
               </h1>
               <p className="hero-sub">
-                <BrandSpan /> watches every game, finds the customers who care,
-                matches the right products, and has the campaign ready while
-                the moment is still hot. You send it. One MCP connection plugs
-                it into Claude or any AI agent.
+                <BrandSpan /> watches every game. When a team wins, your Klaviyo
+                campaign is ready: your own products in its colors, for the
+                customers who live in its territory. No license needed. Nothing
+                sends until you say so.
               </p>
               <div className="hero-actions">
                 <a href="#form" className="btn-primary" data-cta="hero">
                   <span>Get early access</span>
                 </a>
-                <a href="#how" className="btn-ghost">
-                  <span>See how it works</span>
-                </a>
+                <Link href="/p/demo" className="btn-ghost">
+                  <span>See a sample campaign</span>
+                </Link>
               </div>
               <div className="hero-note">
-                {PRICING.trialDays} days free &middot; Done for you during
-                early access
+                {PRICING.trialDays} days free &middot; No credit card &middot;{" "}
+                <span className="inline-block">In Claude, with Shopify and Klaviyo</span>
               </div>
             </div>
 
@@ -242,15 +251,25 @@ export function MarketingPage() {
       {/* ─── LEAGUES ─────────────────────────────────────────── */}
       <div className="league-strip">
         <div className="container-w league-strip-inner">
-          <span className="league-strip-label">V1 coverage</span>
-          <ul className="league-strip-list">
-            {LEAGUES.map((l) => (
-              <li key={l.id}>
-                {l.name}
-                {l.note ? <span className="league-strip-note">{l.note}</span> : null}
-              </li>
-            ))}
-          </ul>
+          <div className="league-strip-group">
+            <span className="league-strip-label">Every game in</span>
+            <ul className="league-strip-list">
+              {LEAGUES.map((l) => (
+                <li key={l.id}>
+                  {l.name}
+                  {l.note ? <span className="league-strip-note">{l.note}</span> : null}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="league-strip-group">
+            <span className="league-strip-label">Plus hometown moments from</span>
+            <ul className="league-strip-list">
+              {TOUR_FACTS.map((t) => (
+                <li key={t.sport}>{t.sport}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -302,12 +321,12 @@ export function MarketingPage() {
               </figcaption>
             </figure>
 
-            <div className="moment-card" aria-label="Example: the email that goes out after a win">
+            <div className="moment-card" aria-label="A real email: Vuori's own catalog in gold and blues">
               <div className="moment-card-final">
-                <span>Final</span>Chargers 27, Chiefs 20
+                <span>Real email</span>Vuori, used with permission
               </div>
               <div className="moment-card-items">
-                {MOMENT_PICKS.map((p) => (
+                {VUORI_PICKS.map((p) => (
                   <div key={p.colorway} className="moment-card-item">
                     <span className="moment-card-photo" style={{ backgroundColor: `#${p.hex}` }} aria-hidden />
                     <b>{p.title}</b>
@@ -316,13 +335,9 @@ export function MarketingPage() {
                 ))}
               </div>
               <div className="moment-card-meta">
-                Ready 2 minutes later &middot; 2,310 customers in their territory
+                Gold and blues, all from Vuori&apos;s own catalog
               </div>
               <div className="moment-card-email">
-                <div className="moment-card-inbox">
-                  <span className="moment-card-from">Vuori</span>
-                  <span className="moment-card-subject">Powder blue kind of Sunday.</span>
-                </div>
                 <div
                   className="moment-card-scroll"
                   tabIndex={0}
@@ -339,7 +354,6 @@ export function MarketingPage() {
                 </div>
               </div>
               <div className="moment-card-foot">
-                <span className="moment-card-tag">Real send &middot; Vuori</span>
                 No logo. No license. Your catalog, in their colors.
               </div>
             </div>
@@ -355,13 +369,12 @@ export function MarketingPage() {
             How it works
           </div>
           <h2 className="section-title">
-            Four steps. <em>We set them up for you.</em>
+            Set it up in Claude. <em>Then ask what to send.</em>
           </h2>
           <p className="section-lead">
             During early access we set up your brand and invite your team.
-            Then it all happens in Claude: it maps your fans from your Shopify
-            store, finds the moment, builds the campaign and drafts it in
-            Klaviyo for your go-ahead.{" "}
+            Everything else happens in Claude, with your Shopify and Klaviyo
+            connectors.{" "}
             <Link href={helpPath("onboarding")} className="section-lead-link">
               See every step
             </Link>
@@ -369,7 +382,9 @@ export function MarketingPage() {
           <ol className="how-grid how-grid-4">
             {STEPS.map((s, idx) => (
               <li key={s.title} className="how-step">
-                <div className="how-step-num">&mdash; 0{idx + 1}</div>
+                <div className="how-step-num">
+                  &mdash; 0{idx + 1} &middot; {s.who}
+                </div>
                 <div className="how-step-title">{s.title}</div>
                 <p className="how-step-body">{s.body}</p>
                 <div className="how-step-visual">{s.visual}</div>
@@ -384,17 +399,17 @@ export function MarketingPage() {
         <div className="container-w">
           <div className="block-num block-num-dark">
             <span className="eyebrow-dot" aria-hidden />
-            Your affinity map
+            Your fan map
           </div>
           <h2 className="section-title section-title-stack">
             Day one, you learn{" "}
             <em>something new about your customers.</em>
           </h2>
           <p className="section-lead section-lead-dark">
-            Connect your Shopify store in Claude and Walkoff shows which fan
-            territories your customers lean toward, using widely recognized fan territory maps
-            for every league. Then it matches your products to each team, down
-            to the colorway.
+            Connect your Shopify store in Claude and Walkoff shows which team
+            territories hold more of your customers than population predicts,
+            then matches your products to each team, down to the colorway. Each
+            standout is a segment you can email the next time that team wins.
           </p>
           <div className="affinity-grid">
             {AFFINITY_EXAMPLES.map((a) => (
@@ -495,28 +510,20 @@ export function MarketingPage() {
             <div>
               <div className="block-num block-num-dark">
                 <span className="eyebrow-dot" aria-hidden />
-                For Claude and every AI agent
+                Works in Claude
               </div>
               <h2 className="section-title">
-                One connection. <em>Every agent.</em>
+                Ask what to send. <em>Get the campaign.</em>
               </h2>
               <p className="section-lead section-lead-dark">
-                Walkoff runs as an MCP server, the open standard Claude and
-                other AI agents use to call tools. Connect it once and Claude
-                can see what just happened for the teams your customers
-                follow, build the campaign, and draft it in Klaviyo for your
-                yes.
+                Walkoff runs inside Claude, next to the Shopify and Klaviyo
+                connectors your team already uses. Ask in plain words. Walkoff
+                finds the moment and builds the campaign, your Klaviyo
+                connector drafts it, and you hit send.
               </p>
               <div className="code-block">
                 <span className="c">{`# Claude: ${CONNECTOR_STEPS}`}</span>
                 {"\n"}
-                <span className="s">{CONNECTOR_URL}</span>
-                {"\n\n"}
-                <span className="c">{"# Claude Code"}</span>
-                {"\n"}
-                <span className="k">claude</span> mcp add --transport http{" "}
-                <span className="s">walkoff</span>
-                {" \\\n  "}
                 <span className="s">{CONNECTOR_URL}</span>
               </div>
               <ul className="mcp-notes">
@@ -526,17 +533,16 @@ export function MarketingPage() {
                   invite.
                 </li>
                 <li>
-                  Works next to the Klaviyo and Shopify connectors you already
-                  use: Walkoff builds the campaign, your Klaviyo connector
-                  drafts it, you hit send.
-                </li>
-                <li>
                   The engine watches every game around the clock, so the
                   moment is already in your queue when you open Claude.
                 </li>
                 <li>
                   Every tool, and what to ask it:{" "}
                   <Link href={helpPath("tools")}>Tools and asks</Link>.
+                </li>
+                <li>
+                  Using Claude Code?{" "}
+                  <Link href={helpPath("connect", "claude-code")}>Here&apos;s the command</Link>.
                 </li>
               </ul>
             </div>
@@ -635,6 +641,18 @@ export function MarketingPage() {
               </span>
             </div>
             <div className="integration-item">
+              <div className="integration-name">Shopify</div>
+              <span className="integration-badge integration-badge-live">
+                Live
+              </span>
+            </div>
+            <div className="integration-item">
+              <div className="integration-name">Claude</div>
+              <span className="integration-badge integration-badge-live">
+                Live
+              </span>
+            </div>
+            <div className="integration-item">
               <Image
                 src="/postscript_logo.svg"
                 alt="Postscript"
@@ -644,7 +662,7 @@ export function MarketingPage() {
                 className="integration-logo integration-logo-postscript"
               />
               <span className="integration-badge integration-badge-progress">
-                In Progress
+                In progress
               </span>
             </div>
             <div className="integration-item">
@@ -657,19 +675,7 @@ export function MarketingPage() {
                 className="integration-logo"
               />
               <span className="integration-badge integration-badge-progress">
-                In Progress
-              </span>
-            </div>
-            <div className="integration-item">
-              <div className="integration-name">MCP &middot; Claude &amp; agents</div>
-              <span className="integration-badge integration-badge-progress">
-                Early Access
-              </span>
-            </div>
-            <div className="integration-item">
-              <div className="integration-name">Webhooks</div>
-              <span className="integration-badge integration-badge-soon">
-                Coming Soon
+                In progress
               </span>
             </div>
           </div>
@@ -687,8 +693,8 @@ export function MarketingPage() {
             One flat price per brand. <em>Everything included.</em>
           </h2>
           <p className="section-lead">
-            Pick your leagues. Every trigger, every moment category and
-            everything we build next comes with it.
+            Pick your leagues. Hometown moments, every trigger and everything
+            we build next come with it.
           </p>
           <div className="pricing-layout">
             <PricingPicker />
@@ -697,8 +703,8 @@ export function MarketingPage() {
                 <div className="pricing-tier">&mdash; Agencies</div>
                 <div className="pricing-side-h">Running several brands?</div>
                 <p className="pricing-side-p">
-                  One onboarding, one bill, every brand on its own affinity
-                  map. Tell us how many brands you run and we&apos;ll price it.
+                  One onboarding, one bill, every brand on its own fan map.
+                  Tell us how many brands you run and we&apos;ll price it.
                 </p>
                 <a href="mailto:hello@walkoff.io?subject=Walkoff%20for%20agencies" className="btn-primary">
                   <span>Talk to us</span>
@@ -709,6 +715,7 @@ export function MarketingPage() {
                 <ul className="pricing-side-list">
                   <li>{PRICING.trialDays} days free</li>
                   <li>No credit card to start</li>
+                  <li>One flat price, whatever your list size</li>
                   <li>Cancel anytime</li>
                   <li>
                     Save {PRICING.annualDiscount * 100}% when you pay yearly
@@ -733,9 +740,9 @@ export function MarketingPage() {
                 Founding brands <em>go first.</em>
               </h2>
               <p className="form-left-body">
-                We onboard by hand during early access. Tell us about your
-                brand and we&apos;ll build your affinity map, tag your catalog
-                and set up your first triggers with you.
+                We set up your brand and invite your team. Connect Shopify in
+                Claude and your fan map is ready in minutes. Then we set up
+                your first triggers with you.
               </p>
               <ul className="form-perks">
                 <li>
@@ -744,7 +751,7 @@ export function MarketingPage() {
                 </li>
                 <li>
                   <span className="form-perks-check">✓</span>
-                  Your affinity map before your first moment
+                  Your fan map in minutes
                 </li>
                 <li>
                   <span className="form-perks-check">✓</span>
@@ -776,21 +783,19 @@ export function MarketingPage() {
           </h2>
 
           <FaqItem num="01" question="Who is Walkoff for?" defaultOpen>
-            Any brand whose customers have a team, a hometown or a season,
-            and especially brands that will never have a sports license. When
-            a team wins, Walkoff features your own products in its colors, so
-            you show up for the moment without a logo. Licensed brands, local
-            bars and restaurants, and agencies use it too. Leave team logos
-            and trademarks out of your messages unless you&apos;re licensed:
-            the colors do the talking.
+            Brands whose customers have a team, and especially brands that
+            will never have a sports license. When a team wins, Walkoff
+            features your own products in its colors, so you show up for the
+            moment without a logo. When someone from a town near your
+            customers wins a title, a tournament or a race, that town gets
+            its own campaign. Licensed brands and agencies too.
           </FaqItem>
-          <FaqItem num="02" question="Do I have to upload anything?">
-            No. On Shopify, Claude sets your brand up with the Shopify
-            connector: Walkoff reads your products from your store, and
-            Claude reads customer counts by postal code from Shopify&apos;s
-            analytics. Walkoff keeps only the area and the count. No names,
-            no emails, no street addresses. Not on Shopify? A private upload
-            page reads your exports in your browser and sends only counts.
+          <FaqItem num="02" question="Do we need a sports license?">
+            No. Without one, campaigns never name a team, league, player,
+            stadium or event. They nod with the colors, and the city for pro
+            teams, through your own products. Licensed brands can name their
+            teams, within the license.{" "}
+            <Link href={helpPath("campaigns", "copy-rules")}>The copy rules</Link>
           </FaqItem>
           <FaqItem num="03" question={<>Does <BrandSpan /> send the messages?</>}>
             Your email platform does, from your own account. Walkoff builds
@@ -801,22 +806,57 @@ export function MarketingPage() {
           <FaqItem num="04" question="What do I need to use it?">
             Claude with your Shopify and Klaviyo connectors. During early
             access we set up your brand and invite your team. Ask Claude to set
-            Walkoff up from your store, and your affinity map is ready in
-            minutes. Then ask what to send, review the campaign, and Claude
-            drafts it in your Klaviyo account.{" "}
+            Walkoff up from your store, and your fan map is ready in minutes.
+            Then ask what to send, review the campaign, and Claude drafts it
+            in your Klaviyo account.{" "}
             <Link href={helpPath("onboarding", "what-you-need")}>What you need</Link>
           </FaqItem>
-          <FaqItem num="05" question="How fast do moments show up?">
-            Within about a minute of the final whistle, the moment is in your
-            queue in Claude, ready to build into a campaign. Nothing sends
-            until you say so.
+          <FaqItem num="05" question="Do I have to upload anything?">
+            No. On Shopify, Claude sets your brand up with the Shopify
+            connector: Walkoff reads your products from your store, and
+            Claude reads customer counts by postal code from Shopify&apos;s
+            analytics. Walkoff keeps only the area and the count. No names,
+            no emails, no street addresses. Not on Shopify? A private upload
+            page reads your exports in your browser and sends only counts.
           </FaqItem>
-          <FaqItem num="06" question="Which leagues are covered?">
-            NFL, NBA, NHL, NCAA football and basketball, and the Premier
-            League, with MLB from Opening Day 2027. Need a league that
-            isn&apos;t listed? Ask. It&apos;s usually quick to add.
+          <FaqItem num="06" question="Will it look like our brand?">
+            It features your products, with their photos, prices and links,
+            your brand&apos;s name at the top and a stripe in the team&apos;s
+            colors. Claude drafts it in your Klaviyo account, so you can edit
+            it there like any campaign before it goes out. Or ask Claude for
+            another subject line, product or offer.
           </FaqItem>
-          <FaqItem num="07" question="How do I see what it earned?">
+          <FaqItem num="07" question="How often will we email?">
+            As often as you choose. By default your queue gets the big
+            moments for your standout teams: walk-offs, comebacks, rivalry
+            wins, playoff runs, titles, and wins in sports that play once a
+            week. An ordinary win in a sport that plays most days doesn&apos;t
+            make the cut, so nobody hears from you after every game. Skip
+            anything, make your own triggers, and Klaviyo&apos;s Smart Sending
+            stays on.
+          </FaqItem>
+          <FaqItem num="08" question="How fast do moments show up?">
+            About a minute after the final whistle for games. Golf, tennis
+            and racing results take a few minutes, and surfing usually a few
+            hours. Nothing sends until you say so.{" "}
+            <Link href="/status">Watch the engine live</Link>
+          </FaqItem>
+          <FaqItem num="09" question="Which sports are covered?">
+            Every game in the NFL, NBA, NHL, NCAA football and basketball, and
+            the Premier League, with MLB from Opening Day 2027. For hometown
+            moments, Walkoff also follows {TOURS_LINE}. Need something else?
+            Ask. It&apos;s usually quick to add.
+          </FaqItem>
+          <FaqItem num="10" question="What's a hometown moment?">
+            When someone from a town near your customers wins a title, a
+            tournament or a race, or wins a playoff game at the very end, that
+            town gets its own moment. It reaches you when enough of your
+            customers live there. The email goes only to customers in a circle
+            around the town, and it celebrates the town. It never names or
+            describes the athlete.{" "}
+            <Link href={helpPath("moments", "hometown")}>Hometown moments</Link>
+          </FaqItem>
+          <FaqItem num="11" question="How do I see what it earned?">
             Every Walkoff send is an ordinary Klaviyo campaign with UTM
             tracking on, so Klaviyo, Shopify, Google Analytics and Triple Whale
             all see it. Ask Claude how your sends did, and it reads each
@@ -825,7 +865,7 @@ export function MarketingPage() {
             so you see what each moment added, not just what it was credited
             with.
           </FaqItem>
-          <FaqItem num="08" question="Is my data safe?">
+          <FaqItem num="12" question="Is my data safe?">
             Walkoff never sees a customer list. It keeps counts by postal
             area, from Shopify&apos;s analytics through Claude or from your
             exports in your browser, so there are no names, emails or
@@ -834,12 +874,12 @@ export function MarketingPage() {
             brand&apos;s data is walled off from every other brand&apos;s.{" "}
             <Link href={helpPath("data-and-safety")}>Data and safety</Link>
           </FaqItem>
-          <FaqItem num="09" question="What does it cost?">
+          <FaqItem num="13" question="What does it cost?">
             ${PRICING.firstLeague} a month per brand, including one league.
             Each extra league is ${PRICING.extraLeague}, and every league
-            together is ${PRICING.allLeagues}. Every trigger, category and
-            feature we ship is included. {PRICING.trialDays} days free, no
-            credit card.
+            together is ${PRICING.allLeagues}. Hometown moments come with
+            every plan, and so does every trigger, category and feature we
+            ship. {PRICING.trialDays} days free, no credit card.
           </FaqItem>
           <p className="faq-more">
             More answers, from setup to sending, in the{" "}

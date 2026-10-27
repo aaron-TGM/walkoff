@@ -85,7 +85,7 @@ export default function CampaignsPage() {
         <p>Licensed brands may name their teams, within the license:</p>
         <RuleList rules={rules.licensed} />
         <p>
-          Moment headlines, like &ldquo;Walk-off win: Chargers 27, Chiefs 24&rdquo;, name teams
+          Moment headlines, like &ldquo;Walk-off win: Chargers 27, Chiefs 20&rdquo;, name teams
           for your eyes only. If you or Claude rewrite the copy, keep the rules.
         </p>
         <h3>Hometown campaigns</h3>

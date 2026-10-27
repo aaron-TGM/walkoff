@@ -527,9 +527,6 @@ section.block {
 .integration-badge-live {
   @apply bg-grass;
 }
-.integration-badge-soon {
-  @apply bg-inkFaint;
-}
 .integration-badge-progress {
   @apply bg-mustard;
   color: rgb(26 20 16);
@@ -1035,10 +1032,14 @@ select.form-input {
   @apply relative z-[1] border-y border-rule bg-paper;
 }
 .league-strip-inner {
-  @apply flex flex-wrap items-center gap-x-8 gap-y-3 py-6;
+  @apply flex flex-wrap items-center gap-x-12 gap-y-3 py-6;
+}
+/* A label and its list, kept together when the strip wraps. */
+.league-strip-group {
+  @apply flex flex-wrap items-center gap-x-8 gap-y-3;
 }
 .league-strip-label {
-  @apply font-mono text-[0.62rem] uppercase tracking-[0.2em] text-inkFaint;
+  @apply font-mono text-[0.62rem] uppercase tracking-[0.2em] text-inkMuted;
 }
 .league-strip-list {
   @apply flex list-none flex-wrap gap-x-6 gap-y-2;
@@ -1051,7 +1052,7 @@ select.form-input {
   @apply inline-block h-1.5 w-1.5 rounded-full bg-red;
 }
 .league-strip-note {
-  @apply font-mono text-[0.55rem] font-normal tracking-[0.12em] text-inkFaint;
+  @apply font-mono text-[0.55rem] font-normal tracking-[0.12em] text-inkMuted;
 }
 
 /* Who it's for */
@@ -1133,15 +1134,6 @@ select.form-input {
 .moment-card-email {
   @apply mt-4 border border-rule bg-white;
 }
-.moment-card-inbox {
-  @apply flex flex-col gap-0.5 border-b border-rule bg-cream px-3.5 py-2.5;
-}
-.moment-card-from {
-  @apply font-mono text-[0.6rem] uppercase tracking-[0.12em] text-inkMuted;
-}
-.moment-card-subject {
-  @apply font-display text-[1.05rem] font-extrabold uppercase leading-tight;
-}
 /* The real email is tall, so it scrolls inside the card; the fade says there's more. */
 .moment-card-scroll {
   @apply relative overflow-y-auto overscroll-contain;
@@ -1158,9 +1150,6 @@ select.form-input {
 }
 .moment-card-foot {
   @apply mt-4 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink;
-}
-.moment-card-tag {
-  @apply mb-1.5 block text-red;
 }
 @media (max-width: 480px) {
   .moment-card {
