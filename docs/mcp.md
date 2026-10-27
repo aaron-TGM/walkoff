@@ -29,7 +29,10 @@ the address Claude connected to.
 
 Signing in: Walkoff emails a 6-digit code to the person's work email, they
 pick which brands Claude may use, and approve. The consent page names the app
-and where it sends them back (claude.ai, or localhost for Claude Code).
+and where it sends them back (claude.ai, or localhost for Claude Code). Any
+app can call itself Claude, so one that sends people back to a website other
+than Claude's is named by that site's address instead, there and in the code
+email.
 
 ## Who can sign in
 
@@ -255,7 +258,10 @@ OAuth 2.1 as the MCP authorization spec and Claude's connector expect:
 - Codes and tokens are stored only as SHA-256 hashes (`oauth_grants`).
   Revoking any token ends the whole connection.
 - The email step answers the same way whether or not an address has
-  access, and only invited addresses get a code (10 an hour at most).
+  access, and only invited addresses get a code. Each address gets 10 codes
+  and 10 wrong tries an hour at most, counted across sign-ins (by a keyed
+  hash of the address, in `oauth_events`), so starting over doesn't reset
+  them.
 - App registration and starting a sign-in are capped per caller and
   overall (`lib/mcp/oauth/limits.ts`, `oauth_events`), and Walkoff only
   fetches client metadata from hosts that resolve to public addresses.

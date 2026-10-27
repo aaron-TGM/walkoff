@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 import { LEAGUE_IDS, LEAGUES } from "@/lib/leagues";
+import { callerKey, overLimit } from "@/lib/mcp/oauth/limits";
 import { getServiceSupabase } from "@/lib/supabase";
 import {
   cleanAttribution,
@@ -69,6 +70,18 @@ export async function POST(req: Request) {
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(submission.email)) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+  }
+
+  // Each request is a row and an email, so a script can't send thousands.
+  try {
+    if (await overLimit(getServiceSupabase(), "waitlist", callerKey(req))) {
+      return NextResponse.json(
+        { error: "Too many requests from your network in the last hour. Try again later, or email hello@walkoff.io." },
+        { status: 429 },
+      );
+    }
+  } catch (e) {
+    console.error("Waitlist limit check failed", e);
   }
 
   const leagueNames = submission.leagues

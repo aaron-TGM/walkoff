@@ -37,7 +37,7 @@ async function main(): Promise<void> {
   const store: Store =
     config.dryRun || !config.supabaseUrl || !config.supabaseKey
       ? new MemoryStore()
-      : createSupabaseStore(config.supabaseUrl, config.supabaseKey);
+      : createSupabaseStore(serviceClient(config.supabaseUrl, config.supabaseKey));
   if (store.kind === "memory") {
     log("WARNING", "Dry run: moments are logged, not saved. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to save them.");
   }

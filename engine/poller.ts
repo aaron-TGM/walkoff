@@ -111,7 +111,6 @@ export class LeaguePoller {
           const { events, summary, ok } = await this.finalDetails(g);
           if (ok || t.summaryAttempts >= 2) {
             moments.push(...(await this.withPlayers(g, finalMoments(t, this.rules, events, now), summary)));
-            t = { ...t, finalProcessed: true };
             finalized.push(g.id);
           } else {
             t = { ...t, summaryAttempts: t.summaryAttempts + 1 };
@@ -123,16 +122,7 @@ export class LeaguePoller {
       }
 
       const fresh = moments.filter((m) => !this.tracked.get(m.gameId)?.emitted.has(m.dedupeKey));
-      try {
-        await this.persist(changed, fresh);
-      } catch (e) {
-        // Retry these finals next poll instead of losing their moments.
-        for (const id of finalized) {
-          const t = this.tracked.get(id);
-          if (t) this.tracked.set(id, { ...t, finalProcessed: false });
-        }
-        throw e;
-      }
+      await this.persist(changed, fresh, finalized);
 
       const list = [...games.values()];
       this.status.lastOkAt = now.toISOString();
@@ -187,7 +177,8 @@ export class LeaguePoller {
       maxHomeDeficit: s.maxHomeDeficit,
       maxAwayDeficit: s.maxAwayDeficit,
       finalAt: s.finalAt,
-      finalProcessed: s.state === "post" && s.completed,
+      // Saved before 013_final_processed.sql: a stored final was handled.
+      finalProcessed: s.finalProcessed ?? (s.state === "post" && s.completed),
       summaryAttempts: 0,
       emitted: new Set(),
     };
@@ -252,7 +243,7 @@ export class LeaguePoller {
     }
   }
 
-  private async persist(changed: TrackedGame[], moments: Moment[]): Promise<void> {
+  private async persist(changed: TrackedGame[], moments: Moment[], finalized: string[]): Promise<void> {
     const { store } = this.deps;
 
     // Moments point at games and teams, so those go first.
@@ -276,20 +267,34 @@ export class LeaguePoller {
       await store.saveGames([...games.values()]);
       for (const t of games.values()) this.savedFingerprints.set(t.game.id, fingerprint(t));
     }
-    if (!moments.length) return;
+    if (moments.length) {
+      const inserted = await store.saveMoments(moments);
+      for (const m of moments) this.tracked.get(m.gameId)?.emitted.add(m.dedupeKey);
+      this.status.momentsSaved += inserted.length;
+      for (const m of inserted) {
+        log("INFO", m.headline, {
+          moment: m.type,
+          league: m.league,
+          team: m.team.displayName,
+          intensity: m.intensity,
+          game: m.gameId,
+          dryRun: store.kind === "memory" || undefined,
+        });
+      }
+    }
 
-    const inserted = await store.saveMoments(moments);
-    for (const m of moments) this.tracked.get(m.gameId)?.emitted.add(m.dedupeKey);
-    this.status.momentsSaved += inserted.length;
-    for (const m of inserted) {
-      log("INFO", m.headline, {
-        moment: m.type,
-        league: m.league,
-        team: m.team.displayName,
-        intensity: m.intensity,
-        game: m.gameId,
-        dryRun: store.kind === "memory" || undefined,
-      });
+    // A final is handled once its moments are saved. Until then its stored
+    // game says it isn't, so a restart in between still makes them.
+    const done = finalized.flatMap((id) => {
+      const t = this.tracked.get(id);
+      return t ? [{ ...t, finalProcessed: true }] : [];
+    });
+    if (done.length) {
+      await store.saveGames(done);
+      for (const t of done) {
+        this.tracked.set(t.game.id, t);
+        this.savedFingerprints.set(t.game.id, fingerprint(t));
+      }
     }
   }
 
@@ -349,5 +354,6 @@ function fingerprint(t: TrackedGame): string {
     t.maxHomeDeficit,
     t.maxAwayDeficit,
     t.finalAt,
+    t.finalProcessed,
   ].join("|");
 }

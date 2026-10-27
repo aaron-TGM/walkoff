@@ -357,12 +357,16 @@ async function main() {
     }
     const o = await outreachByToken(db(), token);
     if (!o) usage("No pitch with that link.");
-    await setOutreachStatus(db(), o, status, now);
+    const blocked = await setOutreachStatus(db(), o, status, now);
     const after: Record<string, string> = {
       sent: "Marked sent, and the store as contacted.",
       replied: "Marked replied, and the store too.",
-      bounced: "Marked bounced. The address is on the do-not-contact list.",
-      unsubscribed: "Marked unsubscribed. The address is on the do-not-contact list, so no pitch will go to it again.",
+      bounced: blocked
+        ? `Marked bounced. ${blocked} is on the do-not-contact list.`
+        : "Marked bounced. This pitch had no address on file, so block the one you sent it to: npm run prospects -- block <email>",
+      unsubscribed: blocked
+        ? `Marked unsubscribed. ${blocked} is on the do-not-contact list, so no pitch will go to it again.`
+        : "Marked unsubscribed, but nothing is on the do-not-contact list yet: npm run prospects -- block <email>",
     };
     console.log(after[status]);
     return;

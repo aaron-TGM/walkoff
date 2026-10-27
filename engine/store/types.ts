@@ -8,6 +8,9 @@ export interface StoredGame {
   maxHomeDeficit: number;
   maxAwayDeficit: number;
   finalAt: string | null;
+  /** Whether its final's moments are saved; null if it was saved before
+   *  supabase/013_final_processed.sql. */
+  finalProcessed: boolean | null;
 }
 
 export interface Heartbeat {

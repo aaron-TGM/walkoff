@@ -84,12 +84,24 @@ describe("toPostalArea keeps only the coarse area", () => {
     assert.deepEqual(toPostalArea("19147-1234"), { country: "US", code: "191" });
     assert.deepEqual(toPostalArea("2035", "US"), { country: "US", code: "020" });
     assert.deepEqual(toPostalArea("02035", "United States"), { country: "US", code: "020" });
+    assert.deepEqual(toPostalArea("191", "US"), { country: "US", code: "191" }, "an area stays as is");
+    assert.deepEqual(toPostalArea("921"), { country: "US", code: "921" });
   });
 
   it("Canada and the UK", () => {
     assert.deepEqual(toPostalArea("m5v 3l9"), { country: "CA", code: "M5V" });
     assert.deepEqual(toPostalArea("N17 0AP"), { country: "GB", code: "N17" });
     assert.deepEqual(toPostalArea("SW1A1AA", "GB"), { country: "GB", code: "SW1A" });
+  });
+
+  it("an area on its own stays as is", () => {
+    assert.deepEqual(toPostalArea("N17", "GB"), { country: "GB", code: "N17" });
+    assert.deepEqual(toPostalArea("sw1a", "UK"), { country: "GB", code: "SW1A" });
+    assert.deepEqual(toPostalArea("W1", "GB"), { country: "GB", code: "W1" });
+    assert.deepEqual(toPostalArea("M5V", "Canada"), { country: "CA", code: "M5V" });
+    assert.deepEqual(toPostalArea("N17"), { country: "GB", code: "N17" });
+    assert.deepEqual(toPostalArea("M5V"), { country: "CA", code: "M5V" });
+    assert.equal(toPostalArea("E1W"), null, "London and New Brunswick both have an E1W");
   });
 
   it("gives up on codes it can't place", () => {

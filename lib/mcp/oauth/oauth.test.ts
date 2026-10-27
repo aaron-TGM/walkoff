@@ -1,9 +1,12 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { isMetadataUrl, privateAddress, readMetadataDocument, redirectAllowed, redirectHost, validRedirectUri } from "./clients";
-import { authorizationServerMetadata, canonicalResource, protectedResourceMetadata } from "./config";
+import { appName, isMetadataUrl, privateAddress, readMetadataDocument, redirectAllowed, redirectHost, validRedirectUri, type OAuthClient } from "./clients";
+import { fakeDb } from "../../testing/fake-db";
+import { authorizationServerMetadata, canonicalResource, LIMITS, protectedResourceMetadata } from "./config";
 import { pkceMatches } from "./crypto";
+import { authorizeStart, authorizeStep } from "./handlers";
+import { overLimit, RATE } from "./limits";
 import { stillAllowed } from "./store";
 
 const ORIGIN = "https://www.walkoff.io";
@@ -36,6 +39,22 @@ describe("redirect addresses", () => {
     assert.equal(redirectHost("https://claude.ai/api/mcp/auth_callback"), "claude.ai");
     assert.equal(redirectHost("http://localhost:54123/callback"), "localhost:54123");
     assert.equal(redirectHost("com.example.app:/oauth"), "com.example.app");
+  });
+
+  it("calls an app by its own name only when it comes back to Claude or this device", () => {
+    const claude = (redirect: string, kind: OAuthClient["kind"] = "dcr"): [OAuthClient, string] => [
+      { client_id: "https://evil.example/c.json", client_name: "Claude", redirect_uris: [redirect], kind },
+      redirect,
+    ];
+    assert.equal(appName(...claude("https://claude.ai/api/mcp/auth_callback", "cimd")), "Claude");
+    assert.equal(appName(...claude("https://app.claude.com/callback")), "Claude");
+    assert.equal(appName(...claude("http://localhost:54123/callback")), "Claude");
+    assert.equal(appName(...claude("com.example.app:/oauth")), "Claude");
+    assert.equal(appName(...claude("https://evil.example/cb", "cimd")), "evil.example");
+    assert.equal(appName(...claude("https://claude.ai.evil.example/cb")), "claude.ai.evil.example");
+    assert.equal(appName(...claude("https://evilclaude.ai/cb")), "evilclaude.ai");
+    const unnamed: OAuthClient = { client_id: "wo_client_x", client_name: null, redirect_uris: [], kind: "dcr" };
+    assert.equal(appName(unnamed, "http://localhost/callback"), "An app");
   });
 });
 
@@ -113,5 +132,62 @@ describe("stillAllowed", () => {
     assert.equal(stillAllowed(null, access(true, ["a"])), null);
     assert.deepEqual(stillAllowed(null, access(false, ["a"])), ["a"], "an operator who stopped being one keeps only invited brands");
     assert.deepEqual(stillAllowed(["a", "z"], access(true, ["a"])), ["a", "z"]);
+  });
+});
+
+describe("sign-in limits per address", () => {
+  const callback = "https://claude.ai/api/mcp/auth_callback";
+  const email = "someone@frostbuddy.com";
+  const db = () =>
+    fakeDb({ oauth_clients: [{ client_id: "wo_client_test", client_name: "Claude", redirect_uris: [callback], kind: "dcr", fetched_at: new Date().toISOString() }] });
+
+  /** Starts a sign-in, and returns a way to post its steps. */
+  async function signIn(d: ReturnType<typeof db>) {
+    const q = new URLSearchParams({ client_id: "wo_client_test", redirect_uri: callback, response_type: "code", code_challenge: "a".repeat(43), code_challenge_method: "S256" });
+    const res = await authorizeStart(d, new Request(`${ORIGIN}/oauth/authorize?${q}`), ORIGIN);
+    assert.equal(res.status, 200);
+    const cookie = res.headers.get("set-cookie")!.split(";")[0];
+    const request = cookie.split("=")[1];
+    return (fields: Record<string, string>) =>
+      authorizeStep(d, new Request(`${ORIGIN}/oauth/authorize`, { method: "POST", body: new URLSearchParams({ request, ...fields }), headers: { cookie } }), ORIGIN);
+  }
+
+  it("caps the codes sent to an address, however often sign-ins start over", async () => {
+    const d = db();
+    let sent = 0;
+    while (sent < LIMITS.codesPerEmailHour) {
+      const step = await signIn(d);
+      for (let i = 0; i < LIMITS.codesSent && sent < LIMITS.codesPerEmailHour; i++, sent++) {
+        assert.equal((await step({ step: "email", email })).status, 200);
+        await step({ step: "restart" });
+      }
+    }
+    const step = await signIn(d);
+    assert.equal((await step({ step: "email", email })).status, 429);
+    assert.equal((await step({ step: "email", email: "other@frostbuddy.com" })).status, 200, "other addresses are fine");
+  });
+
+  it("caps wrong codes for an address across sign-ins", async () => {
+    const d = db();
+    let wrong = 0;
+    while (wrong < LIMITS.wrongCodesPerEmailHour) {
+      const step = await signIn(d);
+      await step({ step: "email", email });
+      for (let i = 0; i < LIMITS.attempts && wrong < LIMITS.wrongCodesPerEmailHour; i++, wrong++) await step({ step: "code", code: "000000" });
+    }
+    const step = await signIn(d);
+    assert.equal((await step({ step: "email", email })).status, 200);
+    const res = await step({ step: "code", code: "000000" });
+    assert.equal(res.status, 429);
+    assert.match(await res.text(), /Too many wrong codes for this address/);
+  });
+});
+
+describe("early access requests", () => {
+  it("are capped per caller", async () => {
+    const d = fakeDb();
+    for (let i = 0; i < RATE.waitlist.perCaller; i++) assert.equal(await overLimit(d, "waitlist", "caller-a"), false);
+    assert.equal(await overLimit(d, "waitlist", "caller-a"), true);
+    assert.equal(await overLimit(d, "waitlist", "caller-b"), false);
   });
 });

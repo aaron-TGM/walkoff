@@ -290,8 +290,10 @@ team.
   hockey).
 - On restart it reloads the last 36 hours of games from Supabase, so it
   neither misses a final it was watching nor repeats moments it already
-  saved. Finals it has never seen and that ended long ago are skipped as
-  stale.
+  saved. A final counts as handled only once its moments are saved, so a
+  restart while it waits on a play-by-play, or after a failed save, still
+  makes them. Finals it has never seen and that ended long ago are skipped
+  as stale.
 - If a feed fails it backs off (15s, 30s, 60s, up to 5 minutes) and records
   the error in `engine_heartbeats`, which walkoff.io/status shows.
 
@@ -341,7 +343,10 @@ waits and the rest of the engine runs as before. Then
 `supabase/010_player_moments.sql` for big signings and playoff
 game-winners; until it has run, the engine makes neither. Then
 `supabase/011_athlete_opt_outs.sql`, so athletes who ask Walkoff to stop
-using them are left out (docs/hometown.md).
+using them are left out (docs/hometown.md). Then
+`supabase/013_final_processed.sql`, so a restart in the middle of a final
+still makes its moments; until it has run, the engine works as before.
+Restart the engine after running it.
 
 ## Deploy to Google Cloud Run
 

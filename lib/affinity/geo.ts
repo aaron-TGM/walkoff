@@ -79,9 +79,9 @@ export function haversineKm(a: { lat: number; lng: number }, b: { lat: number; l
 /**
  * Cuts a raw postal code down to the area Walkoff stores. Returns null when
  * it can't tell which country or area the code belongs to.
- *   US "19147-1234" -> 191, "2035" (Excel dropped the zero) -> 020
+ *   US "19147-1234" -> 191, "2035" (Excel dropped the zero) -> 020, "191" -> 191
  *   CA "m5v 3l9" -> M5V
- *   GB "n17 0ap" -> N17, "N170AP" -> N17
+ *   GB "n17 0ap" -> N17, "N170AP" -> N17, "N17" -> N17
  */
 export function toPostalArea(
   rawCode: string,
@@ -97,7 +97,8 @@ export function toPostalArea(
   if (country === "US") {
     const digits = code.replace(/[^0-9]/g, "").slice(0, 5);
     if (digits.length < 3) return null;
-    const zip = digits.length === 4 ? `0${digits}` : digits.length === 3 ? `00${digits}` : digits;
+    // Three digits is an area already: "921" is San Diego, not 00921.
+    const zip = digits.length === 4 ? `0${digits}` : digits;
     return { country, code: zip.slice(0, 3) };
   }
   if (country === "CA") {
@@ -106,8 +107,9 @@ export function toPostalArea(
   }
   if (country === "GB") {
     const compact = code.replace(/\s+/g, "");
-    const outward = code.includes(" ") ? code.split(/\s+/)[0] : compact.slice(0, -3);
-    return /^[A-Z]{1,2}[0-9][A-Z0-9]?$/.test(outward) ? { country, code: outward } : null;
+    // A district on its own ("N17", "SW1A") is an area already.
+    const outward = code.includes(" ") ? code.split(/\s+/)[0] : DISTRICT.test(compact) ? compact : compact.slice(0, -3);
+    return DISTRICT.test(outward) ? { country, code: outward } : null;
   }
   return null;
 }
@@ -125,9 +127,13 @@ export function normalizeCountry(raw?: string | null): Country | null {
   return null;
 }
 
+const DISTRICT = /^[A-Z]{1,2}[0-9][A-Z0-9]?$/;
+
 function guessCountry(code: string): Country | null {
   if (/^\d{3,5}(-\d{4})?$/.test(code)) return "US";
   if (/^[A-Z]\d[A-Z]\s?\d[A-Z]\d$/.test(code)) return "CA";
   if (/^[A-Z]{1,2}\d[A-Z0-9]?\s?\d[A-Z]{2}$/.test(code)) return "GB";
-  return null;
+  // An area on its own, like "M5V" or "N17", if only one country has it.
+  const found = COUNTRIES.filter((c) => c !== "US" && postalArea(c, code));
+  return found.length === 1 ? found[0] : null;
 }
