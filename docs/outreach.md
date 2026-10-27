@@ -139,8 +139,8 @@ Everything the email and the page say must be true today, like the site
 ```bash
 npm run prospects -- mark <link> sent          # after you send it: the store is "contacted"
 npm run prospects -- mark <link> replied
-npm run prospects -- mark <link> unsubscribed  # on the do-not-contact list for good
-npm run prospects -- mark <link> bounced
+npm run prospects -- mark <link> unsubscribed  # the address, or with none on file the store's domain, on the do-not-contact list for good
+npm run prospects -- mark <link> bounced       # the address on the do-not-contact list
 npm run prospects -- status frostbuddy.com trial --note "Starts Monday"
 npm run prospects -- block sam@frostbuddy.com --reason "Asked"
 ```

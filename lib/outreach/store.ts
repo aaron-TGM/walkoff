@@ -284,8 +284,10 @@ export async function recordView(db: SupabaseClient, token: string, now = new Da
 
 /** Records what came of a pitch, and moves its prospect along: sent is
  *  contacted, a reply is replied. An unsubscribe, or a bounce, puts the
- *  address on the do-not-contact list. */
-export async function setOutreachStatus(db: SupabaseClient, o: Outreach, status: OutreachStatus, now = new Date()): Promise<void> {
+ *  address on the do-not-contact list. An unsubscribe from a pitch with no
+ *  address on file puts the store's whole domain there. Returns what it put
+ *  on the list, if anything. */
+export async function setOutreachStatus(db: SupabaseClient, o: Outreach, status: OutreachStatus, now = new Date()): Promise<string | null> {
   const at = now.toISOString();
   const { error } = await db
     .from("outreach")
@@ -304,10 +306,18 @@ export async function setOutreachStatus(db: SupabaseClient, o: Outreach, status:
       .in("status", [...SCORABLE, "contacted"]);
     if (e) throw e;
   }
-  if ((status === "unsubscribed" || status === "bounced") && o.contact_id) {
+  if (status !== "unsubscribed" && status !== "bounced") return null;
+  let value: string | null = null;
+  if (o.contact_id) {
     const { data, error: e } = await db.from("prospect_contacts").select("email").eq("id", o.contact_id).maybeSingle();
     if (e) throw e;
-    const email = (data as { email: string } | null)?.email;
-    if (email) await addDoNotContact(db, [email], status === "bounced" ? "bounced" : "asked not to be contacted");
+    value = (data as { email: string } | null)?.email ?? null;
   }
+  if (!value && status === "unsubscribed") {
+    const { data, error: e } = await db.from("prospects").select("domain").eq("id", o.prospect_id).maybeSingle();
+    if (e) throw e;
+    value = (data as { domain: string } | null)?.domain ?? null;
+  }
+  if (value) await addDoNotContact(db, [value], status === "bounced" ? "bounced" : "asked not to be contacted");
+  return value;
 }

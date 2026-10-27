@@ -175,7 +175,20 @@ describe("pitches", () => {
 
   it("never writes to someone who unsubscribed again", async () => {
     const { db, o } = await setup();
-    await setOutreachStatus(db, o, "unsubscribed");
+    assert.equal(await setOutreachStatus(db, o, "unsubscribed"), "sam@frostbuddy.com");
     assert.deepEqual(await blockedBy(db, ["sam@frostbuddy.com"]), ["sam@frostbuddy.com"]);
+  });
+
+  it("an unsubscribe from a pitch with no address on file blocks the store", async () => {
+    const { db, o } = await setup();
+    const nobody = { ...o, contact_id: null };
+    assert.equal(await setOutreachStatus(db, nobody, "unsubscribed"), "frostbuddy.com");
+    assert.deepEqual(await blockedBy(db, ["frostbuddy.com"]), ["frostbuddy.com"]);
+  });
+
+  it("a bounce with no address on file blocks nothing, and says so", async () => {
+    const { db, o } = await setup();
+    assert.equal(await setOutreachStatus(db, { ...o, contact_id: null }, "bounced"), null);
+    assert.deepEqual(await blockedBy(db, ["frostbuddy.com", "sam@frostbuddy.com"]), []);
   });
 });
