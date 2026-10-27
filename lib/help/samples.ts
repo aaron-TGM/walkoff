@@ -7,8 +7,10 @@ import { pickForTeam } from "../affinity/pick";
 import { hometownRules } from "../hometown/copy";
 import { teamAudience, type Reach } from "../mcp/audience";
 import { buildCampaign, copyRules } from "../mcp/campaign";
+import { buildHometownCampaign, townAudience, townPicks, type HometownCampaign } from "../mcp/hometown-campaign";
 import { teamByKey } from "../mcp/teams";
 import { formatLocal, sendTiming } from "../mcp/timing";
+import { placeLabel, resolveTown, townCircle } from "../places";
 
 /** A store address that can't be anyone's (RFC 2606). */
 export const SAMPLE_STORE = "https://shop.example.com";
@@ -56,6 +58,41 @@ export function sampleCampaign() {
     options: { now: new Date(END.getTime() + 5 * MINUTE) },
   });
 }
+
+/** A hometown title for the demo brand: someone from San Clemente is on the
+ *  champion's roster, and the champion wears navy and green. */
+export const SAMPLE_TOWN = "San Clemente, CA";
+export const SAMPLE_CHAMPION = teamByKey("nfl:26")!;
+
+/** 7:30 PM in San Clemente. */
+const TITLE_NIGHT = new Date("2026-02-09T03:30:00Z");
+
+let hometown: Promise<HometownCampaign> | undefined;
+
+/** What build_campaign returns for a sample hometown title in San Clemente.
+ *  Async: the town's circle comes from the places data. */
+export const sampleHometownCampaign = () =>
+  (hometown ??= (async () => {
+    const found = await resolveTown(SAMPLE_TOWN);
+    if (found.status !== "found") throw new Error(`${SAMPLE_TOWN}: ${found.status}`);
+    const { place } = found;
+    const label = placeLabel(place);
+    return buildHometownCampaign({
+      brand: SAMPLE_BRAND,
+      moment: {
+        id: null,
+        type: "hometown_title",
+        headline: "Sample: Hometown Champion",
+        occurredAt: TITLE_NIGHT,
+        gameStart: null,
+        town: { label, name: place.name, country: place.country, region: place.region },
+        team: SAMPLE_CHAMPION,
+      },
+      picks: townPicks(demo().catalog, place.name, { team: SAMPLE_CHAMPION, sport: null }),
+      audience: townAudience(label, await townCircle(place)),
+      options: { now: new Date(TITLE_NIGHT.getTime() + 5 * MINUTE) },
+    });
+  })());
 
 /** The sample email as a page: Klaviyo's tags become sample text, and links
  *  open nowhere (the frame that shows it allows no new windows). */

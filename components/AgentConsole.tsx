@@ -1,8 +1,8 @@
 import type { CSSProperties } from "react";
 import { Swatches } from "@/components/upload/AffinityReportView";
 
-// Example session shown in the hero. Lines reveal one after another
-// (CSS only, see .console-line in globals.css).
+// Example session shown in the homepage's Claude section. Lines reveal one
+// after another (CSS only, see .console-line in globals.css).
 
 const AFFINITY = [
   { name: "Chargers territory", customers: "2,310", lift: 2.4 },
@@ -90,7 +90,7 @@ export function AgentConsole() {
 
         <div className="console-line console-fire" style={line(i++)}>
           <span className="console-fire-tag">Final</span>
-          SUN 4:12P &middot; Chargers 27, Chiefs 20
+          SUN 4:41P &middot; Chargers 27, Chiefs 20
         </div>
         <div className="console-line console-tool" style={line(i++)}>
           <span className="console-bullet" aria-hidden />

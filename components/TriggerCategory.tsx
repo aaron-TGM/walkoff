@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Trigger, TriggerCategory as TCat } from "@/lib/triggers";
 
 const ICON_COLORS: Record<TCat, string> = {
@@ -45,10 +45,16 @@ interface Props {
   categoryId: TCat;
   label: string;
   items: Trigger[];
+  /** Open on wide screens. Phones start closed, like the FAQ. */
+  defaultOpen?: boolean;
 }
 
-export function TriggerCategory({ categoryId, label, items }: Props) {
-  const [open, setOpen] = useState(false);
+export function TriggerCategory({ categoryId, label, items, defaultOpen = false }: Props) {
+  const [open, setOpen] = useState(defaultOpen);
+
+  useEffect(() => {
+    if (defaultOpen && window.innerWidth < 880) setOpen(false);
+  }, [defaultOpen]);
 
   return (
     <div className="trigger-cat">
