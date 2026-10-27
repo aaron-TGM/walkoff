@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AgentConsole } from "@/components/AgentConsole";
 import { BrandSpan } from "@/components/BrandSpan";
 import { Eyebrow } from "@/components/Eyebrow";
-import { HometownExample, TeamExample } from "@/components/ExampleEmail";
+import { HometownExample } from "@/components/ExampleEmail";
 import { FaqItem } from "@/components/FaqItem";
 import { PricingPicker } from "@/components/PricingPicker";
 import { RESULT, ResultCard } from "@/components/ResultCard";
@@ -16,7 +16,7 @@ import { WaitlistForm } from "@/components/WaitlistForm";
 import { CONNECTOR_STEPS, CONNECTOR_URL } from "@/lib/connect";
 import { TOUR_FACTS } from "@/lib/help/moments";
 import { helpPath } from "@/lib/help/pages";
-import { mapHighlights } from "@/lib/help/samples";
+import { mapHighlights, SAMPLE_TEAM } from "@/lib/help/samples";
 import { HOME_ASKS } from "@/lib/help/tools";
 import { hometownLive } from "@/lib/hometown/flag";
 import { LEAGUES } from "@/lib/leagues";
@@ -185,7 +185,7 @@ export function MarketingPage() {
       <section className="hero">
         <div className="container-w">
           <div className="hero-grid">
-            <div>
+            <div className="hero-copy">
               <Eyebrow>Sports moments &middot; Ready in Klaviyo</Eyebrow>
               <h1>
                 Their team wins.
@@ -219,34 +219,36 @@ export function MarketingPage() {
               </p>
             </div>
 
-            <div className="moment-card moment-card-hero" aria-label="A real email: Vuori's own catalog in gold and blues">
+            <figure className="moment-card moment-card-hero" aria-label="Example: a Chargers win, and a real Vuori email in Chargers colors">
               <div className="moment-card-final">
-                <span>Real email</span>Vuori, used with permission
+                <span>Final</span>Chargers 27, Chiefs 20
               </div>
-              <div className="moment-card-meta">
-                Gold and blues, all from Vuori&apos;s own catalog
+              <div className="moment-card-colors">
+                <span>Example &middot; {SAMPLE_TEAM.team.nickname} colors</span>
+                <span className="moment-card-stripe" aria-hidden>
+                  {SAMPLE_TEAM.team.colors.map((h) => (
+                    <i key={h} style={{ backgroundColor: `#${h}` }} />
+                  ))}
+                </span>
               </div>
+              <p className="moment-card-why">
+                <b>Vuori, in those colors.</b> A real Vuori email, used with permission.
+              </p>
               <div className="moment-card-email">
-                <div
-                  className="moment-card-scroll"
-                  tabIndex={0}
-                  aria-label="The Vuori email, scrollable"
-                >
-                  <Image
-                    src="/examples/vuori-email.jpg"
-                    alt="Vuori's email: Kore shorts in Brass, a gym bag, socks and a hat in Bay Blue and Foggy Blue, all from its own catalog."
-                    width={654}
-                    height={1858}
-                    priority
-                    sizes="(min-width: 880px) 440px, 92vw"
-                    className="moment-card-shot"
-                  />
-                </div>
+                <Image
+                  src="/examples/vuori-email.jpg"
+                  alt="Vuori's email: Kore shorts in Brass, a gym bag, socks and a hat in Bay Blue and Foggy Blue, all from its own catalog."
+                  width={654}
+                  height={1858}
+                  priority
+                  sizes="(min-width: 880px) 440px, 92vw"
+                  className="moment-card-shot"
+                />
               </div>
-              <div className="moment-card-foot">
+              <figcaption className="moment-card-foot">
                 No logo. No license. Your catalog, in their colors.
-              </div>
-            </div>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>
@@ -301,31 +303,27 @@ export function MarketingPage() {
       {/* ─── FOUNDER ─────────────────────────────────────────── */}
       <section className="block border-t border-rule" id="why">
         <div className="container-w">
-          <div className="founder-grid">
-            <figure className="founder-quote">
-              <div className="block-num">
-                <span className="eyebrow-dot" aria-hidden />
-                Why we built it
-              </div>
-              <blockquote>
-                <p>
-                  The biggest opportunity is brands that will never have a
-                  license. Say the Chargers win. That night, an athleisure brand
-                  sends an email built from its own catalog: the powder blues,
-                  the golds, the pieces that feel like game day.{" "}
-                  <em>
-                    It ties the brand to the moment and gives the message a real
-                    reason to exist.
-                  </em>
-                </p>
-              </blockquote>
-              <figcaption className="founder-name">
-                Aaron <span>Founder, Walkoff</span>
-              </figcaption>
-            </figure>
-
-            <TeamExample />
-          </div>
+          <figure className="founder-quote">
+            <div className="block-num">
+              <span className="eyebrow-dot" aria-hidden />
+              Why we built it
+            </div>
+            <blockquote>
+              <p>
+                The biggest opportunity is brands that will never have a
+                license. Say the Chargers win. That night, an athleisure brand
+                sends an email built from its own catalog: the powder blues,
+                the golds, the pieces that feel like game day.{" "}
+                <em>
+                  It ties the brand to the moment and gives the message a real
+                  reason to exist.
+                </em>
+              </p>
+            </blockquote>
+            <figcaption className="founder-name">
+              Aaron <span>Founder, Walkoff</span>
+            </figcaption>
+          </figure>
         </div>
       </section>
 

@@ -272,7 +272,14 @@
   @apply pb-20 pt-16;
 }
 .hero-grid {
-  @apply grid items-center gap-12 layout:grid-cols-[1.08fr_1fr] layout:gap-14;
+  @apply grid items-start gap-12 layout:grid-cols-[1.08fr_1fr] layout:gap-14;
+}
+/* The email beside it runs long, so the pitch stays in view while it
+   scrolls past. */
+@media (min-width: 880px) and (min-height: 640px) {
+  .hero-copy {
+    @apply sticky top-24;
+  }
 }
 .hero h1 {
   @apply my-5 font-display text-[clamp(2.75rem,5.5vw,5.5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.015em];
@@ -1090,8 +1097,8 @@ select.form-input {
 }
 
 /* Founder */
-.founder-grid {
-  @apply grid items-center gap-12 layout:grid-cols-[1.2fr_1fr] layout:gap-16;
+.founder-quote {
+  @apply max-w-4xl;
 }
 .founder-quote blockquote {
   @apply relative mt-[4.5rem];
@@ -1130,6 +1137,17 @@ select.form-input {
 .moment-card-meta {
   @apply mt-4 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-inkMuted;
 }
+/* The hero's story, top to bottom: the final, the team's colors, then a
+   real email in them. */
+.moment-card-colors {
+  @apply mt-4 flex items-center gap-3 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-inkMuted;
+}
+.moment-card-stripe {
+  @apply flex h-2.5 flex-1;
+}
+.moment-card-stripe i {
+  @apply block h-full flex-1;
+}
 .moment-card-why {
   @apply mt-3 text-[0.85rem] leading-snug text-ink;
 }
@@ -1155,23 +1173,6 @@ select.form-input {
 }
 .moment-card-email {
   @apply mt-4 border border-rule bg-white;
-}
-/* The real email is tall, so it scrolls inside the card; the fade says there's more. */
-.moment-card-scroll {
-  @apply relative overflow-y-auto overscroll-contain;
-  max-height: 26rem;
-  scrollbar-width: thin;
-  -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent);
-  mask-image: linear-gradient(to bottom, #000 82%, transparent);
-}
-/* On a phone, a swipe that reaches the end of the email carries on down the page. */
-@media (pointer: coarse) {
-  .moment-card-scroll {
-    overscroll-behavior: auto;
-  }
-}
-.moment-card-scroll:focus-visible {
-  @apply outline outline-2 outline-offset-2 outline-red;
 }
 .moment-card-shot {
   @apply block h-auto w-full;
@@ -1216,9 +1217,6 @@ select.form-input {
   .moment-card {
     @apply p-3.5;
     box-shadow: 6px 6px 0 rgb(200 68 42);
-  }
-  .moment-card-scroll {
-    max-height: 22rem;
   }
 }
 
