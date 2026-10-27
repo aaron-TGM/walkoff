@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { leagueSport, SportIcon } from "@/components/SportIcon";
 import { visitAttribution } from "@/lib/analytics";
 import { helpPath } from "@/lib/help/pages";
 import { LEAGUES } from "@/lib/leagues";
@@ -205,6 +206,7 @@ export function WaitlistForm({ defaults, source }: { defaults?: { company?: stri
                 aria-pressed={on}
                 onClick={() => toggleLeague(l.id)}
               >
+                <SportIcon sport={leagueSport(l)} />
                 {l.name}
               </button>
             );

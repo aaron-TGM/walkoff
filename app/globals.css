@@ -284,7 +284,8 @@
 .hero h1 {
   @apply my-5 font-display text-[clamp(2.75rem,5.5vw,5.5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.015em];
 }
-.hero h1 .script {
+.hero h1 .script,
+.final-cta-h .script {
   display: block;
   margin-top: 0.06em;
   font-family: var(--font-amerik), sans-serif;
@@ -530,6 +531,12 @@ section.block {
 .integration-item {
   @apply flex flex-col items-center gap-2;
 }
+.integration-lockup {
+  @apply flex h-7 items-center gap-2;
+}
+.integration-mark {
+  @apply block h-6 w-6;
+}
 .integration-name {
   @apply font-display text-[0.95rem] font-bold uppercase tracking-[0.04em] text-ink;
 }
@@ -673,16 +680,8 @@ section.block {
 .final-cta {
   @apply py-28 text-center;
 }
-.final-cta-script {
-  @apply mb-6 block;
-}
-.prefooter-logo {
-  display: block;
-  height: clamp(5rem, 12vw, 10rem);
-  width: auto;
-}
 .final-cta-h {
-  @apply mx-auto mb-8 font-display text-[clamp(1.5rem,3vw,2.25rem)] font-extrabold uppercase tracking-[-0.005em];
+  @apply mx-auto mb-10 font-display text-[clamp(2.25rem,5vw,4.5rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.015em];
 }
 .final-cta-actions {
   @apply flex flex-wrap justify-center gap-4;
@@ -719,10 +718,6 @@ section.block {
   display: block;
   height: 52px;
   width: auto;
-}
-.footer-tagline {
-  @apply max-w-[28ch] font-display text-[0.85rem] font-bold uppercase leading-snug tracking-[0.02em];
-  color: rgba(244, 239, 228, 0.7);
 }
 .footer-col-title {
   @apply mb-4 font-mono text-[0.65rem] uppercase tracking-[0.2em];
@@ -1067,9 +1062,13 @@ select.form-input {
 .league-strip-list li {
   @apply flex items-center gap-2 font-display text-[1.05rem] font-bold uppercase tracking-[-0.005em];
 }
-.league-strip-list li::before {
-  content: "";
-  @apply inline-block h-1.5 w-1.5 rounded-full bg-red;
+/* A league's sport, drawn (components/SportIcon.tsx). */
+.sport-icon {
+  @apply h-[1.15em] w-[1.15em] shrink-0;
+}
+.league-strip-list .sport-icon,
+.hometown-sources .sport-icon {
+  @apply text-red;
 }
 .league-strip-note {
   @apply font-mono text-[0.55rem] font-normal tracking-[0.12em] text-inkMuted;
@@ -1379,10 +1378,6 @@ select.form-input {
 }
 .hometown-sources li {
   @apply flex items-center gap-2 font-display text-[0.95rem] font-bold uppercase;
-}
-.hometown-sources li::before {
-  content: "";
-  @apply inline-block h-1.5 w-1.5 rounded-full bg-red;
 }
 
 /* The categories still to come, in one line */
