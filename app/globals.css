@@ -1077,30 +1077,45 @@ select.form-input {
   @apply mt-2 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-inkMuted;
 }
 .moment-card-email {
-  @apply mt-4 border border-rule bg-cream p-4;
+  @apply mt-4 border border-rule bg-white;
+}
+.moment-card-inbox {
+  @apply flex flex-col gap-0.5 border-b border-rule bg-cream px-3.5 py-2.5;
+}
+.moment-card-from {
+  @apply font-mono text-[0.6rem] uppercase tracking-[0.12em] text-inkMuted;
 }
 .moment-card-subject {
-  @apply font-display text-[1.3rem] font-extrabold uppercase leading-tight;
+  @apply font-display text-[1.05rem] font-extrabold uppercase leading-tight;
 }
-.moment-card-items {
-  @apply mt-4 grid grid-cols-3 gap-2.5;
+/* The real email is tall, so it scrolls inside the card; the fade says there's more. */
+.moment-card-scroll {
+  @apply relative overflow-y-auto overscroll-contain;
+  max-height: 26rem;
+  scrollbar-width: thin;
+  -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent);
+  mask-image: linear-gradient(to bottom, #000 82%, transparent);
 }
-.moment-card-item {
-  @apply text-[0.72rem] leading-tight;
+.moment-card-scroll:focus-visible {
+  @apply outline outline-2 outline-offset-2 outline-red;
 }
-.moment-card-item b {
-  @apply block font-semibold;
-}
-.moment-card-item span:last-child {
-  @apply text-inkMuted;
-}
-.moment-card-photo {
-  @apply mb-2 block aspect-[4/5] w-full;
-  background-image: linear-gradient(155deg, rgb(255 255 255 / 0.22), transparent 55%),
-    linear-gradient(0deg, rgb(0 0 0 / 0.12), transparent 40%);
+.moment-card-shot {
+  @apply block h-auto w-full;
 }
 .moment-card-foot {
   @apply mt-4 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink;
+}
+.moment-card-tag {
+  @apply mb-1.5 block text-red;
+}
+@media (max-width: 480px) {
+  .moment-card {
+    @apply p-3.5;
+    box-shadow: 6px 6px 0 rgb(200 68 42);
+  }
+  .moment-card-scroll {
+    max-height: 22rem;
+  }
 }
 
 /* Dark sections */
