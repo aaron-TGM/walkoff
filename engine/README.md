@@ -346,6 +346,7 @@ game-winners; until it has run, the engine makes neither. Then
 using them are left out (docs/hometown.md). Then
 `supabase/013_final_processed.sql`, so a restart in the middle of a final
 still makes its moments; until it has run, the engine works as before.
+Restart the engine after running it.
 
 ## Deploy to Google Cloud Run
 

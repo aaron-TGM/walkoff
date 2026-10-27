@@ -75,7 +75,8 @@ const GAME_COLUMNS = "id, state, completed, max_home_deficit, max_away_deficit, 
 
 export function createSupabaseStore(db: SupabaseClient): Store {
   // supabase/013_final_processed.sql adds games.final_processed. Until it
-  // has run, games are saved and restored without it, as before.
+  // has run, games are saved and restored without it, as before; the engine
+  // looks for it again when it restarts.
   let withFinal = true;
 
   return {
