@@ -1164,6 +1164,12 @@ select.form-input {
   -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent);
   mask-image: linear-gradient(to bottom, #000 82%, transparent);
 }
+/* On a phone, a swipe that reaches the end of the email carries on down the page. */
+@media (pointer: coarse) {
+  .moment-card-scroll {
+    overscroll-behavior: auto;
+  }
+}
 .moment-card-scroll:focus-visible {
   @apply outline outline-2 outline-offset-2 outline-red;
 }

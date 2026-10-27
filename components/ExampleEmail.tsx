@@ -41,11 +41,11 @@ function MiniEmail({ subject, headline, products, stripe, cta }: { subject: stri
 }
 
 /** A Chargers walk-off, the campaign drafted and waiting. */
-export function HeroCampaign() {
+export function TeamExample() {
   const c = sampleCampaign();
   const [circle] = c.audience.circles;
   return (
-    <figure className="moment-card moment-card-hero" aria-label="Example: the campaign Walkoff builds when the Chargers win">
+    <figure className="moment-card" aria-label="Example: the campaign Walkoff builds when the Chargers win">
       <div className="moment-card-final">
         <span>Final</span>Chargers 27, Chiefs 20
       </div>
@@ -61,8 +61,7 @@ export function HeroCampaign() {
   );
 }
 
-/** A hometown title in San Clemente: one circle, and the town, never the
- *  athlete. The card names him to say why the email wears Seattle's colors. */
+/** A hometown title in San Clemente: one circle, and the town, never the athlete. */
 export async function HometownExample() {
   const c = await sampleHometownCampaign();
   const [circle] = c.audience.circles;
@@ -76,7 +75,7 @@ export async function HometownExample() {
         Example &middot; within {circle.radius_miles} miles of {circle.postal_code}
       </div>
       <p className="moment-card-why">
-        <b>Why navy and green?</b> Sam Darnold plays for the Seahawks, and he&apos;s from San Clemente.
+        <b>Why navy and green?</b> A quarterback from San Clemente plays for the Seahawks.
       </p>
       <MiniEmail subject={c.subject_lines[0]} headline={c.headline} products={c.products} stripe={SAMPLE_CHAMPION.team.colors} cta={c.cta.label} />
       <figcaption className="moment-card-foot">The email celebrates the town. It never names him.</figcaption>
