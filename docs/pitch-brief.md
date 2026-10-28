@@ -401,7 +401,9 @@ Every brand gets all of them.
 
 ### Frost Buddy's early test: the one result
 
-Use these facts exactly, and nothing beyond them.
+The founder confirmed on October 28, 2026 that decks and sales material can
+name Frost Buddy and show its product photos. Use these facts exactly, and
+nothing beyond them.
 
 | | |
 |---|---|
@@ -443,13 +445,12 @@ under an example final (Chargers 27, Chiefs 20) and the Chargers' colors:
 catalog (Kore shorts in Brass, a gym bag, socks and a hat in Bay Blue and
 Foggy Blue) in a team's colors, with no logo.
 
+- Use it in decks and sales material too: the founder confirmed on October
+  28, 2026 that the permission covers them.
 - Caption it the way the site does: "A real Vuori email, used with
   permission."
 - Don't call Vuori a customer, a user or a partner, don't say Walkoff built
   or sent it, and don't attach any numbers to it.
-- The permission was for the site. Use it in a deck only once the founder
-  confirms that's covered (section 19). Until then, use the sample email
-  (section 17).
 
 ### Real, sample, or live
 
@@ -635,13 +636,13 @@ Two beats in a headline: the second, after the "/", is the script beat.
 | 1 | Title | Their team wins. / Your campaign's ready. | Wordmark, the 25-word line, www.walkoff.io, `[FOUNDER: date and round]` | 2, 17 |
 | 2 | The moment | Some wins you feel all week. / The first brand in the inbox owns the moment. | An example Final bar ("Chargers 27, Chiefs 20", labeled Example). A result is worth acting on for about 30 hours. | 3 |
 | 3 | The problem | The moment is there. / Most brands can't use it. | No license, no warning, no map, no time | 3 |
-| 4 | The insight | No logo. No license. / Your catalog, in their colors. | The founder's quote, beside the sample email | 3, 17 |
+| 4 | The insight | No logo. No license. / Your catalog, in their colors. | The founder's quote, beside Vuori's real email under an example Chargers final, as the site's first screen shows it | 3, 8 |
 | 5 | The product | Set it up in Claude. / Then ask what to send. | The four steps, and who does each; the email marked "Drafted in Klaviyo · waiting for your go-ahead" | 5 |
 | 6 | Day one | Day one, you learn / something new about your customers. | The sample fan map's four standouts, labeled "Sample brand" | 6, 17 |
 | 7 | Coverage | The moments / worth an email. | 7 leagues, 10 tours and series, 20 live moment types, the hometown example | 6, 7 |
 | 8 | Control | You approve. / Every send. | The six controls | 12 |
 | 9 | Why now | Ask what to send. / Get the campaign. | Runs in Claude next to Shopify and Klaviyo; no dashboard, pixel, keys or customer list; four real asks | 3, 5 |
-| 10 | Proof | Results you can / defend. | Frost Buddy, exactly as section 8 | 8 |
+| 10 | Proof | Results you can / defend. | Frost Buddy, exactly as section 8, with its seven team cups | 8, 17 |
 | 11 | Model | One flat price per brand. / Everything included. | The price table; agencies | 9 |
 | 12 | Go to market | The product / makes its own pitch. | The best-fit profile; morning-after pitch pages; `[FOUNDER: funnel numbers]` | 4, 10 |
 | 13 | Market | `[FOUNDER]` | A bottom-up size, showing its inputs (section 19 has a method) | 19 |
@@ -656,7 +657,7 @@ Appendix slides: how it works (6), data and privacy (12), the copy rules
 
 | # | Headline | On it |
 |---|---|---|
-| 1 | Their team wins. / Your campaign's ready. | The site's paragraph |
+| 1 | Their team wins. / Your campaign's ready. | The site's paragraph, beside Vuori's email as the site shows it |
 | 2 | If your customers have a team, / you have a trigger. | Who it's for: the card that fits them |
 | 3 | Here's / your email. | Their pitch page if one exists, otherwise the sample campaign, labeled "Sample: nothing was sent" |
 | 4 | Day one, you learn / something new about your customers. | The sample fan map, labeled. "Yours is ready in minutes once you connect Shopify in Claude." |
@@ -863,7 +864,7 @@ All of these are live on www.walkoff.io:
 | The sample fan map | Screenshot www.walkoff.io/upload/demo | Day one | Sample brand |
 | The live status page | Screenshot www.walkoff.io/status | Coverage, technology | Live |
 | Frost Buddy's seven team cups | www.walkoff.io/examples/frostbuddy/dodgers.webp, and yankees, cubs, red-sox, braves, phillies, giants | Proof | "Frost Buddy is licensed, so its emails show the team." |
-| Vuori's email | www.walkoff.io/examples/vuori-email.jpg | The insight | "A real Vuori email, used with permission." Only once cleared for decks |
+| Vuori's email | www.walkoff.io/examples/vuori-email.jpg | The insight | "A real Vuori email, used with permission." |
 | Klaviyo, Shopify and Claude marks | www.walkoff.io/klaviyo-new-logo.png, /shopify_logo.svg, /claude_logo.svg | A "works with" row, badged Live | Not partners |
 | Postscript and Attentive marks | www.walkoff.io/postscript_logo.svg, /attentive_logo.svg | The same row | In progress |
 
@@ -983,7 +984,6 @@ the placeholders you used.
 | Market size | Suggested method: US Shopify stores with Klaviyo in the target categories (Store Leads, the source outreach uses) × the share whose catalogs score 0.6 or more × the average plan price × 12. Show the inputs. |
 | Competitors | Who, and how Walkoff differs. Don't name or characterize any company until then. |
 | Frost Buddy | The month of the test, the exact recipient count, Klaviyo's attribution window |
-| Vuori | Whether the permission covers decks and sales material |
 | Day 60 | What happens when the free 60 days end |
 | Claude plans | Which plans support Walkoff's connector for a brand's team. Don't name plans until confirmed. |
 | Customer quotes | None on file |
