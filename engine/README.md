@@ -371,7 +371,8 @@ for SECRET in supabase-service-role-key anthropic-api-key; do
     --role=roles/secretmanager.secretAccessor
 done
 
-# Build (from the repo root) and deploy. Repeat both to ship an update.
+# Build (from the repo root), then give the service its settings. The build
+# deploys too, but only swaps the image, so the first deploy needs this.
 gcloud builds submit --config engine/cloudbuild.yaml .
 gcloud run deploy walkoff-engine \
   --image $REGION-docker.pkg.dev/$PROJECT/walkoff/engine:latest \
@@ -382,6 +383,13 @@ gcloud run deploy walkoff-engine \
   --set-env-vars SUPABASE_URL=https://YOUR-PROJECT.supabase.co \
   --set-secrets SUPABASE_SERVICE_ROLE_KEY=supabase-service-role-key:latest,ANTHROPIC_API_KEY=anthropic-api-key:latest
 ```
+
+On a new project, that first build's own deploy step can fail, before the
+service exists or its account can deploy. The image is pushed by then, so
+carry on with the deploy. After that, `gcloud builds submit --config
+engine/cloudbuild.yaml .` ships an update on its own: it builds, then deploys
+the new image, and the service keeps its settings, env vars and secrets. Or
+let a trigger do it on every merge (below).
 
 Already running without the Anthropic key? Create the `anthropic-api-key`
 secret and its binding as above, then build and add the key to the running
@@ -407,6 +415,48 @@ dollars a month; check the Cloud Run pricing calculator for your region.
 
 Logs are JSON lines with `severity`, so Cloud Logging filters work, e.g.
 `jsonPayload.moment="walkoff_win"`.
+
+### Deploy on every merge
+
+A Cloud Build trigger runs `engine/cloudbuild.yaml` on every push to `main`
+that touches the engine, so merging a pull request ships it. CI runs on the
+pull request, not before the deploy: merge only green ones. One time:
+
+1. Let the service account builds run as deploy to Cloud Run:
+
+   ```bash
+   PROJECT_NUMBER=$(gcloud projects describe $PROJECT --format='value(projectNumber)')
+   BUILD_SA=$(gcloud builds list --limit=1 --format='value(serviceAccount)' | sed 's#.*/##')
+   BUILD_SA=${BUILD_SA:-${PROJECT_NUMBER}-compute@developer.gserviceaccount.com}
+   RUNTIME_SA=$(gcloud run services describe walkoff-engine --region $REGION --format='value(spec.template.spec.serviceAccountName)')
+   RUNTIME_SA=${RUNTIME_SA:-${PROJECT_NUMBER}-compute@developer.gserviceaccount.com}
+   for ROLE in roles/run.developer roles/artifactregistry.writer roles/logging.logWriter; do
+     gcloud projects add-iam-policy-binding $PROJECT --member=serviceAccount:$BUILD_SA --role=$ROLE --condition=None
+   done
+   gcloud iam service-accounts add-iam-policy-binding $RUNTIME_SA \
+     --member=serviceAccount:$BUILD_SA --role=roles/iam.serviceAccountUser
+   echo "Pick this one in the trigger: $BUILD_SA"
+   ```
+
+2. Cloud Build → Triggers (region global) → Connect repository: GitHub
+   (Cloud Build GitHub App), install the app on the walkoff repository only,
+   and connect it.
+3. Create trigger: event "Push to a branch", branch `^main$`, included files
+   `engine/**`, `lib/**`, `data/**`, `package.json`, `package-lock.json`,
+   `tsconfig.json`, ignored files `**/*.md`, configuration file
+   `engine/cloudbuild.yaml`, and the service account from step 1.
+
+Each build shows in Cloud Build → History and as a check on the commit in
+GitHub. To go back to an earlier version, send traffic to its revision; new
+deploys get no traffic until you hand it back with `--to-latest`:
+
+```bash
+gcloud run revisions list --service walkoff-engine --region $REGION
+gcloud run services update-traffic walkoff-engine --region $REGION --to-revisions=REVISION=100
+gcloud run services update-traffic walkoff-engine --region $REGION --to-latest
+```
+
+To pause deploys, disable the trigger.
 
 ## Not yet
 
