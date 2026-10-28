@@ -1,13 +1,40 @@
-# Builds the engine image with Cloud Build. Run from the repo root:
+# Builds the engine image and deploys it to Cloud Run. A Cloud Build
+# trigger runs it on every merge to main that touches the engine (see
+# engine/README.md, "Deploy on every merge"). By hand, from the repo root:
 #   gcloud builds submit --config engine/cloudbuild.yaml .
+# The deploy only swaps the image: the service keeps its settings, env vars
+# and secrets. Everything here assumes us-central1.
 steps:
-  - name: gcr.io/cloud-builders/docker
+  - id: build
+    name: gcr.io/cloud-builders/docker
     args:
       - build
       - -f
       - engine/Dockerfile
       - -t
       - us-central1-docker.pkg.dev/$PROJECT_ID/walkoff/engine:latest
+      - -t
+      - us-central1-docker.pkg.dev/$PROJECT_ID/walkoff/engine:$BUILD_ID
       - .
+  # The deploy needs the image in the registry, so push before it.
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args: [push, --all-tags, us-central1-docker.pkg.dev/$PROJECT_ID/walkoff/engine]
+  # This build's own image, not whatever :latest points to by then.
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - walkoff-engine
+      - --image=us-central1-docker.pkg.dev/$PROJECT_ID/walkoff/engine:$BUILD_ID
+      - --region=us-central1
+      - --quiet
 images:
   - us-central1-docker.pkg.dev/$PROJECT_ID/walkoff/engine:latest
+  - us-central1-docker.pkg.dev/$PROJECT_ID/walkoff/engine:$BUILD_ID
+# A trigger that runs as a chosen service account has to say where its logs
+# go. Cloud Logging needs no bucket.
+options:
+  logging: CLOUD_LOGGING_ONLY
