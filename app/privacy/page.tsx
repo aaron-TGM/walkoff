@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage eyebrow="Legal" title="Privacy Policy" updated="October 27, 2026">
+    <LegalPage eyebrow="Legal" title="Privacy Policy" updated="November 2, 2026">
       <p>
         Walkoff (walkoff.io) is a product of Tuff Ghost Media LLC, based in San
         Clemente, California (&ldquo;Walkoff,&rdquo; &ldquo;we&rdquo; or
@@ -54,6 +54,13 @@ export default function PrivacyPage() {
           <a href="#athletes">Information about athletes</a>.
         </li>
         <li>
+          <strong>People at brands we contact.</strong> If you work at an
+          online store we think Walkoff could help: details about the store,
+          and your name, work email, job title and LinkedIn profile.
+          See <a href="#outreach">Information about people at brands we
+          contact</a>.
+        </li>
+        <li>
           <strong>Site analytics.</strong> We count visits to walkoff.io with
           Vercel Web Analytics: the pages viewed, the site that sent you, and
           your browser, device type and general location. It sets no cookies
@@ -73,6 +80,10 @@ export default function PrivacyPage() {
         <li>To provide, maintain and improve Walkoff.</li>
         <li>To respond to early access requests and support questions.</li>
         <li>To learn which pages and campaigns bring people to Walkoff.</li>
+        <li>
+          To tell brands Walkoff could help about it, and to follow up when
+          they answer.
+        </li>
         <li>To keep the service secure and prevent abuse.</li>
         <li>To meet legal obligations.</li>
         <li>
@@ -92,8 +103,10 @@ export default function PrivacyPage() {
           <strong>Service providers</strong> that run parts of Walkoff for us
           under confidentiality obligations: hosting and site analytics
           (Vercel), database
-          (Supabase), email delivery (Resend) and AI processing (Anthropic),
-          which we use to analyze product catalogs and counts.
+          (Supabase), email (Resend for the emails Walkoff sends, such as
+          sign-in codes, and Google Workspace for our own emails to brands)
+          and AI processing (Anthropic), which we use to analyze product
+          catalogs and counts and to help with our emails to brands.
         </li>
         <li>
           <strong>Platforms you connect</strong>, when you tell us to, such as
@@ -118,6 +131,9 @@ export default function PrivacyPage() {
         We keep early access information until you ask us to delete it. We keep
         brand data for as long as your account is active and delete it within
         30 days after you cancel, unless the law requires us to keep it longer.
+        We keep information about people at brands we contact until they ask
+        us to delete it, and an address on our do-not-contact list for good,
+        so we never write to it again.
       </p>
 
       <h2 id="athletes">Information about athletes</h2>
@@ -178,6 +194,48 @@ export default function PrivacyPage() {
         never keep it again, stop making hometown moments and big signings
         about you, and take back the ones still in brands&apos; queues. We keep
         your roster facts, so we know you when a roster lists you again.
+      </p>
+
+      <h2 id="outreach">Information about people at brands we contact</h2>
+      <p>
+        Walkoff writes to online stores it could help, to show them a sample
+        campaign made from their own products. For each store, and each person
+        we write to there, we keep:
+      </p>
+      <ul>
+        <li>
+          <strong>About the store.</strong> Its name, website, platform,
+          location, estimated sales, product categories and the apps it uses,
+          from Store Leads, a directory of online stores. Its products, from
+          the store&apos;s public product feed, and how well they match the
+          colors of the teams near it.
+        </li>
+        <li>
+          <strong>About you.</strong> Your name, work email address, job title
+          and LinkedIn profile, and whether your address can receive email,
+          from business contact providers such as Apollo, FullEnrich and Clay.
+        </li>
+        <li>
+          <strong>Our emails.</strong> What we wrote, the sample campaign page
+          we made for the store, how many times that page was opened and when,
+          and whether you replied, unsubscribed or the email bounced.
+        </li>
+      </ul>
+      <p>
+        We use it only to choose which stores to write to, to write to them
+        about Walkoff and to keep track of the conversation. We don&apos;t
+        sell it or use it for advertising. Where the GDPR applies, we rely on
+        our legitimate interest in telling businesses about a service that
+        could help them.
+      </p>
+      <p>
+        To stop hearing from us, reply to any of our emails or write to{" "}
+        <a href="mailto:hello@walkoff.io">hello@walkoff.io</a>. We put your
+        address on our do-not-contact list and never write to it again. To
+        see, correct or delete what we keep about you, email the same
+        address. When we delete it, our emails with you go too, and we keep
+        only your email address, on that list, so no one at Walkoff writes to
+        you again.
       </p>
 
       <h2 id="security">Security</h2>

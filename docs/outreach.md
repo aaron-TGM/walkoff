@@ -27,15 +27,19 @@ tables in `supabase/012_outreach.sql`. The logic is in `lib/outreach/`.
    ```
 
 3. Send from a real inbox on a separate domain, not walkoff.io, at a few
-   dozen emails a day. **Never send outreach through Resend**: its policy
-   bans cold outreach, and Walkoff's sign-in codes and welcome emails go
-   through it, so a closed account would stop people signing in.
+   dozen emails a day. Give the domain SPF, DKIM and DMARC records, point
+   its website at www.walkoff.io, and warm the inbox up for about two weeks
+   (real emails to people who answer) before the first pitch. **Never send
+   outreach through Resend**: its policy bans cold outreach, and Walkoff's
+   sign-in codes and welcome emails go through it, so a closed account
+   would stop people signing in.
 4. Start with US brands. CAN-SPAM allows cold business email with an honest
    subject, a postal address and an opt-out honored within 10 business days
    (the draft has the last two). Canada (CASL) mostly needs consent first,
    and the UK adds GDPR duties for named people.
-5. The privacy page covers early access requests, not prospect data from
-   Store Leads or Apollo. Update it before you store named contacts.
+5. The privacy page says what Walkoff keeps about the stores and people it
+   writes to, where it comes from, and how to stop the emails or have it
+   deleted (`/privacy#outreach`). Keep it true when this pipeline changes.
 
 ## 1. Import stores
 
@@ -143,7 +147,11 @@ npm run prospects -- mark <link> unsubscribed  # the address, or with none on fi
 npm run prospects -- mark <link> bounced       # the address on the do-not-contact list
 npm run prospects -- status frostbuddy.com trial --note "Starts Monday"
 npm run prospects -- block sam@frostbuddy.com --reason "Asked"
+npm run prospects -- forget sam@frostbuddy.com  # asked to be deleted: gone from every store, name out of the pitches, address blocked
 ```
+
+When someone asks to be deleted, run `forget`, then delete your emails with
+them from the outreach inbox: the privacy policy promises both.
 
 - **Views:** each open of the page in a browser counts (`show` lists them).
   Open your own check with `?preview=1` so it doesn't count.

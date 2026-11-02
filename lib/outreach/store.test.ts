@@ -11,6 +11,7 @@ import {
   blockedBy,
   contactsFor,
   createOutreach,
+  forgetContact,
   listProspects,
   newPitchToken,
   outreachByToken,
@@ -190,5 +191,42 @@ describe("pitches", () => {
     const { db, o } = await setup();
     assert.equal(await setOutreachStatus(db, { ...o, contact_id: null }, "bounced"), null);
     assert.deepEqual(await blockedBy(db, ["frostbuddy.com", "sam@frostbuddy.com"]), []);
+  });
+});
+
+describe("forgetContact", () => {
+  it("deletes someone everywhere they're filed, and keeps only their address, blocked", async () => {
+    const db = fakeDb();
+    await upsertProspects(db, [prospect("frostbuddy.com"), prospect("acme.com")]);
+    await addContacts(db, [contact("sam@frostbuddy.com"), contact("sam@frostbuddy.com", { domain: "acme.com" }), contact("ana@frostbuddy.com", { first_name: "Ana" })], "apollo");
+    const p = (await prospectByDomain(db, "frostbuddy.com"))!;
+    const [sam, ana] = await contactsFor(db, p.id);
+    const pitch = (contactId: string, body: string) =>
+      createOutreach(db, {
+        prospect_id: p.id,
+        contact_id: contactId,
+        token: newPitchToken(),
+        team_key: "nfl:24",
+        moment_id: null,
+        moment_type: "team_win",
+        campaign: {} as PitchPage,
+        subject: "Your Chargers email",
+        body,
+      });
+    const toSam = await pitch(sam.id, "Hi Sam,\n\nThe Chargers won last night.");
+    const toAna = await pitch(ana.id, "Hi Ana,\n\nThe Chargers won last night.");
+
+    assert.equal(await forgetContact(db, " Sam@FrostBuddy.com "), 2);
+    assert.deepEqual(db.tables.prospect_contacts.map((c) => c.email), ["ana@frostbuddy.com"]);
+    const forgotten = (await outreachByToken(db, toSam.token))!;
+    assert.deepEqual([forgotten.contact_id, forgotten.body], [null, "Hi there,\n\nThe Chargers won last night."]);
+    assert.equal((await outreachByToken(db, toAna.token))!.body, "Hi Ana,\n\nThe Chargers won last night.");
+    assert.deepEqual(await blockedBy(db, ["sam@frostbuddy.com", "ana@frostbuddy.com", "frostbuddy.com"]), ["sam@frostbuddy.com"]);
+  });
+
+  it("blocks an address it never had", async () => {
+    const db = fakeDb();
+    assert.equal(await forgetContact(db, "jo@elsewhere.com"), 0);
+    assert.deepEqual(await blockedBy(db, ["jo@elsewhere.com"]), ["jo@elsewhere.com"]);
   });
 });

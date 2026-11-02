@@ -11,6 +11,7 @@
 //   npm run prospects -- mark <pitch link> sent|replied|bounced|unsubscribed
 //   npm run prospects -- status frostbuddy.com trial [--note "Starts Monday"]
 //   npm run prospects -- block sam@frostbuddy.com|frostbuddy.com [--reason "Asked"]
+//   npm run prospects -- forget sam@frostbuddy.com
 import "./lib/env";
 import { readFileSync } from "node:fs";
 import { parseArgs } from "node:util";
@@ -28,6 +29,7 @@ import {
   blockedBy,
   contactsFor,
   createOutreach,
+  forgetContact,
   listProspects,
   newPitchToken,
   OUTREACH_STATUSES,
@@ -81,7 +83,8 @@ function usage(message?: string): never {
   npm run prospects -- pitch frostbuddy.com [--team Chargers] [--moment <id> | --sample] [--to sam@frostbuddy.com]
   npm run prospects -- mark <pitch link> sent|replied|bounced|unsubscribed
   npm run prospects -- status frostbuddy.com ${PROSPECT_STATUSES.join("|")} [--note "..."]
-  npm run prospects -- block <email or domain> [--reason "..."]`);
+  npm run prospects -- block <email or domain> [--reason "..."]
+  npm run prospects -- forget <email>`);
   process.exit(1);
 }
 
@@ -387,6 +390,18 @@ async function main() {
     if (!value) usage("Give an email address or a domain.");
     await addDoNotContact(db(), [value], args.reason ?? null);
     console.log(`${value} is on the do-not-contact list. pitch refuses it from now on.`);
+    return;
+  }
+
+  if (command === "forget") {
+    const email = rest[0]?.trim().toLowerCase() ?? "";
+    if (!email.includes("@")) usage("Give the email address of the person who asked.");
+    const deleted = await forgetContact(db(), email);
+    console.log(
+      `${deleted ? `Deleted ${email} from ${fmt(deleted)} ${deleted === 1 ? "store" : "stores"}, and took their name out of the pitches to them.` : `Nobody with ${email} on file.`} ` +
+        "The address stays on the do-not-contact list, so no pitch or contact import brings them back. " +
+        "Now delete your emails with them from the outreach inbox, as the privacy policy promises, and edit any store notes that mention them.",
+    );
     return;
   }
 
