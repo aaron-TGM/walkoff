@@ -101,10 +101,12 @@ jane@frostbuddy.com"), and ask there where each brand is
 
 Find stores in a Store Leads export, score their catalogs against their
 home teams, and pitch the good ones with a sample built from their own
-products. The whole flow is in `docs/outreach.md`.
+products. The whole flow is in `docs/outreach.md`; getting the list from
+Store Leads is in `docs/storeleads.md`.
 
 ```bash
-npm run prospects -- import storeleads.csv --dry-run
+npm run storeleads -- pull                     # STORELEADS_API_KEY, Pro plan
+npm run prospects -- import storeleads.csv --separator "|" --dry-run
 npm run prospects -- score --limit 200
 npm run prospects -- contacts apollo.csv --source apollo
 npm run prospects -- pitch frostbuddy.com
