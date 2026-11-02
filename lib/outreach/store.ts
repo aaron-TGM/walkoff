@@ -321,3 +321,28 @@ export async function setOutreachStatus(db: SupabaseClient, o: Outreach, status:
   if (value) await addDoNotContact(db, [value], status === "bounced" ? "bounced" : "asked not to be contacted");
   return value;
 }
+
+/** For someone who asks Walkoff to delete what it keeps about them, as the
+ *  privacy policy promises: deletes them from every store they're filed
+ *  under, takes their name out of the pitches written to them, and keeps
+ *  only the address, on the do-not-contact list, so no pitch or contact
+ *  import brings them back. Returns how many contact rows it deleted. */
+export async function forgetContact(db: SupabaseClient, email: string): Promise<number> {
+  const address = email.trim().toLowerCase();
+  const { data, error } = await db.from("prospect_contacts").select("id").eq("email", address);
+  if (error) throw error;
+  const ids = ((data ?? []) as { id: string }[]).map((c) => c.id);
+  if (ids.length) {
+    const { data: pitches, error: e } = await db.from("outreach").select("id, body").in("contact_id", ids);
+    if (e) throw e;
+    for (const o of (pitches ?? []) as { id: string; body: string }[]) {
+      // The greeting is the only line with their name: "Hi Sam,".
+      const { error: u } = await db.from("outreach").update({ contact_id: null, body: o.body.replace(/^Hi [^\n]*,/, "Hi there,") }).eq("id", o.id);
+      if (u) throw u;
+    }
+    const { error: d } = await db.from("prospect_contacts").delete().in("id", ids);
+    if (d) throw d;
+  }
+  await addDoNotContact(db, [address], "asked to be deleted");
+  return ids.length;
+}
