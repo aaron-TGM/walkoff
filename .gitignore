@@ -37,3 +37,6 @@ npm-debug.log*
 
 # downloaded reference data (scripts/build-geo.ts)
 /.cache/
+
+# Store Leads pulls and exports: licensed data, never committed (docs/storeleads.md)
+/storeleads*.csv

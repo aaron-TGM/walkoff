@@ -43,13 +43,17 @@ tables in `supabase/012_outreach.sql`. The logic is in `lib/outreach/`.
 
 ## 1. Import stores
 
-In Store Leads, filter for the stores to pitch: Shopify, United States,
-Klaviyo installed (Postscript or Attentive for SMS brands), the Apparel
-category, and an estimated sales band. In the export options, set the
-multiple value separator to `|` (app names can contain colons) and Cluster
-Domains to one domain per merchant.
+**[docs/storeleads.md](storeleads.md) has the whole step:** the plan to buy
+(Pro, a month at a time), the exact search, the export settings and how to
+pull the list by CSV or API. In short: Shopify, United States, Klaviyo
+installed, categories whose products come in colorways (apparel,
+drinkware and kitchen, home, pets, outdoor), $25,000 to $1,000,000 a month
+in estimated sales. Export with the multiple value separator set to `|`
+(app names can contain colons) and Cluster Domains to one domain per
+merchant, or pull the same search from the API:
 
 ```bash
+npm run storeleads -- pull                                              # needs STORELEADS_API_KEY
 npm run prospects -- import storeleads.csv --separator "|" --dry-run   # look first: no keys needed
 npm run prospects -- import storeleads.csv --separator "|"
 ```
