@@ -103,8 +103,8 @@ export function PitchView({ page, source, demo = false }: { page: PitchPage; sou
             Try it on the next win. <em>{PRICING.trialDays} days free.</em>
           </h2>
           <p className="form-left-body">
-            Setup happens in Claude with your Shopify and Klaviyo connectors, and your fan map is ready
-            in minutes. It shows where your customers cluster by team, beyond your hometown.
+            Setup happens in Claude with your Klaviyo connector. Add a Klaviyo export and your fan map
+            is ready in minutes. It shows where your customers cluster by team, beyond your hometown.
             {demo ? null : " Prefer email? Just reply to mine."}
           </p>
         </div>

@@ -11,9 +11,9 @@ export const metadata = helpMetadata("uploads");
 const P = "uploads";
 
 const FILES: { format: ImportFormat; gives: string }[] = [
-  { format: "shopify_orders", gives: "Customers by area, and what each area buys. The best file." },
+  { format: "klaviyo_profiles", gives: "Customers by area. The easiest: include Email, Zip Code and Country in the export." },
+  { format: "shopify_orders", gives: "Customers by area, and what each area buys. The most detail." },
   { format: "shopify_customers", gives: "Customers by area." },
-  { format: "klaviyo_profiles", gives: "Customers by area. Include Zip Code and Country in the export." },
   { format: "counts_csv", gives: "postal_code, country (US, CA or GB) and customers columns. Revenue is optional." },
   { format: "shopify_products", gives: "Your products and every colorway, with SKUs and photos." },
   { format: "catalog_csv", gives: "title, product type and tags columns." },
@@ -25,15 +25,18 @@ export default function UploadsPage() {
   return (
     <HelpPage slug={P}>
       <HelpSection page={P} id="what-leaves">
-        <Callout title="On Shopify?">
+        <Callout title="Most brands need one file">
           <p>
-            You don&apos;t need files. Claude sets your brand up from your Shopify store, with the
-            Shopify connector. <Link href={helpPath("shopify")}>Shopify in Claude</Link>
+            A Klaviyo export of the list or segment you send to, with Email, Zip Code and
+            Country, makes your fan map. Your products come in when you ask Claude to set up
+            Walkoff, so product files are only for stores not on Shopify.{" "}
+            <Link href={helpPath("klaviyo", "fan-map")}>Your fan map from Klaviyo</Link>
           </p>
         </Callout>
         <p>
-          This page is for stores not on Shopify. Your browser reads each file on your computer. For customers and orders, it keeps only
-          counts by postal area, and that&apos;s all it sends:
+          Your upload link is in your welcome email. Your browser reads each file on your
+          computer. For customers and orders, it keeps only counts by postal area, and
+          that&apos;s all it sends:
         </p>
         <div className="help-table-wrap">
           <table className="help-table">
@@ -105,7 +108,12 @@ export default function UploadsPage() {
         </div>
         <p>
           Step 1 is customers or orders, for your fan map. Step 2 is products, for picks in each
-          team&apos;s colors. The upload page tells you if a file is in the wrong step.
+          team&apos;s colors, if Walkoff can&apos;t read them from your store. The upload page
+          tells you if a file is in the wrong step.
+        </p>
+        <p>
+          Connected Shopify in Claude? It can make your fan map with no file at all.{" "}
+          <Link href={helpPath("shopify", "set-up")}>Your fan map from Shopify</Link>
         </p>
       </HelpSection>
 

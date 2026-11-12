@@ -19,14 +19,14 @@ export interface HelpTool {
 export const HELP_TOOLS = {
   import_catalog: {
     summary:
-      "Reads your products from your Shopify store's public product feed: titles, types, tags, descriptions, prices, colorways, SKUs and photos. New products are added and the rest updated. No customer data.",
-    asks: ["Set up Walkoff from our Shopify store.", "Update our catalog from the store."],
+      "Reads your products from your Shopify store's public product feed: titles, types, tags, descriptions, prices, colorways, SKUs and photos. New products are added and the rest updated. No customer data, and no Shopify connector needed. With your catalog in, you're ready for campaigns.",
+    asks: ["Set up Walkoff for our brand.", "Update our catalog from the store."],
     changes: true,
   },
   import_customer_counts: {
     summary:
-      "Makes your fan map from customer counts Claude reads in Shopify's analytics: customers by postal code, and by state or province. Walkoff keeps only each code's area and the count.",
-    asks: ["Refresh our fan map from Shopify."],
+      "Only with Shopify connected in Claude, which is optional. Makes your fan map from customer counts Claude reads in Shopify's analytics: customers by postal code, and by state or province. Walkoff keeps only each code's area and the count. Without Shopify in Claude, your fan map comes from a Klaviyo export on your upload page.",
+    asks: ["Make our fan map from Shopify.", "Refresh our fan map from Shopify."],
     options: { regions: "The second query's state and province totals. They place the customers outside your top postal codes." },
     changes: true,
   },
@@ -124,7 +124,7 @@ export const HELP_TOOLS = {
     options: { days: "How far back. Default 30." },
   },
   list_brands: {
-    summary: "The brands you can use Walkoff for, with your store, whether you're licensed to name teams, customers mapped, your catalog and your standout teams.",
+    summary: "The brands you can use Walkoff for, with your store, whether you're licensed to name teams, customers mapped, your catalog and your standout teams. It says what's left to set up, and suggests your fan map if it isn't in yet.",
     asks: ["Which brands can I use in Walkoff?"],
   },
 } satisfies Record<string, HelpTool>;

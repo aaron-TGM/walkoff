@@ -12,17 +12,18 @@ export default function DataAndSafetyPage() {
     <HelpPage slug={P}>
       <HelpSection page={P} id="counts">
         <p>
-          Walkoff works from counts, not customer lists. When Claude sets your brand up from
-          Shopify, it reads counts by postal code from Shopify&apos;s analytics: a country, a
-          postal code or state, and a number of customers. Walkoff cuts each postal code to its
-          area as it arrives, keeps the area and the count, and lets go of the rest. It never asks
-          for names, emails or addresses, and it refuses rows that hold them.{" "}
-          <Link href={helpPath("shopify", "privacy")}>What Walkoff sees from Shopify</Link>
+          Walkoff works from counts, not customer lists. When you upload a Klaviyo export, or any
+          other file, your browser turns it into customers, orders and revenue per postal area
+          before anything is sent, and Walkoff refuses anything finer.{" "}
+          <Link href={helpPath("uploads", "what-leaves")}>What leaves your browser</Link>
         </p>
         <p>
-          Not on Shopify? Your browser turns each export into customers, orders and revenue per
-          postal area before anything is sent, and Walkoff refuses anything finer.{" "}
-          <Link href={helpPath("uploads", "what-leaves")}>What leaves your browser</Link>
+          If you make your fan map from Shopify in Claude instead, Claude reads counts by postal
+          code from Shopify&apos;s analytics: a country, a postal code or state, and a number of
+          customers. Walkoff cuts each postal code to its area as it arrives, keeps the area and
+          the count, and lets go of the rest. It never asks for names, emails or addresses, and
+          it refuses rows that hold them.{" "}
+          <Link href={helpPath("shopify", "privacy")}>What Walkoff sees from Shopify</Link>
         </p>
         <p>
           So Walkoff never has your customers&apos; names, emails or addresses, and there&apos;s
@@ -45,7 +46,7 @@ export default function DataAndSafetyPage() {
 
       <HelpSection page={P} id="upload-link">
         <p>
-          Your upload link is for stores not on Shopify, and it&apos;s private to your brand.
+          Your upload link is for your fan map and your files, and it&apos;s private to your brand.
           Anyone with it can upload files for your brand and see your fan map. Walkoff sends it only to the people invited to your brand,
           in their welcome email.
         </p>

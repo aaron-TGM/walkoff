@@ -30,8 +30,9 @@ const UNTRUE = [
   // The marketer reviews and approves every send.
   "triggers and approvals",
   "done for you, start to finish",
-  // Brands on Shopify set up in Claude, with no files, and their postal
-  // codes reach Walkoff (cut to areas on arrival). Only the upload page, for
+  // Setup needs no files. The optional fan map comes from a Klaviyo or Shopify
+  // export read in the browser, or Shopify's analytics through Claude (postal
+  // codes cut to areas on arrival). Only the upload page, which reads the
   // files, can say they stay on the computer.
   "drop in your exports",
   "never leave your computer",

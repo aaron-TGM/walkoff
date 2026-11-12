@@ -149,7 +149,7 @@ export function registerAthleteTools(server: McpServer, ctx: ToolContext, run: R
         const counts = await loadAreaCounts(db, b.id);
         if (!counts.length) {
           throw new ToolError(
-            `${b.name} has no customer counts yet, so Walkoff can't tell which towns are near its customers. Set it up from Shopify in Claude: ${helpUrl(ctx.origin, "shopify", "customers")}`,
+            `${b.name} has no customer counts yet, so Walkoff can't tell which towns are near its customers. Add the fan map with a Klaviyo export on the upload page: ${helpUrl(ctx.origin, "klaviyo", "fan-map")}`,
           );
         }
         const top = [...counts].filter((c) => c.customers > 0).sort((x, y) => y.customers - x.customers).slice(0, TOP_AREAS);

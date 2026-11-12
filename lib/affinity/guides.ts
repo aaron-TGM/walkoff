@@ -13,9 +13,22 @@ export interface ExportGuide {
 
 export const GUIDES: ExportGuide[] = [
   {
-    title: "Shopify: orders (best)",
+    title: "Klaviyo: profiles (easiest)",
+    format: "klaviyo_profiles",
+    best: "The easiest. Your Klaviyo profiles already have each customer's zip code, so this gives us customers by area.",
+    steps: [
+      "In Klaviyo, go to Audience, then Lists & segments.",
+      "Open the list or segment you send campaigns to, like your newsletter list or everyone who has bought.",
+      "Export it to CSV. It's usually under the Manage menu.",
+      "When Klaviyo asks which properties to include, pick Email, Zip Code and Country.",
+      "Klaviyo emails you a download link, or downloads the file. Drop it in step 1.",
+    ],
+    note: "Your browser reads the file and keeps only counts by postal area. Profiles without a zip code are skipped.",
+  },
+  {
+    title: "Shopify: orders (most detail)",
     format: "shopify_orders",
-    best: "Gives us customers and what they buy, so your map can name products.",
+    best: "Also shows what each territory buys, so your map can name products.",
     steps: [
       "In Shopify admin, go to Orders.",
       "Click Export.",
@@ -42,17 +55,6 @@ export const GUIDES: ExportGuide[] = [
       "Click Export, then choose All products.",
       "Pick CSV for Excel, Numbers, or other spreadsheet programs.",
       "Click Export products and drop the file in step 2.",
-    ],
-  },
-  {
-    title: "Klaviyo: profiles",
-    format: "klaviyo_profiles",
-    steps: [
-      "In Klaviyo, open Audience, then Lists & segments.",
-      "Open the list or segment you market to, for example everyone who has bought.",
-      "Use the Manage menu to export it to CSV.",
-      "Include Zip Code and Country in the export, then start it.",
-      "Klaviyo emails a download link. Drop the file in step 1.",
     ],
   },
   {

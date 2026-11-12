@@ -9,7 +9,7 @@ const INCLUDED = [
   "Every trigger in every league you pick",
   "Hometown moments, whatever leagues you pick",
   "Your fan map and product matching",
-  "Works in Claude, with your Shopify and Klaviyo",
+  "Works in Claude, with your Klaviyo",
   "Setup done for you during early access",
   "Every new moment category as it launches",
   "Holdout results and benchmarks as they launch",

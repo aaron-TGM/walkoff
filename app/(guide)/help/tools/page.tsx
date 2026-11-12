@@ -32,8 +32,13 @@ export default function ToolsPage() {
         <ExampleSession {...SESSIONS.week} />
         <p>And setting up what you want to hear about:</p>
         <ExampleSession {...SESSIONS.trigger} />
-        <p>Setting your brand up from Shopify, the first time:</p>
+        <p>Setting your brand up, the first time, with your fan map from a Klaviyo export:</p>
         <ExampleSession {...SESSIONS.setup} />
+        <p>
+          Or your fan map from Shopify, if you&apos;ve connected it in Claude. That&apos;s
+          optional.
+        </p>
+        <ExampleSession {...SESSIONS.shopify} />
       </HelpSection>
 
       <HelpSection page={P} id="asks">
@@ -68,9 +73,10 @@ export default function ToolsPage() {
             When you say go, it drafts the campaign in Klaviyo and logs it.
           </li>
           <li>
-            <strong>Set up from Shopify</strong> imports your catalog from your store and your
-            customer counts from Shopify&apos;s analytics, then shows you your fan map.{" "}
-            <Link href={helpPath("shopify", "set-up")}>Setting up</Link>
+            <strong>Set up your brand</strong> imports your catalog from your store, so
+            you&apos;re ready for campaigns. Then it helps you add your fan map, from a Klaviyo
+            export or, if you&apos;ve connected it, from Shopify.{" "}
+            <Link href={helpPath("onboarding", "steps")}>Getting started</Link>
           </li>
         </ul>
         <h3>What Walkoff tells Claude</h3>

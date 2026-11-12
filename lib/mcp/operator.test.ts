@@ -158,8 +158,8 @@ describe("onboarding a brand from Claude", () => {
     assert.match(emails[0], /op@walkoff\.io invited you to use Walkoff for Frost Buddy/);
     assert.ok(emails[0].includes(`${ORIGIN}/upload/${brand.upload_token}`));
     assert.ok(emails[0].includes(`${ORIGIN}/mcp`));
-    assert.ok(emails[0].includes('Ask Claude: "Set up Walkoff for Frost Buddy from our Shopify store."'));
-    assert.ok(emails[0].indexOf("Set up Walkoff for Frost Buddy") < emails[0].indexOf(`${ORIGIN}/upload/`), "the upload link is the fallback");
+    assert.ok(emails[0].includes('Ask Claude: "Set up Walkoff for Frost Buddy."'));
+    assert.ok(emails[0].indexOf("Set up Walkoff for Frost Buddy") < emails[0].indexOf(`${ORIGIN}/upload/`), "the catalog first, then the fan map's upload link");
 
     const quiet = await call(client, "invite_member", { brand: "frost buddy", email: "jane@frostbuddy.com", send_email: false });
     assert.deepEqual([quiet.json().added, quiet.json().welcome_email], [false, "Not sent."]);

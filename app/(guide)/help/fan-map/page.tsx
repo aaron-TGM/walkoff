@@ -17,6 +17,33 @@ export default function FanMapPage() {
   const buys = report.standouts.find((g) => g.products.length)?.products[0];
   return (
     <HelpPage slug={P}>
+      <HelpSection page={P} id="get">
+        <p>
+          Your fan map is optional. Campaigns work as soon as your catalog is in: name the teams
+          you care about, or the ones your products are made for. The map adds your standout
+          teams and how strongly your customers lean toward each.
+        </p>
+        <ul>
+          <li>
+            <strong>From Klaviyo, the easiest.</strong> Export the list or segment you send
+            campaigns to, with Email, Zip Code and Country, and drop it in step 1 of your private
+            upload page. Your browser keeps only counts by postal area.{" "}
+            <Link href={helpPath("klaviyo", "fan-map")}>Your fan map from Klaviyo</Link>
+          </li>
+          <li>
+            <strong>From a Shopify orders export, the most detail.</strong> It also shows what
+            each territory buys. <Link href={helpPath("uploads", "export")}>How to export</Link>
+          </li>
+          <li>
+            <strong>From Shopify in Claude, if you&apos;ve connected it.</strong> Claude reads
+            customer counts from Shopify&apos;s analytics, with no file.{" "}
+            <Link href={helpPath("shopify", "set-up")}>Your fan map from Shopify</Link>
+          </li>
+        </ul>
+        <p>Once it&apos;s in, ask:</p>
+        <Ask>Where are our fans?</Ask>
+      </HelpSection>
+
       <HelpSection page={P} id="lift">
         <p>
           Every league has fan territories: the areas where most people follow each team.
@@ -69,8 +96,8 @@ export default function FanMapPage() {
           {PRODUCT.minLift}&times; to count. Each territory shows its top {PRODUCT.max}.
         </p>
         <p>
-          A map set up from Shopify in Claude shows where your customers are, not what they buy.
-          For this part, upload an orders export too.{" "}
+          A map from a Klaviyo export, or from Shopify in Claude, shows where your customers are,
+          not what they buy. For this part, upload a Shopify orders export.{" "}
           <Link href={helpPath("uploads", "files")}>Which files</Link>
         </p>
       </HelpSection>
