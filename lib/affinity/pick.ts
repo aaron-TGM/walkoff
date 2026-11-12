@@ -22,6 +22,9 @@ export interface PickProduct {
   /** Scenes it's made for beyond team sports: surf, golf, tennis. */
   interests?: string[];
   price?: number | null;
+  /** The product's own photo, when its colorways have none (or it has no
+   *  colorways). */
+  image?: string;
 }
 
 export interface Pick {
@@ -70,7 +73,7 @@ function toPick(product: PickProduct, option: Option | null, teamHex: string | n
     colorway: option?.variant ? option.name : null,
     hex: option?.hex ?? [],
     skus: option?.skus ?? [],
-    image: option?.image ?? "",
+    image: option?.image || product.image || "",
     why: teamHex ? `Close to their ${colorFamily(teamHex)}` : "Made for their fans",
     score: Math.round(score * 100) / 100,
     price: product.price ?? null,
@@ -153,7 +156,7 @@ export function plain(product: PickProduct, why: string, score = 0): Pick {
     colorway: null,
     hex: first?.hex ?? [],
     skus: first?.skus ?? [],
-    image: first?.image ?? "",
+    image: first?.image || product.image || "",
     why,
     score,
     price: product.price ?? null,
