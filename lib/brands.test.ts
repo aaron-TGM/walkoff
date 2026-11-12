@@ -356,7 +356,6 @@ describe("nextStep", () => {
     next({ ...ready, ...nothingYet, members: [{ ...jane, connected: false }] }),
     next({ ...ready, ...nothingYet, members: [{ ...jane, connected: false, needs_reconnect: true }] }),
     next({ ...ready, ...nothingYet }),
-    next({ ...ready, map: { ...ready.map!, customers_mapped: 0 } }),
     next({ ...ready, catalog: { ...ready.catalog, products: 0, tagged_by_claude: 0 } }),
     next({ ...ready, catalog: { ...ready.catalog, tagged_by_claude: 7, tagged_by_rules: 3 } }),
     next({ ...ready, last_send: null }),
@@ -365,15 +364,22 @@ describe("nextStep", () => {
 
   it("follows onboarding in order: connecting comes first, since setup happens in Claude", () => {
     assert.match(steps[0], /^Add the store's address with update_brand\. Walkoff reads the catalog from it/);
-    assert.match(steps[1], /^Invite the brand's marketer with invite_member\. It emails them how to connect Walkoff and Shopify in Claude/);
+    assert.match(steps[1], /^Invite the brand's marketer with invite_member\. It emails them how to connect Walkoff and Klaviyo in Claude/);
     assert.match(steps[2], /^Waiting on jane@frostbuddy\.com to connect Walkoff in Claude/);
     assert.match(steps[3], /^jane@frostbuddy\.com signed in before this invite, so they need to disconnect Walkoff in Claude and connect it again to reach Frost Buddy\.$/);
-    assert.match(steps[4], /^Waiting on jane@frostbuddy\.com to set Frost Buddy up in Claude: customer counts from Shopify \(import_customer_counts\), or the upload page for stores not on Shopify\./);
-    assert.match(steps[5], /didn't place anyone in a postal area/);
-    assert.match(steps[6], /^Waiting on the catalog: import_catalog in Claude, or the product export on the upload page\.$/);
-    assert.match(steps[7], /^Claude hasn't tagged 3 products an hour after the catalog last came in\. .*npm run affinity:tag -- --brand b1\.$/);
-    assert.match(steps[8], /^Ready for a first campaign/);
-    assert.equal(steps[9], "Live. The last campaign was sent on 2026-10-22.");
+    assert.match(steps[4], /^Waiting on jane@frostbuddy\.com to set Frost Buddy up in Claude: import_catalog reads the catalog from the store, or the product export on the upload page/);
+    assert.equal(steps[5], steps[4], "a catalog comes before the fan map");
+    assert.match(steps[6], /^Claude hasn't tagged 3 products an hour after the catalog last came in\. .*npm run affinity:tag -- --brand b1\.$/);
+    assert.equal(steps[7], "Ready for a first campaign. trigger_queue shows the moments to act on now.");
+    assert.equal(steps[8], "Live. The last campaign was sent on 2026-10-22.");
+  });
+
+  it("is ready for campaigns with a catalog, and only suggests the fan map", () => {
+    const noMap = { ...ready, customers: null, map: null, last_send: null };
+    assert.match(next(noMap), /^Ready for a first campaign\. trigger_queue shows the moments to act on now\. Suggest the fan map too: a Klaviyo profile export \(Email, Zip Code, Country\) on the upload page, or Walkoff's Shopify queries in Claude if they have Shopify connected\./);
+    assert.match(next({ ...noMap, last_send: ready.last_send }), /^Live\. The last campaign was sent on 2026-10-22\. Suggest the fan map too: a Klaviyo profile export/);
+    const placedNobody = next({ ...ready, map: { ...ready.map!, customers_mapped: 0 } });
+    assert.match(placedNobody, /^Live\. The last campaign was sent on 2026-10-22\. Their customer counts didn't place anyone in a postal area, so there's no fan map\. Suggest a Klaviyo export with Zip Code and Country/);
   });
 
   it("doesn't wait on Claude's tagging while the engine has time, or for a few leftovers", () => {
@@ -390,6 +396,7 @@ describe("nextStep", () => {
   });
 
   it("writes plain sentences without em dashes", () => {
-    for (const s of steps) assert.ok(!/[—–]/.test(s), s);
+    const suggestions = [next({ ...ready, customers: null, map: null }), next({ ...ready, map: { ...ready.map!, customers_mapped: 0 } })];
+    for (const s of [...steps, ...suggestions]) assert.ok(!/[—–]/.test(s), s);
   });
 });

@@ -112,7 +112,8 @@ describe("tool reference", () => {
     }
     const prompts = (await client.listPrompts()).prompts;
     assert.ok(prompts.some((p) => p.name === "moment_campaign" && p.title === "Campaign for the moment"));
-    assert.ok(prompts.some((p) => p.name === "set_up_brand" && p.title === "Set up from Shopify"));
+    assert.ok(prompts.some((p) => p.name === "set_up_brand" && p.title === "Set up your brand"));
+    assert.ok(read(pageFile("/help/tools")).includes("<strong>Set up your brand</strong>"), "the tools page names the prompt as Claude shows it");
     assert.ok(client.getInstructions()?.includes("https://www.walkoff.io/help"), "Claude knows where the help is");
     await client.close();
   });

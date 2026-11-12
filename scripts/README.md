@@ -26,9 +26,10 @@ jane@frostbuddy.com"), and ask there where each brand is
 
 2. **Invite the people who'll use it.** Each gets a welcome email: who
    invited them, how to add `https://www.walkoff.io/mcp` as a connector in
-   Claude and sign in with that address, how to connect Shopify and Klaviyo
-   and set the brand up there, a first thing to ask Claude, and the upload
-   link for stores not on Shopify (the page has the export guides).
+   Claude and sign in with that address, how to connect Klaviyo (Shopify in
+   Claude is optional) and set the brand up there, a first thing to ask
+   Claude, and the upload link for their fan map, a Klaviyo export (the page
+   has the export guides).
 
    ```bash
    npm run brand -- invite <brand> person@brand.com --by you@walkoff.io   # --no-welcome skips the email
@@ -40,13 +41,15 @@ jane@frostbuddy.com"), and ask there where each brand is
    someone again resends it. Links use `WALKOFF_PUBLIC_URL`, else
    `https://www.walkoff.io`.
 
-3. **The brand sets up in Claude.** On Shopify, the marketer asks Claude to
-   "Set up Walkoff for <brand> from our Shopify store": Walkoff reads the
-   catalog from the store's public feed, and Claude passes customer counts
-   from Shopify's analytics (`docs/mcp.md`, Setting a brand up from
-   Shopify). Stores not on Shopify upload at `walkoff.io/upload/<token>`
-   instead: an order or customer export in step 1, their product export in
-   step 2, and their browser keeps only counts per postal area. Either way
+3. **The brand sets up in Claude.** The marketer asks Claude to "Set up
+   Walkoff for <brand>": Walkoff reads the catalog from the store's public
+   feed, and the brand is ready for campaigns (`docs/mcp.md`, Setting a
+   brand up). The fan map is optional and recommended: a Klaviyo profile
+   export (Email, Zip Code, Country) in step 1 at
+   `walkoff.io/upload/<token>`, or, with a Shopify connector in Claude,
+   customer counts from Shopify's analytics. Stores not on Shopify upload
+   their product export in step 2. The browser keeps only counts per postal
+   area. Either way
    Walkoff stores only counts per area (US 3-digit ZIP, Canadian FSA, UK
    postcode district). Products get keyword tags as they come in, and
    every colorway (the variants' color option, with SKUs and photos) is

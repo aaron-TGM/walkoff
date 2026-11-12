@@ -1,5 +1,6 @@
 // Setting a brand up from Claude: the catalog from the store's public feed,
-// customer counts from Shopify's analytics, no files.
+// which is all campaigns need, then, optionally, customer counts from
+// Shopify's analytics when the marketer has a Shopify connector.
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
@@ -93,7 +94,7 @@ describe("setting up in Claude", () => {
     });
 
     const prompts = (await client.listPrompts()).prompts;
-    assert.ok(prompts.some((p) => p.name === "set_up_brand" && p.title === "Set up from Shopify"));
+    assert.ok(prompts.some((p) => p.name === "set_up_brand" && p.title === "Set up your brand"));
     const prompt = await client.getPrompt({ name: "set_up_brand", arguments: { brand: "Frost Buddy" } });
     const text = prompt.messages.map((m) => (m.content.type === "text" ? m.content.text : "")).join("\n");
     const instructions = client.getInstructions() ?? "";
@@ -101,9 +102,18 @@ describe("setting up in Claude", () => {
       for (const q of Object.values(SHOPIFYQL)) assert.ok(said.includes(q), "the exact query");
       for (const tool of ["import_catalog", "import_customer_counts", "get_affinity_map", SHOPIFY_TOOLS.analytics]) assert.ok(said.includes(tool), tool);
       assert.match(said, /Counts only/);
+      // The fan map is optional: a Klaviyo export first, Shopify only with its connector.
+      assert.match(said, /Email, Zip Code and Country/);
+      assert.match(said, /step 1 of (their private|our) upload page/);
+      assert.match(said, /Only if (the marketer|I) ha(s|ve) a Shopify connector connected/);
+      assert.ok(said.indexOf("Zip Code") < said.indexOf(SHOPIFYQL.postalCodes), "Klaviyo comes before Shopify");
+      assert.ok(said.indexOf("import_catalog") < said.indexOf("Zip Code"), "the catalog comes first");
     }
-    assert.match(text, /^Set up Walkoff for Frost Buddy from our Shopify store\./);
+    assert.match(text, /^Set up Walkoff for Frost Buddy\. First, import_catalog, and tell me when we're ready for a first campaign\./);
+    assert.match(text, /It's optional, so don't hold campaigns for it\./);
+    assert.match(instructions, /Recommended, not required: the fan map\./);
     assert.ok(instructions.includes(`${ORIGIN}/help/shopify`));
+    assert.ok(instructions.includes(`${ORIGIN}/help/klaviyo#fan-map`));
     assert.ok(!instructions.includes("create_brand"), "members don't see the operator steps");
     await client.close();
   });
@@ -111,14 +121,19 @@ describe("setting up in Claude", () => {
   it("says what each brand still needs, and points to setup", async () => {
     const client = await connect({ db: seeded(), principal: jane });
     const listed = (await call(client, "list_brands")).json();
-    assert.deepEqual(listed.brands[0].setup_needed, ["catalog", "customer counts"]);
-    assert.match(listed.next, /^Set up Frost Buddy first, with the Setup steps: import_catalog, Walkoff's two Shopify queries, then import_customer_counts\./);
+    assert.deepEqual(listed.brands[0].setup_needed, ["catalog"], "the fan map isn't required");
+    assert.match(listed.brands[0].fan_map_suggestion, /^Optional: add the fan map for standout teams and lift\. In Klaviyo, export the list or segment you send campaigns to as a CSV, with Email, Zip Code and Country/);
+    assert.ok(listed.brands[0].fan_map_suggestion.includes(`${ORIGIN}/help/klaviyo#fan-map`));
+    assert.match(listed.next, /^Set up Frost Buddy first: import_catalog reads the catalog from the store\. That's all campaigns need\. The fan map is optional\./);
     const map = await call(client, "get_affinity_map");
     assert.ok(map.isError);
-    assert.match(map.text, /^Frost Buddy has no fan map yet: it needs its customer counts\./);
+    assert.match(map.text, /^Frost Buddy has no fan map yet: it needs its customer counts\. Campaigns work without it: name a team\. To add it, export the Klaviyo list or segment/);
+    assert.ok(map.text.includes(`${ORIGIN}/help/klaviyo#fan-map`));
     assert.ok(map.text.includes(`${ORIGIN}/help/shopify#customers`));
     const moments = await call(client, "recent_moments");
-    assert.match(moments.text, /^Frost Buddy has no fan map yet, so it has no standout teams\. Set it up first, or name a team\.$/);
+    assert.match(moments.text, /^Frost Buddy has no fan map yet, so it has no standout teams\. Name a team, or add the fan map\.$/);
+    const queue = (await call(client, "trigger_queue")).json();
+    assert.match(queue.note, /^No triggers set and no fan map yet, so Walkoff's default has no standout teams to watch\. create_trigger with the teams you care about/);
     const picks = (await call(client, "match_products", { team: "Eagles" })).json();
     assert.match(picks.note, /^No catalog yet: import_catalog reads it from the store\./);
     await client.close();
@@ -141,7 +156,12 @@ describe("import_catalog", () => {
     assert.equal(out.examples.length, 3);
     assert.equal(out.warning, undefined, "photos saved, nothing to warn about");
     assert.equal(db.tables.brand_products.find((p) => p.handle === "product-2")!.image, "https://cdn.example.com/2.jpg");
-    assert.match(out.next, /^Next: customer counts\./);
+    assert.match(out.next, /^Ready for campaigns: match_products and build_campaign can use the catalog now, for any team you name\./);
+    assert.match(out.next, /Optional: add the fan map/);
+    const ready = (await call(client, "list_brands")).json();
+    assert.equal(ready.brands[0].setup_needed, undefined, "a catalog is all campaigns need");
+    assert.match(ready.brands[0].fan_map_suggestion, /^Optional: add the fan map/);
+    assert.match(ready.next, /^trigger_queue shows the moments to act on now\. .* Frost Buddy has no fan map yet, so name the teams: create_trigger with teams, or a team in build_campaign\.$/);
     assert.equal(db.tables.brand_products.length, 260);
     assert.ok(db.tables.brand_products.every((p) => p.brand_id === FROST && p.tagged_by === "rules"));
     const green = db.tables.brand_products.find((p) => p.handle === "product-1")!;
@@ -245,6 +265,7 @@ describe("import_customer_counts", () => {
 
     const listed = (await call(client, "list_brands")).json();
     assert.deepEqual(listed.brands[0].setup_needed, ["catalog"]);
+    assert.equal(listed.brands[0].fan_map_suggestion, undefined, "the map is in");
     assert.equal(listed.brands[0].customers_mapped, out.customers_mapped);
     await client.close();
   });

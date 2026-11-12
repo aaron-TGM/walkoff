@@ -25,10 +25,10 @@ export default function HelpHome() {
       <HelpSection page={P} id="start">
         <p>
           Walkoff watches every game in its leagues and spots the big moments: walk-offs,
-          comebacks, rivalry wins and more. From your own customer counts, it
-          knows which fan territories your customers lean toward, and which of your products
-          are in each team&apos;s colors. Claude sets it up from your Shopify store, with no
-          files.
+          comebacks, rivalry wins and more. It reads your store&apos;s products, so it knows
+          which of them are in each team&apos;s colors. Add your fan map, from a Klaviyo export,
+          and it also knows which fan territories your customers lean toward. You need Walkoff
+          and Klaviyo in Claude. Shopify in Claude is optional.
         </p>
         <p>
           You use it in Claude. Ask what to send, and Claude builds a ready-to-draft Klaviyo
@@ -37,8 +37,8 @@ export default function HelpHome() {
         </p>
         <Callout title="New here?">
           <p>
-            Start with <Link href={helpPath("onboarding")}>Getting started</Link>: five steps
-            from your invite to your first campaign.
+            Start with <Link href={helpPath("onboarding")}>Getting started</Link>: from your
+            invite to your first campaign, then your fan map.
           </p>
         </Callout>
       </HelpSection>

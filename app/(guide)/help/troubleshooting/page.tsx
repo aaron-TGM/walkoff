@@ -21,14 +21,18 @@ export default function TroubleshootingPage() {
 
       <HelpSection page={P} id="setup">
         <p>
-          In Claude, while it sets your brand up from Shopify.{" "}
+          In Claude, while Walkoff reads your products from your store, or while Claude makes
+          your fan map from Shopify, if you&apos;ve connected it.{" "}
           <Link href={helpPath("shopify")}>Shopify in Claude</Link>
         </p>
         <TroubleList items={TROUBLE.setup} />
       </HelpSection>
 
       <HelpSection page={P} id="uploads">
-        <p>On your upload page, for stores not on Shopify.</p>
+        <p>
+          On your upload page, with your Klaviyo export or other files.{" "}
+          <Link href={helpPath("uploads")}>Uploading files</Link>
+        </p>
         <TroubleList items={TROUBLE.uploads} />
       </HelpSection>
 

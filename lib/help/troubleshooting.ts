@@ -157,7 +157,7 @@ export const TROUBLE: Record<"sign-in" | "setup" | "uploads" | "in-claude", Trou
       id: "what-file",
       says: "We couldn't tell what this file is. The export guides below show the files we read.",
       source: UPLOAD,
-      fix: "Export the file again following a guide on the upload page, and upload it as it comes out. Renamed or removed columns are the usual cause.",
+      fix: "Export the file again following a guide on the upload page, and upload it as it comes out. Renamed or removed columns are the usual cause. A Klaviyo export needs Zip Code, and Email or Phone Number.",
     },
     {
       id: "wrong-step",
@@ -170,7 +170,7 @@ export const TROUBLE: Record<"sign-in" | "setup" | "uploads" | "in-claude", Trou
       id: "no-postal",
       says: "No rows had a US, Canadian or UK postal code we could read.",
       source: UPLOAD,
-      fix: "Walkoff maps customers in the US, Canada and the UK. Check the export includes the zip or postal code column. For Klaviyo, include Zip Code and Country.",
+      fix: "Walkoff maps customers in the US, Canada and the UK. Check the export includes the zip or postal code column. For Klaviyo, include Email, Zip Code and Country when you export.",
     },
     {
       id: "no-titles",
@@ -217,14 +217,14 @@ export const TROUBLE: Record<"sign-in" | "setup" | "uploads" | "in-claude", Trou
       says: "… has no fan map yet: it needs its customer counts.",
       check: "has no fan map yet: it needs its customer counts.",
       source: TOOLS,
-      fix: "Ask Claude to set up Walkoff from your Shopify store. Not on Shopify? Upload customers or orders on your upload page. The link is in your welcome email.",
+      fix: "The fan map is optional, so campaigns still work: name a team. To add it, export the Klaviyo list or segment you send to, with Email, Zip Code and Country, and drop it in step 1 of your upload page. The link is in your welcome email.",
     },
     {
       id: "no-standouts",
-      says: "… has no fan map yet, so it has no standout teams. Set it up first, or name a team.",
-      check: "has no fan map yet, so it has no standout teams. Set it up first, or name a team.",
+      says: "… has no fan map yet, so it has no standout teams. Name a team, or add the fan map.",
+      check: "has no fan map yet, so it has no standout teams. Name a team, or add the fan map.",
       source: TOOLS,
-      fix: "Set your brand up first, or name a team in your ask.",
+      fix: "Name a team in your ask, or make a trigger for the teams you care about. For standout teams, add your fan map with a Klaviyo export on your upload page.",
     },
     {
       id: "no-team-stands-out",
@@ -237,7 +237,7 @@ export const TROUBLE: Record<"sign-in" | "setup" | "uploads" | "in-claude", Trou
       id: "no-catalog",
       says: "No catalog yet: import_catalog reads it from the store.",
       source: TOOLS,
-      fix: "Ask Claude to update your catalog from your store. Not on Shopify? Upload your product export in step 2 of your upload page.",
+      fix: "Ask Claude to set up Walkoff for your brand: it reads your catalog from your store. Not on Shopify? Upload your product export in step 2 of your upload page.",
     },
     {
       id: "no-colors",

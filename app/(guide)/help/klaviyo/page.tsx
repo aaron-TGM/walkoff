@@ -92,6 +92,50 @@ export default function KlaviyoPage() {
         </Callout>
       </HelpSection>
 
+      <HelpSection page={P} id="fan-map">
+        <p>
+          Your fan map shows which teams your customers lean toward. It&apos;s optional:
+          campaigns work as soon as your catalog is in. The easiest way to make it is a Klaviyo
+          export, since your profiles already have each customer&apos;s zip code.
+        </p>
+        <ol>
+          <li>In Klaviyo, go to Audience, then Lists &amp; segments.</li>
+          <li>
+            Open the list or segment you send campaigns to, like your newsletter list or everyone
+            who has bought.
+          </li>
+          <li>Export it to CSV. It&apos;s usually under the Manage menu.</li>
+          <li>When Klaviyo asks which properties to include, pick Email, Zip Code and Country.</li>
+          <li>
+            Drop the file in step 1 of your private upload page. The link is in your welcome
+            email.
+          </li>
+        </ol>
+        <ul>
+          <li>
+            Your browser reads the file and keeps only counts by postal area. Names, emails and
+            street addresses stay on your computer.{" "}
+            <Link href={helpPath("uploads", "what-leaves")}>What leaves your browser</Link>
+          </li>
+          <li>Profiles without a zip code are skipped. Walkoff maps the US, Canada and the UK.</li>
+          <li>
+            Then ask Claude &ldquo;Where are our fans?&rdquo; to see your standout teams.
+            Export again whenever you like: each upload replaces your counts.
+          </li>
+          <li>
+            For what each territory buys too, upload a Shopify orders export instead.{" "}
+            <Link href={helpPath("fan-map", "buys")}>What each territory buys</Link>
+          </li>
+        </ul>
+        <Callout>
+          <p>
+            Klaviyo&apos;s menus move now and then. If you can&apos;t find the export, look for
+            Export in the list or segment&apos;s own menu, or search Klaviyo&apos;s help center
+            for exporting a list or segment.
+          </p>
+        </Callout>
+      </HelpSection>
+
       <HelpSection page={P} id="accounts">
         <p>
           Agencies, and anyone with several brands, add Klaviyo once per Klaviyo account, as a
@@ -274,7 +318,7 @@ export default function KlaviyoPage() {
               a: (
                 <p>
                   Klaviyo counts only profiles with a zip code and country, or a location it can
-                  place. Walkoff&apos;s numbers come from your Shopify counts or uploads, so the two can differ.
+                  place. Walkoff&apos;s numbers come from your upload or your Shopify counts, so the two can differ.
                 </p>
               ),
             },

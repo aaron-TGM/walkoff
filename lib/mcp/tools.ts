@@ -178,7 +178,7 @@ async function teamsFor(ctx: ToolContext, args: { brand?: string; team?: string;
     throw new ToolError(
       report
         ? `No team stands out on ${brand!.name}'s fan map, so name a team instead.`
-        : `${brand!.name} has no fan map yet, so it has no standout teams. Set it up first, or name a team.`,
+        : `${brand!.name} has no fan map yet, so it has no standout teams. Name a team, or add the fan map.`,
     );
   }
   return { brand, teams: standouts };
@@ -273,7 +273,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     {
       title: "List brands",
       description:
-        "The brands you can use Walkoff for, with what Walkoff knows about each: store, whether it's licensed to name teams, customers mapped, catalog, and its standout fan territories. Start here. A brand with setup_needed isn't set up yet: run Setup first.",
+        "The brands you can use Walkoff for, with what Walkoff knows about each: store, whether it's licensed to name teams, customers mapped, catalog, and its standout fan territories. Start here. A brand with setup_needed has no catalog yet: run Setup first. A brand with a catalog is ready for campaigns; without a fan map it shows fan_map_suggestion, an optional next step.",
       inputSchema: {},
       annotations: { readOnlyHint: true, openWorldHint: false },
     },
@@ -283,7 +283,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         const rows = await Promise.all(
           brands.map(async (b) => {
             const [report, stats] = await Promise.all([latestReport(db, b.id), catalogCounts(db, b.id)]);
-            const setup = [...(stats.products ? [] : ["catalog"]), ...(report ? [] : ["customer counts"])];
+            const setup = stats.products ? [] : ["catalog"];
             return {
               id: b.id,
               name: b.name,
@@ -299,21 +299,27 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
                 customers: g.customers,
               })),
               ...(setup.length ? { setup_needed: setup } : {}),
+              ...(report ? {} : { fan_map_suggestion: fanMapSuggestion }),
             };
           }),
         );
         const unset = rows.filter((r) => r.setup_needed).map((r) => r.name);
+        const unmapped = rows.filter((r) => !r.setup_needed && r.fan_map_suggestion).map((r) => r.name);
         return {
           signed_in_as: principal.email,
           brands: rows,
           next: !rows.length
             ? `No brands yet. Ask your Walkoff contact to invite this email. Help: ${helpUrl(ctx.origin, "troubleshooting", "in-claude")}`
             : unset.length
-              ? `Set up ${unset.join(" and ")} first, with the Setup steps: import_catalog, Walkoff's two Shopify queries, then import_customer_counts. How: ${helpUrl(ctx.origin, "shopify", "set-up")}`
-              : "trigger_queue shows the moments to act on now. recent_moments shows what just happened.",
+              ? `Set up ${unset.join(" and ")} first: import_catalog reads the catalog from the store. That's all campaigns need. The fan map is optional. How: ${helpUrl(ctx.origin, "onboarding", "steps")}`
+              : `trigger_queue shows the moments to act on now. recent_moments shows what just happened.${
+                  unmapped.length ? ` ${unmapped.join(" and ")} ${unmapped.length === 1 ? "has" : "have"} no fan map yet, so name the teams: create_trigger with teams, or a team in build_campaign.` : ""
+                }`,
         };
       }),
   );
+
+  const fanMapSuggestion = `Optional: add the fan map for standout teams and lift. In Klaviyo, export the list or segment you send campaigns to as a CSV, with Email, Zip Code and Country, and drop it in step 1 of the upload page from your welcome email. How: ${helpUrl(ctx.origin, "klaviyo", "fan-map")} With a Shopify connector in Claude, Walkoff's two Shopify queries (${SHOPIFY_TOOLS.analytics}) and import_customer_counts work too. Campaigns don't wait for it.`;
 
   const notOnShopify = (what: string) => `Not on Shopify? Upload ${what} with the link in your welcome email: ${helpUrl(ctx.origin, "uploads", "export")}`;
 
@@ -322,7 +328,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     {
       title: "Import the catalog from the store",
       description:
-        "Reads the brand's products from its Shopify store's public product feed: titles, types, tags, descriptions, prices, colorways, SKUs and photos. No customer data. New products are added and the rest updated; nothing is removed. Claude tags them for teams and colors within minutes. Use it to set a brand up, or when its catalog changes. A store that isn't on Shopify uploads a product export instead.",
+        "Reads the brand's products from its Shopify store's public product feed: titles, types, tags, descriptions, prices, colorways, SKUs and photos. No customer data. New products are added and the rest updated; nothing is removed. Claude tags them for teams and colors within minutes. It needs no Shopify connector. Use it to set a brand up, or when its catalog changes: with a catalog, the brand is ready for campaigns. A store that isn't on Shopify uploads a product export instead.",
       inputSchema: { brand: brandArg },
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     },
@@ -365,7 +371,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           map_refreshed: !!report,
           next: report
             ? "Claude tags the new products for teams and colors within minutes. match_products and build_campaign can use them now."
-            : `Next: customer counts. Run Walkoff's two Shopify queries with ${SHOPIFY_TOOLS.analytics}, then import_customer_counts.`,
+            : `Ready for campaigns: match_products and build_campaign can use the catalog now, for any team you name. Claude tags the new products within minutes. ${fanMapSuggestion}`,
         };
       }),
   );
@@ -374,7 +380,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
     "import_customer_counts",
     {
       title: "Import customer counts from Shopify",
-      description: `Builds the brand's fan map from customer counts by postal code, from Shopify's analytics: Walkoff's two queries, run with the Shopify connector's ${SHOPIFY_TOOLS.analytics}. Counts only, never names, emails or addresses. Walkoff keeps only each code's area (a US 3-digit ZIP, a Canadian FSA, a UK district), spreads each state's or province's other customers over its areas by population, replaces the brand's customer counts and redraws the map. Pass every row in one call.`,
+      description: `Builds the brand's fan map from customer counts by postal code, from Shopify's analytics: Walkoff's two queries, run with the Shopify connector's ${SHOPIFY_TOOLS.analytics}. Use it only when the marketer has a Shopify connector in Claude; otherwise the fan map comes from a Klaviyo export on the brand's upload page. Counts only, never names, emails or addresses. Walkoff keeps only each code's area (a US 3-digit ZIP, a Canadian FSA, a UK district), spreads each state's or province's other customers over its areas by population, replaces the brand's customer counts and redraws the map. Pass every row in one call.`,
       inputSchema: {
         brand: brandArg,
         postal_codes: z
@@ -442,7 +448,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         const [report, catalog] = await Promise.all([latestReport(db, b.id), loadTaggedCatalog(db, b.id)]);
         if (!report) {
           throw new ToolError(
-            `${b.name} has no fan map yet: it needs its customer counts. Set it up from Shopify in Claude: Walkoff's two Shopify queries, then import_customer_counts. How: ${helpUrl(ctx.origin, "shopify", "customers")} Not on Shopify? Upload customers or orders with the link in your welcome email.`,
+            `${b.name} has no fan map yet: it needs its customer counts. Campaigns work without it: name a team. To add it, export the Klaviyo list or segment you send campaigns to as a CSV, with Email, Zip Code and Country, and drop it in step 1 of the upload page from your welcome email. How: ${helpUrl(ctx.origin, "klaviyo", "fan-map")} With a Shopify connector in Claude, Walkoff's two Shopify queries and import_customer_counts work too: ${helpUrl(ctx.origin, "shopify", "customers")}`,
           );
         }
         return {
@@ -816,7 +822,13 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
         return {
           brand: b.name,
           rules: rules.map((r) => triggerView(r, labels)),
-          ...(active.length ? {} : { note: "No triggers set, so this uses Walkoff's default. create_trigger makes your own." }),
+          ...(active.length
+            ? {}
+            : {
+                note: report
+                  ? "No triggers set, so this uses Walkoff's default. create_trigger makes your own."
+                  : "No triggers set and no fan map yet, so Walkoff's default has no standout teams to watch. create_trigger with the teams you care about fills the queue, or add the fan map.",
+              }),
           queue: queue.map((x) => ({
             ...x.view(),
             matched: x.rule!.name,
@@ -1047,7 +1059,7 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
     {
       title: "Create a brand",
       description:
-        "Walkoff operators only. Sets up a new brand with its store and whether it's licensed to name its teams, and returns its id and private upload link. Then invite_member for each marketer: it emails them how to connect Walkoff and Shopify in Claude and set the brand up there, with the upload link for stores not on Shopify. Refuses a name another brand has unless allow_duplicate is true.",
+        "Walkoff operators only. Sets up a new brand with its store and whether it's licensed to name its teams, and returns its id and private upload link. Then invite_member for each marketer: it emails them how to connect Walkoff and Klaviyo in Claude, set the brand up there, and add their fan map with a Klaviyo export on the upload page. Refuses a name another brand has unless allow_duplicate is true.",
       inputSchema: {
         name: z.string().min(1).max(100).describe('The brand\'s name, like "Frost Buddy".'),
         store_url: storeArg.optional(),
@@ -1141,7 +1153,7 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
     {
       title: "Invite someone to a brand",
       description:
-        "Walkoff operators only. Lets someone use Walkoff for a brand in Claude, and emails them a welcome: who invited them, how to add Walkoff as a connector in Claude, how to set the brand up from Shopify there, the brand's private upload link for stores not on Shopify, and a first thing to ask. Safe to repeat: inviting someone again sends the welcome again.",
+        "Walkoff operators only. Lets someone use Walkoff for a brand in Claude, and emails them a welcome: who invited them, how to add Walkoff and Klaviyo as connectors in Claude, how to set the brand up there, a first thing to ask, and the brand's private upload link for their fan map (a Klaviyo export). Safe to repeat: inviting someone again sends the welcome again.",
       inputSchema: {
         brand: exactBrand,
         email: emailArg,
@@ -1226,7 +1238,7 @@ export function registerOperatorTools(server: McpServer, ctx: ToolContext): void
     {
       title: "Onboarding status",
       description:
-        "Walkoff operators only. Where a brand is in onboarding, or every brand: store and license, members and whether each has connected Walkoff in Claude, customer counts (from Shopify or an upload) and how many were mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step.",
+        "Walkoff operators only. Where a brand is in onboarding, or every brand: store and license, members and whether each has connected Walkoff in Claude, customer counts (from an upload, like a Klaviyo export, or Shopify in Claude) and how many were mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step. A brand with a catalog is ready for campaigns; the fan map is a suggestion, not a blocker.",
       inputSchema: { brand: z.string().optional().describe("Brand name or id. Leave it out for every brand.") },
       annotations: { readOnlyHint: true, openWorldHint: false },
     },

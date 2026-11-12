@@ -8,13 +8,23 @@ export interface SessionLine {
   note?: string;
 }
 
-export const SESSIONS: Record<"setup" | "week" | "trigger", { title: string; lines: SessionLine[] }> = {
+export const SESSIONS: Record<"setup" | "shopify" | "week" | "trigger", { title: string; lines: SessionLine[] }> = {
   setup: {
-    title: "claude · walkoff + shopify",
+    title: "claude · walkoff + klaviyo",
     lines: [
-      { kind: "user", text: "Set up Walkoff from our Shopify store." },
+      { kind: "user", text: "Set up Walkoff for our brand." },
       { kind: "tool", text: "import_catalog" },
       { kind: "out", text: "412 products read from the store · 1,180 colorways" },
+      { kind: "ok", text: "Ready for a first campaign. Want your fan map? Export your Klaviyo list with Zip Code." },
+      { kind: "user", text: "Done. I dropped it on our upload page." },
+      { kind: "tool", text: "get_affinity_map" },
+      { kind: "ok", text: "Your standouts: Chargers 2.4x, Padres 1.9x, Kings 1.6x" },
+    ],
+  },
+  shopify: {
+    title: "claude · walkoff + shopify",
+    lines: [
+      { kind: "user", text: "Make our fan map from Shopify." },
       { kind: "out", text: "Shopify analytics: customers by postal code, and by state" },
       { kind: "tool", text: "import_customer_counts" },
       { kind: "out", text: "18,240 customers mapped · 64% placed by their postal code" },

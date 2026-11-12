@@ -1,11 +1,11 @@
 # Walkoff MCP server
 
 Walkoff runs as a remote MCP server at **`https://www.walkoff.io/mcp`**, so
-marketers can use it in Claude next to the Klaviyo and Shopify connectors
-they already have. Walkoff knows the moments and the fans; it builds the
-campaign. Their own Klaviyo connector, on their own permissions, drafts it.
-Brands on Shopify set up there too, with no files: see
-[Setting a brand up from Shopify](#setting-a-brand-up-from-shopify).
+marketers can use it in Claude next to the Klaviyo connector they already
+have. Walkoff knows the moments and the fans; it builds the campaign. Their
+own Klaviyo connector, on their own permissions, drafts it. Setting a brand
+up is one ask in Claude, and the Shopify connector is optional: see
+[Setting a brand up](#setting-a-brand-up).
 
 For marketers, the help center explains all of this in plain words:
 [www.walkoff.io/help](https://www.walkoff.io/help), with the setup guide at
@@ -71,7 +71,7 @@ welcome. Later: "Where is each brand in onboarding?"
 | `update_brand` | Changes the name, store or license. `new_upload_link: true` replaces the upload link, say after removing someone: the old link stops working, and `invite_member` sends the new one. |
 | `invite_member` | Adds someone to a brand and emails them the welcome (`send_email: false` skips it). Safe to repeat: it resends the welcome. |
 | `list_members`, `remove_member` | Who can use a brand and whether each has connected. Removing someone ends their access in Claude on their next request; the brand's upload link keeps working until it's replaced. |
-| `onboarding_status` | One brand or all: store and license, members and whether each has connected (a live refresh token whose brands include this one), customer counts and where they came from (Shopify in Claude, or an upload) and when, customers mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step. |
+| `onboarding_status` | One brand or all: store and license, members and whether each has connected (a live refresh token whose brands include this one), customer counts and where they came from (an upload, like a Klaviyo export, or Shopify in Claude) and when, customers mapped, products and colorways, how much of the catalog Claude tagged, triggers, the last campaign, and the next step. A brand with a catalog is ready for campaigns: the fan map is a suggestion on the step, not a step. |
 | `set_athlete_home` | Sets where an athlete is from when Walkoff has it wrong, over every source, or clears it (`clear: true`). Takes a town ("San Clemente, CA") or a postal code, and a required note on where you learned it. Shows the athlete's homes before and after. |
 | `record_athlete_rights` | Records an athlete's written agreement (an NIL or sponsor deal) that a brand may name them: `starts_on`, `ends_on` and `evidence` (where the agreement is) are required. `revoke: true` revokes what's on file. Without an agreement in date, copy never names an athlete. |
 | `create_moment` | Records a win Walkoff doesn't follow itself (a medal, a big-wave contest) and makes the moment for each town the athlete is from right away. An athlete Walkoff knows, or someone new with their `sport` and `hometown`; a `note` on where you learned it is required. Running it again adds nothing. |
@@ -79,12 +79,16 @@ welcome. Later: "Where is each brand in onboarding?"
 | `exclude_athlete` | For an athlete who asks Walkoff to stop using them (the privacy policy's promise): deletes where they're from, never saves it again, and makes no hometown moment or big signing about them. A `note` on who asked is required; lists their moments from the last week, to retract. `undo: true` takes it back. Needs `supabase/011_athlete_opt_outs.sql`. |
 
 The next step follows the onboarding order: store, invite, connecting
-Claude, customer counts (set up from Shopify in Claude, or uploaded), the
-map, the catalog, then a first campaign. Connecting comes before data,
-since setup happens in Claude. Claude's tagging runs on its own in the
-engine within minutes of a catalog import or upload, so it's the next step
-only when it's an hour behind on more than a tenth of the catalog (then:
-check the engine, or run `npm run affinity:tag`). Operators get the member
+Claude, the catalog (`import_catalog` in Claude, or a product export on the
+upload page), then a first campaign. Connecting comes before data, since
+setup happens in Claude. The fan map isn't a step: a brand with a catalog
+is ready for campaigns. Until a map is in, the "first campaign" and "live"
+steps add a suggestion to add it (a Klaviyo profile export on the upload
+page, or the Shopify queries in Claude), and say so when the counts placed
+nobody. Claude's tagging runs on its own in the engine within minutes of a
+catalog import or upload, so it's the next step only when it's an hour
+behind on more than a tenth of the catalog (then: check the engine, or run
+`npm run affinity:tag`). Operators get the member
 tools too, so an operator can run `import_catalog` for any brand.
 
 Only operators get these tools. They aren't registered for anyone else
@@ -97,12 +101,15 @@ Supply. The consent page tells operators what they're allowing.
 **The welcome email** goes only to the person invited, through Resend
 (`RESEND_API_KEY`, from `RESEND_FROM_EMAIL`), with replies to the operator
 who invited them. It says who invited them and to which brand, gives the
-connector steps above with the address they sign in with, tells them to
-connect Shopify (with an account that can see the store's reports) and
-Klaviyo, and to ask Claude "Set up Walkoff for <brand> from our Shopify
-store", with what Walkoff keeps. Then it suggests "What should we send this
-week?". The brand's upload page comes last, for stores not on Shopify (the
-page has the export guides). Someone already signed in for another brand
+connector steps above with the address they sign in with (and the line for
+Team and Enterprise owners), tells them to connect Klaviyo, with one line
+saying Shopify in Claude is optional, and to ask Claude "Set up Walkoff for
+<brand>", which imports the catalog. Then it suggests "What should we send
+this week?". Last comes the fan map: export the Klaviyo list or segment
+they send to, with Email, Zip Code and Country, and drop it in step 1 of
+the brand's private upload page (the link, the "private, don't share" line,
+what the browser keeps, and a line about product exports for stores not on
+Shopify). Someone already signed in for another brand
 also gets a line about disconnecting and connecting again, since a sign-in
 reaches only the brands picked when it was made. Without `RESEND_API_KEY`
 outside production, the email is printed to the server log. In production
@@ -121,9 +128,9 @@ The script and the tools share `lib/brands.ts` and `lib/welcome.ts`.
 
 | Tool | What it does |
 |------|--------------|
-| `import_catalog` | Reads the brand's products from its Shopify store's public feed and saves them like a product export: new ones added, the rest updated, nothing removed. No customer data. |
-| `import_customer_counts` | Customer counts from Walkoff's two ShopifyQL queries, run by Claude with the Shopify connector, as text rows. Keeps only areas and counts, spreads the rest by population, replaces the brand's counts and redraws the map. |
-| `list_brands` | Brands this person can use, with store, license, customers mapped, catalog and standout teams, and `setup_needed` for what's missing. |
+| `import_catalog` | Reads the brand's products from its Shopify store's public feed and saves them like a product export: new ones added, the rest updated, nothing removed. No customer data, and no Shopify connector. With a catalog, the brand is ready for campaigns. |
+| `import_customer_counts` | Only with a Shopify connector in Claude: customer counts from Walkoff's two ShopifyQL queries, run by Claude with that connector, as text rows. Keeps only areas and counts, spreads the rest by population, replaces the brand's counts and redraws the map. |
+| `list_brands` | Brands this person can use, with store, license, customers mapped, catalog and standout teams. `setup_needed: ["catalog"]` when there's no catalog yet, the only thing campaigns need. Without a fan map, `fan_map_suggestion` suggests a Klaviyo export (or the Shopify queries) as an optional next step. |
 | `get_affinity_map` | Standout fan territories (lift, customers, what they buy) and what to feature for each. |
 | `local_athletes` | Athletes from towns near the brand's customers, town by town: estimated customers in each town's circle and the lift, and each athlete's team, position, how Walkoff knows where they're from, and any naming rights on file. Names are for the marketer only. Empty until `supabase/009_athletes.sql` has run and the engine has synced rosters. |
 | `trigger_queue` | Moments to act on now: matching the brand's triggers (or, with none, big moments for its standout teams), not yet drafted, sent or skipped, with how long each keeps. The default takes ordinary wins in weekly sports (NFL, college football, Premier League) but not in sports with a game most days. |
@@ -148,8 +155,8 @@ brand's customers, with the customers estimated in each town's circle;
 `WALKOFF_HOMETOWN=0` takes them out of members' tools, which then don't
 mention them; operators keep them, to test.
 
-There are two prompts: `set_up_brand` ("Set up from Shopify") runs the
-setup below, and `moment_campaign` runs the whole campaign loop. The server
+There are two prompts: `set_up_brand` ("Set up your brand") runs the setup
+below, and `moment_campaign` runs the whole campaign loop. The server
 instructions tell Claude the setup steps, the flow, the copy rules and where
 the help center is (and, for operators, how to onboard a brand).
 
@@ -177,50 +184,76 @@ campaign's recipients, clicks, orders and revenue with Klaviyo's
 `get_campaign_report`. Walkoff stores none of it. The marketer's side is
 [/help/klaviyo#tracking](https://www.walkoff.io/help/klaviyo#tracking).
 
-## Setting a brand up from Shopify
+## Setting a brand up
 
-A brand on Shopify needs no files. The marketer connects Walkoff, Shopify
-and Klaviyo in Claude and asks "Set up Walkoff for <brand> from our Shopify
-store", or picks the `set_up_brand` prompt. Claude follows the Setup steps
-in Walkoff's instructions (`lib/mcp/server.ts`):
+The marketer connects Walkoff and Klaviyo in Claude and asks "Set up
+Walkoff for <brand>", or picks the `set_up_brand` prompt. Claude follows
+the Setup steps in Walkoff's instructions (`lib/mcp/server.ts`). The
+Shopify connector is optional: on a live onboarding, a marketer on a Team
+plan couldn't get it working, and nothing needed it.
 
-1. **`import_catalog`.** Walkoff reads `<store>/products.json` itself, 250
-   products a page (`lib/affinity/storefront.ts`), and turns each product
-   into the rows a Shopify product export has. So `parseCatalog` reads it
-   exactly as it reads an upload: colors from the Color option, SKUs,
-   photos, descriptions. It saves with `saveCatalog` as `shopify_store`,
-   and the engine's Claude pass tags the new products. Each product's own
-   photo goes in `brand_products.image` (`supabase/015_product_image.sql`).
-   Without that column the products still save, without photos, and the
-   result carries a `warning` saying how many photos were skipped (the
-   server log names the migration to run).
-2. **Two ShopifyQL queries** with the Shopify connector's
-   `run-analytics-query`, which only reads. Both are in `SHOPIFYQL`
-   (`lib/affinity/shopify-counts.ts`), the one source for the instructions,
-   the prompt and the help page: customers by postal code for the top
-   1,000 codes, and customers by state or province. Both count customers
-   with a US, Canadian or UK shipping address in the last 365 days, so the
-   second's totals cover the same customers the first draws from.
-3. **`import_customer_counts`**, with both results as text rows (a header,
-   tabs, quotes or a table are fine). Walkoff cuts each postal code to its
-   area (`coarseArea`) and sums codes in the same area. Then it spreads each
-   state's remaining customers (its total less those already placed) over
-   its areas by population, rounding by largest remainder so the counts add
-   up. A state whose codes add up to more than its total keeps them all
-   (someone who shipped to two codes counts in each). UK customers, and
-   states it can't name, are spread over the whole country. It saves
-   through the upload path's own check (`parseCustomerUpload`), so only
-   coarse areas are stored, as `shopify_analytics`, and redraws the map.
-   The result says how many customers were placed by their own postal code.
-4. **`get_affinity_map`**, to show the marketer their standouts.
+1. **`import_catalog`**, the only required step. Walkoff reads
+   `<store>/products.json` itself, 250 products a page
+   (`lib/affinity/storefront.ts`), with no connector, and turns each
+   product into the rows a Shopify product export has. So `parseCatalog`
+   reads it exactly as it reads an upload: colors from the Color option,
+   SKUs, photos, descriptions. It saves with `saveCatalog` as
+   `shopify_store`, and the engine's Claude pass tags the new products.
+   Each product's own photo goes in `brand_products.image`
+   (`supabase/015_product_image.sql`). Without that column the products
+   still save, without photos, and the result carries a `warning` saying
+   how many photos were skipped (the server log names the migration to
+   run). With a catalog the brand is ready for campaigns: `build_campaign`,
+   `match_products`, `get_territory`, `upcoming_games` and `create_trigger`
+   (with teams named) all work. Licensed brands often pick teams straight
+   from their catalog. `list_brands` drops `setup_needed` here.
+2. **The fan map, recommended and optional.** It adds standout teams and
+   lift; without it, the default rule has no standouts to watch, so
+   Claude asks which teams matter and makes a trigger for them
+   (`trigger_queue` says so too). Two ways in:
+   - **A Klaviyo profile export (the default).** The marketer exports the
+     list or segment they send campaigns to as a CSV, with Email, Zip Code
+     and Country, and drops it in step 1 of the brand's upload page (the
+     link is in the welcome email). `detectFormat` reads a file with a
+     "Zip Code" column plus "Email" or "Phone Number" as
+     `klaviyo_profiles`; `aggregateCustomers` places each profile by its
+     "Zip Code", using "Country" when it's there and the code's shape when
+     it isn't. The browser keeps only counts per postal area, as for every
+     upload. Claude is told not to take the file in chat and not to pull
+     profiles with the Klaviyo connector.
+   - **Shopify in Claude, only if a Shopify connector is connected.** Two
+     ShopifyQL queries with the connector's `run-analytics-query`, which
+     only reads. Both are in `SHOPIFYQL` (`lib/affinity/shopify-counts.ts`),
+     the one source for the instructions, the prompt and the help page:
+     customers by postal code for the top 1,000 codes, and customers by
+     state or province. Both count customers with a US, Canadian or UK
+     shipping address in the last 365 days, so the second's totals cover
+     the same customers the first draws from. Then
+     **`import_customer_counts`**, with both results as text rows (a
+     header, tabs, quotes or a table are fine). Walkoff cuts each postal
+     code to its area (`coarseArea`) and sums codes in the same area. Then
+     it spreads each state's remaining customers (its total less those
+     already placed) over its areas by population, rounding by largest
+     remainder so the counts add up. A state whose codes add up to more
+     than its total keeps them all (someone who shipped to two codes counts
+     in each). UK customers, and states it can't name, are spread over the
+     whole country. It saves through the upload path's own check
+     (`parseCustomerUpload`), so only coarse areas are stored, as
+     `shopify_analytics`, and redraws the map. The result says how many
+     customers were placed by their own postal code.
+3. **`get_affinity_map`**, once the map is in, to show the marketer their
+   standouts.
 
-**Privacy.** Only counts pass through Claude. Full postal codes reach
-Walkoff's server in the request and are cut to areas in memory: they're
+**Privacy.** A Klaviyo export never passes through Claude: the browser
+reads it and sends only counts per area. On the Shopify route, only counts
+pass through Claude. Full postal codes reach Walkoff's server in the
+request and are cut to areas in memory: they're
 never stored or logged, and no error echoes a row. The tool refuses the
 whole input when any row has an "@", more than three parts or a part over
 60 characters, or when there are more than 5,000 rows, and nothing is
-saved. Claude is told to pass counts only and never to use the connector's
-customer or order tools for this.
+saved. Claude is told to pass counts only, never to use the Shopify
+connector's customer or order tools for this, and never to pull profiles
+with the Klaviyo connector.
 
 **Reading the store** (`lib/public-fetch.ts`, which the OAuth client
 metadata fetch also uses): https only, the default port, a DNS name (no IP
@@ -234,12 +267,12 @@ Walkoff away gives a plain message with the upload page as the way in.
 DNS can still change between the check and the fetch; only operators set
 `store_url`.
 
-**What it doesn't cover.** A map set up this way has no product counts per
-area: "what each territory buys" needs an orders upload. If Shopify
-rejects a query, Claude is told to fix only its syntax and keep its
-columns, and to page with OFFSET if the connector returns part of the
-rows. Stores not on Shopify, and anyone who'd rather use files, have the
-upload page.
+**What it doesn't cover.** A map from a Klaviyo export or from Shopify in
+Claude has no product counts per area: "what each territory buys" needs a
+Shopify orders upload. If Shopify rejects a query, Claude is told to fix
+only its syntax and keep its columns, and to page with OFFSET if the
+connector returns part of the rows. Stores not on Shopify upload a product
+export in step 2 of the upload page.
 
 ## How sign-in works
 

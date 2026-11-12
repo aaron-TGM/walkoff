@@ -1,7 +1,8 @@
 // The email someone gets when they're invited to use Walkoff for a brand:
-// who invited them, how to connect Walkoff in Claude and set the brand up
-// from Shopify there, a first thing to ask, and the upload page for stores
-// not on Shopify. Sent with Resend, like the sign-in codes
+// who invited them, how to connect Walkoff and Klaviyo in Claude, setting
+// the brand up there (the catalog), a first thing to ask, and their fan map
+// from a Klaviyo export on the brand's private upload page. Shopify in
+// Claude is optional. Sent with Resend, like the sign-in codes
 // (lib/mcp/oauth/email.ts).
 import { Resend } from "resend";
 import { CONNECTOR_STEPS, CONNECTORS_PAGE, ORG_CONNECTOR_STEPS } from "./connect";
@@ -43,22 +44,28 @@ export function welcomeEmail(w: Welcome): { subject: string; text: string } {
     "",
     ...connect,
     "",
-    "2. Connect Shopify and Klaviyo in Claude",
+    "2. Connect Klaviyo in Claude",
     "",
-    `Both are in Claude's connectors, under ${CONNECTORS_PAGE}. Connect Shopify with an account that can see your store's reports. Claude drafts the campaigns with your Klaviyo connector.`,
+    `It's in Claude's connectors, under ${CONNECTORS_PAGE}. Claude drafts your campaigns in Klaviyo with it. Connecting Shopify in Claude is optional.`,
     "",
     `3. Set up ${w.brand} in Claude`,
     "",
-    `Ask Claude: "Set up Walkoff for ${w.brand} from our Shopify store."`,
+    `Ask Claude: "Set up Walkoff for ${w.brand}."`,
     "",
-    "Walkoff reads your products from your store. Claude reads customer counts by postal code from Shopify's analytics, and Walkoff keeps only the area. No names, emails or street addresses reach Walkoff.",
+    "Walkoff reads your products from your store. That's all it needs to build your first campaign.",
     "",
     `Then try: "What should we send this week?"`,
     "",
-    "Not on Shopify? Use your private upload page instead:",
+    "4. Add your fan map",
+    "",
+    "Your fan map shows which teams your customers lean toward, so Walkoff can point you to the moments that matter most. It's optional. In Klaviyo, export the list or segment you send campaigns to as a CSV, with Email, Zip Code and Country. Then drop it in step 1 of your private upload page:",
     w.uploadUrl,
     "",
+    "Your browser keeps only counts by postal area. No names, emails or street addresses reach Walkoff.",
+    "",
     `This link is private to ${w.brand}. Anyone with it can upload for you, so please don't share it.`,
+    "",
+    "Not on Shopify? Drop a product export in step 2 of the same page.",
     "",
     "The setup guide walks through each step:",
     w.guideUrl,

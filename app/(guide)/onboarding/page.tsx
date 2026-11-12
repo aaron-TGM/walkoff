@@ -22,15 +22,24 @@ export default function OnboardingPage() {
             <Link href="/#form" data-cta="onboarding">Ask for early access</Link>.
           </li>
           <li>
-            <strong>Claude, with the Shopify and Klaviyo connectors.</strong> Claude sets your
-            brand up from your Shopify store, with no files. Walkoff finds the moment and builds
-            the campaign, and your Klaviyo connector drafts it in your account.{" "}
-            <Link href={helpPath("shopify")}>Shopify in Claude</Link> &middot;{" "}
+            <strong>Claude, with Walkoff and Klaviyo connected.</strong> Walkoff finds the moment
+            and builds the campaign, and your Klaviyo connector drafts it in your account.{" "}
             <Link href={helpPath("klaviyo")}>Klaviyo in Claude</Link>
           </li>
           <li>
-            <strong>Not on Shopify?</strong> Your exports, on a private upload page.{" "}
+            <strong>Your store&apos;s address.</strong> Walkoff reads your products from it. Not
+            on Shopify? A product export on your private upload page.{" "}
             <Link href={helpPath("uploads")}>Uploading files</Link>
+          </li>
+          <li>
+            <strong>For your fan map, a Klaviyo export.</strong> Optional, and the easiest way to
+            see which teams your customers lean toward.{" "}
+            <Link href={helpPath("klaviyo", "fan-map")}>Your fan map from Klaviyo</Link>
+          </li>
+          <li>
+            <strong>Shopify in Claude is optional.</strong> Connect it only if you&apos;d rather
+            make your fan map from Shopify&apos;s analytics.{" "}
+            <Link href={helpPath("shopify")}>Shopify in Claude</Link>
           </li>
         </ul>
       </HelpSection>
@@ -45,9 +54,9 @@ export default function OnboardingPage() {
             </p>
             <p>
               Then we invite each person who&apos;ll use Walkoff. Each gets an email with who
-              invited them, how to connect Walkoff in Claude and set your brand up there, and a
-              first thing to ask. It also has your private upload link, for stores not on
-              Shopify.
+              invited them, how to connect Walkoff and Klaviyo in Claude, how to set your brand
+              up there, and a first thing to ask. It also has your private upload link, for your
+              fan map.
             </p>
             <p>
               The upload link is private to your brand, so keep it within your team.{" "}
@@ -55,7 +64,7 @@ export default function OnboardingPage() {
             </p>
           </Step>
 
-          <Step who="you" title="Connect Claude, Shopify and Klaviyo">
+          <Step who="you" title="Connect Walkoff and Klaviyo in Claude">
             <p>In Claude, go to {CONNECTOR_STEPS}, and enter this address:</p>
             <CopyLine>{CONNECTOR_URL}</CopyLine>
             <p>
@@ -67,14 +76,13 @@ export default function OnboardingPage() {
               {ORG_CONNECTOR_STEPS}.
             </p>
             <p>
-              Connect Shopify too, with an account that can see your store&apos;s reports. Claude
-              sets your brand up with it.{" "}
-              <Link href={helpPath("shopify", "connect")}>Connecting Shopify</Link>
+              Then connect Klaviyo, if you haven&apos;t. Claude drafts each campaign with your
+              Klaviyo connector, in your account.{" "}
+              <Link href={helpPath("klaviyo", "connect")}>Connecting Klaviyo</Link>
             </p>
             <p>
-              And Klaviyo, if you haven&apos;t. Claude drafts each campaign with your Klaviyo
-              connector, in your account.{" "}
-              <Link href={helpPath("klaviyo", "connect")}>Connecting Klaviyo</Link>
+              Shopify in Claude is optional. If it won&apos;t connect, skip it: you don&apos;t
+              need it. <Link href={helpPath("shopify", "connect")}>When Shopify helps</Link>
             </p>
             <p>
               In Klaviyo, check UTM tracking is on, under {TRACKING.utmSettings}. Then your sends
@@ -89,16 +97,15 @@ export default function OnboardingPage() {
 
           <Step who="you" title="Set up your brand in Claude">
             <p>Ask Claude:</p>
-            <Ask>Set up Walkoff from our Shopify store.</Ask>
+            <Ask>Set up Walkoff for our brand.</Ask>
             <p>
-              Walkoff reads your products from your store. Claude reads customer counts by postal
-              code from Shopify&apos;s analytics, and Walkoff keeps only each code&apos;s area and
-              the count. No names, emails or street addresses reach Walkoff. Your fan map is ready
-              in a few minutes.
+              Walkoff reads your products from your store&apos;s public product feed. No customer
+              data, and no Shopify connector. With your catalog in, you&apos;re ready for a first
+              campaign.
             </p>
             <p>
-              <Link href={helpPath("shopify", "set-up")}>Setting up, in detail</Link> &middot; Not
-              on Shopify? <Link href={helpPath("uploads", "export")}>Upload your exports instead</Link>
+              <Link href={helpPath("shopify", "products")}>Your products, in detail</Link> &middot;
+              Not on Shopify? <Link href={helpPath("uploads", "export")}>Upload a product export</Link>
             </p>
           </Step>
 
@@ -111,8 +118,7 @@ export default function OnboardingPage() {
             <p>
               Then Claude reads every product, usually within a few minutes: the teams it&apos;s
               made for, its colors, uses and seasons, and what names like &ldquo;Dune&rdquo; look
-              like. You don&apos;t do anything here, and your map and picks work before it&apos;s
-              done. Later imports keep this work, and new or changed products get the same pass.
+              like. You don&apos;t do anything here, and your picks work before it&apos;s done. Later imports keep this work, and new or changed products get the same pass.
             </p>
           </Step>
 
@@ -134,7 +140,31 @@ export default function OnboardingPage() {
               ask Claude to log it, so it leaves your queue. A few days later, ask how it did.
             </p>
             <p>
+              No fan map yet? Name the teams you care about, or the ones your products are made
+              for: &ldquo;Make a trigger for big wins for the Chargers and Padres.&rdquo;
+            </p>
+            <p>
               <Link href={helpPath("campaigns")}>Campaigns, in detail</Link>
+            </p>
+          </Step>
+
+          <Step who="you" title="Add your fan map (recommended)">
+            <p>
+              Your fan map shows which teams your customers lean toward, so Walkoff can point you
+              to the moments that matter most. It&apos;s optional, and campaigns don&apos;t wait
+              for it.
+            </p>
+            <p>
+              In Klaviyo, export the list or segment you send campaigns to as a CSV, with Email,
+              Zip Code and Country. Then drop it in step 1 of your private upload page. The link
+              is in your welcome email. Your browser keeps only counts by postal area, and your
+              map is ready right after.
+            </p>
+            <Ask>Where are our fans?</Ask>
+            <p>
+              <Link href={helpPath("klaviyo", "fan-map")}>Your fan map from Klaviyo</Link> &middot;
+              Connected Shopify in Claude?{" "}
+              <Link href={helpPath("shopify", "set-up")}>Make it from Shopify instead</Link>
             </p>
           </Step>
         </Steps>
@@ -143,8 +173,9 @@ export default function OnboardingPage() {
       <HelpSection page={P} id="what-to-expect">
         <ul>
           <li>
-            <strong>Your fan map</strong> appears a few minutes after you ask Claude to set your
-            brand up, or right after an upload.
+            <strong>Your fan map</strong> appears right after you upload a Klaviyo export, or a
+            few minutes after you ask Claude to make it from Shopify. Campaigns work before
+            it&apos;s in.
           </li>
           <li>
             <strong>Claude&apos;s product tags</strong> come a few minutes after your catalog
@@ -219,13 +250,14 @@ export default function OnboardingPage() {
             },
             {
               id: "shopify-data",
-              q: "What does Walkoff see from Shopify?",
+              q: "Do we need to connect Shopify in Claude?",
               a: (
                 <p>
-                  Your products, from your store&apos;s public product feed, and customer counts
-                  by postal code from Shopify&apos;s analytics. Walkoff cuts each code to its area
-                  and keeps only the area and the count. Never names, emails or addresses.{" "}
-                  <Link href={helpPath("shopify", "privacy")}>What Walkoff sees</Link>
+                  No. Walkoff reads your products from your store&apos;s public product feed, and
+                  your fan map can come from a Klaviyo export. If you do connect Shopify, Claude can
+                  read customer counts by postal code from Shopify&apos;s analytics instead.
+                  Walkoff keeps only each code&apos;s area and the count. Never names, emails or
+                  addresses. <Link href={helpPath("shopify", "privacy")}>What Walkoff sees</Link>
                 </p>
               ),
             },
@@ -235,7 +267,7 @@ export default function OnboardingPage() {
               a: (
                 <p>
                   Yes, with the private upload page in your welcome email. A Klaviyo profile export
-                  works for customers, or a spreadsheet with postal_code, country and customers
+                  makes your fan map, or a spreadsheet with postal_code, country and customers
                   columns. For products, a spreadsheet with title, product type and tags.
                   Campaigns are built for Klaviyo.
                 </p>

@@ -15,10 +15,44 @@ const fmt = (n: number) => n.toLocaleString("en-US");
 export default function ShopifyPage() {
   return (
     <HelpPage slug={P}>
+      <HelpSection page={P} id="products">
+        <Callout title="You don't need Shopify in Claude">
+          <p>
+            Walkoff reads your products from your store on its own, and your fan map can come
+            from a Klaviyo export. Connect Shopify in Claude only if you&apos;d rather build your
+            map from Shopify&apos;s analytics.{" "}
+            <Link href={helpPath("klaviyo", "fan-map")}>Your fan map from Klaviyo</Link>
+          </p>
+        </Callout>
+        <p>
+          When you ask Claude to set up Walkoff, Walkoff reads your store&apos;s public product
+          feed: what your store already shows shoppers. That&apos;s titles, types, tags,
+          descriptions, prices, colorways, SKUs and photos. No customer data, and no Shopify
+          connector.
+        </p>
+        <Ask>Set up Walkoff for our brand.</Ask>
+        <ul>
+          <li>Colorways come from your variants&apos; color option, with their SKUs and photos.</li>
+          <li>
+            New products are added and the rest updated. Nothing is removed. One import reads up
+            to {fmt(SHOPIFY.maxProducts)} products.
+          </li>
+          <li>Claude tags them for teams and colors within minutes.</li>
+          <li>Products that aren&apos;t on your online store aren&apos;t in the feed.</li>
+          <li>With your catalog in, you&apos;re ready for a first campaign.</li>
+        </ul>
+        <p>Run it again whenever your catalog changes:</p>
+        <Ask>Update our catalog from the store.</Ask>
+        <p>
+          More on colorways: <Link href={helpPath("uploads", "colorways")}>Products and colorways</Link>
+        </p>
+      </HelpSection>
+
       <HelpSection page={P} id="connect">
         <p>
-          Walkoff sets your brand up in Claude, with the Shopify connector you may already use.
-          There are no files to export or upload.
+          Connecting Shopify is optional. It lets Claude build your fan map from Shopify&apos;s
+          analytics, with no file to export. If it won&apos;t connect, or your plan doesn&apos;t
+          allow it, skip it: a Klaviyo export makes the same map.
         </p>
         <ol>
           <li>
@@ -41,7 +75,7 @@ export default function ShopifyPage() {
             first, under {ORG_CONNECTOR_STEPS}.
           </li>
           <li>
-            Connect Walkoff and Klaviyo too, if you haven&apos;t:{" "}
+            You still need Walkoff and Klaviyo connected:{" "}
             <Link href={helpPath("connect")}>Connect Claude</Link>,{" "}
             <Link href={helpPath("klaviyo", "connect")}>Connecting Klaviyo</Link>.
           </li>
@@ -58,44 +92,23 @@ export default function ShopifyPage() {
       </HelpSection>
 
       <HelpSection page={P} id="set-up">
-        <p>With Walkoff and Shopify connected, ask Claude:</p>
-        <Ask>Set up Walkoff from our Shopify store.</Ask>
+        <p>With Walkoff and Shopify connected, and your catalog in, ask Claude:</p>
+        <Ask>Make our fan map from Shopify.</Ask>
         <p>
-          Or pick Walkoff&apos;s prompt, <strong>Set up from Shopify</strong>, if your Claude app
-          shows connector prompts. Claude then does three things:
+          Or pick Walkoff&apos;s prompt, <strong>Set up your brand</strong>, if your Claude app
+          shows connector prompts. With Shopify connected, Claude then:
         </p>
         <ol>
-          <li>Walkoff reads your products from your store.</li>
-          <li>Claude runs two reports in Shopify&apos;s analytics: customers by postal code, and by state or province.</li>
-          <li>Walkoff turns those counts into your fan map, and Claude shows you your standout teams.</li>
+          <li>Runs two reports in Shopify&apos;s analytics: customers by postal code, and by state or province.</li>
+          <li>Passes the counts to Walkoff, which turns them into your fan map.</li>
+          <li>Shows you your standout teams.</li>
         </ol>
-        <ExampleSession {...SESSIONS.setup} />
+        <ExampleSession {...SESSIONS.shopify} />
         <p>
           It takes a few minutes, mostly while Claude passes the counts along. Run it again
           whenever you like:
         </p>
-        <Ask>Update our catalog from the store.</Ask>
         <Ask>Refresh our fan map from Shopify.</Ask>
-      </HelpSection>
-
-      <HelpSection page={P} id="products">
-        <p>
-          Walkoff reads your store&apos;s public product feed: what your store already shows
-          shoppers. That&apos;s titles, types, tags, descriptions, prices, colorways, SKUs and
-          photos. No customer data.
-        </p>
-        <ul>
-          <li>Colorways come from your variants&apos; color option, with their SKUs and photos.</li>
-          <li>
-            New products are added and the rest updated. Nothing is removed. One import reads up
-            to {fmt(SHOPIFY.maxProducts)} products.
-          </li>
-          <li>Claude tags them for teams and colors within minutes.</li>
-          <li>Products that aren&apos;t on your online store aren&apos;t in the feed.</li>
-        </ul>
-        <p>
-          More on colorways: <Link href={helpPath("uploads", "colorways")}>Products and colorways</Link>
-        </p>
       </HelpSection>
 
       <HelpSection page={P} id="customers">
@@ -129,8 +142,8 @@ export default function ShopifyPage() {
           </li>
         </ul>
         <p>
-          Maps set up this way show where your customers are. What each territory buys more of
-          needs an orders upload. <Link href={helpPath("fan-map", "buys")}>What each territory buys</Link>
+          Maps made this way, or from a Klaviyo export, show where your customers are. What each
+          territory buys more of needs an orders upload. <Link href={helpPath("fan-map", "buys")}>What each territory buys</Link>
         </p>
         <Callout>
           <p>
@@ -175,15 +188,32 @@ export default function ShopifyPage() {
 
       <HelpSection page={P} id="not-shopify">
         <p>
-          Not on Shopify, or rather not connect it in Claude? Use your private upload page. The
-          link is in your welcome email. It reads your exports in your browser and sends only
-          counts by area. <Link href={helpPath("uploads")}>Uploading files</Link>
+          Not on Shopify, or rather not connect it in Claude? Make your fan map from a Klaviyo
+          export instead: the list or segment you send campaigns to, with Email, Zip Code and
+          Country, dropped in step 1 of your private upload page. The link is in your welcome
+          email. Your browser reads the file and sends only counts by area.{" "}
+          <Link href={helpPath("klaviyo", "fan-map")}>Your fan map from Klaviyo</Link>
+        </p>
+        <p>
+          Stores not on Shopify upload a product export in step 2 of the same page.{" "}
+          <Link href={helpPath("uploads")}>Uploading files</Link>
         </p>
       </HelpSection>
 
       <HelpSection page={P} id="trouble">
         <HelpFaq
           items={[
+            {
+              id: "wont-connect",
+              q: "Shopify won't connect in Claude.",
+              a: (
+                <p>
+                  Skip it. You don&apos;t need Shopify in Claude: Walkoff reads your products
+                  from your store without it, and a Klaviyo export makes your fan map.{" "}
+                  <Link href={helpPath("klaviyo", "fan-map")}>Your fan map from Klaviyo</Link>
+                </p>
+              ),
+            },
             {
               id: "no-feed",
               q: "Walkoff says our store doesn't have a Shopify product feed.",
@@ -234,7 +264,7 @@ export default function ShopifyPage() {
           ]}
         />
         <p>
-          The exact messages and what to do: <Link href={helpPath("troubleshooting", "setup")}>Setting up from Shopify</Link>
+          The exact messages and what to do: <Link href={helpPath("troubleshooting", "setup")}>Setting up in Claude</Link>
         </p>
       </HelpSection>
     </HelpPage>

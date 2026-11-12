@@ -31,10 +31,14 @@ export default function ConnectPage() {
           </li>
         </ol>
         <p>
-          Connect Shopify and Klaviyo too, if you haven&apos;t. Claude sets your brand up from
-          your Shopify store, and drafts campaigns with your Klaviyo connector, in your own
-          account. <Link href={helpPath("shopify", "connect")}>Connecting Shopify</Link> &middot;{" "}
+          Connect Klaviyo too, if you haven&apos;t. Claude drafts campaigns with your Klaviyo
+          connector, in your own account.{" "}
           <Link href={helpPath("klaviyo", "connect")}>Connecting Klaviyo</Link>
+        </p>
+        <p>
+          Shopify in Claude is optional. Walkoff reads your products from your store without it,
+          and your fan map can come from a Klaviyo export.{" "}
+          <Link href={helpPath("shopify")}>Shopify in Claude</Link>
         </p>
         <Callout>
           <p>

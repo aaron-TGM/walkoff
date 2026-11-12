@@ -252,8 +252,9 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
         <div className="upload-step-num">Step 1</div>
         <h2 className="upload-step-title">Customers or orders</h2>
         <p className="upload-step-body">
-          A Shopify order or customer export, a Klaviyo profile export, or a spreadsheet
-          of counts. Orders work best: they also show what each territory buys.
+          A Klaviyo profile export is the easiest: the list or segment you send to, with
+          Email, Zip Code and Country. A Shopify order or customer export, or a spreadsheet
+          of counts, works too. Orders give the most: they also show what each territory buys.
         </p>
         <DropZone
           label="Drop your export here, or click to choose"
@@ -420,9 +421,8 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
         <>
           <p className="upload-lead">
             No file needed. This is a sample brand&apos;s fan map: the teams its customers lean
-            toward, and what to feature for each. On Shopify, your own map takes one ask in
-            Claude, with no files.{" "}
-            <Link href={helpPath("shopify")}>Shopify in Claude</Link>
+            toward, and what to feature for each. Your own map takes one Klaviyo export.{" "}
+            <Link href={helpPath("klaviyo", "fan-map")}>Your fan map from Klaviyo</Link>
           </p>
           {territories}
           <aside className="demo-cta">
@@ -439,8 +439,9 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
                 )}
               </h2>
               <p>
-                During early access we set up your brand and invite your team. On Shopify, your own
-                map is ready in minutes, and Walkoff builds the campaign when one of your teams wins.{" "}
+                During early access we set up your brand and invite your team. Your own map is
+                ready minutes after a Klaviyo export, and Walkoff builds the campaign when one of
+                your teams wins.{" "}
                 {PRICING.trialDays} days free, no credit card.
               </p>
             </div>
@@ -460,16 +461,18 @@ export function UploadClient({ token, brandName, initialReport, initialCatalog, 
       ) : (
         <>
           <aside className="upload-banner">
-            <div className="upload-banner-title">On Shopify? You don&apos;t need this page</div>
+            <div className="upload-banner-title">The easy way: a Klaviyo export</div>
             <p>
-              In Claude, with Walkoff and Shopify connected, ask: &ldquo;Set up Walkoff for{" "}
-              {brandName} from our Shopify store.&rdquo; No files to export.{" "}
-              <Link href={helpPath("shopify", "set-up")}>How it works</Link>
+              In Klaviyo, export the list or segment you send campaigns to as a CSV, with Email,
+              Zip Code and Country. Drop it in step 1 to see your fan map. The guides below
+              show where to click.{" "}
+              <Link href={helpPath("klaviyo", "fan-map")}>How it works</Link>
             </p>
           </aside>
           <p className="upload-lead">
-            For stores not on Shopify, or if you&apos;d rather use files: drop in an export from
-            your store or Klaviyo. {privacy}
+            Your products come in when you ask Claude to set up {brandName}, so you only need
+            step 2 if your store isn&apos;t on Shopify. Using Shopify in Claude? It can build your map instead.{" "}
+            <Link href={helpPath("shopify", "set-up")}>Shopify in Claude</Link> {privacy}
           </p>
           {steps}
           {territories}
