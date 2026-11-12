@@ -139,6 +139,8 @@ describe("import_catalog", () => {
       ["Frost Buddy", `https://${HOST}`, 260, 2, true, 260, false],
     );
     assert.equal(out.examples.length, 3);
+    assert.equal(out.warning, undefined, "photos saved, nothing to warn about");
+    assert.equal(db.tables.brand_products.find((p) => p.handle === "product-2")!.image, "https://cdn.example.com/2.jpg");
     assert.match(out.next, /^Next: customer counts\./);
     assert.equal(db.tables.brand_products.length, 260);
     assert.ok(db.tables.brand_products.every((p) => p.brand_id === FROST && p.tagged_by === "rules"));
@@ -153,6 +155,22 @@ describe("import_catalog", () => {
     assert.equal(db.tables.brand_products.length, 260);
     assert.equal(db.tables.brand_products.find((p) => p.handle === "product-1")!.tagged_by, "claude");
     assert.equal(db.tables.brand_uploads.length, 2);
+    await client.close();
+  });
+
+  it("says so when product photos can't be saved yet", async () => {
+    // Before supabase/015_product_image.sql: products save without photos.
+    const db = fakeDb(
+      { brands: [brand(FROST, "Frost Buddy", `https://${HOST}`), brand(SUNDAY, "Sunday Supply", "https://sunday.example.com")] },
+      { through: "014" },
+    );
+    const store = fakeStorefront({ host: HOST, products: products(12) });
+    const client = await connect({ db, principal: jane, fetch: store.fetch, lookup: store.lookup });
+    const out = (await call(client, "import_catalog")).json();
+    assert.equal(out.products_read, 12);
+    assert.equal(db.tables.brand_products.length, 12);
+    assert.match(out.warning, /^12 product photos weren't saved, so campaigns will show these products without photos\./);
+    assert.match(out.warning, /ask your Walkoff contact, then run import_catalog again\.$/);
     await client.close();
   });
 

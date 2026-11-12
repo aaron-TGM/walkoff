@@ -24,14 +24,15 @@ const tumbler: CatalogItem = {
 describe("a product's own photo", () => {
   it("is saved and read back for picking", async () => {
     const db = fakeDb({ brands: [BRAND], brand_products: [], brand_uploads: [] });
-    await saveCatalog(db, BRAND, "shopify_store", [tumbler]);
+    assert.deepEqual(await saveCatalog(db, BRAND, "shopify_store", [tumbler]), { photosSkipped: 0 });
     const [saved] = await loadTaggedCatalog(db, BRAND.id);
     assert.equal(saved.image, "https://cdn.shopify.com/uga.jpg");
   });
 
   it("isn't needed before 015_product_image.sql has run", async () => {
     const db = fakeDb({ brands: [BRAND], brand_products: [], brand_uploads: [] }, { through: "014" });
-    await saveCatalog(db, BRAND, "shopify_store", [tumbler]);
+    // Saved all the same, and it says how many photos it couldn't keep.
+    assert.deepEqual(await saveCatalog(db, BRAND, "shopify_store", [tumbler, { ...tumbler, handle: "no-photo", image: undefined }]), { photosSkipped: 1 });
     const [saved] = await loadTaggedCatalog(db, BRAND.id);
     assert.equal(saved.title, tumbler.title);
     assert.equal(saved.image, "");
