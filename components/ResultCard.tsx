@@ -28,7 +28,7 @@ export function ResultCard() {
     <div className="result-card">
       <div className="result-card-badge">
         <span className="result-card-badge-dot" aria-hidden />
-        Early test
+        Early test &middot; April 2026
       </div>
       <div className="result-card-meta">
         {RESULT.brand} &middot; Licensed brand &middot; MLB win triggers

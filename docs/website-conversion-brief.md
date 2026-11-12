@@ -301,7 +301,7 @@ The "Now" column quotes the page before PR 1. Its figures, and the first figures
 
 | Element | Now | New |
 |---|---|---|
-| Badge | Early test | Early test (April 2026 can be added) |
+| Badge | Early test | Early test · April 2026 |
 | Meta | Frost Buddy · MLB · Win triggers | Same |
 | Title | 7 teams. 7 win-triggered emails. | Same |
 | Headline | $5,689 in 7 minutes. | $9,135 in revenue. |
@@ -529,7 +529,7 @@ Each PR ships on its own. Every PR description must list which founder defaults 
 | # | Question | Default |
 |---|---|---|
 | F1 | Replace the Oct 23 headline? | Yes. The line moves to the eyebrow and stays in the footer. |
-| F2 | Frost Buddy: permission to name them and show these numbers on the site; Klaviyo's attribution window. **Answered Nov 12, 2026 from Frost Buddy's Klaviyo:** April 6 and 8, 2026; 30,787 recipients; $9,135.41 in Placed Order revenue; the offer was a free lid with a team Buddy for 48 hours, no code (see 7.9). | **Open: confirm with Frost Buddy before publishing.** Drop "7 minutes"; use averages; badge "Early test." |
+| F2 | Frost Buddy: permission to name them and show these numbers on the site; Klaviyo's attribution window. **Answered Nov 12, 2026 from Frost Buddy's Klaviyo:** April 6 and 8, 2026; 30,787 recipients; $9,135.41 in Placed Order revenue; the offer was a free lid with a team Buddy for 48 hours, no code (see 7.9). | **Open: confirm with Frost Buddy before publishing.** Drop "7 minutes"; use averages; badge "Early test · April 2026." |
 | F3 | Can you keep "We reply within 24 hours"? | Keep it |
 | F4 | Is there a path without Claude during early access? | No; Claude is required |
 | F5 | Which Claude plans support the connector for your users? | Don't name plans |
