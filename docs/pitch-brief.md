@@ -121,7 +121,7 @@ sample story here stops matching it.
 | "encrypts your keys", "stored API credentials" | Walkoff holds no Klaviyo or Shopify keys | "Never asks for your keys" |
 | "quiet hours", "frequency cap", "instant pause" | Not features | "Send timing" and "Smart Sending stays on" |
 | "drop in your exports", "never leaves your computer" | Shopify brands set up in Claude with no files, and postal codes reach Walkoff, cut to areas on arrival | "No exports. Never a customer list." |
-| "$5,689 in 7 minutes" | The time isn't defensible | "$5,689 in revenue" |
+| "$5,689 in 7 minutes" | The time isn't defensible, and the figure was wrong | "$9,135 in revenue" |
 
 ### Voice
 
@@ -185,7 +185,7 @@ until the marketer says so. $149 a month, 60 days free.
 > over, Claude drafts it in their Klaviyo, and they hit send.
 >
 > In an early test, Frost Buddy sent seven win emails, one per team the
-> night it won, and Klaviyo attributed $5,689 in revenue to them. Walkoff is
+> afternoon after it won, and Klaviyo attributed $9,135 in revenue to them. Walkoff is
 > $149 a month per brand, and the first 60 days are free.
 
 ---
@@ -403,23 +403,25 @@ Every brand gets all of them.
 
 The founder confirmed on October 28, 2026 that decks and sales material can
 name Frost Buddy and show its product photos. Use these facts exactly, and
-nothing beyond them.
+nothing beyond them. They were checked against Frost Buddy's Klaviyo on
+November 12, 2026 (Placed Order conversions); earlier figures ($5,689, 16K,
+6.7%, $0.36, Phillies and Giants) were wrong and must not be used.
 
 | | |
 |---|---|
 | Label | Early test |
 | Brand | Frost Buddy, a licensed brand, so its emails show the team |
-| What | MLB win triggers: 7 teams, 7 win-triggered emails, one per team, each sent the night that team won |
-| Teams | Dodgers, Yankees, Cubs, Red Sox, Braves, Phillies, Giants |
-| Product | The Universal Buddy, in each team's Gameday version, from Frost Buddy's MLB collection |
-| Offer | A free lid with the win. Nothing marked down. |
-| Revenue | $5,689, as Klaviyo attributed it |
-| Recipients | 16K, across 7 team segments |
-| Click rate | 6.7%, the average across the 7 sends |
-| Revenue per recipient | $0.36, across all 7 sends |
+| What | MLB win triggers: 7 teams, 7 win-triggered emails, one per team, each sent the afternoon after that team won (April 6 and 8, 2026) |
+| Teams | Cubs, Dodgers, Yankees, Mets, Red Sox, Braves, Cardinals |
+| Product | The Universal Buddy, in each team's Gameday version (Legacy for the Cardinals, which have no Gameday), from Frost Buddy's MLB collection |
+| Offer | A free lid with a team Buddy for 48 hours, applied at checkout, no code. Nothing marked down. |
+| Revenue | $9,135 from 140 orders, as Klaviyo attributed it |
+| Recipients | 30.8K (30,787), across 7 team segments |
+| Click rate | 4.8%, the average across the 7 sends (4.5% pooled) |
+| Revenue per recipient | $0.30, across all 7 sends |
 
 **In one line:** "Early test: Frost Buddy sent 7 win emails, one per team the
-night it won, and Klaviyo attributed $5,689 in revenue to them."
+afternoon after it won, and Klaviyo attributed $9,135 in revenue to them."
 
 **The bridge, when MLB comes up:** "MLB plans start on Opening Day 2027. The
 same win triggers run today for NFL, NBA, NHL, NCAA and Premier League
@@ -427,8 +429,8 @@ teams."
 
 **Don't:**
 
-- Say "in 7 minutes", or put the best single send's revenue per recipient
-  ($0.52) next to averages.
+- Say "in 7 minutes", "the night they won", or put the best single send's
+  revenue per recipient ($0.39, the Cubs) next to averages.
 - Call it typical, a benchmark or what a brand should expect.
 - Annualize it, multiply it or project from it.
 - Say Walkoff "generated" or "drove" the revenue. It's what Klaviyo
@@ -823,7 +825,7 @@ never as part of the brand palette.
 - **Arbeit:** Bold for headlines (often in capitals, set tight), Regular for
   body text.
 - **Amerik Slant:** the wordmark, and the second beat of a headline, in red
-  capitals. Also big stats: "$5,689 IN REVENUE.", "2.37×".
+  capitals. Also big stats: "$9,135 IN REVENUE.", "2.37×".
 - **JetBrains Mono:** eyebrows, labels, buttons and badges, in spaced
   capitals.
 
@@ -863,7 +865,7 @@ All of these are live on www.walkoff.io:
 | The sample campaign page | Screenshot www.walkoff.io/p/demo | Product | Sample |
 | The sample fan map | Screenshot www.walkoff.io/upload/demo | Day one | Sample brand |
 | The live status page | Screenshot www.walkoff.io/status | Coverage, technology | Live |
-| Frost Buddy's seven team cups | www.walkoff.io/examples/frostbuddy/dodgers.webp, and yankees, cubs, red-sox, braves, phillies, giants | Proof | "Frost Buddy is licensed, so its emails show the team." |
+| Frost Buddy's seven team cups | www.walkoff.io/examples/frostbuddy/cubs.webp, and dodgers, yankees, mets, red-sox, braves, cardinals | Proof | "Frost Buddy is licensed, so its emails show the team." |
 | Vuori's email | www.walkoff.io/examples/vuori-email.jpg | The insight | "A real Vuori email, used with permission." |
 | Klaviyo, Shopify and Claude marks | www.walkoff.io/klaviyo-new-logo.png, /shopify_logo.svg, /claude_logo.svg | A "works with" row, badged Live | Not partners |
 | Postscript and Attentive marks | www.walkoff.io/postscript_logo.svg, /attentive_logo.svg | The same row | In progress |
@@ -983,7 +985,7 @@ the placeholders you used.
 | The raise | Amount, instrument, terms, use of funds, milestones |
 | Market size | Suggested method: US Shopify stores with Klaviyo in the target categories (Store Leads, the source outreach uses) × the share whose catalogs score 0.6 or more × the average plan price × 12. Show the inputs. |
 | Competitors | Who, and how Walkoff differs. Don't name or characterize any company until then. |
-| Frost Buddy | The month of the test, the exact recipient count, Klaviyo's attribution window |
+| Frost Buddy | Klaviyo's attribution window. (Month and recipient count are known: April 2026, 30,787.) |
 | Day 60 | What happens when the free 60 days end |
 | Claude plans | Which plans support Walkoff's connector for a brand's team. Don't name plans until confirmed. |
 | Customer quotes | None on file |

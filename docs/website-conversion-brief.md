@@ -51,7 +51,7 @@
 | 8.3 | Moments: four of five category cards say Next or Soon | Is this mostly roadmap? |
 | 10.6 | MCP section with a `claude mcp add` command | Not for me. |
 | 13.0 | "You approve. Every send." | Good. I needed to hear this much earlier. |
-| 14.4 | "$5,689 in 7 minutes." An average click rate beside best-send revenue. "Free Lid Win." beside "No discount." | Seven minutes of what? This looks cherry-picked. |
+| 14.4 | "$5,689 in 7 minutes." An average click rate beside best-send revenue. "Free Lid Win." beside "No discount." | Seven minutes of what? This looks cherry-picked. (The figures were also wrong; see 7.9.) |
 | 16.6 | Pricing picker, $149 | Fair. |
 | 18.8 | Seven-field form. Success: "We'll be in touch within 24 hours." No links. | Now I wait. |
 
@@ -90,7 +90,7 @@ The sticky nav keeps "Early access" one tap away, so reaching the form isn't the
 | One coherent scenario; label illustrations as such | **Keep** | Also fix the current collisions (section 9). |
 | Say "customers in this team's territory," not "fans," for numbers | **Keep** | Mostly done already. Fix the hero sub and one console row. |
 | Put proof directly under the hero | **Keep** | As one compact line in the hero. The full card stays in `#proof`. |
-| Question "7 minutes," the free-lid offer, and average vs best send | **Keep, extend** | Replace best-send revenue with the all-sends figure (about $0.36). |
+| Question "7 minutes," the free-lid offer, and average vs best send | **Keep, extend** | Replace best-send revenue with the all-sends figure ($0.30, per Klaviyo; see 7.9). |
 | Proof title "A sports-moment campaign in practice." | **Reject** | Doesn't match the brand voice. |
 | Make the Claude and Klaviyo requirement visible | **Keep** | This also fixes FAQ 04 contradicting /onboarding. |
 | Cut the form to email, website and platform; make leagues and teams optional; allow "Not sure yet" | **Mostly done already** | Only four fields are required. Leagues and teams are optional, the placeholder says "not sure yet," platform has "Other / not sure," and values survive an error. `company` is NOT NULL in the database. Keep the form and tune it. |
@@ -173,7 +173,7 @@ The sticky nav keeps "Early access" one tap away, so reaching the form isn't the
 | Primary | Get early access → `#form` |
 | Ghost | See a sample campaign → `#example` |
 | Note | 60 days free · No credit card · We do the setup · Then from $149/mo (build it from `PRICING`) |
-| Proof line | `Early test` badge · Frost Buddy: 7 win-triggered emails, $5,689 in revenue. · See the test → `#proof` |
+| Proof line | `Early test` badge · Frost Buddy: 7 win-triggered emails, $9,135 in revenue. · See the test → `#proof` |
 
 The sub adapts the clearest sentence in the codebase, from the welcome email (`lib/welcome.ts:39`), with "fans" changed to territory language. The proof line sits in the copy column under the note, so it's on the first desktop screen and close to the first phone screen. Style it with `.result-card-badge`.
 
@@ -297,19 +297,35 @@ Keep these anchors: `#how`, `#moments`, `#mcp`, `#pricing`, `#form`, `#faq`. Hel
 
 ### 7.9 `#proof`: keep "Results you can *defend.*" Rewrite `components/ResultCard.tsx`.
 
-| Element | Now | New (defaults until [F2] confirms) |
+The "Now" column quotes the page before PR 1. Its figures, and the first figures PR 1 shipped ($5,689, 16K recipients, 6.7%, $0.36, with Phillies and Giants among the teams), didn't match Frost Buddy's Klaviyo and were corrected on November 12, 2026. The "New" column is checked against Klaviyo.
+
+| Element | Now | New |
 |---|---|---|
-| Badge | Early test | Early test · {Month} 2026 |
+| Badge | Early test | Early test (April 2026 can be added) |
 | Meta | Frost Buddy · MLB · Win triggers | Same |
 | Title | 7 teams. 7 win-triggered emails. | Same |
-| Headline | $5,689 in 7 minutes. | $5,689 in revenue. |
-| Tile 1 | 16K · Recipients · 7 team segments | Same |
-| Tile 2 | 6.7% · Click rate · Avg across 7 sends | Same |
-| Tile 3 | $0.52 · Rev / recipient · Best single send | $0.36 · Rev / recipient · Across all 7 sends |
-| Footer | "Free Lid Win." No discount. Just the right email at the right moment. | The offer: "Free Lid Win." Revenue as Frost Buddy's Klaviyo attributed it. |
+| Headline | $5,689 in 7 minutes. | $9,135 in revenue. |
+| Teams | Dodgers, Yankees, Cubs, Red Sox, Braves, Phillies, Giants | Cubs, Dodgers, Yankees, Mets, Red Sox, Braves, Cardinals. "One email per team, the afternoon after the win." |
+| Tile 1 | 16K · Recipients · 7 team segments | 30.8K · Recipients · 7 team segments |
+| Tile 2 | 6.7% · Click rate · Avg across 7 sends | 4.8% · Click rate · Avg across 7 sends |
+| Tile 3 | $0.52 · Rev / recipient · Best single send | $0.30 · Rev / recipient · Across all 7 sends |
+| Footer | "Free Lid Win." No discount. Just the right email at the right moment. | The offer: a free lid with a team Buddy for 48 hours, no code needed. Nothing marked down. Revenue as Klaviyo attributed it. |
 | Bridge (new) | | MLB is back on Opening Day 2027. The same win triggers run today for the NFL, NBA, NHL, college and the Premier League. |
 
-$0.36 is $5,689 ÷ 16,000. If the true recipient count is anywhere from 15,500 to 16,500, the figure is $0.34 to $0.37, so use the exact count once you have it. Keep "in 7 minutes" only if [F2] explains it in a footnote.
+**The source.** Frost Buddy's Klaviyo campaign report (Placed Order conversions), checked November 12, 2026, for the seven "MLB | Free Lid Win | {team}" campaigns sent April 6 and April 8, 2026. Each went out the afternoon after the team's win, not the night of it (the Cubs email says "we took one win in our doubleheader yesterday"). The offer applied automatically at checkout.
+
+| Team | Recipients | Click rate | Orders | Revenue | Rev / recipient |
+|---|---|---|---|---|---|
+| Cubs | 4,906 | 4.09% | 25 | $1,889.82 | $0.386 |
+| Dodgers | 7,225 | 3.14% | 32 | $2,068.78 | $0.287 |
+| Yankees | 7,758 | 5.05% | 29 | $1,989.92 | $0.257 |
+| Mets | 2,183 | 5.52% | 15 | $746.60 | $0.343 |
+| Red Sox | 2,785 | 5.01% | 16 | $979.01 | $0.353 |
+| Braves | 3,386 | 4.88% | 11 | $683.29 | $0.202 |
+| Cardinals | 2,544 | 5.67% | 12 | $777.99 | $0.306 |
+| **Total** | **30,787** | **4.8% avg (4.5% pooled)** | **140** | **$9,135.41** | **$0.30** |
+
+$0.30 is $9,135.41 ÷ 30,787. The click rate on the card is the average of the seven sends' rates; pooled across all recipients it's 4.5%. Don't use "in 7 minutes."
 
 ### 7.10 `#pricing`
 - `components/PricingPicker.tsx:12`: "Done-for-you setup, triggers and approvals" → "Setup done for you during early access." Approvals belong to the marketer.
@@ -513,7 +529,7 @@ Each PR ships on its own. Every PR description must list which founder defaults 
 | # | Question | Default |
 |---|---|---|
 | F1 | Replace the Oct 23 headline? | Yes. The line moves to the eyebrow and stays in the footer. |
-| F2 | Frost Buddy: which month; what "7 minutes" measures; the exact recipient count; where the revenue figure comes from and its attribution window; what the offer was; permission to name them | Drop "7 minutes"; use averages; badge "Early test"; name the offer only as "Free Lid Win." |
+| F2 | Frost Buddy: permission to name them and show these numbers on the site; Klaviyo's attribution window. **Answered Nov 12, 2026 from Frost Buddy's Klaviyo:** April 6 and 8, 2026; 30,787 recipients; $9,135.41 in Placed Order revenue; the offer was a free lid with a team Buddy for 48 hours, no code (see 7.9). | **Open: confirm with Frost Buddy before publishing.** Drop "7 minutes"; use averages; badge "Early test." |
 | F3 | Can you keep "We reply within 24 hours"? | Keep it |
 | F4 | Is there a path without Claude during early access? | No; Claude is required |
 | F5 | Which Claude plans support the connector for your users? | Don't name plans |
