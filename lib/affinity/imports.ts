@@ -231,6 +231,9 @@ export interface CatalogItem {
   price: number | null;
   /** The colors it comes in, from the variants' color option. */
   colorways: Colorway[];
+  /** The product's first photo, for products with no colorways (a store
+   *  that puts the design in the title, not a Color option). */
+  image?: string;
 }
 
 export const MAX_COLORWAYS = 40;
@@ -316,6 +319,8 @@ export function parseCatalog(format: ImportFormat, rows: Row[]): CatalogItem[] {
       }
     }
     for (const cw of item.colorways) cw.image ||= firstImage.get(item.handle) ?? "";
+    const photo = firstImage.get(item.handle);
+    if (photo) item.image = photo;
   }
   return [...items.values()].filter((i) => i.title);
 }

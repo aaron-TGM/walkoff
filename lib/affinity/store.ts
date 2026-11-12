@@ -5,6 +5,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { computeAffinity, type AffinityReport, type AreaCount, type ProductCount, type TaggedProduct } from "./compute";
 import type { Country } from "./geo";
 import type { CatalogItem, CustomerImport, DataSource } from "./imports";
+import { isMissingSchema } from "../supabase";
 import { hexForColorName } from "./colors";
 import { tagProduct, type ProductTags } from "./tagging";
 
@@ -14,6 +15,14 @@ export interface Brand {
 }
 
 const PAGE = 1000;
+
+/** A row without its product photo, for a database that hasn't run
+ *  supabase/015_product_image.sql yet. */
+function withoutImage(row: Record<string, unknown>): Record<string, unknown> {
+  const { image, ...rest } = row;
+  void image;
+  return rest;
+}
 
 /** Supabase returns at most 1,000 rows per request; read them all. */
 async function selectAll<T>(fetchPage: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: unknown }>): Promise<T[]> {
@@ -144,6 +153,7 @@ export async function saveCatalog(
       description: item.description || null,
       price: item.price,
       colorways: item.colorways,
+      image: item.image || null,
       updated_at: now,
     };
     if (byClaude.get(item.handle) === taggedText(base)) kept.push(base);
@@ -154,7 +164,9 @@ export async function saveCatalog(
   // nulled.
   for (const rows of [kept, ruled]) {
     for (let i = 0; i < rows.length; i += PAGE) {
-      const { error } = await db.from("brand_products").upsert(rows.slice(i, i + PAGE), { onConflict: "brand_id,handle" });
+      const chunk = rows.slice(i, i + PAGE);
+      let { error } = await db.from("brand_products").upsert(chunk, { onConflict: "brand_id,handle" });
+      if (isMissingSchema(error)) ({ error } = await db.from("brand_products").upsert(chunk.map(withoutImage), { onConflict: "brand_id,handle" }));
       if (error) throw error;
     }
   }
@@ -287,19 +299,23 @@ async function loadProductCounts(db: SupabaseClient, brandId: string): Promise<P
 /** The catalog with team tags, prices and colorway colors, for picking
  *  what to feature. */
 export async function loadTaggedCatalog(db: SupabaseClient, brandId: string): Promise<TaggedProduct[]> {
+  type Row = {
+    handle: string;
+    title: string;
+    teams: { league: string; teamId: string }[] | null;
+    colors: string[] | null;
+    uses: string[] | null;
+    interests: string[] | null;
+    colorways: CatalogItem["colorways"] | null;
+    price: number | string | null;
+    image?: string | null;
+  };
+  const columns = "handle, title, teams, colors, uses, interests, colorways, price";
+  const rows = (cols: string) =>
+    selectAll<Row>((from, to) => db.from("brand_products").select(cols).eq("brand_id", brandId).range(from, to) as unknown as PromiseLike<{ data: Row[] | null; error: unknown }>);
   const [catalog, colorNames] = await Promise.all([
-    selectAll<{
-      handle: string;
-      title: string;
-      teams: { league: string; teamId: string }[] | null;
-      colors: string[] | null;
-      uses: string[] | null;
-      interests: string[] | null;
-      colorways: CatalogItem["colorways"] | null;
-      price: number | string | null;
-    }>((from, to) =>
-      db.from("brand_products").select("handle, title, teams, colors, uses, interests, colorways, price").eq("brand_id", brandId).range(from, to),
-    ),
+    // Before 015_product_image.sql has run, there's no photo column.
+    rows(`${columns}, image`).catch((e: { code?: string }) => (isMissingSchema(e) ? rows(columns) : Promise.reject(e))),
     loadColorNames(db, brandId),
   ]);
   return catalog.map((p) => ({
@@ -310,6 +326,7 @@ export async function loadTaggedCatalog(db: SupabaseClient, brandId: string): Pr
     uses: p.uses ?? [],
     interests: p.interests ?? [],
     price: p.price === null || p.price === undefined ? null : Number(p.price),
+    image: p.image ?? "",
     colorways: (p.colorways ?? []).map((c) => ({
       ...c,
       hex: colorNames.get(c.name.toLowerCase())?.hex ?? hexForColorName(c.name),

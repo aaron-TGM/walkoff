@@ -27,6 +27,18 @@ describe("pickForTeam", () => {
     assert.deepEqual(picks[0].skus, ["SKU-Azure Heather"]);
   });
 
+  it("shows the product's own photo when it has no colorways", () => {
+    // Frost Buddy: the team and design are in the title, with no Color option.
+    const products: PickProduct[] = [
+      { title: "Universal Buddy | Los Angeles Chargers | Gameday", teams: [{ league: "nfl", teamId: "24" }], image: "https://cdn.example.com/bolt.jpg" },
+      { title: "Sunday Hoodie", teams: [], colorways: [{ ...cw("Sunflower"), image: "" }], image: "https://cdn.example.com/hoodie.jpg" },
+    ];
+    const picks = pickForTeam(products, "nfl", CHARGERS);
+    assert.equal(picks[0].why, "Made for their fans");
+    assert.equal(picks[0].image, "https://cdn.example.com/bolt.jpg");
+    assert.equal(picks.find((p) => p.title === "Sunday Hoodie")?.image, "https://cdn.example.com/hoodie.jpg");
+  });
+
   it("the Rams get royal, not the Chargers' azure", () => {
     const picks = titles(pickForTeam(catalog, "nfl", RAMS));
     assert.ok(picks.includes("Performance Tee · Royal"));

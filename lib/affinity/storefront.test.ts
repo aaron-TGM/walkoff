@@ -57,7 +57,8 @@ describe("productsJsonToRows", () => {
         { id: 3, handle: "untitled" },
       ]),
     );
-    assert.deepEqual(mug, { handle: "mug-twilight", title: "Mug Buddy 16oz | Twilight", productType: "Thicc Buddy", category: "", tags: ["Drinkware", "Licensing"], description: "", price: 34, colorways: [] });
+    assert.deepEqual(mug, { handle: "mug-twilight", title: "Mug Buddy 16oz | Twilight", productType: "Thicc Buddy", category: "", tags: ["Drinkware", "Licensing"], description: "", price: 34, colorways: [], image: "https://cdn.shopify.com/mug.jpg" });
+    assert.equal(bare.image, undefined, "no photo, no image");
     assert.equal(bare.handle, "2");
     assert.equal(bare.title, "No Variants Tee");
   });

@@ -120,6 +120,7 @@ export function parseCatalogItems(raw: unknown): CatalogItem[] {
     const r = raw as Record<string, unknown>;
     const title = text(r.title, 200) || fail("Every product needs a title");
     const price = r.price === null || r.price === undefined ? null : count(r.price, 1e9);
+    const image = imageUrl(r.image);
     return {
       handle: text(r.handle, 200) || title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
       title,
@@ -129,6 +130,7 @@ export function parseCatalogItems(raw: unknown): CatalogItem[] {
       description: text(r.description, 500),
       price,
       colorways: colorways(r.colorways),
+      ...(image ? { image } : {}),
     };
   });
 }
