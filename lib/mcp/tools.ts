@@ -346,7 +346,7 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           if (err instanceof UploadError) throw new ToolError(err.message);
           throw err;
         }
-        await saveCatalog(db, b, "shopify_store", items);
+        const saved = await saveCatalog(db, b, "shopify_store", items);
         const [stats, report] = await Promise.all([catalogStats(db, b.id), recomputeReport(db, b)]);
         return {
           brand: b.name,
@@ -356,6 +356,11 @@ export function registerTools(server: McpServer, ctx: ToolContext): void {
           complete: feed.complete,
           ...(feed.note ? { note: feed.note } : {}),
           examples: items.slice(0, 3).map((i) => i.title),
+          ...(saved.photosSkipped
+            ? {
+                warning: `${saved.photosSkipped} product photos weren't saved, so campaigns will show these products without photos. Walkoff's database needs an update first: ask your Walkoff contact, then run import_catalog again.`,
+              }
+            : {}),
           catalog: stats,
           map_refreshed: !!report,
           next: report

@@ -16,6 +16,10 @@ export interface Brand {
 
 const PAGE = 1000;
 
+/** What's wrong when product photos can't be stored or read, and the fix. */
+export const MISSING_PHOTO_COLUMN =
+  "The database has no brand_products.image column: run supabase/015_product_image.sql, then notify pgrst, 'reload schema'.";
+
 /** A row without its product photo, for a database that hasn't run
  *  supabase/015_product_image.sql yet. */
 function withoutImage(row: Record<string, unknown>): Record<string, unknown> {
@@ -114,6 +118,13 @@ function tagColumns(tags: ProductTags) {
 const taggedText = (p: { title: string; product_type: string | null; category: string | null; tags: string[] | null; description: string | null }) =>
   JSON.stringify([p.title, p.product_type, p.category, p.tags ?? [], p.description]);
 
+export interface SavedCatalog {
+  /** Products whose photo wasn't saved because the database has no
+   *  brand_products.image column yet (supabase/015_product_image.sql).
+   *  Campaigns then show them without a photo. */
+  photosSkipped: number;
+}
+
 /** Saves the catalog with rule-based tags. Products Claude already tagged
  *  keep Claude's tags, unless their text changed: those go back to the
  *  rules until Claude's next pass (engine/tagger.ts). */
@@ -122,7 +133,7 @@ export async function saveCatalog(
   brand: Brand,
   format: DataSource,
   items: CatalogItem[],
-): Promise<void> {
+): Promise<SavedCatalog> {
   const existing = await selectAll<{
     handle: string;
     tagged_by: string;
@@ -162,14 +173,19 @@ export async function saveCatalog(
   // Separate writes: PostgREST gives every row in one write the same
   // columns, so a kept row next to rows with tags would have its tags
   // nulled.
+  let photosSkipped = 0;
   for (const rows of [kept, ruled]) {
     for (let i = 0; i < rows.length; i += PAGE) {
       const chunk = rows.slice(i, i + PAGE);
       let { error } = await db.from("brand_products").upsert(chunk, { onConflict: "brand_id,handle" });
-      if (isMissingSchema(error)) ({ error } = await db.from("brand_products").upsert(chunk.map(withoutImage), { onConflict: "brand_id,handle" }));
+      if (isMissingSchema(error)) {
+        ({ error } = await db.from("brand_products").upsert(chunk.map(withoutImage), { onConflict: "brand_id,handle" }));
+        photosSkipped += chunk.filter((r) => r.image).length;
+      }
       if (error) throw error;
     }
   }
+  if (photosSkipped) console.warn(`[walkoff] ${brand.name}: ${MISSING_PHOTO_COLUMN} ${photosSkipped} product photos weren't saved.`);
   const { error } = await db.from("brand_uploads").insert({
     brand_id: brand.id,
     format,
@@ -183,6 +199,7 @@ export async function saveCatalog(
     items.flatMap((i) => i.colorways.map((c) => ({ name: c.name, hex: hexForColorName(c.name) }))),
     "rules",
   );
+  return { photosSkipped };
 }
 
 /** What each of the brand's color names looks like, by lowercased name. */
@@ -315,7 +332,11 @@ export async function loadTaggedCatalog(db: SupabaseClient, brandId: string): Pr
     selectAll<Row>((from, to) => db.from("brand_products").select(cols).eq("brand_id", brandId).range(from, to) as unknown as PromiseLike<{ data: Row[] | null; error: unknown }>);
   const [catalog, colorNames] = await Promise.all([
     // Before 015_product_image.sql has run, there's no photo column.
-    rows(`${columns}, image`).catch((e: { code?: string }) => (isMissingSchema(e) ? rows(columns) : Promise.reject(e))),
+    rows(`${columns}, image`).catch((e: { code?: string }) => {
+      if (!isMissingSchema(e)) return Promise.reject(e);
+      console.warn(`[walkoff] Reading products without their photos. ${MISSING_PHOTO_COLUMN}`);
+      return rows(columns);
+    }),
     loadColorNames(db, brandId),
   ]);
   return catalog.map((p) => ({

@@ -189,7 +189,11 @@ in Walkoff's instructions (`lib/mcp/server.ts`):
    into the rows a Shopify product export has. So `parseCatalog` reads it
    exactly as it reads an upload: colors from the Color option, SKUs,
    photos, descriptions. It saves with `saveCatalog` as `shopify_store`,
-   and the engine's Claude pass tags the new products.
+   and the engine's Claude pass tags the new products. Each product's own
+   photo goes in `brand_products.image` (`supabase/015_product_image.sql`).
+   Without that column the products still save, without photos, and the
+   result carries a `warning` saying how many photos were skipped (the
+   server log names the migration to run).
 2. **Two ShopifyQL queries** with the Shopify connector's
    `run-analytics-query`, which only reads. Both are in `SHOPIFYQL`
    (`lib/affinity/shopify-counts.ts`), the one source for the instructions,
