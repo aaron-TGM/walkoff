@@ -49,9 +49,9 @@ const AUDIENCES = [
 
 const STEPS = [
   {
-    title: "Connect your store in Claude",
+    title: "Connect Walkoff and Klaviyo in Claude",
     who: "You",
-    body: "Connect Walkoff, Shopify and Klaviyo in Claude. Walkoff reads your products, and customer counts by area from Shopify's analytics. No exports. Never a customer list.",
+    body: "Add Walkoff to Claude next to your Klaviyo. Walkoff reads your products from your store, and your fan map comes from your Klaviyo list as counts by area. Walkoff never sees a customer list.",
     visual: (
       <>
         <span className="c">{"// what reaches Walkoff"}</span>
@@ -208,7 +208,7 @@ export function MarketingPage() {
               </div>
               <div className="hero-note">
                 {PRICING.trialDays} days free &middot; No credit card &middot;{" "}
-                <span className="inline-block">In Claude, with Shopify and Klaviyo</span>
+                <span className="inline-block">In Claude, with Klaviyo</span>
               </div>
               <p className="hero-proof">
                 <span className="hero-proof-badge">Early test</span>
@@ -344,8 +344,8 @@ export function MarketingPage() {
           </h2>
           <p className="section-lead">
             During early access we set up your brand and invite your team.
-            Everything else happens in Claude, with your Shopify and Klaviyo
-            connectors.{" "}
+            Everything else happens in Claude, with your Klaviyo
+            connector.{" "}
             <Link href={helpPath("onboarding")} className="section-lead-link">
               See every step
             </Link>
@@ -439,8 +439,9 @@ export function MarketingPage() {
             <em>something new about your customers.</em>
           </h2>
           <p className="section-lead section-lead-dark">
-            Connect your Shopify store in Claude and Walkoff shows which team
-            territories hold more of your customers than population predicts,
+            Add a Klaviyo export to your private upload page and Walkoff shows
+            which team territories hold more of your customers than population
+            predicts,
             then matches your products to each team, down to the colorway. Each
             standout is a segment you can email the next time that team wins.
           </p>
@@ -588,8 +589,8 @@ export function MarketingPage() {
                 Ask what to send. <em>Get the campaign.</em>
               </h2>
               <p className="section-lead section-lead-dark">
-                Walkoff runs inside Claude, next to the Shopify and Klaviyo
-                connectors your team already uses. Ask in plain words. Walkoff
+                Walkoff runs inside Claude, next to the Klaviyo connector your
+                team already uses. Ask in plain words. Walkoff
                 finds the moment and builds the campaign, your Klaviyo
                 connector drafts it, and you hit send.
               </p>
@@ -757,9 +758,10 @@ export function MarketingPage() {
                 Founding brands <em>go first.</em>
               </h2>
               <p className="form-left-body">
-                We set up your brand and invite your team. Connect Shopify in
-                Claude and your fan map is ready in minutes. Then we set up
-                your first triggers with you.
+                We set up your brand and invite your team. Connect Klaviyo in
+                Claude and your first campaign is one question away. Add a
+                Klaviyo export and your fan map is ready in minutes. Then we
+                set up your first triggers with you.
               </p>
               <ul className="form-perks">
                 <li>
@@ -821,20 +823,20 @@ export function MarketingPage() {
             rules stay exactly as they are.
           </FaqItem>
           <FaqItem num="04" question="What do I need to use it?">
-            Claude with your Shopify and Klaviyo connectors. During early
+            Claude with Walkoff and your Klaviyo connector. During early
             access we set up your brand and invite your team. Ask Claude to set
-            Walkoff up from your store, and your fan map is ready in minutes.
-            Then ask what to send, review the campaign, and Claude drafts it
-            in your Klaviyo account.{" "}
+            Walkoff up, and it reads your products from your store. Then ask
+            what to send, review the campaign, and Claude drafts it in your
+            Klaviyo account. Connecting Shopify in Claude is optional.{" "}
             <Link href={helpPath("onboarding", "what-you-need")}>What you need</Link>
           </FaqItem>
           <FaqItem num="05" question="Do I have to upload anything?">
-            No. On Shopify, Claude sets your brand up with the Shopify
-            connector: Walkoff reads your products from your store, and
-            Claude reads customer counts by postal code from Shopify&apos;s
-            analytics. Walkoff keeps only the area and the count. No names,
-            no emails, no street addresses. Not on Shopify? A private upload
-            page reads your exports in your browser and sends only counts.
+            Only for your fan map, and it&apos;s optional. Export the Klaviyo
+            list you send campaigns to and add it to your private upload page:
+            it reads the file in your browser and sends Walkoff only counts by
+            postal area. No names, no emails, no street addresses. Shopify
+            connected in Claude? Claude can read those counts from
+            Shopify&apos;s analytics instead.
           </FaqItem>
           <FaqItem num="06" question="Will it look like our brand?">
             It features your products, with their photos, prices and links,
@@ -884,8 +886,8 @@ export function MarketingPage() {
           </FaqItem>
           <FaqItem num="12" question="Is my data safe?">
             Walkoff never sees a customer list. It keeps counts by postal
-            area, from Shopify&apos;s analytics through Claude or from your
-            exports in your browser, so there are no names, emails or
+            area, from a Klaviyo export read in your browser or from
+            Shopify&apos;s analytics through Claude, so there are no names, emails or
             addresses to leak. Walkoff never asks for your Klaviyo or Shopify
             keys: your own connectors in Claude do the work. Each
             brand&apos;s data is walled off from every other brand&apos;s.{" "}

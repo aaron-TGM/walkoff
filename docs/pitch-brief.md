@@ -120,7 +120,7 @@ sample story here stops matching it.
 | "tracked to the order", "matched to your orders" | The brand's own Klaviyo UTMs and attribution do the tracking | "Shows up in the tracking you already use" |
 | "encrypts your keys", "stored API credentials" | Walkoff holds no Klaviyo or Shopify keys | "Never asks for your keys" |
 | "quiet hours", "frequency cap", "instant pause" | Not features | "Send timing" and "Smart Sending stays on" |
-| "drop in your exports", "never leaves your computer" | Shopify brands set up in Claude with no files, and postal codes reach Walkoff, cut to areas on arrival | "No exports. Never a customer list." |
+| "drop in your exports", "never leaves your computer" | Setup needs no files. The optional fan map comes from a Klaviyo export read in the browser (or Shopify's analytics through Claude), and only counts by area reach Walkoff | "Walkoff never sees a customer list." |
 | "$5,689 in 7 minutes" | The time isn't defensible, and the figure was wrong | "$9,135 in revenue" |
 
 ### Voice
@@ -294,18 +294,19 @@ During early access, Walkoff sets up the brand and invites its team. Then:
 
 | # | Step | Who | What happens |
 |---|---|---|---|
-| 1 | Connect your store in Claude | You | Connect Walkoff, Shopify and Klaviyo in Claude. Walkoff reads your products, and customer counts by area from Shopify's analytics. No exports. Never a customer list. |
-| 2 | Get your fan map | Walkoff | Walkoff finds the team territories that hold more of your customers than population predicts, then matches your products and colorways to each team. Ready in minutes. |
+| 1 | Connect Walkoff and Klaviyo in Claude | You | Add Walkoff to Claude next to your Klaviyo. Walkoff reads your products from your store, and your fan map comes from your Klaviyo list as counts by area. Walkoff never sees a customer list. |
+| 2 | Get your fan map | Walkoff | From a Klaviyo export on the brand's private upload page (optional; campaigns don't wait for it), Walkoff finds the team territories that hold more of your customers than population predicts, then matches your products and colorways to each team. Ready in minutes. |
 | 3 | Moments land in your queue | Walkoff, 24/7 | When a team on your map wins big, the moment is in your queue in Claude about a minute after the final whistle. |
 | 4 | You approve, Klaviyo sends | You | Claude drafts the campaign in your Klaviyo account, with the audience and the send time. You look it over and hit send. |
 
-**What the marketer needs:** an invite, and Claude with the Shopify and
-Klaviyo connectors. Stores not on Shopify use a private upload page instead.
+**What the marketer needs:** an invite, and Claude with Walkoff and the
+Klaviyo connector. The fan map takes a Klaviyo export on a private upload
+page. Connecting Shopify in Claude is optional.
 
 **The work, in the marketer's own words.** Each of these works in Claude
 today:
 
-- "Set up Walkoff from our Shopify store."
+- "Set up Walkoff for our brand."
 - "Where are our fans?"
 - "What should we send this week?"
 - "Build a campaign for the top moment in our queue."
@@ -556,12 +557,13 @@ company.
 
 **Data**
 
-- **Counts, not customer lists.** From Shopify, Claude reads customer counts
-  by postal code. Walkoff cuts each postal code to its area as it arrives,
-  keeps only the area and the count, and refuses rows that hold names or
-  emails. No names, emails or street addresses reach Walkoff, so there's no
-  customer list to leak. Without Shopify, the upload page turns exports into
-  counts in the browser before anything is sent.
+- **Counts, not customer lists.** The upload page turns a Klaviyo (or
+  Shopify) export into counts by postal area in the browser before anything
+  is sent. With Shopify connected in Claude, Claude can read the counts from
+  Shopify's analytics instead: Walkoff cuts each postal code to its area as
+  it arrives, keeps only the area and the count, and refuses rows that hold
+  names or emails. No names, emails or street addresses reach Walkoff, so
+  there's no customer list to leak.
 - **No keys.** Walkoff never asks for Klaviyo or Shopify keys. The brand's
   own connectors in Claude do the work, on its own permissions.
 - **Walled off.** Each brand's data is separate from every other brand's,
@@ -662,7 +664,7 @@ Appendix slides: how it works (6), data and privacy (12), the copy rules
 | 1 | Their team wins. / Your campaign's ready. | The site's paragraph, beside Vuori's email as the site shows it |
 | 2 | If your customers have a team, / you have a trigger. | Who it's for: the card that fits them |
 | 3 | Here's / your email. | Their pitch page if one exists, otherwise the sample campaign, labeled "Sample: nothing was sent" |
-| 4 | Day one, you learn / something new about your customers. | The sample fan map, labeled. "Yours is ready in minutes once you connect Shopify in Claude." |
+| 4 | Day one, you learn / something new about your customers. | The sample fan map, labeled. "Yours is ready in minutes from a Klaviyo export." |
 | 5 | Set it up in Claude. / Then ask what to send. | The four steps, who does each, and what they need |
 | 6 | You approve. / Every send. | The six controls |
 | 7 | The moments / worth an email. | The moments that fit their leagues; about a minute after the final whistle; after 9 PM waits for 8 AM |
@@ -769,8 +771,7 @@ Early access, 60 days free: www.walkoff.io
 | Watch the engine live | www.walkoff.io/status |
 | Ask a question | hello@walkoff.io |
 
-**Offer line:** 60 days free · No credit card · In Claude, with Shopify and
-Klaviyo.
+**Offer line:** 60 days free · No credit card · In Claude, with Klaviyo.
 
 **Objections, and the site's answers:**
 
@@ -778,8 +779,8 @@ Klaviyo.
 |---|---|
 | Do we need a sports license? | No. Without one, campaigns never name a team, league, player, stadium or event. They nod with the colors, and the city for pro teams, through your own products. Licensed brands can name their teams, within the license. |
 | Does Walkoff email our customers? | No. Klaviyo does, from your account, when you say so. Walkoff builds the campaign, Claude drafts it with your Klaviyo connector, and you send it. Your deliverability, unsubscribes and suppressions stay as they are. |
-| What do we need? | Claude with your Shopify and Klaviyo connectors. During early access we set up your brand and invite your team. |
-| Do we have to upload anything? | No. On Shopify, Claude sets your brand up with the Shopify connector, and Walkoff keeps only areas and counts. Not on Shopify? A private upload page reads your exports in your browser and sends only counts. |
+| What do we need? | Claude with Walkoff and your Klaviyo connector. During early access we set up your brand and invite your team. Connecting Shopify in Claude is optional. |
+| Do we have to upload anything? | Only for your fan map, and it's optional. Export the Klaviyo list you send to and add it to your private upload page: it reads the file in your browser and sends only counts by area. Shopify connected in Claude? Claude can read those counts from Shopify's analytics instead. |
 | Will it look like our brand? | It features your products, with their photos, prices and links, your brand's name at the top and a stripe in the team's colors. It's drafted in your Klaviyo, so you can edit it like any campaign, or ask Claude for another subject line, product or offer. |
 | How often will we email? | As often as you choose. By default, the big moments for your standout teams. An ordinary win in a sport that plays most days doesn't make the cut. Skip anything, and Smart Sending stays on. |
 | How fast? | About a minute after the final whistle. Nothing sends until you say so. |
@@ -940,9 +941,9 @@ brand's standout teams, and leaves out ordinary wins in sports that play most
 days. Each send goes to one territory or one town, never the whole list, and
 Klaviyo's Smart Sending stays on. Brands skip anything.
 
-**Why Claude? What if a brand doesn't use it?** Claude is where the Shopify
-and Klaviyo connectors are, so setup needs no files and drafting runs on the
-brand's own Klaviyo permissions, with no keys for Walkoff to hold. Claude is
+**Why Claude? What if a brand doesn't use it?** Claude is where the Klaviyo
+connector is, so drafting runs on the brand's own Klaviyo permissions, with
+no keys for Walkoff to hold. Claude is
 required during early access. Walkoff is built on MCP, the open standard
 Claude's connectors use, and it's documented for Claude and Claude Code.
 `[FOUNDER: plans for other assistants]`
