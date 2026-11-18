@@ -305,14 +305,14 @@ The "Now" column quotes the page before PR 1. Its figures, and the first figures
 | Meta | Frost Buddy · MLB · Win triggers | Same |
 | Title | 7 teams. 7 win-triggered emails. | Same |
 | Headline | $5,689 in 7 minutes. | $9,135 in revenue. |
-| Teams | Dodgers, Yankees, Cubs, Red Sox, Braves, Phillies, Giants | Cubs, Dodgers, Yankees, Mets, Red Sox, Braves, Cardinals. "One email per team, the afternoon after the win." |
+| Teams | Dodgers, Yankees, Cubs, Red Sox, Braves, Phillies, Giants | Cubs, Dodgers, Yankees, Mets, Red Sox, Braves, Cardinals. "One email per team, seven minutes after the win." |
 | Tile 1 | 16K · Recipients · 7 team segments | 30.8K · Recipients · 7 team segments |
 | Tile 2 | 6.7% · Click rate · Avg across 7 sends | 4.8% · Click rate · Avg across 7 sends |
 | Tile 3 | $0.52 · Rev / recipient · Best single send | $0.30 · Rev / recipient · Across all 7 sends |
 | Footer | "Free Lid Win." No discount. Just the right email at the right moment. | The offer: a free lid with a team Buddy for 48 hours, no code needed. Nothing marked down. Revenue as Klaviyo attributed it. |
 | Bridge (new) | | MLB is back on Opening Day 2027. The same win triggers run today for the NFL, NBA, NHL, college and the Premier League. |
 
-**The source.** Frost Buddy's Klaviyo campaign report (Placed Order conversions), checked November 12, 2026, for the seven "MLB | Free Lid Win | {team}" campaigns sent April 6 and April 8, 2026. Each went out the afternoon after the team's win, not the night of it (the Cubs email says "we took one win in our doubleheader yesterday"). The offer applied automatically at checkout.
+**The source.** Frost Buddy's Klaviyo campaign report (Placed Order conversions), checked November 12, 2026, for the seven "MLB | Free Lid Win | {team}" campaigns sent April 6 and April 8, 2026. Each went out seven minutes after the team's win (confirmed by the founder, November 18, 2026). The offer applied automatically at checkout.
 
 | Team | Recipients | Click rate | Orders | Revenue | Rev / recipient |
 |---|---|---|---|---|---|
@@ -325,7 +325,7 @@ The "Now" column quotes the page before PR 1. Its figures, and the first figures
 | Cardinals | 2,544 | 5.67% | 12 | $777.99 | $0.306 |
 | **Total** | **30,787** | **4.8% avg (4.5% pooled)** | **140** | **$9,135.41** | **$0.30** |
 
-$0.30 is $9,135.41 ÷ 30,787. The click rate on the card is the average of the seven sends' rates; pooled across all recipients it's 4.5%. Don't use "in 7 minutes."
+$0.30 is $9,135.41 ÷ 30,787. The click rate on the card is the average of the seven sends' rates; pooled across all recipients it's 4.5%. Seven minutes is when each email went out after the win: say "seven minutes after the win." Don't tie it to revenue ("$9,135 in 7 minutes"): the revenue came in over the 48-hour offer, not in seven minutes.
 
 ### 7.10 `#pricing`
 - `components/PricingPicker.tsx:12`: "Done-for-you setup, triggers and approvals" → "Setup done for you during early access." Approvals belong to the marketer.
@@ -395,7 +395,7 @@ Write the answers in the site's voice and build every number from constants. The
 | `AgentConsole.tsx:10` | "Arsenal fans, UK" | It's a territory, not proven fandom | "Arsenal territory, UK" |
 | `Ticker.tsx:5` | "2,310 … Eagles territory" | Same figure as the Chargers | Use a new number |
 | `MarketingPage.tsx:309, 312` | "Ready 2 minutes later"; "Powder blue kind of Sunday." | Doesn't match the queue timing or the real subject line | Removed along with the moment card |
-| `ResultCard.tsx` | "in 7 minutes"; best send beside averages; "No discount. Just the right email at the right moment." | Not defensible | 7.9 |
+| `ResultCard.tsx` | "in 7 minutes" as a revenue time (the seven minutes is send time; see 7.9); best send beside averages; "No discount. Just the right email at the right moment." | Not defensible | 7.9 |
 | `lib/triggers.ts` | "converts well," "Highest… engagement" | Performance claims with no data behind them | 7.7 |
 | `lib/leagues.ts:25` vs `/status` | MLB "Opening Day 2027" vs "7 leagues monitored live" | Reads as a contradiction | P2: change the note to "Plans from Opening Day 2027" |
 | Terminology | "affinity map" (homepage, pricing) vs "fan map" (help, onboarding) | Two names for one thing | **[F9]** Default: "fan map" in public copy; tool names unchanged |
@@ -529,7 +529,7 @@ Each PR ships on its own. Every PR description must list which founder defaults 
 | # | Question | Default |
 |---|---|---|
 | F1 | Replace the Oct 23 headline? | Yes. The line moves to the eyebrow and stays in the footer. |
-| F2 | Frost Buddy: permission to name them and show these numbers on the site; Klaviyo's attribution window. **Answered Nov 12, 2026 from Frost Buddy's Klaviyo:** April 6 and 8, 2026; 30,787 recipients; $9,135.41 in Placed Order revenue; the offer was a free lid with a team Buddy for 48 hours, no code (see 7.9). | **Open: confirm with Frost Buddy before publishing.** Drop "7 minutes"; use averages; badge "Early test · April 2026." |
+| F2 | Frost Buddy: permission to name them and show these numbers on the site; Klaviyo's attribution window. **Answered Nov 12, 2026 from Frost Buddy's Klaviyo:** April 6 and 8, 2026; 30,787 recipients; $9,135.41 in Placed Order revenue; the offer was a free lid with a team Buddy for 48 hours, no code (see 7.9). Each email went out seven minutes after the win (founder, Nov 18, 2026). | **Open: confirm with Frost Buddy before publishing.** Say "seven minutes after the win," never "in 7 minutes" for revenue; use averages; badge "Early test · April 2026." |
 | F3 | Can you keep "We reply within 24 hours"? | Keep it |
 | F4 | Is there a path without Claude during early access? | No; Claude is required |
 | F5 | Which Claude plans support the connector for your users? | Don't name plans |
