@@ -121,7 +121,7 @@ sample story here stops matching it.
 | "encrypts your keys", "stored API credentials" | Walkoff holds no Klaviyo or Shopify keys | "Never asks for your keys" |
 | "quiet hours", "frequency cap", "instant pause" | Not features | "Send timing" and "Smart Sending stays on" |
 | "drop in your exports", "never leaves your computer" | Setup needs no files. The optional fan map comes from a Klaviyo export read in the browser (or Shopify's analytics through Claude), and only counts by area reach Walkoff | "Walkoff never sees a customer list." |
-| "$5,689 in 7 minutes" | The time isn't defensible, and the figure was wrong | "$9,135 in revenue" |
+| "$5,689 in 7 minutes" | The seven minutes is when the emails went out, not how fast revenue came in, and the figure was wrong | "$9,135 in revenue", and separately "seven minutes after the win" |
 
 ### Voice
 
@@ -184,8 +184,8 @@ until the marketer says so. $149 a month, 60 days free.
 > territory, and a send time. No logo, no license. The marketer looks it
 > over, Claude drafts it in their Klaviyo, and they hit send.
 >
-> In an early test, Frost Buddy sent seven win emails, one per team the
-> afternoon after it won, and Klaviyo attributed $9,135 in revenue to them. Walkoff is
+> In an early test, Frost Buddy sent seven win emails, one per team seven
+> minutes after it won, and Klaviyo attributed $9,135 in revenue to them. Walkoff is
 > $149 a month per brand, and the first 60 days are free.
 
 ---
@@ -406,13 +406,15 @@ The founder confirmed on October 28, 2026 that decks and sales material can
 name Frost Buddy and show its product photos. Use these facts exactly, and
 nothing beyond them. They were checked against Frost Buddy's Klaviyo on
 November 12, 2026 (Placed Order conversions); earlier figures ($5,689, 16K,
-6.7%, $0.36, Phillies and Giants) were wrong and must not be used.
+6.7%, $0.36, Phillies and Giants) were wrong and must not be used. The
+founder confirmed on November 18, 2026 that each email went out seven
+minutes after the win.
 
 | | |
 |---|---|
 | Label | Early test |
 | Brand | Frost Buddy, a licensed brand, so its emails show the team |
-| What | MLB win triggers: 7 teams, 7 win-triggered emails, one per team, each sent the afternoon after that team won (April 6 and 8, 2026) |
+| What | MLB win triggers: 7 teams, 7 win-triggered emails, one per team, each sent seven minutes after that team won (April 6 and 8, 2026) |
 | Teams | Cubs, Dodgers, Yankees, Mets, Red Sox, Braves, Cardinals |
 | Product | The Universal Buddy, in each team's Gameday version (Legacy for the Cardinals, which have no Gameday), from Frost Buddy's MLB collection |
 | Offer | A free lid with a team Buddy for 48 hours, applied at checkout, no code. Nothing marked down. |
@@ -421,8 +423,8 @@ November 12, 2026 (Placed Order conversions); earlier figures ($5,689, 16K,
 | Click rate | 4.8%, the average across the 7 sends (4.5% pooled) |
 | Revenue per recipient | $0.30, across all 7 sends |
 
-**In one line:** "Early test: Frost Buddy sent 7 win emails, one per team the
-afternoon after it won, and Klaviyo attributed $9,135 in revenue to them."
+**In one line:** "Early test: Frost Buddy sent 7 win emails, one per team
+seven minutes after it won, and Klaviyo attributed $9,135 in revenue to them."
 
 **The bridge, when MLB comes up:** "MLB plans start on Opening Day 2027. The
 same win triggers run today for NFL, NBA, NHL, NCAA and Premier League
@@ -430,8 +432,10 @@ teams."
 
 **Don't:**
 
-- Say "in 7 minutes", "the night they won", or put the best single send's
-  revenue per recipient ($0.39, the Cubs) next to averages.
+- Tie the seven minutes to revenue ("$9,135 in 7 minutes"). It's when the
+  emails went out; the revenue came in over the 48-hour offer.
+- Put the best single send's revenue per recipient ($0.39, the Cubs) next
+  to averages.
 - Call it typical, a benchmark or what a brand should expect.
 - Annualize it, multiply it or project from it.
 - Say Walkoff "generated" or "drove" the revenue. It's what Klaviyo
