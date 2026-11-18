@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-// One email per team, each sent the afternoon after that team won, in send
+// One email per team, each sent seven minutes after that team won, in send
 // order. Real products from Frost Buddy's MLB collection
 // (frostbuddy.com/collections/mlb): the Gameday edition where there is one,
 // and Legacy for the Cardinals, which have no Gameday.
@@ -38,7 +38,7 @@ export function ResultCard() {
       </div>
       <div className="result-card-headline">{RESULT.revenue} in revenue.</div>
       <div className="result-card-sends-label">
-        One email per team, the afternoon after the win
+        One email per team, seven minutes after the win
       </div>
       <div className="result-card-sends" tabIndex={0} aria-label="The seven team emails, scrollable">
         {TEAM_SENDS.map((t) => (
